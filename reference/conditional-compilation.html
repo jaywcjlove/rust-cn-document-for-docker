@@ -1,0 +1,474 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>条件编译 - Rust 参考手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 参考手册是 Rust 官方编写的 Rust 语言规范手册，由于语言还在快速迭代当中，所以本手册的内容还未固定下来。但这是一本学习和了解 Rust 全面的语言特性必不可少的书籍。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/reference.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="conditional-compilation.html" class="active"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li></ol></li><li class="chapter-item expanded "><a href="statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 推断型</a></li></ol></li><li class="chapter-item expanded "><a href="dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态尺寸类型(DST)</a></li><li class="chapter-item expanded "><a href="type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="linkage.html"><strong aria-hidden="true">14.</strong> 链接(linkage)</a></li><li class="chapter-item expanded "><a href="unsafety.html"><strong aria-hidden="true">15.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe-functions.html"><strong aria-hidden="true">15.1.</strong> 非安全函数</a></li><li class="chapter-item expanded "><a href="unsafe-blocks.html"><strong aria-hidden="true">15.2.</strong> 非安全代码块</a></li><li class="chapter-item expanded "><a href="behavior-considered-undefined.html"><strong aria-hidden="true">15.3.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="behavior-not-considered-unsafe.html"><strong aria-hidden="true">15.4.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="const_eval.html"><strong aria-hidden="true">16.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="abi.html"><strong aria-hidden="true">17.</strong> ABI</a></li><li class="chapter-item expanded "><a href="runtime.html"><strong aria-hidden="true">18.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="appendices.html"><strong aria-hidden="true">19.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macro-ambiguity.html"><strong aria-hidden="true">19.1.</strong> 宏定义规范</a></li><li class="chapter-item expanded "><a href="influences.html"><strong aria-hidden="true">19.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">19.3.</strong> 术语表</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 参考手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/reference-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#条件编译" id="条件编译">条件编译</a></h1>
+<blockquote>
+<p><a href="https://github.com/rust-lang/reference/blob/master/src/conditional-compilation.md">conditional-compilation.md</a><br />
+commit: 949726950a4ac5c8674e902dc33c09b48fc7434c <br />
+本章译文最后维护日期：2021-5-6</p>
+</blockquote>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>ConfigurationPredicate</em> :<br />
+      <em>ConfigurationOption</em><br />
+   | <em>ConfigurationAll</em><br />
+   | <em>ConfigurationAny</em><br />
+   | <em>ConfigurationNot</em></p>
+<p><em>ConfigurationOption</em> :<br />
+   <a href="identifiers.html">IDENTIFIER</a> (<code>=</code> (<a href="tokens.html#string-literals">STRING_LITERAL</a> | <a href="tokens.html#raw-string-literals">RAW_STRING_LITERAL</a>))<sup>?</sup></p>
+<p><em>ConfigurationAll</em><br />
+   <code>all</code> <code>(</code> <em>ConfigurationPredicateList</em><sup>?</sup> <code>)</code></p>
+<p><em>ConfigurationAny</em><br />
+   <code>any</code> <code>(</code> <em>ConfigurationPredicateList</em><sup>?</sup> <code>)</code></p>
+<p><em>ConfigurationNot</em><br />
+   <code>not</code> <code>(</code> <em>ConfigurationPredicate</em> <code>)</code></p>
+<p><em>ConfigurationPredicateList</em><br />
+   <em>ConfigurationPredicate</em> (<code>,</code> <em>ConfigurationPredicate</em>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+</blockquote>
+<p>根据某些条件，<!-- 这个定义有点空洞 --> <em>条件性编译的源代码(Conditionally compiled source code)</em> 可以被认为是 crate 源代码的一部分，也可以不被认为是 crate 源代码的一部分。可以使用<a href="attributes.html">属性</a> <a href="#the-cfg-attribute"><code>cfg</code></a> 和 <a href="#the-cfg_attr-attribute"><code>cfg_attr</code></a> 以及内置的 <a href="#the-cfg-macro"><code>cfg</code> macro</a> 来有条件地对源代码进行编译。这些条件可以基于被编译的 crate 的目标架构、传递给编译器的值，以及下面将详细描述的一些其他事项。</p>
+<p>每种形式的编译条件都有一个计算结果为真或假的<em>配置谓词(configuration predicate)</em>。谓词是以下内容之一：</p>
+<ul>
+<li>一个配置选项。如果设置了该选项，则为真，如果未设置则为假。</li>
+<li><code>all()</code> 这样的配置谓词列表，列表内的配置谓词以逗号分隔。如果至少有一个谓词为假，则为假。如果没有谓词，则为真。</li>
+<li><code>any()</code> 这样的配置谓词列表，列表内的配置谓词以逗号分隔。如果至少有一个谓词为真，则为真。如果没有谓词，则为假。</li>
+<li>带一个配置谓词的 <code>not()</code> 模式 。如果此谓词为假，整个配置它为真；如果此谓词为真，整个配置为假。</li>
+</ul>
+<p><em>配置选项</em>可以是名称，也可以是键值对，它们可以设置，也可以不设置。名称以单个标识符形式写入，例如 <code>unix</code>。键值对被写为标识符后跟 <code>=</code>，然后再跟一个字符串。例如，<code>target_arch=“x86_64”</code> 就是一个配置选项。</p>
+<blockquote>
+<p><strong>注意</strong>: <code>=</code> 周围的空白符将被忽略。<code>foo=&quot;bar&quot;</code> 和 <code>foo = &quot;bar&quot;</code> 是等价的配置选项。</p>
+</blockquote>
+<p>键在键值对配置选项列表中不是唯一的。例如，<code>feature = &quot;std&quot;</code> and <code>feature = &quot;serde&quot;</code> 可以同时设置。</p>
+<h2><a class="header" href="#设置配置选项" id="设置配置选项">设置配置选项</a></h2>
+<p>设置哪些配置选项是在 crate 编译期时就静态确定的。一些选项属于<em>编译器设置集(compiler-set)</em>，这部分选项是编译器根据相关编译数据设置的。其他选项属于<em>任意设置集(arbitrarily-set)</em>，这部分设置必须从代码之外传参给编译器来自主设置。无法在正在编译的 crate 的源代码中设置编译配置选项。</p>
+<blockquote>
+<p><strong>注意</strong>: 对于 <code>rustc</code>，任意配置集的配置选项要使用命令行参数 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--cfg-configure-the-compilation-environment"><code>--cfg</code></a> 来设置。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>: 键名为 <code>feature</code> 的配置选项一般被 <a href="https://doc.rust-lang.org/cargo/reference/features.html">Cargo</a> 约定用于指定编译期（用到的各种编译）选项和可选依赖项。</p>
+</blockquote>
+<div class="warning">
+<p>警告：任意配置集的配置选项可能与编译器设置集的配置选项设置相同的值。例如，在编译一个 Windows 目标时，可以执行命令行 <code>rustc --cfg &quot;unix&quot; program.rs</code>，这样就同时设置了 <code>unix</code> 和 <code>windows</code> 配置选项。但实际上这样做是不明智的。</p>
+</div>
+<h3><a class="header" href="#target_arch" id="target_arch"><code>target_arch</code></a></h3>
+<p>键值对选项，用于一次性设置编译目标的 CPU 架构。该值类似于平台的目标三元组(target triple)<sup class="footnote-reference"><a href="#target-triple">1</a></sup>中的第一个元素，但也不完全相同。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;x86&quot;</code></li>
+<li><code>&quot;x86_64&quot;</code></li>
+<li><code>&quot;mips&quot;</code></li>
+<li><code>&quot;powerpc&quot;</code></li>
+<li><code>&quot;powerpc64&quot;</code></li>
+<li><code>&quot;arm&quot;</code></li>
+<li><code>&quot;aarch64&quot;</code></li>
+</ul>
+<h3><a class="header" href="#target_feature" id="target_feature"><code>target_feature</code></a></h3>
+<p>键值对选项，用于设置当前编译目标的可用平台特性。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;avx&quot;</code></li>
+<li><code>&quot;avx2&quot;</code></li>
+<li><code>&quot;crt-static&quot;</code></li>
+<li><code>&quot;rdrand&quot;</code></li>
+<li><code>&quot;sse&quot;</code></li>
+<li><code>&quot;sse2&quot;</code></li>
+<li><code>&quot;sse4.1&quot;</code></li>
+</ul>
+<p>有关可用特性的更多细节，请参见 <a href="attributes/codegen.html#the-target_feature-attribute"><code>target_feature</code>属性</a>。此外，编译器还为 <code>target_feature</code>选项提供了一个额外的 <code>crt-static</code>特性，它表示需要链接一个可用的<a href="linkage.html#static-and-dynamic-c-runtimes">静态C运行时</a>。</p>
+<h3><a class="header" href="#target_os" id="target_os"><code>target_os</code></a></h3>
+<p>键值对选项，用于一次性设置编译目标的操作系统类型。该值类似于平台目标三元组中的第二和第三个元素。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;windows&quot;</code></li>
+<li><code>&quot;macos&quot;</code></li>
+<li><code>&quot;ios&quot;</code></li>
+<li><code>&quot;linux&quot;</code></li>
+<li><code>&quot;android&quot;</code></li>
+<li><code>&quot;freebsd&quot;</code></li>
+<li><code>&quot;dragonfly&quot;</code></li>
+<li><code>&quot;openbsd&quot;</code></li>
+<li><code>&quot;netbsd&quot;</code></li>
+</ul>
+<h3><a class="header" href="#target_family" id="target_family"><code>target_family</code></a></h3>
+<p>键值对选项提供了对具体目标平台更通用化的描述，比如编译目标操作系统或架构。可以设置任意数量的键值对。
+最多设置一次，用于设置编译目标的操作系统类别。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;unix&quot;</code></li>
+<li><code>&quot;windows&quot;</code></li>
+<li><code>&quot;wasm&quot;</code></li>
+</ul>
+<h3><a class="header" href="#unix-和-windows" id="unix-和-windows"><code>unix</code> 和 <code>windows</code></a></h3>
+<p>如果设置了 <code>target_family = &quot;unix&quot;</code> 则谓词 <code>unix</code> 为真；如果设置了 <code>target_family = &quot;windows&quot;</code> 则谓词 <code>windows</code> 为真。</p>
+<h3><a class="header" href="#target_env" id="target_env"><code>target_env</code></a></h3>
+<p>键值对选项，用来进一步消除编译目标平台信息与所用 ABI 或 <code>libc</code> 相关的歧义。由于历史原因，仅当实际需要消除歧义时，才将此值定义为非空字符串。因此，例如在许多 GNU 平台上，此值将为空。该值类似于平台目标三元组的第四个元素，但也有区别。一个区别是在嵌入式 ABI 上，比如在目标为嵌入式系统时，<code>gnueabihf</code> 会简单地将 <code>target_env</code> 定义为 <code>&quot;gnu&quot;</code>。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;&quot;</code></li>
+<li><code>&quot;gnu&quot;</code></li>
+<li><code>&quot;msvc&quot;</code></li>
+<li><code>&quot;musl&quot;</code></li>
+<li><code>&quot;sgx&quot;</code></li>
+</ul>
+<h3><a class="header" href="#target_endian" id="target_endian"><code>target_endian</code></a></h3>
+<p>键值对选项，根据编译目标的 CPU 的字节序(endianness)属性一次性设置值为 “little” 或 “big”。</p>
+<h3><a class="header" href="#target_pointer_width" id="target_pointer_width"><code>target_pointer_width</code></a></h3>
+<p>键值对选项，用于一次性设置编译目标的指针位宽(pointer width in bits)。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;16&quot;</code></li>
+<li><code>&quot;32&quot;</code></li>
+<li><code>&quot;64&quot;</code></li>
+</ul>
+<h3><a class="header" href="#target_vendor" id="target_vendor"><code>target_vendor</code></a></h3>
+<p>键值对选项，用于一次性设置编译目标的供应商。</p>
+<p>示例值：</p>
+<ul>
+<li><code>&quot;apple&quot;</code></li>
+<li><code>&quot;fortanix&quot;</code></li>
+<li><code>&quot;pc&quot;</code></li>
+<li><code>&quot;unknown&quot;</code></li>
+</ul>
+<h3><a class="header" href="#test" id="test"><code>test</code></a></h3>
+<p>在编译测试套件时启用。通过在 <code>rustc</code> 里使用 <a href="https://doc.rust-lang.org/rustc/command-line-arguments.html#--test-build-a-test-harness"><code>--test</code></a> 命令行参数来完成此启用。请参阅<a href="attributes/testing.html">测试</a>章节来获取更多和测试支持相关的信息。</p>
+<h3><a class="header" href="#debug_assertions" id="debug_assertions"><code>debug_assertions</code></a></h3>
+<p>在进行非优化编译时默认启用。这可以用于在开发中启用额外的代码调试功能，但不能在生产中启用。例如，它控制着标准库的 <a href="https://doc.rust-lang.org/std/macro.debug_assert.html"><code>debug_assert!</code></a>宏（是否可用）。</p>
+<h3><a class="header" href="#proc_macro" id="proc_macro"><code>proc_macro</code></a></h3>
+<p>当须要指定当前 crate 的<a href="linkage.html">编译输出文件类型(crate-type)</a>为 <code>proc_macro</code> 时设置。</p>
+<h2><a class="header" href="#条件编译的形式" id="条件编译的形式">条件编译的形式</a></h2>
+<h3><a class="header" href="#cfg属性" id="cfg属性"><code>cfg</code>属性</a></h3>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>CfgAttrAttribute</em> :<br />
+   <code>cfg</code> <code>(</code> <em>ConfigurationPredicate</em> <code>)</code></p>
+</blockquote>
+<!-- 这里可以用“激活属性”来称呼吗？should we say they're active attributes here? -->
+<p><code>cfg</code><a href="attributes.html">属性</a>根据配置谓词有条件地包括它所附加的东西。</p>
+<p>它被写成 <code>cfg</code> 后跟一个 <code>(</code>，再跟一个配置谓词，最后是一个 <code>)</code>。</p>
+<p>如果谓词为真，则重写该部分代码，使其上没有 <code>cfg</code> 属性。如果谓词为假，则从源代码中删除该内容。</p>
+<p>在函数上的一些例子:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 该函数只会在编译目标为 macOS 时才会包含在构建中
+#[cfg(target_os = &quot;macos&quot;)]
+fn macos_only() {
+  // ...
+}
+
+// 此函数仅在定义了 foo 或 bar 时才会被包含在构建中
+#[cfg(any(foo, bar))]
+fn needs_foo_or_bar() {
+  // ...
+}
+
+// 此函数仅在编译目标是32位体系架构的类unix 系统时才会被包含在构建中
+#[cfg(all(unix, target_pointer_width = &quot;32&quot;))]
+fn on_32bit_unix() {
+  // ...
+}
+
+// 此函数仅在没有定义 foo 时才会被包含在构建中
+#[cfg(not(foo))]
+fn needs_not_foo() {
+  // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>cfg</code>属性允许在任何允许属性的地方上使用。</p>
+<h3><a class="header" href="#cfg_attr属性" id="cfg_attr属性"><code>cfg_attr</code>属性</a></h3>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>CfgAttrAttribute</em> :<br />
+   <code>cfg_attr</code> <code>(</code> <em>ConfigurationPredicate</em> <code>,</code> <em>CfgAttrs</em><sup>?</sup> <code>)</code></p>
+<p><em>CfgAttrs</em> :<br />
+   <a href="attributes.html"><em>Attr</em></a> (<code>,</code> <a href="attributes.html"><em>Attr</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+</blockquote>
+<p><code>cfg_attr</code><a href="attributes.html">属性</a>根据配置谓词有条件地包含<a href="attributes.html">属性</a>。</p>
+<p>当配置谓词为真时，此属性展开为谓词后列出的属性。例如，下面的模块可以在 <code>linux.rs</code> 或 <code>windows.rs</code> 中都能找到。</p>
+<!-- ignore: `mod` needs multiple files -->
+<pre><code class="language-rust ignore">#[cfg_attr(target_os = &quot;linux&quot;, path = &quot;linux.rs&quot;)]
+#[cfg_attr(windows, path = &quot;windows.rs&quot;)]
+mod os;
+</code></pre>
+<p>可以列出零个、一个或多个属性。多个属性将各自展开为单独的属性。例如：</p>
+<!-- ignore: fake attributes -->
+<pre><code class="language-rust ignore">#[cfg_attr(feature = &quot;magic&quot;, sparkles, crackles)]
+fn bewitched() {}
+
+// 当启用了 `magic` 特性时, 上面的代码将会被展开为:
+#[sparkles]
+#[crackles]
+fn bewitched() {}
+</code></pre>
+<blockquote>
+<p><strong>注意</strong>: <code>cfg_attr</code> 能展开为另一个 <code>cfg_attr</code>。比如：<br />
+<code>#[cfg_attr(target_os = &quot;linux&quot;, cfg_attr(feature = &quot;multithreaded&quot;, some_other_attribute))]</code> <br />
+这个是合法的。这个示例等效于：<br />
+<code>#[cfg_attr(all(target_os = &quot;linux&quot;, feature =&quot;multithreaded&quot;), some_other_attribute)]</code>.</p>
+</blockquote>
+<p><code>cfg_attr</code> 属性允许在任何允许属性的地方上使用。</p>
+<h3><a class="header" href="#the-cfg-macro" id="the-cfg-macro">The <code>cfg</code> macro</a></h3>
+<h3><a class="header" href="#cfg宏" id="cfg宏"><code>cfg</code>宏</a></h3>
+<p>内置的 <code>cfg</code>宏接受单个配置谓词，当谓词为真时计算为 <code>true</code> 字面量，当谓词为假时计算为 <code>false</code> 字面量。</p>
+<p>例如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let machine_kind = if cfg!(unix) {
+  &quot;unix&quot;
+} else if cfg!(windows) {
+  &quot;windows&quot;
+} else {
+  &quot;unknown&quot;
+};
+
+println!(&quot;I'm running on a {} machine!&quot;, machine_kind);
+<span class="boring">}
+</span></code></pre></pre>
+<div class="footnote-definition" id="target-triple"><sup class="footnote-definition-label">1</sup>
+<p>首先给出 <em>目标三元组</em> 的参考资料地址：https://www.bookstack.cn/read/rCore_tutorial_doc/d997e9cbdfeef7d4.md。<br />
+接下来为防止该地址失效，我用自己的理解简单重复一下我对这个名词的理解:<br />
+目标三元组可以理解为我们常说的平台信息，包含这些信息：第一项元素：CPU 架构；第二项元素：供应商；第三项元素：操作系统；第四项元素：ABI。<br />
+Rust 下查看当前平台的三元组属性可以用 <code>rustc --version --verbose</code> 命令行。比如我在我工作机下下执行这行命令行的输出的 <code>host</code> 信息为：<code>host: x86_64-unknown-linux-gnu</code>，那我都工作机的目标三元组的信息就是：CPU 架构为 x86_64 ，供应商为 unknown ，操作系统为 linux ，ABI 为 gnu 。<br />
+我另一台 windows 机器为：<code>host: x86_64-pc-windows-msvc</code>，那这台的目标三元组的信息为：CPU 架构为 x86_64 ，供应商为 pc ，操作系统为 windows ，ABI 为 msvc 。<br />
+Rust 官方对一些平台提供了默认的目标三元组，我们可以通过 <code>rustc --print target-list</code> 命令来查看完整列表。</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="crates-and-source-files.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="items.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="crates-and-source-files.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="items.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

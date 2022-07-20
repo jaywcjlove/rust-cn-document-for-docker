@@ -1,0 +1,920 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>模式 - Rust 参考手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 参考手册是 Rust 官方编写的 Rust 语言规范手册，由于语言还在快速迭代当中，所以本手册的内容还未固定下来。但这是一本学习和了解 Rust 全面的语言特性必不可少的书籍。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/reference.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li></ol></li><li class="chapter-item expanded "><a href="statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="patterns.html" class="active"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 推断型</a></li></ol></li><li class="chapter-item expanded "><a href="dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态尺寸类型(DST)</a></li><li class="chapter-item expanded "><a href="type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="linkage.html"><strong aria-hidden="true">14.</strong> 链接(linkage)</a></li><li class="chapter-item expanded "><a href="unsafety.html"><strong aria-hidden="true">15.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe-functions.html"><strong aria-hidden="true">15.1.</strong> 非安全函数</a></li><li class="chapter-item expanded "><a href="unsafe-blocks.html"><strong aria-hidden="true">15.2.</strong> 非安全代码块</a></li><li class="chapter-item expanded "><a href="behavior-considered-undefined.html"><strong aria-hidden="true">15.3.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="behavior-not-considered-unsafe.html"><strong aria-hidden="true">15.4.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="const_eval.html"><strong aria-hidden="true">16.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="abi.html"><strong aria-hidden="true">17.</strong> ABI</a></li><li class="chapter-item expanded "><a href="runtime.html"><strong aria-hidden="true">18.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="appendices.html"><strong aria-hidden="true">19.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macro-ambiguity.html"><strong aria-hidden="true">19.1.</strong> 宏定义规范</a></li><li class="chapter-item expanded "><a href="influences.html"><strong aria-hidden="true">19.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">19.3.</strong> 术语表</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 参考手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/reference-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#模式" id="模式">模式</a></h1>
+<blockquote>
+<p><a href="https://github.com/rust-lang/reference/blob/master/src/patterns.md">patterns.md</a><br />
+commit: 100fa060ce1d2db7e4d1533efd289f9c18d08d53 <br />
+本章译文最后维护日期：2021-5-6</p>
+</blockquote>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>Pattern</em> :<br />
+      <code>|</code><sup>?</sup> <em>PatternNoTopAlt</em>  ( <code>|</code> <em>PatternNoTopAlt</em> )<sup>*</sup></p>
+<p><em>PatternNoTopAlt</em> :<br />
+      <em>PatternWithoutRange</em><br />
+   | <a href="#range-patterns"><em>RangePattern</em></a></p>
+<p><em>PatternWithoutRange</em> :<br />
+      <a href="#literal-patterns"><em>LiteralPattern</em></a><br />
+   | <a href="#identifier-patterns"><em>IdentifierPattern</em></a><br />
+   | <a href="#wildcard-pattern"><em>WildcardPattern</em></a><br />
+   | <a href="#rest-patterns"><em>RestPattern</em></a><br />
+   | <a href="#range-patterns"><em>ObsoleteRangePattern</em></a><br />
+   | <a href="#reference-patterns"><em>ReferencePattern</em></a><br />
+   | <a href="#struct-patterns"><em>StructPattern</em></a><br />
+   | <a href="#tuple-struct-patterns"><em>TupleStructPattern</em></a><br />
+   | <a href="#tuple-patterns"><em>TuplePattern</em></a><br />
+   | <a href="#grouped-patterns"><em>GroupedPattern</em></a><br />
+   | <a href="#slice-patterns"><em>SlicePattern</em></a><br />
+   | <a href="#path-patterns"><em>PathPattern</em></a><br />
+   | <a href="macros.html#macro-invocation"><em>MacroInvocation</em></a></p>
+</blockquote>
+<p>模式基于给定数据结构去匹配值，并可选地将变量和这些结构中匹配到的值绑定起来。模式也用在变量声明上和函数（包括闭包）的参数上。</p>
+<p>下面示例中的模式完成四件事：</p>
+<ul>
+<li>测试 <code>person</code> 是否在其 <code>car</code>字段中填充了内容。</li>
+<li>测试 <code>person</code> 的 <code>age</code>字段（的值）是否在 13 到 19 之间，并将其值绑定到给定的变量 <code>person_age</code> 上。</li>
+<li>将对 <code>name</code>字段的引用绑定到给定变量 <code>person_name</code> 上。</li>
+<li>忽略 <code>person</code> 的其余字段。其余字段可以有任何值，并且不会绑定到任何变量上。</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Car;
+</span><span class="boring">struct Computer;
+</span><span class="boring">struct Person {
+</span><span class="boring">    name: String,
+</span><span class="boring">    car: Option&lt;Car&gt;,
+</span><span class="boring">    computer: Option&lt;Computer&gt;,
+</span><span class="boring">    age: u8,
+</span><span class="boring">}
+</span><span class="boring">let person = Person {
+</span><span class="boring">    name: String::from(&quot;John&quot;),
+</span><span class="boring">    car: Some(Car),
+</span><span class="boring">    computer: None,
+</span><span class="boring">    age: 15,
+</span><span class="boring">};
+</span>if let
+    Person {
+        car: Some(_),
+        age: person_age @ 13..=19,
+        name: ref person_name,
+        ..
+    } = person
+{
+    println!(&quot;{} has a car and is {} years old.&quot;, person_name, person_age);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>模式用于：</p>
+<ul>
+<li><a href="statements.html#let%E8%AF%AD%E5%8F%A5"><code>let</code>声明</a></li>
+<li><a href="items/functions.html">函数</a>和<a href="expressions/closure-expr.html">闭包</a>的参数。</li>
+<li><a href="expressions/match-expr.html">匹配(<code>match</code>)表达式</a></li>
+<li><a href="expressions/if-expr.html"><code>if let</code>表达式</a></li>
+<li><a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code>表达式</a></li>
+<li><a href="expressions/loop-expr.html#iterator-loops"><code>for</code>表达式</a></li>
+</ul>
+<h2><a class="header" href="#解构" id="解构">解构</a></h2>
+<p>模式可用于<em>解构</em><a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/enumerations.html">枚举(<code>enum</code>)</a>和<a href="types/tuple.html">元组</a>。解构将一个值分解成它的组件组成，使用的句法与创建此类值时的几乎相同。在<a href="glossary.html#scrutinee">检验对象</a>表达式的类型为结构体(<code>struct</code>)、枚举(<code>enum</code>)或元组(<code>tuple</code>)的模式中，占位符(<code>_</code>) 代表<em>一个</em>数据字段，而通配符 <code>..</code> 代表特定变量/变体(variant)的<em>所有</em>剩余字段。当使用字段的名称（而不是字段序号）来解构数据结构时，允许将 <code>fieldname</code> 当作 <code>fieldname: fieldname</code> 的简写形式书写。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">enum Message {
+</span><span class="boring">    Quit,
+</span><span class="boring">    WriteString(String),
+</span><span class="boring">    Move { x: i32, y: i32 },
+</span><span class="boring">    ChangeColor(u8, u8, u8),
+</span><span class="boring">}
+</span><span class="boring">let message = Message::Quit;
+</span>match message {
+    Message::Quit =&gt; println!(&quot;Quit&quot;),
+    Message::WriteString(write) =&gt; println!(&quot;{}&quot;, &amp;write),
+    Message::Move{ x, y: 0 } =&gt; println!(&quot;move {} horizontally&quot;, x),
+    Message::Move{ .. } =&gt; println!(&quot;other move&quot;),
+    Message::ChangeColor { 0: red, 1: green, 2: _ } =&gt; {
+        println!(&quot;color change, red: {}, green: {}&quot;, red, green);
+    }
+};
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#可反驳性" id="可反驳性">可反驳性</a></h2>
+<p>当一个模式有可能与它所匹配的值不匹配时，我们就说它是<em>可反驳型的(refutable)</em>。也就是说，*不可反驳型(irrefutable)*模式总是能与它们所匹配的值匹配成功。例如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let (x, y) = (1, 2);               // &quot;(x, y)&quot; 是一个不可反驳型模式
+
+if let (a, 3) = (1, 2) {           // &quot;(a, 3)&quot; 是可反驳型的, 将不会匹配
+    panic!(&quot;Shouldn't reach here&quot;);
+} else if let (a, 4) = (3, 4) {    // &quot;(a, 4)&quot; 是可反驳型的, 将会匹配
+    println!(&quot;Matched ({}, 4)&quot;, a);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#字面量模式" id="字面量模式">字面量模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>LiteralPattern</em> :<br />
+      <a href="tokens.html#boolean-literals">BOOLEAN_LITERAL</a><br />
+   | <a href="tokens.html#character-literals">CHAR_LITERAL</a><br />
+   | <a href="tokens.html#byte-literals">BYTE_LITERAL</a><br />
+   | <a href="tokens.html#string-literals">STRING_LITERAL</a><br />
+   | <a href="tokens.html#raw-string-literals">RAW_STRING_LITERAL</a><br />
+   | <a href="tokens.html#byte-string-literals">BYTE_STRING_LITERAL</a><br />
+   | <a href="tokens.html#raw-byte-string-literals">RAW_BYTE_STRING_LITERAL</a><br />
+   | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
+   | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a></p>
+</blockquote>
+<p><em>字面量模式</em>匹配的值与字面量所创建的值完全相同。由于负数不是<a href="expressions/literal-expr.html">字面量</a>，（特设定）字面量模式也接受字面量前的可选负号，它的作用类似于否定运算符。</p>
+<div class="warning">
+<p>浮点字面量目前还可以使用，但是由于它们在数值比较时带来的复杂性，在将来的 Rust 版本中，它们将被禁止用于字面量模式(参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>)。</p>
+</div>
+<p>字面量模式总是可以反驳型的。</p>
+<p>示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>for i in -2..5 {
+    match i {
+        -1 =&gt; println!(&quot;It's minus one&quot;),
+        1 =&gt; println!(&quot;It's a one&quot;),
+        2|4 =&gt; println!(&quot;It's either a two or a four&quot;),
+        _ =&gt; println!(&quot;Matched none of the arms&quot;),
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#标识符模式" id="标识符模式">标识符模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>IdentifierPattern</em> :<br />
+      <code>ref</code><sup>?</sup> <code>mut</code><sup>?</sup> <a href="identifiers.html">IDENTIFIER</a> (<code>@</code> <a href="#patterns"><em>Pattern</em></a> ) <sup>?</sup></p>
+</blockquote>
+<p>标识符模式将它们匹配的值绑定到一个变量上。此标识符在该模式中必须是唯一的。该变量会在作用域中遮蔽任何同名的变量。这种绑定的作用域取决于使用模式的上下文（例如 <code>let</code>绑定或匹配臂(<code>match</code> arm)<sup class="footnote-reference"><a href="#译注1">1</a></sup>）。</p>
+<p>标识符模式只能包含一个标识符（也可能前带一个 <code>mut</code>），能匹配任何值，并将其绑定到该标识符上。最常见的标识符模式应用场景就是用在变量声明上和用在函数（包括闭包）的参数上。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut variable = 10;
+fn sum(x: i32, y: i32) -&gt; i32 {
+<span class="boring">   x + y
+</span><span class="boring">}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>要将模式匹配到的值绑定到变量上，也可使用句法 <code>variable @ subpattern</code>。例如，下面示例中将值 2 绑定到 <code>e</code> 上（不是整个区间(range)：这里的区间是一个区间子模式(range subpattern)）。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 2;
+
+match x {
+    e @ 1 ..= 5 =&gt; println!(&quot;got a range element {}&quot;, e),
+    _ =&gt; println!(&quot;anything&quot;),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>默认情况下，标识符模式里变量会和匹配到的值的一个拷贝副本绑定，或匹配值自身移动过来和变量完成绑定，具体是使用拷贝语义还是移动语义取决于匹配到的值是否实现了 <a href="special-types-and-traits.html#copy"><code>Copy</code></a>。也可以通过使用关键字 <code>ref</code> 将变量和值的引用绑定，或者使用 <code>ref mut</code> 将变量和值的可变引用绑定。示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let a = Some(10);
+</span>match a {
+    None =&gt; (),
+    Some(value) =&gt; (),
+}
+
+match a {
+    None =&gt; (),
+    Some(ref value) =&gt; (),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在第一个匹配表达式中，值被拷贝（或移动）（到变量 <code>value</code> 上）。在第二个匹配中，对相同内存位置的引用被绑定到变量上。之所以需要这种句法，是因为在解构子模式(destructuring subpatterns)里，操作符 <code>&amp;</code> 不能应用在值的字段上。例如，以下内容无效：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Person {
+</span><span class="boring">   name: String,
+</span><span class="boring">   age: u8,
+</span><span class="boring">}
+</span><span class="boring">let value = Person { name: String::from(&quot;John&quot;), age: 23 };
+</span>if let Person { name: &amp;person_name, age: 18..=150 } = value { }
+<span class="boring">}
+</span></code></pre></pre>
+<p>要使其有效，请按如下方式编写代码：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Person {
+</span><span class="boring">   name: String,
+</span><span class="boring">   age: u8,
+</span><span class="boring">}
+</span><span class="boring">let value = Person { name: String::from(&quot;John&quot;), age: 23 };
+</span>if let Person { name: ref person_name, age: 18..=150 } = value { }
+<span class="boring">}
+</span></code></pre></pre>
+<p>这里，<code>ref</code> 不是被匹配的一部分。这里它唯一的目的就是使变量和匹配值的引用绑定起来，而不是潜在地拷贝或移动匹配到的内容。</p>
+<p><a href="#path-patterns">路径模式(Path pattern)</a>优先于标识符模式。如果给某个标识符指定了 <code>ref</code> 或 <code>ref mut</code>，同时该标识符又遮蔽了某个常量，这会导致错误。</p>
+<p>如果 <code>@</code>子模式是不可反驳型的或未指定子模式，则标识符模式是不可反驳型的。</p>
+<h3><a class="header" href="#绑定方式" id="绑定方式">绑定方式</a></h3>
+<p>基于人类工程学的考虑，为了让引用和匹配值的绑定更容易一些，模式会自动选择不同的<em>绑定方式</em>。当引用值与非引用模式匹配时，这将自动地被视为 <code>ref</code> 或 <code>ref mut</code> 绑定方式。示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x: &amp;Option&lt;i32&gt; = &amp;Some(3);
+if let Some(y) = x {
+    // y 被转换为`ref y` ，其类型为 &amp;i32
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>*非引用模式(Non-reference patterns)*包括<strong>除</strong>上面这种绑定模式和后面会讲到的<a href="#wildcard-pattern">通配符模式</a>（<code>_</code>）、匹配引用类型的<a href="#path-patterns">常量(<code>const</code>)模式</a>和<a href="#reference-patterns">引用模式</a>这些模式以外的所有模式。</p>
+<p>如果绑定模式(binding pattern)中没有显式地包含 <code>ref</code>、<code>ref mut</code>、<code>mut</code>，那么它将使用<em>默认绑定方式</em>来确定如何绑定变量。默认绑定方式以使用移动语义的“移动(move)”方式开始。当匹配一个模式时，编译器对模式从外到内逐层匹配。每次非引用模式和引用匹配上了时，引用都会自动解引用出最后的值，并更新默认绑定方式，再进行最终的匹配。此时引用会将默认绑定方式设置为 <code>ref</code> 方式。可变引用会将模式设置为 <code>ref mut</code> 方式，除非绑定方式已经是 <code>ref</code> 了（在这种情况下它仍然是 <code>ref</code> 方式）。如果自动解引用解出的值仍然是引用，则会重复解引用。<sup class="footnote-reference"><a href="#译注2">2</a></sup></p>
+<p>移动语义的绑定方式和引用语义的绑定方式可以在同一个模式中混合使用，这样做会导致绑定对象的部分被移走，并且之后无法再使用该对象。这只适用于类型无法拷贝的情况下。</p>
+<p>下面的示例中，<code>name</code> 被移出了 <code>person</code>，因此如果再试图把 <code>person</code> 作为一个整体使用，或再次使用 <code>person.name</code>，将会因为*部分移出(partial move)*的问题而报错。</p>
+<p>示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Person {
+</span><span class="boring">   name: String,
+</span><span class="boring">   age: u8,
+</span><span class="boring">}
+</span><span class="boring">let person = Person{ name: String::from(&quot;John&quot;), age: 23 };
+</span>// 在 `age` 被引用绑定的情况下，`name` 被从 person 中移出
+let Person { name, ref age } = person;
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#通配符模式" id="通配符模式">通配符模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>WildcardPattern</em> :<br />
+   <code>_</code></p>
+</blockquote>
+<p><em>通配符模式</em>（下划线符号）能与任何值匹配。常用它来忽略那些无关紧要的值。在其他模式中使用该模式时，它匹配单个数据字段（与和匹配所有其余字段的 <code>..</code> 相对）。与标识符模式不同，它不会复制、移动或借用它匹配的值。</p>
+<p>示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let x = 20;
+</span>let (a, _) = (10, x);   // x 一定会被 _ 匹配上
+<span class="boring">assert_eq!(a, 10);
+</span>
+// 忽略一个函数/闭包参数
+let real_part = |a: f64, _: f64| { a };
+
+// 忽略结构体的一个字段
+<span class="boring">struct RGBA {
+</span><span class="boring">   r: f32,
+</span><span class="boring">   g: f32,
+</span><span class="boring">   b: f32,
+</span><span class="boring">   a: f32,
+</span><span class="boring">}
+</span><span class="boring">let color = RGBA{r: 0.4, g: 0.1, b: 0.9, a: 0.5};
+</span>let RGBA{r: red, g: green, b: blue, a: _} = color;
+<span class="boring">assert_eq!(color.r, red);
+</span><span class="boring">assert_eq!(color.g, green);
+</span><span class="boring">assert_eq!(color.b, blue);
+</span>
+// 能接收带任何值的任何 Some
+<span class="boring">let x = Some(10);
+</span>if let Some(_) = x {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>通配符模式总是不可反驳型的。</p>
+<h2><a class="header" href="#剩余模式" id="剩余模式">剩余模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>RestPattern</em> :<br />
+   <code>..</code></p>
+</blockquote>
+<p><em>剩余模式</em>（<code>..</code> token）充当匹配长度可变的模式(variable-length pattern)，它匹配之前之后没有匹配的零个或多个元素。它只能在<a href="#tuple-patterns">元组</a>模式、<a href="#tuple-struct-patterns">元组结构体</a>模式和<a href="#slice-patterns">切片</a>模式中使用，并且只能作为这些模式中的一个元素出现一次。当作为<a href="#identifier-patterns">标识符模式</a>的子模式时，它也可出现在<a href="#slice-patterns">切片模式</a>里。</p>
+<p>剩余模式总是不可反驳型的。</p>
+<p>示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let words = vec![&quot;a&quot;, &quot;b&quot;, &quot;c&quot;];
+</span><span class="boring">let slice = &amp;words[..];
+</span>match slice {
+    [] =&gt; println!(&quot;slice is empty&quot;),
+    [one] =&gt; println!(&quot;single element {}&quot;, one),
+    [head, tail @ ..] =&gt; println!(&quot;head={} tail={:?}&quot;, head, tail),
+}
+
+match slice {
+    // 忽略除最后一个元素以外的所有元素，并且最后一个元素必须是 &quot;!&quot;.
+    [.., &quot;!&quot;] =&gt; println!(&quot;!!!&quot;),
+
+    // `start` 是除最后一个元素之外的所有元素的一个切片，最后一个元素必须是 “z”。
+    [start @ .., &quot;z&quot;] =&gt; println!(&quot;starts with: {:?}&quot;, start),
+
+    // `end` 是除第一个元素之外的所有元素的一个切片，第一个元素必须是 “a”
+    [&quot;a&quot;, end @ ..] =&gt; println!(&quot;ends with: {:?}&quot;, end),
+
+    rest =&gt; println!(&quot;{:?}&quot;, rest),
+}
+
+if let [.., penultimate, _] = slice {
+    println!(&quot;next to last is {}&quot;, penultimate);
+}
+
+<span class="boring">let tuple = (1, 2, 3, 4, 5);
+</span>// 剩余模式也可是在元组和元组结构体模式中使用。
+match tuple {
+    (1, .., y, z) =&gt; println!(&quot;y={} z={}&quot;, y, z),
+    (.., 5) =&gt; println!(&quot;tail must be 5&quot;),
+    (..) =&gt; println!(&quot;matches everything else&quot;),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#区间模式" id="区间模式">区间模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>RangePattern</em> :<br />
+   <em>RangePatternBound</em> <code>..=</code> <em>RangePatternBound</em></p>
+<p><em>ObsoleteRangePattern</em> :(译者注：废弃的区间模式句法/产生式) \ 
+   <em>RangePatternBound</em> <code>...</code> <em>RangePatternBound</em></p>
+<p><em>RangePatternBound</em> :<br />
+      <a href="tokens.html#character-literals">CHAR_LITERAL</a><br />
+   | <a href="tokens.html#byte-literals">BYTE_LITERAL</a><br />
+   | <code>-</code><sup>?</sup> <a href="tokens.html#integer-literals">INTEGER_LITERAL</a><br />
+   | <code>-</code><sup>?</sup> <a href="tokens.html#floating-point-literals">FLOAT_LITERAL</a><br />
+   | <a href="paths.html#paths-in-expressions"><em>PathInExpression</em></a><br />
+   | <a href="paths.html#qualified-paths"><em>QualifiedPathInExpression</em></a></p>
+</blockquote>
+<p>区间模式匹配在其上下边界定义的封闭区间内的值。例如，一个模式 <code>'m'..='p'</code> 将只能匹配值<code>'m'</code>、<code>'n'</code>、<code>'o'</code> 和 <code>'p'</code>。它的边界值可以是字面量，也可以是指向常量值的路径。</p>
+<p>一个模式 a <code>..=</code> b 必须总是有 a ≤ b。例如，<code>10..=0</code> 这样的区间模式是错误的。</p>
+<p>保留 <code>...</code>句法只是为了向后兼容。</p>
+<p>区间模式只适用于标量类型(scalar type)。可接受的类型有：</p>
+<ul>
+<li>整型（u8、i8、u16、i16、usize、isize ...）。</li>
+<li>字符型（char）。</li>
+<li>浮点类型（f32 和 f64）。这已被弃用，在未来版本的 Rust 中将不可用（参见 <a href="https://github.com/rust-lang/rust/issues/41620">issue #41620</a>）。</li>
+</ul>
+<p>示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let c = 'f';
+</span>let valid_variable = match c {
+    'a'..='z' =&gt; true,
+    'A'..='Z' =&gt; true,
+    'α'..='ω' =&gt; true,
+    _ =&gt; false,
+};
+
+<span class="boring">let ph = 10;
+</span>println!(&quot;{}&quot;, match ph {
+    0..=6 =&gt; &quot;acid&quot;,
+    7 =&gt; &quot;neutral&quot;,
+    8..=14 =&gt; &quot;base&quot;,
+    _ =&gt; unreachable!(),
+});
+
+// 使用指向常量值的路径：
+<span class="boring">const TROPOSPHERE_MIN : u8 = 6;
+</span><span class="boring">const TROPOSPHERE_MAX : u8 = 20;
+</span><span class="boring">
+</span><span class="boring">const STRATOSPHERE_MIN : u8 = TROPOSPHERE_MAX + 1;
+</span><span class="boring">const STRATOSPHERE_MAX : u8 = 50;
+</span><span class="boring">
+</span><span class="boring">const MESOSPHERE_MIN : u8 = STRATOSPHERE_MAX + 1;
+</span><span class="boring">const MESOSPHERE_MAX : u8 = 85;
+</span><span class="boring">
+</span><span class="boring">let altitude = 70;
+</span><span class="boring">
+</span>println!(&quot;{}&quot;, match altitude {
+    TROPOSPHERE_MIN..=TROPOSPHERE_MAX =&gt; &quot;troposphere&quot;,
+    STRATOSPHERE_MIN..=STRATOSPHERE_MAX =&gt; &quot;stratosphere&quot;,
+    MESOSPHERE_MIN..=MESOSPHERE_MAX =&gt; &quot;mesosphere&quot;,
+    _ =&gt; &quot;outer space, maybe&quot;,
+});
+
+<span class="boring">pub mod binary {
+</span><span class="boring">    pub const MEGA : u64 = 1024*1024;
+</span><span class="boring">    pub const GIGA : u64 = 1024*1024*1024;
+</span><span class="boring">}
+</span><span class="boring">let n_items = 20_832_425;
+</span><span class="boring">let bytes_per_item = 12;
+</span>if let size @ binary::MEGA..=binary::GIGA = n_items * bytes_per_item {
+    println!(&quot;这适用并占用{}个字节&quot;, size);
+}
+
+<span class="boring">trait MaxValue {
+</span><span class="boring">    const MAX: u64;
+</span><span class="boring">}
+</span><span class="boring">impl MaxValue for u8 {
+</span><span class="boring">    const MAX: u64 = (1 &lt;&lt; 8) - 1;
+</span><span class="boring">}
+</span><span class="boring">impl MaxValue for u16 {
+</span><span class="boring">    const MAX: u64 = (1 &lt;&lt; 16) - 1;
+</span><span class="boring">}
+</span><span class="boring">impl MaxValue for u32 {
+</span><span class="boring">    const MAX: u64 = (1 &lt;&lt; 32) - 1;
+</span><span class="boring">}
+</span>// 使用限定路径：
+println!(&quot;{}&quot;, match 0xfacade {
+    0 ..= &lt;u8 as MaxValue&gt;::MAX =&gt; &quot;fits in a u8&quot;,
+    0 ..= &lt;u16 as MaxValue&gt;::MAX =&gt; &quot;fits in a u16&quot;,
+    0 ..= &lt;u32 as MaxValue&gt;::MAX =&gt; &quot;fits in a u32&quot;,
+    _ =&gt; &quot;too big&quot;,
+});
+<span class="boring">}
+</span></code></pre></pre>
+<p>当区间模式匹配某（非usize 和 非isize）整型类型和字符型(<code>char</code>)的整个值域时，此模式是不可反驳型的。例如，<code>0u8..=255u8</code> 是不可反驳型的。某类整型的值区间是从该类型的最小值到该类型最大值的闭区间。字符型(<code>char</code>)的值的区间就是那些包含所有 Unicode 标量值的区间，即 <code>'\u{0000}'..='\u{D7FF}'</code> 和 <code>'\u{E000}'..='\u{10FFFF}'</code>。</p>
+<h2><a class="header" href="#引用模式" id="引用模式">引用模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>ReferencePattern</em> :<br />
+   (<code>&amp;</code>|<code>&amp;&amp;</code>) <code>mut</code><sup>?</sup> <a href="#patterns"><em>PatternWithoutRange</em></a></p>
+</blockquote>
+<p>引用模式对当前匹配的指针做解引用，从而能借用它们：</p>
+<p>例如，下面 <code>x: &amp;i32</code> 上的两个匹配是等效的：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let int_reference = &amp;3;
+
+let a = match *int_reference { 0 =&gt; &quot;zero&quot;, _ =&gt; &quot;some&quot; };
+let b = match int_reference { &amp;0 =&gt; &quot;zero&quot;, _ =&gt; &quot;some&quot; };
+
+assert_eq!(a, b);
+<span class="boring">}
+</span></code></pre></pre>
+<p>引用模式的文法产生式(grammar production)要求必须使用 token <code>&amp;&amp;</code> 来匹配对引用的引用，因为 <code>&amp;&amp;</code> 本身是一个单独的 token，而不是两个 <code>&amp;</code> token。</p>
+<blockquote>
+<p>译者注：举例</p>
+<pre><code>let a = Some(&amp;&amp;10);
+match a {
+   Some( &amp;&amp;value ) =&gt; println!(&quot;{}&quot;, value),
+   None =&gt; {}
+}
+</code></pre>
+</blockquote>
+<p>引用模式中添加关键字 <code>mut</code> 可对可变引用做解引用。引用模式中的可变性标记必须与作为匹配对象的那个引用的可变性匹配。</p>
+<p>引用模式总是不可反驳型的。</p>
+<h2><a class="header" href="#结构体模式" id="结构体模式">结构体模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>StructPattern</em> :<br />
+   <a href="paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>{</code><br />
+      <em>StructPatternElements</em> <sup>?</sup><br />
+   <code>}</code></p>
+<p><em>StructPatternElements</em> :<br />
+      <em>StructPatternFields</em> (<code>,</code> | <code>,</code> <em>StructPatternEtCetera</em>)<sup>?</sup><br />
+   | <em>StructPatternEtCetera</em></p>
+<p><em>StructPatternFields</em> :<br />
+   <em>StructPatternField</em> (<code>,</code> <em>StructPatternField</em>) <sup>*</sup></p>
+<p><em>StructPatternField</em> :<br />
+   <a href="attributes.html"><em>OuterAttribute</em></a> <sup>*</sup><br />
+   (<br />
+         <a href="tokens.html#tuple-index">TUPLE_INDEX</a> <code>:</code> <a href="#patterns"><em>Pattern</em></a><br />
+      | <a href="identifiers.html">IDENTIFIER</a> <code>:</code> <a href="#patterns"><em>Pattern</em></a><br />
+      | <code>ref</code><sup>?</sup> <code>mut</code><sup>?</sup> <a href="identifiers.html">IDENTIFIER</a><br />
+   )</p>
+<p><em>StructPatternEtCetera</em> :<br />
+   <a href="attributes.html"><em>OuterAttribute</em></a> <sup>*</sup><br />
+   <code>..</code></p>
+</blockquote>
+<p>结构体模式匹配与子模式定义的所有条件匹配的结构体值。它也被用来<a href="#destructuring">解构</a>结构体。</p>
+<p>在结构体模式中，结构体字段需通过名称、索引（对于元组结构体来说）来指代，或者通过使用 <code>..</code> 来忽略：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Point {
+</span><span class="boring">    x: u32,
+</span><span class="boring">    y: u32,
+</span><span class="boring">}
+</span><span class="boring">let s = Point {x: 1, y: 1};
+</span><span class="boring">
+</span>match s {
+    Point {x: 10, y: 20} =&gt; (),
+    Point {y: 10, x: 20} =&gt; (),    // 顺序没关系
+    Point {x: 10, ..} =&gt; (),
+    Point {..} =&gt; (),
+}
+
+<span class="boring">struct PointTuple (
+</span><span class="boring">    u32,
+</span><span class="boring">    u32,
+</span><span class="boring">);
+</span><span class="boring">let t = PointTuple(1, 2);
+</span><span class="boring">
+</span>match t {
+    PointTuple {0: 10, 1: 20} =&gt; (),
+    PointTuple {1: 10, 0: 20} =&gt; (),   // 顺序没关系
+    PointTuple {0: 10, ..} =&gt; (),
+    PointTuple {..} =&gt; (),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果没使用 <code>..</code>，需要提供所有字段的详尽匹配：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Struct {
+</span><span class="boring">   a: i32,
+</span><span class="boring">   b: char,
+</span><span class="boring">   c: bool,
+</span><span class="boring">}
+</span><span class="boring">let mut struct_value = Struct{a: 10, b: 'X', c: false};
+</span><span class="boring">
+</span>match struct_value {
+    Struct{a: 10, b: 'X', c: false} =&gt; (),
+    Struct{a: 10, b: 'X', ref c} =&gt; (),
+    Struct{a: 10, b: 'X', ref mut c} =&gt; (),
+    Struct{a: 10, b: 'X', c: _} =&gt; (),
+    Struct{a: _, b: _, c: _} =&gt; (),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><em><code>ref</code> 和/或 <code>mut</code> IDENTIFIER</em> 这样的句法格式能匹配任意值，并将其绑定到与给定字段同名的变量上。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Struct {
+</span><span class="boring">   a: i32,
+</span><span class="boring">   b: char,
+</span><span class="boring">   c: bool,
+</span><span class="boring">}
+</span><span class="boring">let struct_value = Struct{a: 10, b: 'X', c: false};
+</span><span class="boring">
+</span>let Struct{a: x, b: y, c: z} = struct_value;          // 解构所有的字段
+<span class="boring">}
+</span></code></pre></pre>
+<p>当一个结构体模式的子模式是可反驳型的，那这个结构体模式就是可反驳型的。</p>
+<h2><a class="header" href="#元组结构体模式" id="元组结构体模式">元组结构体模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>TupleStructPattern</em> :<br />
+   <a href="paths.html#paths-in-expressions"><em>PathInExpression</em></a> <code>(</code> <em>TupleStructItems</em><sup>?</sup> <code>)</code></p>
+<p><em>TupleStructItems</em> :<br />
+   <a href="#patterns"><em>Pattern</em></a> ( <code>,</code> <a href="#patterns"><em>Pattern</em></a> )<sup>*</sup> <code>,</code><sup>?</sup></p>
+</blockquote>
+<p>元组结构体模式匹配元组结构体值和枚举值，这些值将与该模式的子模式定义的所有条件进行匹配。它还被用于<a href="#destructuring">解构</a>元组结构体值或枚举值。</p>
+<p>当元组结构体模式的一个子模式是可反驳型的，则该元组结构体模式就是可反驳型的。</p>
+<h2><a class="header" href="#元组模式" id="元组模式">元组模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>TuplePattern</em> :<br />
+   <code>(</code> <em>TuplePatternItems</em><sup>?</sup> <code>)</code></p>
+<p><em>TuplePatternItems</em> :<br />
+      <a href="#patterns"><em>Pattern</em></a> <code>,</code><br />
+   | <a href="#rest-patterns"><em>RestPattern</em></a><br />
+   | <a href="#patterns"><em>Pattern</em></a> (<code>,</code> <a href="#patterns"><em>Pattern</em></a>)<sup>+</sup> <code>,</code><sup>?</sup></p>
+</blockquote>
+<p>元组模式匹配与子模式定义的所有条件匹配的元组值。它们还被用来<a href="#destructuring">解构</a>元组值。</p>
+<p>内部只带有一个<a href="#rest-patterns">剩余模式</a>(<em>RestPattern</em>)的元组句法形式 <code>(..)</code> 是一种内部不需要逗号分割的特殊匹配形式，它可以匹配任意长度的元组。</p>
+<p>当元组模式的一个子模式是可反驳型的，那该元组模式就是可反驳型的。</p>
+<p>使用元组模式的示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let pair = (10, &quot;ten&quot;);
+let (a, b) = pair;
+
+assert_eq!(a, 10);
+assert_eq!(b, &quot;ten&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#分组模式" id="分组模式">分组模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>GroupedPattern</em> :<br />
+   <code>(</code> <a href="#patterns"><em>Pattern</em></a> <code>)</code></p>
+</blockquote>
+<p>将模式括在圆括号内可用来显式控制复合模式的优先级。例如，像 <code>&amp;0..=5</code> 这样的引用模式和区间模式相邻就会引起歧义，这时可以用圆括号来消除歧义。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let int_reference = &amp;3;
+match int_reference {
+    &amp;(0..=5) =&gt; (),
+    _ =&gt; (),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#切片模式" id="切片模式">切片模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>SlicePattern</em> :<br />
+   <code>[</code> <em>SlicePatternItems</em><sup>?</sup> <code>]</code></p>
+<p><em>SlicePatternItems</em> :<br />
+   <a href="#patterns"><em>Pattern</em></a> (<code>,</code> <a href="#patterns"><em>Pattern</em></a>)<sup>*</sup> <code>,</code><sup>?</sup></p>
+</blockquote>
+<p>切片模式可以匹配固定长度的数组和动态长度的切片。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 固定长度
+let arr = [1, 2, 3];
+match arr {
+    [1, _, _] =&gt; &quot;从 1 开始&quot;,
+    [a, b, c] =&gt; &quot;从其他值开始&quot;,
+};
+<span class="boring">}
+</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 动态长度
+let v = vec![1, 2, 3];
+match v[..] {
+    [a, b] =&gt; { /* 这个匹配臂不适用，因为长度不匹配 */ }
+    [a, b, c] =&gt; { /* 这个匹配臂适用 */ }
+    _ =&gt; { /* 这个通配符是必需的，因为长度不是编译时可知的 */ }
+};
+<span class="boring">}
+</span></code></pre></pre>
+<p>在匹配数组时，只要每个元素是不可反驳型的，切片模式就是不可反驳型的。当匹配切片时，只有单个 <code>..</code> <a href="#rest-patterns">剩余模式</a>或带有 <code>..</code>（剩余模式）作为子模式的<a href="#identifier-patterns">标识符模式</a>的情况才是不可反驳型的。</p>
+<h2><a class="header" href="#路径模式" id="路径模式">路径模式</a></h2>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>PathPattern</em> :<br />
+      <a href="paths.html#paths-in-expressions"><em>PathInExpression</em></a><br />
+   | <a href="paths.html#qualified-paths"><em>QualifiedPathInExpression</em></a></p>
+</blockquote>
+<p><em>路径模式</em>是指向(refer to)常量值或指向没有字段的结构体或没有字段的枚举变体的模式。</p>
+<p>非限定路径模式可以指向：</p>
+<ul>
+<li>枚举变体</li>
+<li>结构体</li>
+<li>常量</li>
+<li>关联常量</li>
+</ul>
+<p>限定路径模式只能指向关联常量。</p>
+<p>常量不能是联合体类型。结构体常量和枚举常量必须带有 <code>#[derive(PartialEq, Eq)]</code> 属性（不只是实现）。</p>
+<p>当路径模式指向结构体或枚举变体(枚举只有一个变体)或类型为不可反驳型的常量时，该路径模式是不可反驳型的。当路径模式指向的是可反驳型常量或带有多个变体的枚举时，该路径模式是可反驳型的。</p>
+<h2><a class="header" href="#or-模式" id="or-模式">or 模式</a></h2>
+<p>_or模式_是能匹配两个或多个并列子模式（例如：<code>A | B | C</code>）中的一个的模式。此模式可以任意嵌套。除了 <code>let</code>绑定和函数参数（包括闭包参数）中的模式（此时句法上使用 _PatternNoTopAlt_产生式），or模式在句法上允许在任何其他模式出现的地方出现（这些模式句法上使用 _Pattern_产生式）。</p>
+<h3><a class="header" href="#静态语义" id="静态语义">静态语义</a></h3>
+<ol>
+<li>
+<p>假定在某个代码深度上给定任意模式 <code>p</code> 和 <code>q</code>，现假定它们组成模式 <code>p | q</code>，则以下情况会导致这种组成的非法：</p>
+<ul>
+<li>从 <code>p</code> 推断出的类型和从 <code>q</code> 推断出的类型不一致，或</li>
+<li><code>p</code> 和 <code>q</code> 引入的绑定标识符不一样，或</li>
+<li><code>p</code> 和 <code>q</code> 中引入的同名绑定标识符的类型和绑定模式中的类型不一致。</li>
+</ul>
+<p>前面提到的所有实例中的类型都必须是精确的，隐式的<a href="type-coercions.html">类型强转</a>在这里不适用。</p>
+</li>
+<li>
+<p>当对表达式 <code>match e_s { a_1 =&gt; e_1, ... a_n =&gt; e_n }</code> 做类型检查时，假定在 <code>e_s</code> 内部深度为 <code>d</code> 的地方存一个表达式片段，那对于此片段，每一个匹配臂 <code>a_i</code> 都包含了一个 <code>p_i | q_i</code> 来与此段内容进行匹配，但如果表达式片段的类型与 <code>p_i | q_i</code> 的类型不一致，则该模式 <code>p_i | q_i</code> 被认为是格式错误的。</p>
+</li>
+<li>
+<p>为了遵从匹配模式的穷尽性检查，模式 <code>p | q</code> 被认为同时覆盖了 <code>p</code> 和 <code>q</code>。对于某些构造器 <code>c(x, ..)</code> 来说，此时应用分配律能使 <code>c(p | q, ..rest)</code> 与 <code>c(p, ..rest) | c(q, ..rest)</code> 覆盖相同的一组匹配值。这个规律可以递归地应用，直到不再有形式为 <code>p | q</code>  的嵌套模式。</p>
+</li>
+</ol>
+<p>注意这里的*“构造器”*这个用词，我们并没有特定提到它是元组结构模式，因为它本意是指任何能够生成类型的模式。这包括枚举变量、元组结构、具有命名字段的结构、数组、元组和切片。</p>
+<h3><a class="header" href="#动态语义" id="动态语义">动态语义</a></h3>
+<ol>
+<li>检查对象表达式(scrutinee expression) <code>e_s</code> 与深度为 <code>d</code> 的模式 <code>c(p | q, ..rest)</code>（这里<code>c</code>是某种构造器，<code>p</code> 和 <code>q</code> 是任意的模式，<code>rest</code> 是 <code>c</code>构造器的任意的可选因子）进行匹配的动态语义与此表达式与 <code>c(p, ..rest) | c(q, ..rest)</code> 进行匹配的语法定义相同。</li>
+</ol>
+<h3><a class="header" href="#无分解符模式的优先级" id="无分解符模式的优先级">无分解符模式的优先级</a></h3>
+<p>如本章其他部分所示，有几种类型的模式在语法上没有定义分界符，它们包括标识符模式、引用模式和 or模式。它们组合在一起时，or模式的优先级总是最低的。这允许我们为将来可能的类型特性保留语法空间，同时也可以减少歧义。例如，<code>x @ A(..) | B(..)</code> 将导致一个错误，即 <code>x</code> 不是在所有模式中都存在绑定关系； <code>&amp;A(x) | B(x)</code>将导致不同子模式中的 <code>x</code> 之的类型不匹配。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>请仔细参研<a href="expressions/match-expr.html">匹配表达式</a>中的 MatchExpression产生式，搞清楚匹配臂(MatchArm)的位置。</p>
+</div>
+<div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
+<p>文字叙述有些晦涩，译者举个例子：假如 <code>if let &amp;Some(y) = &amp;&amp;&amp;Some(3) {</code>，此时会首先剥掉等号两边的第一层 <code>&amp;</code>号，然后是 <code>Some(y)</code> 和 <code>&amp;&amp;Some(3)</code>匹配，此时发现是非引用模式和引用匹配上了，就再对 <code>&amp;&amp;Some(3)</code> 做重复解引用，解出 <code>Some(3)</code>，然后从外部转向内部，见到最后的变量 <code>y</code> 和检验对象 <code>3</code>，就更新 <code>y</code> 的默认绑定方式为 <code>ref</code>，所以 <code>y</code> 就匹配为 <code>&amp;3</code>；如果我们这个例子的变量 <code>y</code> 改为 <code>ref y</code>，不影响 <code>y</code> 的绑定效果；极端的情况 <code>if let &amp;Some(y) = &amp;&amp;&amp;Some(x) {</code>，如果 <code>x</code> 是可变的，那么此时 <code>y</code> 的绑定方式就是 <code>ref mut</code>，再进一步极端 <code>if let &amp;Some(ref y) = &amp;&amp;&amp;Some(x) {</code>，此时 <code>y</code> 的绑定方式仍是 <code>ref</code>。</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="expressions/await-expr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="type-system.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="expressions/await-expr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="type-system.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

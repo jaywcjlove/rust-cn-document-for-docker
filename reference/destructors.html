@@ -1,0 +1,527 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>析构函数 - Rust 参考手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 参考手册是 Rust 官方编写的 Rust 语言规范手册，由于语言还在快速迭代当中，所以本手册的内容还未固定下来。但这是一本学习和了解 Rust 全面的语言特性必不可少的书籍。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/reference.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li></ol></li><li class="chapter-item expanded "><a href="statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 推断型</a></li></ol></li><li class="chapter-item expanded "><a href="dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态尺寸类型(DST)</a></li><li class="chapter-item expanded "><a href="type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="destructors.html" class="active"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="linkage.html"><strong aria-hidden="true">14.</strong> 链接(linkage)</a></li><li class="chapter-item expanded "><a href="unsafety.html"><strong aria-hidden="true">15.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe-functions.html"><strong aria-hidden="true">15.1.</strong> 非安全函数</a></li><li class="chapter-item expanded "><a href="unsafe-blocks.html"><strong aria-hidden="true">15.2.</strong> 非安全代码块</a></li><li class="chapter-item expanded "><a href="behavior-considered-undefined.html"><strong aria-hidden="true">15.3.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="behavior-not-considered-unsafe.html"><strong aria-hidden="true">15.4.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="const_eval.html"><strong aria-hidden="true">16.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="abi.html"><strong aria-hidden="true">17.</strong> ABI</a></li><li class="chapter-item expanded "><a href="runtime.html"><strong aria-hidden="true">18.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="appendices.html"><strong aria-hidden="true">19.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macro-ambiguity.html"><strong aria-hidden="true">19.1.</strong> 宏定义规范</a></li><li class="chapter-item expanded "><a href="influences.html"><strong aria-hidden="true">19.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">19.3.</strong> 术语表</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 参考手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/reference-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#析构函数" id="析构函数">析构函数</a></h1>
+<blockquote>
+<p><a href="https://github.com/rust-lang/reference/blob/master/src/destructors.md">destructors.md</a><br />
+commit: b2d11240bd9a3a6dd34419d0b0ba74617b23d77e <br />
+本章译文最后维护日期：2020-11-16</p>
+</blockquote>
+<p>当一个<a href="glossary.html#initialized">初始化</a>了的<a href="variables.html">变量</a>或<a href="expressions.html#temporaries">临时变量</a>超出<a href="#drop-scopes">作用域</a>时，其<em>析构函数(destructor)<em>将运行，或者说它将被</em>销毁(dropped)</em>。此外<a href="expressions/operator-expr.html#assignment-expressions">赋值</a>操作也会运行其左操作数的析构函数（如果它已经初始化了）。如果变量已部分初始化了，则只销毁其已初始化的字段。</p>
+<p>类型 <code>T</code> 的析构函数由以下内容组成：</p>
+<ol>
+<li>如果有约束 <code>T: Drop</code>, 则调用 <a href="https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop"><code>&lt;T as std::ops::Drop&gt;::drop</code></a></li>
+<li>递归运行其所有字段的析构函数。
+<ul>
+<li><a href="types/struct.html">结构体(<code>struct</code>)</a>的字段按照声明顺序被销毁。</li>
+<li>活动<a href="types/enum.html">枚举变体</a>的字段按声明顺序销毁。</li>
+<li><a href="types/tuple.html">元组</a>中的字段按顺序销毁。</li>
+<li><a href="types/array.html">数组</a>或拥有所有权的<a href="types/slice.html">切片</a>的元素的销毁顺序是从第一个元素到最后一个元素。</li>
+<li><a href="types/closure.html">闭包</a>通过移动(move)语义捕获的变量的销毁顺序未明确指定。</li>
+<li><a href="types/trait-object.html">trait对象</a>的销毁会运行其非具名基类(underlying type)的析构函数。</li>
+<li>其他类型不会导致任何进一步的销毁动作发生。</li>
+</ul>
+</li>
+</ol>
+<p>如果析构函数必须手动运行，比如在实现自定义的智能指针时，可以使用标准库函数 <a href="https://doc.rust-lang.org/std/ptr/fn.drop_in_place.html"><code>std::ptr::drop_in_place</code></a>。</p>
+<p>举些（析构函数的）例子：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct PrintOnDrop(&amp;'static str);
+
+impl Drop for PrintOnDrop {
+    fn drop(&amp;mut self) {
+        println!(&quot;{}&quot;, self.0);
+    }
+}
+
+let mut overwritten = PrintOnDrop(&quot;当覆写时执行销毁&quot;);
+overwritten = PrintOnDrop(&quot;当作用域结束时执行销毁&quot;);
+
+let tuple = (PrintOnDrop(&quot;Tuple first&quot;), PrintOnDrop(&quot;Tuple second&quot;));
+
+let moved;
+// 没有析构函数在赋值时运行
+moved = PrintOnDrop(&quot;Drops when moved&quot;);
+// 这里执行销毁，但随后变量进入未初始化状态
+moved;
+
+// 未初始化不会被销毁
+let uninitialized: PrintOnDrop;
+
+// 在部分移动之后，后续销毁动作只销毁剩余字段。
+let mut partial_move = (PrintOnDrop(&quot;first&quot;), PrintOnDrop(&quot;forgotten&quot;));
+// 执行部分移出，只留下 `partial_move.0` 处于初始化状态
+core::mem::forget(partial_move.1);
+// 当 partial_move 的作用域结束时, 这里就只有第一个字段被销毁。
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#销毁作用域" id="销毁作用域">销毁作用域</a></h2>
+<p>每个变量或临时变量都与一个<em>销毁作用域(drop scope)</em><sup class="footnote-reference"><a href="#译注1">1</a></sup>相关联。当控制流离开一个销毁作用域时，与该作用域关联的所有变量都将按照其声明（对变量而言）或创建（对临时变量而言）的相反顺序销毁。</p>
+<p>销毁作用域是在将 <a href="expressions/loop-expr.html#iterator-loops"><code>for</code></a>、<a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a> 和 <a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a> 这些表达式替换为等效的 <a href="expressions/match-expr.html"><code>match</code></a>表达式之后确定的。在确定销毁作用域这事儿上，对重载操作符与内置操作符不做区分<sup class="footnote-reference"><a href="#译注2">2</a></sup>，匹配模式的变量<a href="patterns.html#binding-modes">绑定方式(binding modes)</a>也不去考虑。</p>
+<p>给定一个函数或闭包，存在以下的销毁作用域：</p>
+<ul>
+<li>整个函数</li>
+<li>每个<a href="statements.html">语句</a></li>
+<li>每个<a href="expressions.html">表达式</a></li>
+<li>每个块，包括函数体
+<ul>
+<li>当在<a href="expressions/block-expr.html">块表达式</a>上时，整个块和整个块表达式的销毁作用域是相同的</li>
+</ul>
+</li>
+<li>匹配(<code>match</code>)表达式的每条匹配臂(arm)</li>
+</ul>
+<p>销毁作用域相互嵌套如规则下。当同时离开多个作用域时，比如从函数返回时，变量会从内层的向层依次销毁。</p>
+<ul>
+<li>整个函数作用域是最外层的作用域。</li>
+<li>函数体块包含在整个函数作用域内。</li>
+<li>表达式语句中的表达式的父作用域是该语句的作用域。</li>
+<li><a href="statements.html#let-statements"><code>let</code>语句</a>的初始化器(initializer)的父作用域是 <code>let</code>语句的作用域。</li>
+<li>语句作用域的父作用域是包含该语句的块作用域。</li>
+<li>匹配守卫(<code>match</code> guard)表达式的父作用域是该守卫所在的匹配臂的作用域。</li>
+<li>在匹配表达式(<code>match</code> expression)里的 <code>=&gt;</code> 之后的表达式的父作用域是此表达式对应的匹配臂所在的那个作用域。</li>
+<li>匹配臂的作用域的父作用域是它所在的匹配表达式(<code>match</code> expression)的作用域。</li>
+<li>所有其他作用域的父作用域都是直接封闭该表达式的作用域。</li>
+</ul>
+<h3><a class="header" href="#函数参数的作用域" id="函数参数的作用域">函数参数的作用域</a></h3>
+<p>所有函数参数都在整个函数体的作用域内有效，因此在对函数求值时，它们是最后被销毁的。实参会在其内部值被形参的模式绑定之后销毁。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct PrintOnDrop(&amp;'static str);
+</span><span class="boring">impl Drop for PrintOnDrop {
+</span><span class="boring">    fn drop(&amp;mut self) {
+</span><span class="boring">        println!(&quot;drop({})&quot;, self.0);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>// 先销毁第二个参数, 接下来是 `y`, 然后是第一个参数r, 最后是 `x`
+fn patterns_in_parameters(
+    (x, _): (PrintOnDrop, PrintOnDrop),
+    (_, y): (PrintOnDrop, PrintOnDrop),
+) {}
+
+// 销毁顺序是 3 2 0 1
+patterns_in_parameters(
+    (PrintOnDrop(&quot;0&quot;), PrintOnDrop(&quot;1&quot;)),
+    (PrintOnDrop(&quot;2&quot;), PrintOnDrop(&quot;3&quot;)),
+);
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#本地变量的作用域" id="本地变量的作用域">本地变量的作用域</a></h3>
+<p>在 <code>let</code>语句中声明的局部变量与包含此 <code>let</code>语句的块作用域相关联。在匹配(<code>match</code>)表达式中声明的局部变量与声明它们的匹配(<code>match</code>)臂的匹配臂作用域相关联。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct PrintOnDrop(&amp;'static str);
+</span><span class="boring">impl Drop for PrintOnDrop {
+</span><span class="boring">    fn drop(&amp;mut self) {
+</span><span class="boring">        println!(&quot;drop({})&quot;, self.0);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>let declared_first = PrintOnDrop(&quot;在外层作用域内最后销毁&quot;);
+{
+    let declared_in_block = PrintOnDrop(&quot;在内层作用域内销毁&quot;);
+}
+let declared_last = PrintOnDrop(&quot;在外层作用域内最先销毁&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果在一个匹配(<code>match</code>)表达式的同一个匹配臂中使用了多个模式，则毁顺序不确定。（译者注：这里译者不确定后半句翻译是否准确，这里给出原文：then an unspecified pattern will be used to determine the drop order.）</p>
+<h3><a class="header" href="#临时作用域" id="临时作用域">临时作用域</a></h3>
+<p>表达式的<em>临时作用域</em>用于该表达在位置上下文中求出的结果被保存进的那个临时变量的作用域。有些情况下，此表达式求出的结果会被<a href="destructors.html#constant-promotion">提升</a>，则此表达式不存在临时作用域。<sup class="footnote-reference"><a href="#译注3">3</a></sup></p>
+<p>除了<a href="#temporary-lifetime-extension">生存期扩展</a>之外，表达式的临时作用域是包含该表达式的最小作用域，它适用于以下情况之一:</p>
+<ul>
+<li>整个函数体。</li>
+<li>一条语句。</li>
+<li><a href="expressions/if-expr.html#if-expressions"><code>if</code></a>表达式、<a href="expressions/loop-expr.html#predicate-loops"><code>while</code></a>表达式 或 <a href="expressions/loop-expr.html#infinite-loops"><code>loop</code></a>表达式这三种表达式的代码体。</li>
+<li><code>if</code>表达式的 <code>else</code>块。</li>
+<li><code>if</code>表达式的条件表达式，<code>while</code>表达式的条件表达式，或匹配表达式中的匹配(<code>match</code>)守卫。</li>
+<li>匹配臂上的表达式。</li>
+<li><a href="expressions/operator-expr.html#lazy-boolean-operators">惰性布尔表达式</a>的第二操作数。</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>：</p>
+<p>在函数体的最终表达式(final expression)中创建的临时变量会在任何具名变量销毁<em>之后</em>销毁，因为这里没有更小的封闭它的临时作用域。</p>
+<p>匹配表达式的<a href="glossary.html#scrutinee">检验对象</a>表达式本身不是一个临时作用域（，但它内部可以包含临时作用域），因此可以在匹配(<code>match</code>)表达式之后销毁检验对象表达式中的临时作用域。例如，<code>match 1 { ref mut z =&gt; z };</code> 中的 <code>1</code> 所在的临时变量一直存活到此语句结束。</p>
+</blockquote>
+<p>一些示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct PrintOnDrop(&amp;'static str);
+</span><span class="boring">impl Drop for PrintOnDrop {
+</span><span class="boring">    fn drop(&amp;mut self) {
+</span><span class="boring">        println!(&quot;drop({})&quot;, self.0);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>let local_var = PrintOnDrop(&quot;local var&quot;);
+
+// 在条件表达式执行后立即销毁
+if PrintOnDrop(&quot;If condition&quot;).0 == &quot;If condition&quot; {
+    // 在此块的末尾处销毁
+    PrintOnDrop(&quot;If body&quot;).0
+} else {
+    unreachable!()
+};
+
+// 在此条语句的末尾处销毁
+(PrintOnDrop(&quot;first operand&quot;).0 == &quot;&quot;
+// 在 ) 处销毁
+|| PrintOnDrop(&quot;second operand&quot;).0 == &quot;&quot;)
+// 在此表达式的末尾处销毁
+|| PrintOnDrop(&quot;third operand&quot;).0 == &quot;&quot;;
+
+// 在函数末尾处，局部变量之后销毁之后销毁
+// 将下面这段更改为一个包含返回(return)表达式的语句将使临时变量在本地变量之前被删除。
+// 如果把此临时变量绑定到一个变量，然后返回这个变量，也会先删除这个临时变量
+match PrintOnDrop(&quot;Matched value in final expression&quot;) {
+    // 在条件表达式执行后立即销毁
+    _ if PrintOnDrop(&quot;guard condition&quot;).0 == &quot;&quot; =&gt; (),
+    _ =&gt; (),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#操作数" id="操作数">操作数</a></h3>
+<p>在同一表达式中，在对其他操作数求值时，也会创建临时变量来将已求值的操作数的结果保存起来。临时变量与该操作数所属的表达式的作用域相关联。因为一旦表达式求值，临时变量就被移走了，所以销毁它们没有任何效果和意义，除非整个表达式的某一操作数出现异常，导致表达式求值失败，或提前返回，或触发了 panic。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct PrintOnDrop(&amp;'static str);
+</span><span class="boring">impl Drop for PrintOnDrop {
+</span><span class="boring">    fn drop(&amp;mut self) {
+</span><span class="boring">        println!(&quot;drop({})&quot;, self.0);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>loop {
+    // 元组表达式未结束求值就提前返回了，所以其操作数按声明的反序销毁
+    (
+        PrintOnDrop(&quot;Outer tuple first&quot;),
+        PrintOnDrop(&quot;Outer tuple second&quot;),
+        (
+            PrintOnDrop(&quot;Inner tuple first&quot;),
+            PrintOnDrop(&quot;Inner tuple second&quot;),
+            break,
+        ),
+        PrintOnDrop(&quot;Never created&quot;),
+    );
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#常量提升" id="常量提升">常量提升</a></h3>
+<p>如果可以通过借用的方式将某一值表达式写入常量，并且还能通过解引用此借用的方式来解出原始写入的表达式，并且如果这种做法也不更改运行时行为，那 Rust 会将值表达式提升到静态(<code>'static</code>) slot 作用域内。也就是说，提升的表达式可以在编译时求值，这求得的值不具备<a href="interior-mutability.html">内部可变性</a>或不包含<a href="destructors.html">析构函数</a>（。这些属性是根据可能的值来确定的，例如 <code>&amp;None</code> 的类型总是 <code>&amp;'static Option&lt;_&gt;</code>，因为 <code>&amp;None</code> 的值是唯一确定的）。</p>
+<h3><a class="header" href="#临时生存期扩展" id="临时生存期扩展">临时生存期扩展</a></h3>
+<blockquote>
+<p><strong>注意</strong>：临时生存期扩展的确切规则可能还会改变。这里只描述了当前的行为表现。</p>
+</blockquote>
+<p><code>let</code>语句中表达式的临时作用域有时会<em>扩展</em>到包含此 <code>let</code>语句的块作用域内。根据某些句法规则，当通常的临时作用域太小时，就会这样做。例如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = &amp;mut 0;
+// 通常上面存储0的临时变量（或者临时位置）到这里就会被丢弃，但这里是一直存在到块的末尾。
+println!(&quot;{}&quot;, x);
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果一个借用、解引用、字段或元组索引表达式有一个扩展的临时作用域，那么它们的操作数也会同样扩展。如果索引表达式有扩展的临时作用域，那么被索引的表达式也会一并扩展。</p>
+<h4><a class="header" href="#基于模式的扩展" id="基于模式的扩展">基于模式的扩展</a></h4>
+<p>*扩展临时作用域的模式(extending pattern)*是下面任一：</p>
+<ul>
+<li>绑定方式为引用或可变引用的<a href="patterns.html#identifier-patterns">标识符模式</a>。</li>
+<li><a href="patterns.html#struct-patterns">结构体(<code>struct</code>)模式</a>、<a href="patterns.html#tuple-patterns">元组模式</a>、<a href="patterns.html#tuple-struct-patterns">元组结构体模式</a>或<a href="patterns.html#slice-patterns">切片模式</a>，其中它们至少有一个直接子模式是扩展临时作用域的模式。</li>
+</ul>
+<p>所以 <code>ref x</code>、<code>V(ref x)</code> 和 <code>[ref x, y]</code> 都是扩展临时作用域的模式，但是  <code>x</code>、<code>&amp;ref x</code> 和 <code>&amp;(ref x,)</code> 不是。</p>
+<p>如果 <code>let</code>语句中的模式是扩展临时作用域的模式，那么初始化器表达式中的临时作用域将被扩展。</p>
+<h4><a class="header" href="#基于表达式的扩展" id="基于表达式的扩展">基于表达式的扩展</a></h4>
+<p>对于带有初始化器的 let语句来说，*扩展临时作用域的表达式(extending expression)*是以下表达式之一：</p>
+<ul>
+<li>初始化表达式(initializer expression)。</li>
+<li>扩展临时作用域的<a href="expressions/operator-expr.html#borrow-operators">借用表达式</a>的操作数。</li>
+<li>扩展临时作用域的<a href="expressions/array-expr.html#array-expressions">数组</a>、<a href="expressions/operator-expr.html#type-cast-expressions">强制转换(cast)</a>、<a href="expressions/struct-expr.html">花括号括起来的结构体</a>或<a href="expressions/tuple-expr.html#tuple-expressions">元组</a>表达式的操作数。</li>
+<li>任何扩展临时作用域的<a href="expressions/block-expr.html">块表达式</a>的最终表达式(final expression);</li>
+</ul>
+<p>因此，在 <code>&amp;mut 0</code>、<code>(&amp;1, &amp;mut 2)</code> 和 <code>Some { 0: &amp;mut 3 }</code> 中的借用表达式都是扩展临时作用域的表达式。在 <code>&amp;0 + &amp;1</code> 和一些 <code>Some(&amp;mut 0)</code> 中的借用不是：它们在句法上是函数调用表达式。</p>
+<p>任何扩展了临时作用域的借用表达式的操作数的临时作用域都随此表达式的临时作用域的扩展而扩展。</p>
+<h4><a class="header" href="#示例" id="示例">示例</a></h4>
+<p>这是一些带有扩展的临时作用域的表达式：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">fn temp() {}
+</span><span class="boring">trait Use { fn use_temp(&amp;self) -&gt; &amp;Self { self } }
+</span><span class="boring">impl Use for () {}
+</span>// 在这些情况下，存储 `temp()` 结果的临时变量与x在同一个作用域中。
+let x = &amp;temp();
+let x = &amp;temp() as &amp;dyn Send;
+let x = (&amp;*&amp;temp(),);
+let x = { [Some { 0: &amp;temp(), }] };
+let ref x = temp();
+let ref x = *&amp;temp();
+<span class="boring">x;
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>下面是一些表达式没有扩展临时作用域的例子：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">fn temp() {}
+</span><span class="boring">trait Use { fn use_temp(&amp;self) -&gt; &amp;Self { self } }
+</span><span class="boring">impl Use for () {}
+</span>// 在这些情况下，存储 `temp()` 结果的临时变量只存活到 let语句结束。
+
+let x = Some(&amp;temp());         // ERROR
+let x = (&amp;temp()).use_temp();  // ERROR
+<span class="boring">x;
+</span><span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#阻断运行析构函数" id="阻断运行析构函数">阻断运行析构函数</a></h2>
+<p>在 Rust 中，即便类型不是 <code>'static</code>，禁止运行析构函数也是允许的，也是安全的。<a href="https://doc.rust-lang.org/std/mem/struct.ManuallyDrop.html"><code>std::mem::ManuallyDrop</code></a> 提供了一个包装器(wrapper)来防止变量或字段被自动销毁。</p>
+<div class="footnote-definition" id="译注1"><sup class="footnote-definition-label">1</sup>
+<p>后文有时也直接简称为作用域。</p>
+</div>
+<div class="footnote-definition" id="译注2"><sup class="footnote-definition-label">2</sup>
+<p>这里说这句是因为操作符的操作数也涉及到销毁作用域范围的确定。</p>
+</div>
+<div class="footnote-definition" id="译注3"><sup class="footnote-definition-label">3</sup>
+<p>对这句话，这里译者按自己的理解再翻译一遍：一个表达式在位置表达式上使用时会被求值，如果此时没有具名变量和此值绑定，那就会先被保存进一个临时变量里，临时作用域就是伴随这此临时变量而生成。此作用域通常在此表达式所在的语句结束时结束，但如果求出的值被通过借用绑定给具名变量，此作用域会扩展到此具名变量的作用域（后面<a href="#temporary-lifetime-extension">生存期扩展</a>会讲到）。如果求出的值比较特殊，这个作用域还会提升到全局作用域，这就是所谓的<a href="destructors.html#constant-promotion">常量提升</a>。</p>
+</div>
+<!-- 2020-11-12-->
+<!-- checked -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="type-coercions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="lifetime-elision.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="type-coercions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="lifetime-elision.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

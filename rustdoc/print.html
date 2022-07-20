@@ -1,0 +1,2251 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>rustdoc 手册 中文版</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rustdoc 手册详细介绍了如何使用 rustdoc 命令或 cargo doc 来生成漂亮的 crate 文档，发布 crate 前很有必要熟悉 rustdoc 的相关内容。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what-is-rustdoc.html"><strong aria-hidden="true">1.</strong> 什么是 rustdoc?</a></li><li class="chapter-item expanded "><a href="how-to-read-rustdoc.html"><strong aria-hidden="true">2.</strong> 如何阅读 rustdoc 的输出</a></li><li class="chapter-item expanded "><a href="how-to-write-documentation.html"><strong aria-hidden="true">3.</strong> 如何写文档</a></li><li class="chapter-item expanded "><a href="what-to-include.html"><strong aria-hidden="true">4.</strong> 什么被包含（和排除）</a></li><li class="chapter-item expanded "><a href="command-line-arguments.html"><strong aria-hidden="true">5.</strong> 命令行参数</a></li><li class="chapter-item expanded "><a href="the-doc-attribute.html"><strong aria-hidden="true">6.</strong> #[doc] 属性</a></li><li class="chapter-item expanded "><a href="documentation-tests.html"><strong aria-hidden="true">7.</strong> 文档测试</a></li><li class="chapter-item expanded "><a href="linking-to-items-by-name.html"><strong aria-hidden="true">8.</strong> 通过 items 名称链接</a></li><li class="chapter-item expanded "><a href="lints.html"><strong aria-hidden="true">9.</strong> Lints</a></li><li class="chapter-item expanded "><a href="advanced-features.html"><strong aria-hidden="true">10.</strong> 高级特性</a></li><li class="chapter-item expanded "><a href="unstable-features.html"><strong aria-hidden="true">11.</strong> 不稳定特性</a></li><li class="chapter-item expanded "><a href="website-features.html"><strong aria-hidden="true">12.</strong> Website features</a></li><li class="chapter-item expanded "><a href="passes.html"><strong aria-hidden="true">13.</strong> Passes</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">14.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rustdoc 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/rustdoc-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#什么是-rustdoc" id="什么是-rustdoc">什么是 rustdoc？</a></h1>
+<blockquote>
+<p>中文翻译注（The Chinese translation of <a href="https://doc.rust-lang.org/rustdoc/">The rustdoc Book</a>）：</p>
+<ul>
+<li>👉 查看更多 <a href="https://rustwiki.org/" style="color:#97ca00;font-weight:bold;">Rust 官方文档中英文双语教程</a>，包括双语版<a href="https://rustwiki.org/zh-CN/book/">《Rust 程序设计语言》</a>（出版书名为《Rust 权威指南》），本站还提供了 <a href="https://rustwiki.org/zh-CN/std/">Rust 标准库中文版</a>。</li>
+<li>《rustdoc 手册》（<em>rustdoc Book</em> 中文版）翻译自 <a href="https://doc.rust-lang.org/rustdoc/"><em>rustdoc Book</em></a>，内容已全部翻译完成，查看此书的 <a href="https://github.com/rust-lang-cn/rustdoc-cn">Github 翻译项目和源码</a>。</li>
+<li>本文版最后更新时间：2022-02-04。</li>
+<li>本书主要译者：<a href="https://github.com/wendajiang"><em>David</em></a>，<a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a> 成员。</li>
+<li><a href="https://rustwiki.org/en/rustdoc/" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，<strong>英文版每天都会自动同步一次官方的最新版本</strong>。</li>
+<li>若发现当前页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开该页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！</li>
+</ul>
+</blockquote>
+<p>标准 Rust 版本包含了名为 <code>rustdoc</code> 的工具。它的作用是为 Rust 项目生成文档，Rustdoc 接受一个 crate 根目录或者一个 markdown 文件作为参数，生成 HTML，CSS 和 JavaScript 文件。</p>
+<h2><a class="header" href="#基本使用" id="基本使用">基本使用</a></h2>
+<p>让我们试用一下，使用 Cargo 创建一个新项目</p>
+<pre><code class="language-bash">$ cargo new docs --lib
+$ cd docs
+</code></pre>
+<p>在 <code>src/lib.rs</code> 中，Cargo 生成了一些事例代码，删掉使用下面的代码代替</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// foo is a function
+fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>然后我们运行 <code>rustdoc</code>。我们可以在 crate 根目录执行下面的命令</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs
+</code></pre>
+<p>这会创建一个新目录 <code>doc</code>，其中是一个网站结构。在我们的例子中，主页面是 <code>doc/lib/index.html</code>。如果你使用浏览器打开，可以在 tab 栏看到 &quot;Crate lib&quot;，页面没有内容。</p>
+<h2><a class="header" href="#配置-rustdoc" id="配置-rustdoc">配置 rustdoc</a></h2>
+<p>现在有两个问题：第一，为什么我们的包名字是 &quot;lib&quot;？第二，为什么没有任何内容？</p>
+<p>第一个问题的原因是因为 <code>rustdoc</code> 试图更好用，像 <code>rustc</code> 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name docs
+</code></pre>
+<p>现在， <code>doc/docs/index.html</code> 文件生成，页面名称为 &quot;Crate docs&quot;。</p>
+<p>对于第二个问题，因为我们的函数 <code>foo</code> 不是公共的；<code>rustdoc</code> 默认只会为公共函数生成文档，如果我们将代码修改为</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// foo is a function
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>然后重新运行 <code>rustdoc</code>:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name docs
+</code></pre>
+<p>现在我们生成了文档，打开 <code>doc/docs/index.html</code>，显示了 <code>foo</code> 函数的连接页面，文件位置是 <code>doc/docs/fn.foo.html</code>。在函数的页面上，你可以看到我们写的注释 &quot;foo is a function&quot;。</p>
+<h2><a class="header" href="#通过-cargo-使用-rustdoc" id="通过-cargo-使用-rustdoc">通过 Cargo 使用 rustdoc</a></h2>
+<p>Cargo 整合了 <code>rustdoc</code>，使得生成文档更容易。代替 <code>rustdoc</code> 命令，我们可以这样做：</p>
+<pre><code class="language-bash">$ cargo doc
+</code></pre>
+<p>实际上，会这样调用 <code>rustdoc</code>:</p>
+<pre><code class="language-bash">$ rustdoc --crate-name docs src/lib.rs -o &lt;path&gt;/docs/target/doc -L
+dependency=&lt;path&gt;/docs/target/debug/deps
+</code></pre>
+<p>你可以使用 <code>cargo doc --verbose</code> 看到这个过程。</p>
+<p>它会自动生成正确的 crate 名称 <code>--crate-name</code>，同时指向 <code>src/lib.rs</code>。但是其他的参数表示什么呢？</p>
+<ul>
+<li><code>-o</code> 控制文档的输出。不使用顶层的 <code>doc</code> 目录，Cargo 会把生成的文档生成在 <code>target</code>。这是 Cargo 项目的惯用生成文件的位置。</li>
+<li><code>-L</code> 帮助 rustdoc 找到代码的依赖，如果我们的项目有依赖，也会生成依赖的文档。</li>
+</ul>
+<h2><a class="header" href="#outer-和-inner-文档" id="outer-和-inner-文档">Outer 和 inner 文档</a></h2>
+<p><code>///</code> 语法用来对下面一个 item 生成文档，所以称为 outer 文档。还有语法<code>//!</code>，用来生成 item 内部的文档，也叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要这样用 <code>//!</code>：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! This is my first rust crate
+<span class="boring">}
+</span></code></pre></pre>
+<p>当这样用的时候，会生成 item 内部的文档，也就是 crate 自己。</p>
+<p>为了获取更多 <code>//!</code> 的信息，请看 <a href="https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#commenting-contained-items">the Book</a></p>
+<h2><a class="header" href="#利用单独的-markdown-文件" id="利用单独的-markdown-文件">利用单独的 Markdown 文件</a></h2>
+<p><code>rustdoc</code> 可以为单独的 markdown 文件生成 HTML。让我们尝试一下，创建<code>README.md</code>，并输入如下内容</p>
+<pre><code class="language-text"># Docs
+
+This is a project to test out `rustdoc`.
+
+[Here is a link!](https://www.rust-lang.org)
+
+## Example
+
+```rust
+fn foo() -&gt; i32 {
+    1 + 1
+}
+```
+</code></pre>
+<p>然后运行 <code>rustdoc</code> 命令：</p>
+<pre><code class="language-bash">$ rustdoc README.md
+</code></pre>
+<p>你能发现生成的 <code>docs/doc/README.html</code> 文件。</p>
+<p>不过现在 Cargo 不能这样操作 markdown 文件。</p>
+<h2><a class="header" href="#总结" id="总结">总结</a></h2>
+<p>本节涵盖了 <code>rustdoc</code> 的基本使用方法。本书的剩余部分会展示 <code>rustdoc</code> 所有的可选功能，以及如何使用它们。</p>
+<h1><a class="header" href="#如何阅读-rustdoc-的输出" id="如何阅读-rustdoc-的输出">如何阅读 rustdoc 的输出</a></h1>
+<p>Rustdoc 的 HTML 文件包含了有用的跳转入口，便于用户跳转理解你的代码。本章会覆盖入口的主要特性，同时也是良好的文档作者和用户的开端。</p>
+<h2><a class="header" href="#结构" id="结构">结构</a></h2>
+<p><code>rustdoc</code> 的输出包含三部分，左侧是整个页面的快速导航，展示了当前条目的上下文信息。页面的右侧大版面由顶部的搜索和下面的文档页面主体组成。</p>
+<h2><a class="header" href="#item-文档" id="item-文档">Item 文档</a></h2>
+<p>屏幕的主要区域展示的是 item 的文档。</p>
+<p>顶端是一览信息：</p>
+<ul>
+<li>item 的类型和名称，比如 &quot;Struct <code>std::time::Duration</code>&quot;；</li>
+<li>复制 crate 路径的按钮；</li>
+<li>展开和收起 item 顶层文档的按钮 (<code>[+]</code> or <code>[-]</code>)；</li>
+<li>如果 <a href="the-doc-attribute.html#html_no_source">configured</a>, 并且可以展示（如果文档创建通过 <code>cargo doc --no-deps</code> 源码可能是无效的），会有源码的连接 (<code>[src]</code>)；</li>
+<li>如果 item 是标准库，会展示 item 稳定的版本。</li>
+</ul>
+<p>下面是 item 的主要文档，包括函数签名，Rust 类型的 fields 列表或者 variants。最后页面列出关联的函数以及 trait 实现，包括 <code>rustdoc</code> 知道的自动和空白实现。</p>
+<h3><a class="header" href="#导航" id="导航">导航</a></h3>
+<p>subheadings，variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当悬停或给定键盘焦点时，印刷符号 &quot;§&quot; 出现在带有锚点的行旁边。</p>
+<h2><a class="header" href="#导航栏" id="导航栏">导航栏</a></h2>
+<p>比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。顶部，在当前 crate 名称和版本旁边或者当前 item 旁边展示 <a href="the-doc-attribute.html#html_logo_url">configurable logo</a>。</p>
+<h2><a class="header" href="#主题选择和搜索栏" id="主题选择和搜索栏">主题选择和搜索栏</a></h2>
+<p>当在支持 JavaScript 的浏览器中打开 <code>rustdoc</code> 的输出时，页面顶部会出现一个接口，左侧是主题选择（一个画笔图标），搜索栏，帮助提示和配置按钮。【译者注：主题选择已经在配置设置中】</p>
+<h3><a class="header" href="#主题选择" id="主题选择">主题选择</a></h3>
+<p>点击主题选择会列出可选主题，默认是 <code>ayu</code>, <code>light</code>, and <code>dark</code>。</p>
+<h3><a class="header" href="#搜索栏" id="搜索栏">搜索栏</a></h3>
+<p>在搜索栏输入内容，会模糊匹配搜索当前的文档</p>
+<p>默认搜索结果显示按照名称的结果，意味着模糊匹配 item 的名称，匹配的名称显示在左侧，如果有描述会显示在右侧，点击 item，你会跳转到对应的页面</p>
+<p>还有两种结果，按照参数搜索，展示函数参数中类型的匹配结果，按返回值搜索，展示函数返回值类型的搜索结构。这两种搜索结果在你不知道函数名称，但是知道你想要的类型时非常有用。</p>
+<p>当在搜索栏输入时，可以通过冒号前缀来限制搜索结果的类型（比如 <code>mod:</code>）</p>
+<h3><a class="header" href="#快捷键" id="快捷键">快捷键</a></h3>
+<p>按下 <code>S</code> 焦点会移动到搜索框，按下 <code>?</code> 会展示帮助界面，其中包括所有快捷键以及说明。按下 <code>T</code> 焦点移动到主题选择。【译者注：主题选择通过搜索栏的右侧 setting 按钮唤出】</p>
+<p>当焦点在搜索结果时，左右箭头可以切换搜索的 tab，上下箭头可以移动关注的搜索结果。按下回车键可以打开高亮的结果。</p>
+<p>当焦点在 item 文档时，加号和减号可以展开收起文档的小结。</p>
+<h1><a class="header" href="#如何写文档" id="如何写文档">如何写文档</a></h1>
+<p>好的文档并不自然。存在一些矛盾的目标使得写好文档很困难。即要求对领域很专业又要写出对新手很友好的文档。文档因此经常隐去一些细节，或者留给读者一些未解答的问题。</p>
+<p>Rust 文档有一些原则指导任何人来写文档，从而每个人都有机会来使用代码。</p>
+<p>本章不仅覆盖如何编写文档，还介绍了如何写出<strong>好</strong>文档。尽可能清晰完整非常重要。根据经验：你编写的文档越多你的 crate 越好。如果 item 是公共的，就应该有文档。</p>
+<h2><a class="header" href="#开始" id="开始">开始</a></h2>
+<p>编写 crate 文档首先应该从首页开始。例如 <a href="https://docs.rs/hashbrown/0.8.2/hashbrown/"><code>hashbrown</code></a> crate 级别的文档总结了这个 crate 的角色是什么，说明了使用的详细技术，以及为什么你需要这个 crate。</p>
+<p>在介绍了 crate 之后，首页给出使用 crate 的代码示例很重要。在代码例子中展示库如何使用，不要使用裁剪过的代码，
+使得用户可以直接复制粘贴就能运行。</p>
+<p><a href="https://docs.rs/futures/0.3.5/futures/"><code>futures</code></a> 使用内联注释逐行解释使用 <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>Future</code></a> 的复杂性，因为用户接触 rust 的 <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>Future</code></a> 的第一个例子可能就是这个。</p>
+<p><a href="https://docs.rs/backtrace/0.3.50/backtrace/"><code>backtrace</code></a> 文档描述了整个使用过程，说明了 <code>Cargo.toml</code> 文件应该如何修改，传递命令行参数给编译器，并展示了一个使用 backtrace 的例子。</p>
+<p>最后，首页会成为如何使用 crate 的综合参考，就像 <a href="https://docs.rs/regex/1.3.9/regex/"><code>regex</code></a>。在这个首页，所有的依赖被列出，边缘情况被列出，实际例子被列出。然后首页继续展示如何使用正则表达式，然后还列出了 crate 的特性。</p>
+<p>不要担心你的新 crate 与已经开发一段时间的 crate 比较。要是文档逐步完善，请逐步开始添加介绍，示例和特性。罗马不是一天建成的！</p>
+<p><code>lib.rs</code> 的第一行开始会是首页，它们与 rustdoc 其他部分不同，要以 <code>//!</code> 开始表明这是模块级别或者 crate 级别的文档。这是一个简单的例子：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! Fast and easy queue abstraction.
+//!
+//! Provides an abstraction over a queue.  When the abstraction is used
+//! there are these advantages:
+//! - Fast
+//! - [`Easy`]
+//!
+//! [`Easy`]: http://thatwaseasy.example.com
+
+/// This module makes it easy.
+pub mod easy {
+
+    /// Use the abstraction function to do this specific thing.
+    pub fn abstraction() {}
+
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>理想情况下，文档第一行是没有技术细节的句子，但是很好的描述了在 Rust 生态中的位置。
+阅读这行后，用户应该知道 crate 是否满足他们的需要。</p>
+<h2><a class="header" href="#文档组成" id="文档组成">文档组成</a></h2>
+<p>无论是 modules, structs, funtions, macros：代码的公共 API 都应该有文档。很少有人嫌弃文档太多！</p>
+<p>每个 item 的文档应该都以下面的结构构成：</p>
+<pre><code class="language-text">[short sentence explaining what it is]
+
+[more detailed explanation]
+
+[at least one code example that users can copy/paste to try it]
+
+[even more advanced explanations if necessary]
+</code></pre>
+<p>编写文档时，基本结构应该很容易遵循；你可能认为代码示例微不足道，但是它真的很重要，
+能帮助用户理解 item 是什么，如何使用，以及存在的目的是什么。</p>
+<p>让我们看一个来自 <a href="https://doc.rust-lang.org/stable/std/index.html">standard library</a> 的例子，
+<a href="https://doc.rust-lang.org/stable/std/env/fn.args.html"><code>std::env::args()</code></a> 函数：</p>
+<pre><code class="language-markdown">Returns the arguments which this program was started with (normally passed
+via the command line).
+
+The first element is traditionally the path of the executable, but it can be
+set to arbitrary text, and may not even exist. This means this property should
+not be relied upon for security purposes.
+
+On Unix systems shell usually expands unquoted arguments with glob patterns
+(such as `*` and `?`). On Windows this is not done, and such arguments are
+passed as-is.
+
+# Panics
+
+The returned iterator will panic during iteration if any argument to the
+process is not valid unicode. If this is not desired,
+use the [`args_os`] function instead.
+
+# Examples
+
+```
+use std::env;
+
+// Prints each argument on a separate line
+for argument in env::args() {
+    println!(&quot;{}&quot;, argument);
+}
+```
+
+[`args_os`]: ./fn.args_os.html
+</code></pre>
+<p>在第一个空行之间的所有内容都会被用于搜索和模块的简介。比如，上面的 <code>std::enve::args()</code> 函数就会在展示在 <a href="https://doc.rust-lang.org/stable/std/env/index.html#functions"><code>std::env</code></a> 模块文档中。将摘要保持在一行是良好习惯：简介是好文档的目标。</p>
+<p>因为类型系统很好定义了函数的参数和返回值类型，所以将其显式写入文档没有好处，尤其是 <code>rustdoc</code> 会自动在函数签名中添加指向类型的超链接。</p>
+<p>在上面的例子中，<code>Panics</code> 小节解释了代码何时可能会意外退出，可以帮助读者规避 panic。如果你知道代码的边缘情况，尽可能增加 panic 小节。</p>
+<p>如同你所看到的，它遵循了给出的结构建议：简短描述函数的作用，然后提供了更多信息以及最后提供了代码示例。</p>
+<h2><a class="header" href="#markdown" id="markdown">Markdown</a></h2>
+<p><code>rustdoc</code> 使用 <a href="https://commonmark.org/">CommonMark Markdown specification</a>。你可能会对它们的网站感兴趣：</p>
+<ul>
+<li><a href="https://commonmark.org/help/">CommonMark quick reference</a></li>
+<li><a href="https://spec.commonmark.org/current/">current spec</a></li>
+</ul>
+<p>补充了标准 CommonMark 语法， <code>rustdoc</code> 支持几种扩展：</p>
+<h3><a class="header" href="#strikethrough删除线" id="strikethrough删除线">Strikethrough（删除线）</a></h3>
+<p>文本可以通过两个波浪线来渲染删除线：</p>
+<pre><code class="language-text">An example of ~~strikethrough text~~.
+</code></pre>
+<p>这个例子会渲染成：</p>
+<blockquote>
+<p>An example of <del>strikethrough text</del>.</p>
+</blockquote>
+<p>这使用 <a href="https://github.github.com/gfm/#strikethrough-extension-">GitHub Strikethrough extension</a>。</p>
+<h3><a class="header" href="#footnotes角标" id="footnotes角标">Footnotes（角标）</a></h3>
+<p>角标会生成一个小号数字链接，点击数字链接会跳转到这个 item 的位置。角标标签类似与链接语法。例子如下：</p>
+<pre><code class="language-text">This is an example of a footnote[^note].
+
+[^note]: This text is the contents of the footnote, which will be rendered
+    towards the bottom.
+</code></pre>
+<p>这个例子会渲染成：</p>
+<blockquote>
+<p>This is an example of a footnote<sup class="footnote-reference"><a href="#note">1</a></sup>.</p>
+<div class="footnote-definition" id="note"><sup class="footnote-definition-label">1</sup>
+<blockquote>
+<pre><code>This text is the contents of the footnote, which will be rendered
+</code></pre>
+</blockquote>
+<pre><code>towards the bottom.
+</code></pre>
+</div>
+</blockquote>
+<p>角标数字会根据角标位置自动生成。</p>
+<h3><a class="header" href="#tables表格" id="tables表格">Tables（表格）</a></h3>
+<p>表格可以可以通过竖线和短横线来表示表格的行和列。被转换为符合 HTML 形状的表格。比如：</p>
+<pre><code class="language-text">| Header1 | Header2 |
+|---------|---------|
+| abc     | def     |
+</code></pre>
+<p>这个例子会被渲染成类似这样：</p>
+<blockquote>
+<table><thead><tr><th>Header1</th><th>Header2</th></tr></thead><tbody>
+<tr><td>abc</td><td>def</td></tr>
+</tbody></table>
+</blockquote>
+<p>阅读 <a href="https://github.github.com/gfm/#tables-extension-">GitHub Tables extension</a> 的说明获取更多细节。</p>
+<h3><a class="header" href="#task-lists" id="task-lists">Task lists</a></h3>
+<p>任务列表可以用于检查需要完成的条目。
+比如：</p>
+<pre><code class="language-md">- [x] Complete task
+- [ ] Incomplete task
+</code></pre>
+<p>会被渲染成：</p>
+<blockquote>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+Complete task</li>
+<li><input disabled="" type="checkbox"/>
+Incomplete task</li>
+</ul>
+</blockquote>
+<p>阅读 <a href="https://github.github.com/gfm/#task-list-items-extension-">task list extension</a> 获得更多细节。</p>
+<h3><a class="header" href="#smart-punctuation标点符号" id="smart-punctuation标点符号">Smart punctuation（标点符号）</a></h3>
+<p>一些 ASCII 符号可以自动转换为更好看的 Unicode 符号：</p>
+<table><thead><tr><th>ASCII sequence</th><th>Unicode</th></tr></thead><tbody>
+<tr><td><code>--</code></td><td>–</td></tr>
+<tr><td><code>---</code></td><td>—</td></tr>
+<tr><td><code>...</code></td><td>…</td></tr>
+<tr><td><code>&quot;</code></td><td>“ or ”, depending on context</td></tr>
+<tr><td><code>'</code></td><td>‘ or ’, depending on context</td></tr>
+</tbody></table>
+<p>所以，不需要手工输入这些 Unicode 符号！</p>
+<h1><a class="header" href="#什么包含和排除" id="什么包含和排除">什么包含（和排除）</a></h1>
+<p>说起来项目中的所有内容都需要有文档简单正确，但是我们如何才能做到，以及是否还有内容没有文档？</p>
+<p>在顶层的 <code>src/lib.rs</code> 或者你的二进制项目 <code>main.rs</code> 文件中，包含下面的属性：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(missing_docs)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>现在运行 <code>cargo doc</code>，检查输出，这是一个例子：</p>
+<pre><code class="language-text"> Documenting docdemo v0.1.0 (/Users/username/docdemo)
+warning: missing documentation for the crate
+ --&gt; src/main.rs:1:1
+  |
+1 | / #![warn(missing_docs)]
+2 | |
+3 | | fn main() {
+4 | |     println!(&quot;Hello, world!&quot;);
+5 | | }
+  | |_^
+  |
+note: the lint level is defined here
+ --&gt; src/main.rs:1:9
+  |
+1 | #![warn(missing_docs)]
+  |         ^^^^^^^^^^^^
+
+warning: 1 warning emitted
+
+    Finished dev [unoptimized + debuginfo] target(s) in 2.96s
+</code></pre>
+<p>作为一个库作者，加入 lint <code>#![deny(missing_docs)]</code> 是一个确保项目拥有良好文档的好方法，<code>#![warn(missing_docs)]</code> 是通向良好文档的好方法。除了文档，<code>#![deny(missing_doc_code_examples)]</code> 确保每个函数有一个使用示例。在我们上面的例子中，添加 crate 级别的 lint 来警告。</p>
+<p>下面的章节有更多 lints 的细节 <a href="lints.html">Lints</a>。</p>
+<h2><a class="header" href="#例子" id="例子">例子</a></h2>
+<p>当然这很简单，但是文档的力量之一是展示的代码易于理解，而不是生产级别。文档通常会忽略错误处理，因为例子需要排除一些不必要的内容保持简单。</p>
+<p><code>Async</code> 是一个好例子。为了执行 <code>async</code> 例子，一个 executor 是需要的，例子中通常会省略它，让用户自己将 <code>async</code> 代码放到自己的运行时。</p>
+<p>最好不要在例子中使用 <code>unwrap()</code>，并且如果错误处理使得例子难以理解应该被隐藏起来。</p>
+<pre><code class="language-text">/// Example
+/// ```rust
+/// let fourtytwo = &quot;42&quot;.parse::&lt;u32&gt;()?;
+/// println!(&quot;{} + 10 = {}&quot;, fourtytwo, fourtytwo+10);
+/// ```
+</code></pre>
+<p>当 rustdoc wrap 这些到 main 函数中，会编译错误因为 <code>ParseIntError</code> trait 没有实现。为了同时帮助读者和测试，这个例子还需要增加些额外代码：</p>
+<pre><code class="language-text">/// Example
+/// ```rust
+/// # main() -&gt; Result&lt;(), std::num::ParseIntError&gt; {
+/// let fortytwo = &quot;42&quot;.parse::&lt;u32&gt;()?;
+/// println!(&quot;{} + 10 = {}&quot;, fortytwo, fortytwo+10);
+/// #     Ok(())
+/// # }
+/// ```
+</code></pre>
+<p>这两个例子在文档页面是相同的，但是对你 crate 的使用者有一些额外的信息。更多的文档测试内容在接下来的 [文档测试] 章节中。</p>
+<h2><a class="header" href="#什么被排除" id="什么被排除">什么被排除</a></h2>
+<p>默认情况下，你的公共接口可能会默认包含在 rustdoc 输出中。<code>#[doc(hidden)]</code> 属性可以隐藏实现细节来鼓励本 crate 的惯用法。</p>
+<p>比如，一个内部的 <code>macro!</code> 使得 crate 更容易实现如果对用户暴露会使得用户困惑。一个内部的<code>Error</code>类型可能存在，并且 <code>impl</code> 细节应该被隐藏，如同 <a href="https://rust-lang.github.io/api-guidelines/documentation.html#rustdoc-does-not-show-unhelpful-implementation-details-c-hidden">API Guidelines</a> 中描述的一样。</p>
+<h2><a class="header" href="#自定义输出" id="自定义输出">自定义输出</a></h2>
+<p>传递一个自定义 css 文件给 <code>rustdoc</code> 定义文档的款式是可行的。</p>
+<pre><code class="language-bash">rustdoc --extend-css custom.css src/lib.rs
+</code></pre>
+<p>一个良好的例子就是使用这个特性来创建本书的暗黑主题。记住，暗黑主题也包含在点击画笔的输出中。使用可选参数可以很容易使用自定义主题 <code>.css</code> 文件：</p>
+<pre><code class="language-bash">rustdoc --theme awesome.css src/lib.rs
+</code></pre>
+<p>这是一个新主题 <a href="https://github.com/rust-lang/rust/blob/master/src/librustdoc/html/static/themes/ayu.css">Ayu</a> 的例子。</p>
+<h1><a class="header" href="#command-line-arguments" id="command-line-arguments">Command-line arguments</a></h1>
+<p>这里是可以传递给 <code>rustdoc</code> 的参数列表：</p>
+<h2><a class="header" href="#-h--help-help" id="-h--help-help"><code>-h</code>/<code>--help</code>: help</a></h2>
+<p>这样使用：</p>
+<pre><code class="language-bash">$ rustdoc -h
+$ rustdoc --help
+</code></pre>
+<p>这会展示 <code>rustdoc</code> 内置的帮助，包含了大量可用的命令行 flags。</p>
+<p>有些 flags 是未稳定的；这个页面只会只包好稳定的参数，<code>--help</code> 会包含所有的。</p>
+<h2><a class="header" href="#-v--version-version-information" id="-v--version-version-information"><code>-V</code>/<code>--version</code>: version information</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc -V
+$ rustdoc --version
+</code></pre>
+<p>This will show <code>rustdoc</code>'s version, which will look something
+like this:</p>
+<pre><code class="language-text">rustdoc 1.17.0 (56124baa9 2017-04-24)
+</code></pre>
+<h2><a class="header" href="#-v--verbose-more-verbose-output" id="-v--verbose-more-verbose-output"><code>-v</code>/<code>--verbose</code>: more verbose output</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc -v src/lib.rs
+$ rustdoc --verbose src/lib.rs
+</code></pre>
+<p>This enables &quot;verbose mode&quot;, which means that more information will be written
+to standard out. What is written depends on the other flags you've passed in.
+For example, with <code>--version</code>:</p>
+<pre><code class="language-text">$ rustdoc --verbose --version
+rustdoc 1.17.0 (56124baa9 2017-04-24)
+binary: rustdoc
+commit-hash: hash
+commit-date: date
+host: host-triple
+release: 1.17.0
+LLVM version: 3.9
+</code></pre>
+<h2><a class="header" href="#-o--out-dir-output-directory-path" id="-o--out-dir-output-directory-path"><code>-o</code>/<code>--out-dir</code>: output directory path</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -o target/doc
+$ rustdoc src/lib.rs --out-dir target/doc
+</code></pre>
+<p>By default, <code>rustdoc</code>'s output appears in a directory named <code>doc</code> in
+the current working directory. With this flag, it will place all output
+into the directory you specify.</p>
+<h2><a class="header" href="#--crate-name-controlling-the-name-of-the-crate" id="--crate-name-controlling-the-name-of-the-crate"><code>--crate-name</code>: controlling the name of the crate</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name mycrate
+</code></pre>
+<p>By default, <code>rustdoc</code> assumes that the name of your crate is the same name
+as the <code>.rs</code> file. <code>--crate-name</code> lets you override this assumption with
+whatever name you choose.</p>
+<h2><a class="header" href="#--document-private-items-show-items-that-are-not-public" id="--document-private-items-show-items-that-are-not-public"><code>--document-private-items</code>: Show items that are not public</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --document-private-items
+</code></pre>
+<p>By default, <code>rustdoc</code> only documents items that are publicly reachable.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn public() {} // this item is public and will be documented
+mod private { // this item is private and will not be documented
+    pub fn unreachable() {} // this item is public, but unreachable, so it will not be documented
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>--document-private-items</code> documents all items, even if they're not public.</p>
+<h2><a class="header" href="#-l--library-path-where-to-look-for-dependencies" id="-l--library-path-where-to-look-for-dependencies"><code>-L</code>/<code>--library-path</code>: where to look for dependencies</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -L target/debug/deps
+$ rustdoc src/lib.rs --library-path target/debug/deps
+</code></pre>
+<p>If your crate has dependencies, <code>rustdoc</code> needs to know where to find them.
+Passing <code>--library-path</code> gives <code>rustdoc</code> a list of places to look for these
+dependencies.</p>
+<p>This flag takes any number of directories as its argument, and will use all of
+them when searching.</p>
+<h2><a class="header" href="#--cfg-passing-configuration-flags" id="--cfg-passing-configuration-flags"><code>--cfg</code>: passing configuration flags</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --cfg feature=&quot;foo&quot;
+</code></pre>
+<p>This flag accepts the same values as <code>rustc --cfg</code>, and uses it to configure
+compilation. The example above uses <code>feature</code>, but any of the <code>cfg</code> values
+are acceptable.</p>
+<h2><a class="header" href="#--extern-specify-a-dependencys-location" id="--extern-specify-a-dependencys-location"><code>--extern</code>: specify a dependency's location</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --extern lazy-static=/path/to/lazy-static
+</code></pre>
+<p>Similar to <code>--library-path</code>, <code>--extern</code> is about specifying the location
+of a dependency. <code>--library-path</code> provides directories to search in, <code>--extern</code>
+instead lets you specify exactly which dependency is located where.</p>
+<h2><a class="header" href="#-c--codegen-pass-codegen-options-to-rustc" id="-c--codegen-pass-codegen-options-to-rustc"><code>-C</code>/<code>--codegen</code>: pass codegen options to rustc</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -C target_feature=+avx
+$ rustdoc src/lib.rs --codegen target_feature=+avx
+
+$ rustdoc --test src/lib.rs -C target_feature=+avx
+$ rustdoc --test src/lib.rs --codegen target_feature=+avx
+
+$ rustdoc --test README.md -C target_feature=+avx
+$ rustdoc --test README.md --codegen target_feature=+avx
+</code></pre>
+<p>When rustdoc generates documentation, looks for documentation tests, or executes documentation
+tests, it needs to compile some rust code, at least part-way. This flag allows you to tell rustdoc
+to provide some extra codegen options to rustc when it runs these compilations. Most of the time,
+these options won't affect a regular documentation run, but if something depends on target features
+to be enabled, or documentation tests need to use some additional options, this flag allows you to
+affect that.</p>
+<p>The arguments to this flag are the same as those for the <code>-C</code> flag on rustc. Run <code>rustc -C help</code> to
+get the full list.</p>
+<h2><a class="header" href="#--test-run-code-examples-as-tests" id="--test-run-code-examples-as-tests"><code>--test</code>: run code examples as tests</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --test
+</code></pre>
+<p>This flag will run your code examples as tests. For more, see <a href="documentation-tests.html">the chapter
+on documentation tests</a>.</p>
+<p>See also <code>--test-args</code>.</p>
+<h2><a class="header" href="#--test-args-pass-options-to-test-runner" id="--test-args-pass-options-to-test-runner"><code>--test-args</code>: pass options to test runner</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --test --test-args ignored
+</code></pre>
+<p>This flag will pass options to the test runner when running documentation tests.
+For more, see <a href="documentation-tests.html">the chapter on documentation tests</a>.</p>
+<p>See also <code>--test</code>.</p>
+<h2><a class="header" href="#--target-generate-documentation-for-the-specified-target-triple" id="--target-generate-documentation-for-the-specified-target-triple"><code>--target</code>: generate documentation for the specified target triple</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --target x86_64-pc-windows-gnu
+</code></pre>
+<p>Similar to the <code>--target</code> flag for <code>rustc</code>, this generates documentation
+for a target triple that's different than your host triple.</p>
+<p>All of the usual caveats of cross-compiling code apply.</p>
+<h2><a class="header" href="#--default-theme-set-the-default-theme" id="--default-theme-set-the-default-theme"><code>--default-theme</code>: set the default theme</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --default-theme=ayu
+</code></pre>
+<p>Sets the default theme (for users whose browser has not remembered a
+previous theme selection from the on-page theme picker).</p>
+<p>The supplied value should be the lowercase version of the theme name.
+The set of available themes can be seen in the theme picker in the
+generated output.</p>
+<p>Note that the set of available themes - and their appearance - is not
+necessarily stable from one rustdoc version to the next. If the
+requested theme does not exist, the builtin default (currently
+<code>light</code>) is used instead.</p>
+<h2><a class="header" href="#--markdown-css-include-more-css-files-when-rendering-markdown" id="--markdown-css-include-more-css-files-when-rendering-markdown"><code>--markdown-css</code>: include more CSS files when rendering markdown</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc README.md --markdown-css foo.css
+</code></pre>
+<p>When rendering Markdown files, this will create a <code>&lt;link&gt;</code> element in the
+<code>&lt;head&gt;</code> section of the generated HTML. For example, with the invocation above,</p>
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;foo.css&quot; /&gt;
+</code></pre>
+<p>will be added.</p>
+<p>When rendering Rust files, this flag is ignored.</p>
+<h2><a class="header" href="#--html-in-header-include-more-html-in-head" id="--html-in-header-include-more-html-in-head"><code>--html-in-header</code>: include more HTML in <head></a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --html-in-header header.html
+$ rustdoc README.md --html-in-header header.html
+</code></pre>
+<p>This flag takes a list of files, and inserts them into the <code>&lt;head&gt;</code> section of
+the rendered documentation.</p>
+<h2><a class="header" href="#--html-before-content-include-more-html-before-the-content" id="--html-before-content-include-more-html-before-the-content"><code>--html-before-content</code>: include more HTML before the content</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --html-before-content extra.html
+$ rustdoc README.md --html-before-content extra.html
+</code></pre>
+<p>This flag takes a list of files, and inserts them inside the <code>&lt;body&gt;</code> tag but
+before the other content <code>rustdoc</code> would normally produce in the rendered
+documentation.</p>
+<h2><a class="header" href="#--html-after-content-include-more-html-after-the-content" id="--html-after-content-include-more-html-after-the-content"><code>--html-after-content</code>: include more HTML after the content</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --html-after-content extra.html
+$ rustdoc README.md --html-after-content extra.html
+</code></pre>
+<p>This flag takes a list of files, and inserts them before the <code>&lt;/body&gt;</code> tag but
+after the other content <code>rustdoc</code> would normally produce in the rendered
+documentation.</p>
+<h2><a class="header" href="#--markdown-playground-url-control-the-location-of-the-playground" id="--markdown-playground-url-control-the-location-of-the-playground"><code>--markdown-playground-url</code>: control the location of the playground</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc README.md --markdown-playground-url https://play.rust-lang.org/
+</code></pre>
+<p>When rendering a Markdown file, this flag gives the base URL of the Rust
+Playground, to use for generating <code>Run</code> buttons.</p>
+<h2><a class="header" href="#--markdown-no-toc-dont-generate-a-table-of-contents" id="--markdown-no-toc-dont-generate-a-table-of-contents"><code>--markdown-no-toc</code>: don't generate a table of contents</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc README.md --markdown-no-toc
+</code></pre>
+<p>When generating documentation from a Markdown file, by default, <code>rustdoc</code> will
+generate a table of contents. This flag suppresses that, and no TOC will be
+generated.</p>
+<h2><a class="header" href="#-e--extend-css-extend-rustdocs-css" id="-e--extend-css-extend-rustdocs-css"><code>-e</code>/<code>--extend-css</code>: extend rustdoc's CSS</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -e extra.css
+$ rustdoc src/lib.rs --extend-css extra.css
+</code></pre>
+<p>With this flag, the contents of the files you pass are included at the bottom
+of Rustdoc's <code>theme.css</code> file.</p>
+<p>While this flag is stable, the contents of <code>theme.css</code> are not, so be careful!
+Updates may break your theme extensions.</p>
+<h2><a class="header" href="#--sysroot-override-the-system-root" id="--sysroot-override-the-system-root"><code>--sysroot</code>: override the system root</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --sysroot /path/to/sysroot
+</code></pre>
+<p>Similar to <code>rustc --sysroot</code>, this lets you change the sysroot <code>rustdoc</code> uses
+when compiling your code.</p>
+<h3><a class="header" href="#--edition-control-the-edition-of-docs-and-doctests" id="--edition-control-the-edition-of-docs-and-doctests"><code>--edition</code>: control the edition of docs and doctests</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --edition 2018
+$ rustdoc --test src/lib.rs --edition 2018
+</code></pre>
+<p>This flag allows <code>rustdoc</code> to treat your rust code as the given edition. It will compile doctests with
+the given edition as well. As with <code>rustc</code>, the default edition that <code>rustdoc</code> will use is <code>2015</code>
+(the first edition).</p>
+<h2><a class="header" href="#--theme-add-a-theme-to-the-documentation-output" id="--theme-add-a-theme-to-the-documentation-output"><code>--theme</code>: add a theme to the documentation output</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --theme /path/to/your/custom-theme.css
+</code></pre>
+<p><code>rustdoc</code>'s default output includes two themes: <code>light</code> (the default) and
+<code>dark</code>. This flag allows you to add custom themes to the output. Giving a CSS
+file to this flag adds it to your documentation as an additional theme choice.
+The theme's name is determined by its filename; a theme file named
+<code>custom-theme.css</code> will add a theme named <code>custom-theme</code> to the documentation.</p>
+<h2><a class="header" href="#--check-theme-verify-custom-themes-against-the-default-theme" id="--check-theme-verify-custom-themes-against-the-default-theme"><code>--check-theme</code>: verify custom themes against the default theme</a></h2>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc --check-theme /path/to/your/custom-theme.css
+</code></pre>
+<p>While <code>rustdoc</code>'s HTML output is more-or-less consistent between versions, there
+is no guarantee that a theme file will have the same effect. The <code>--theme</code> flag
+will still allow you to add the theme to your documentation, but to ensure that
+your theme works as expected, you can use this flag to verify that it implements
+the same CSS rules as the official <code>light</code> theme.</p>
+<p><code>--check-theme</code> is a separate mode in <code>rustdoc</code>. When <code>rustdoc</code> sees the
+<code>--check-theme</code> flag, it discards all other flags and only performs the CSS rule
+comparison operation.</p>
+<h3><a class="header" href="#--crate-version-control-the-crate-version" id="--crate-version-control-the-crate-version"><code>--crate-version</code>: control the crate version</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --crate-version 1.3.37
+</code></pre>
+<p>When <code>rustdoc</code> receives this flag, it will print an extra &quot;Version (version)&quot; into the sidebar of
+the crate root's docs. You can use this flag to differentiate between different versions of your
+library's documentation.</p>
+<h2><a class="header" href="#path-load-command-line-flags-from-a-path" id="path-load-command-line-flags-from-a-path"><code>@path</code>: load command-line flags from a path</a></h2>
+<p>If you specify <code>@path</code> on the command-line, then it will open <code>path</code> and read
+command line options from it. These options are one per line; a blank line indicates
+an empty option. The file can use Unix or Windows style line endings, and must be
+encoded as UTF-8.</p>
+<h2><a class="header" href="#--passes-add-more-rustdoc-passes" id="--passes-add-more-rustdoc-passes"><code>--passes</code>: add more rustdoc passes</a></h2>
+<p>This flag is <strong>deprecated</strong>.
+For more details on passes, see <a href="passes.html">the chapter on them</a>.</p>
+<h2><a class="header" href="#--no-defaults-dont-run-default-passes" id="--no-defaults-dont-run-default-passes"><code>--no-defaults</code>: don't run default passes</a></h2>
+<p>This flag is <strong>deprecated</strong>.
+For more details on passes, see <a href="passes.html">the chapter on them</a>.</p>
+<h2><a class="header" href="#-r--input-format-input-format" id="-r--input-format-input-format"><code>-r</code>/<code>--input-format</code>: input format</a></h2>
+<p>This flag is <strong>deprecated</strong> and <strong>has no effect</strong>.</p>
+<p>Rustdoc only supports Rust source code and Markdown input formats. If the
+file ends in <code>.md</code> or <code>.markdown</code>, <code>rustdoc</code> treats it as a Markdown file.
+Otherwise, it assumes that the input file is Rust.</p>
+<h2><a class="header" href="#--nocapture" id="--nocapture"><code>--nocapture</code></a></h2>
+<p>When this flag is used with <code>--test</code>, the output (stdout and stderr) of your tests won't be
+captured by rustdoc. Instead, the output will be directed to your terminal,
+as if you had run the test executable manually. This is especially useful
+for debugging your tests!</p>
+<h1><a class="header" href="#doc-属性" id="doc-属性"><code>#[doc]</code> 属性</a></h1>
+<p><code>#[doc]</code> 属性可以让你控制 <code>rustdoc</code> 工作的各个方面。</p>
+<p><code>#[doc]</code> 最基本的作用就是处理文档内容。就是说，<code>///</code> 就是 <code>#[doc]</code> 的语法糖。下面的两行注释是一样的：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// This is a doc comment.
+#[doc = &quot; This is a doc comment.&quot;]
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>（请注意属性版本的开始的空格。）</p>
+<p>在大多数情况下，<code>///</code> 比 <code>#[doc]</code> 更容易使用。一种后面更容易使用的场景是给宏生成文档；<code>collapse-docs</code> 会组合多个 <code>#[doc]</code>属性为一条文档注释，比如：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc = &quot;This is&quot;]
+#[doc = &quot; a &quot;]
+#[doc = &quot;doc comment&quot;]
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这样可能感觉更灵活。注意这跟下面的写法是一样的：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc = &quot;This is\n a \ndoc comment&quot;]
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>给出的文档会渲染成 markdown，会删除换行符。</p>
+<p>另一个有用的场景是引入外部文件：</p>
+<pre><code class="language-rust no_run ignore">#[doc = include_str!(&quot;../README.md&quot;)]
+<span class="boring">fn f() {}
+</span></code></pre>
+<p><code>doc</code> 属性有更多的选项！不会包含在输出中，但是可以控制输出的表示。我们将它们分为两大类：在 crate 层面使用的，和在 item 层面使用的。</p>
+<h2><a class="header" href="#crate-层面" id="crate-层面">crate 层面</a></h2>
+<p>这些选项控制文档在 crate 层面如何表示。</p>
+<h3><a class="header" href="#html_favicon_url" id="html_favicon_url"><code>html_favicon_url</code></a></h3>
+<p>这个 <code>doc</code> 属性让你控制你的文档图标。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_favicon_url = &quot;https://example.com/favicon.ico&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这会在你的文档中加入 <code>&lt;link rel=&quot;shortcut icon&quot; href=&quot;{}&quot;&gt;</code>，属性的值会填入 <code>{}</code>。</p>
+<p>如果你不使用这个属性，就没有图标。</p>
+<h3><a class="header" href="#html_logo_url" id="html_logo_url"><code>html_logo_url</code></a></h3>
+<p>这个 <code>doc</code> 属性可以让你控制左上角的 logo。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_logo_url = &quot;https://example.com/logo.jpg&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这会在你的文档中加入 <code>&lt;a href='index.html'&gt;&lt;img src='{}' alt='logo' width='100'&gt;&lt;/a&gt;</code>，属性的值会填入 <code>{}</code>。</p>
+<p>如果你不使用这个属性，就没有 logo。</p>
+<h3><a class="header" href="#html_playground_url" id="html_playground_url"><code>html_playground_url</code></a></h3>
+<p>这个 <code>doc</code> 属性让你控制文档示例中的 &quot;run&quot; 按钮的请求到哪里。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_playground_url = &quot;https://playground.example.com/&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>现在，当你按下 &quot;run&quot;，会向对应网站发出请求。</p>
+<p>如果你没有使用这个属性，没有运行按钮。</p>
+<h3><a class="header" href="#issue_tracker_base_url" id="issue_tracker_base_url"><code>issue_tracker_base_url</code></a></h3>
+<p>这个 <code>doc</code> 属性在标准库中使用最多；当一个特性未稳定时，需要提供 issue number 来追踪这个特性。<code>rustdoc</code> 使用这个 number，加入到给定的基本 URL 来链接到追踪的网址。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(issue_tracker_base_url = &quot;https://github.com/rust-lang/rust/issues/&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#html_root_url" id="html_root_url"><code>html_root_url</code></a></h3>
+<p><code>#[doc(html_root_url = &quot;…&quot;)]</code> 属性的值表明了生成外部 crate 的 URL。当 rustdoc 需要生成一个外部 crate item 的链接时，首先检查本地外部 crate 的文档，如果存在直接链接指向。如果失败，就会使用 <code>--extern-html-root-url</code> 命令行参数的值，如果没有这个参数，才会使用 <code>html_root_url</code> ，如果还是无效，外部 item 不会链接。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_root_url = &quot;https://docs.rs/serde/1.0&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#html_no_source" id="html_no_source"><code>html_no_source</code></a></h3>
+<p>默认情况下，<code>rustdoc</code> 会包含你的源码链接到文档中。
+但是如果你这样写：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_no_source)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>就不会。</p>
+<h3><a class="header" href="#testno_crate_inject" id="testno_crate_inject"><code>test(no_crate_inject)</code></a></h3>
+<p>默认情况下，<code>rustdoc</code> 会自动加一行 <code>extern crate my_crate;</code> 到每个文档测试中。
+但是如果你这样写了：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(test(no_crate_inject))]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>就不会。</p>
+<h3><a class="header" href="#testattr" id="testattr"><code>test(attr(...))</code></a></h3>
+<p>这个 <code>doc</code> 属性允许你对你所有的文档测试加上某个属性。比如，如果你想要你的文档测试存在警告时失败，可以这样写：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(test(attr(deny(warnings))))]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#item-层面" id="item-层面">item 层面</a></h2>
+<p>这些 <code>#[doc]</code> 属性单独给 item 使用，控制 item 文档表示。</p>
+<h3><a class="header" href="#inline-and-no_inline" id="inline-and-no_inline"><code>inline</code> and <code>no_inline</code></a></h3>
+<p><span id="docno_inlinedocinline"></span></p>
+<p>这两个属性可以用于 <code>use</code> 声明。比如，考虑如下 Rust 代码：</p>
+<pre><pre class="playground"><code class="language-rust no_run">pub use bar::Bar;
+
+/// bar docs
+pub mod bar {
+    /// the docs for Bar
+    pub struct Bar;
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>文档会生成 &quot;Re-exports&quot; 小节，表示 <code>pub use bar::Bar;</code> 其中 <code>Bar</code> 会链接到自己的页面。</p>
+<p>如果我们将代码改为：</p>
+<pre><pre class="playground"><code class="language-rust no_run">#[doc(inline)]
+pub use bar::Bar;
+<span class="boring">pub mod bar { pub struct Bar; }
+</span><span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><code>Bar</code> 就会出现在 <code>Structs</code> 小节，就像 <code>Bar</code> 就定义在顶层一样，而不是 <code>pub use</code> 的。</p>
+<p>然后我们修改原始的例子，使 <code>bar</code> 私有：</p>
+<pre><pre class="playground"><code class="language-rust no_run">pub use bar::Bar;
+
+/// bar docs
+mod bar {
+    /// the docs for Bar
+    pub struct Bar;
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>这里，因为 <code>bar</code> 不是公共的，<code>Bar</code> 没有自己的页面，所有没有链接可以指向。<code>rustdoc</code> 将会内联定义，所以会得到与 <code>#[doc(inline)]</code> 一样的结果：<code>Bar</code> 就会出现在 <code>Structs</code> 小节，就像 <code>Bar</code> 就定义在顶层一样。如果我们加上 <code>no_inline</code> 属性：</p>
+<pre><pre class="playground"><code class="language-rust no_run">#[doc(no_inline)]
+pub use bar::Bar;
+
+/// bar docs
+mod bar {
+    /// the docs for Bar
+    pub struct Bar;
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>现在我们有了 <code>Re-exports</code>，并且 <code>Bar</code> 没有链接到任何页面。</p>
+<p>一个特殊情况：在 Rust 2018 以及更高版本，如果你 <code>pub use</code> 你的依赖，<code>rustdoc</code> 不会作为 modules 内联除非你加上 <code>#[doc(inline)]</code>。</p>
+<h3><a class="header" href="#hidden" id="hidden"><code>hidden</code></a></h3>
+<p><span id="dochidden"></span></p>
+<p>任何标注了 <code>#[doc(hidden)]</code> 的 item 不会出现在文档中，除非 <code>strip-hidden</code> pass 被删除。</p>
+<h3><a class="header" href="#alias" id="alias"><code>alias</code></a></h3>
+<p>这个属性给搜索索引增加了别名。</p>
+<p>让我们举个例子：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc(alias = &quot;TheAlias&quot;)]
+pub struct SomeType;
+<span class="boring">}
+</span></code></pre></pre>
+<p>现在，如果你输入 &quot;TheAlias&quot; 搜索，也会显示 <code>SomeType</code>。当然如果你输入 <code>SomeType</code> 也会显示 <code>SomeType</code>！</p>
+<h4><a class="header" href="#ffi-例子" id="ffi-例子">FFI 例子</a></h4>
+<p>文档属性在写 c 库的 bingding 时尤其有用。比如，我们有一个下面这样的 C 函数：</p>
+<pre><code class="language-c">int lib_name_do_something(Obj *obj);
+</code></pre>
+<p>它输入一个指向 <code>Obj</code> 类型的指针返回一个整数。在 Rust 中，可能会这样写：</p>
+<pre><code class="language-ignore(usingnon-existingffitypes)">pub struct Obj {
+    inner: *mut ffi::Obj,
+}
+
+impl Obj {
+    pub fn do_something(&amp;mut self) -&gt; i32 {
+        unsafe { ffi::lib_name_do_something(self.inner) }
+    }
+}
+</code></pre>
+<p>函数已经被转换为一个方法便于使用。但是如果你想要寻找 Rust 相当的 <code>lib_name_do_something</code>，你没有办法做到。</p>
+<p>为了避免这个限制，我们只需要在 <code>do_something</code> 方法加上 <code>#[doc(alias = &quot;lib_name_do_something&quot;)]</code>，然后就可以了！</p>
+<p>用户可以直接搜索 <code>lib_name_do_something</code> 然后找到<code>Obj::do_something</code>。</p>
+<h1><a class="header" href="#文档测试" id="文档测试">文档测试</a></h1>
+<p><code>rustdoc</code> 支持将你文档中的代码示例作为测试执行。这确保了文档中的代码示例保持更新。</p>
+<p>基本写法是这样的：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// # Examples
+///
+/// ```
+/// let x = 5;
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>三个反引号中的代码块。如果有一个文件名叫做<code>foo.rs</code>，运行<code>rustdoc --test foo.rs</code>会提取这个例子，然后作为测试执行。</p>
+<p>需要注意的是，如果代码块没有设置语言，rustdoc 默认是 Rust 代码，所以下面的：</p>
+<pre><code class="language-markdown">```rust
+let x = 5;
+```
+</code></pre>
+<p>跟这个是相等的</p>
+<pre><code class="language-markdown">```
+let x = 5;
+```
+</code></pre>
+<p>还有一些微妙之处！请阅读获得更多详情。</p>
+<h2><a class="header" href="#文档测试通过或者失败" id="文档测试通过或者失败">文档测试通过或者失败</a></h2>
+<p>就像常规的单元测试，常规的文档测试也需要编译和运行“通过”。所以如果需要计算给出一个结果，可以使用<code>assert!</code>系列宏来检查：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let foo = &quot;foo&quot;;
+assert_eq!(foo, &quot;foo&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>这样，如果计算返回的结果不符合预期，代码就会 panic，文档测试会失败。</p>
+<h2><a class="header" href="#预处理例子" id="预处理例子">预处理例子</a></h2>
+<p>在上面的例子中，你注意到奇怪的事情：没有<code>main</code>函数！如果强制你为每个例子写<code>main</code>，增加了难度。
+所以<code>rustdoc</code>在运行例子前会帮你处理好这个。这里是<code>rustdoc</code>预处理的完整算法：</p>
+<ol>
+<li>一些常用的 <code>allow</code> 属性会被插入，包括 <code>unused_variables</code>, <code>unused_assignments</code>, <code>unused_mut</code>, <code>unused_attributes</code>, 和 <code>dead_code</code>。小型示例经常出发这些警告。</li>
+<li>如果存在 <code>#![doc(test(attr(...)))]</code> 的属性会被加入。</li>
+<li><code>#![foo]</code> 属性会被作为 crate 属性保留。</li>
+<li>如果例子不包含 <code>extern crate</code>, 并且 <code>#![doc(test(no_crate_inject))]</code> 没有被指定，<code>extern crate &lt;mycrate&gt;;</code> 被插入（注意 <code>#[macro_use]</code> 要手动写一般）。</li>
+<li>最后，如果例子不包含 <code>fn main</code>，剩下的代码会被 main 函数 wrap：<code>fn main() { your_code }</code>。</li>
+</ol>
+<p>对于第 4 条的详细解释，请阅读下面的“宏的文档”</p>
+<h2><a class="header" href="#隐藏例子的一部分" id="隐藏例子的一部分">隐藏例子的一部分</a></h2>
+<p>有时，你需要一些初始代码，或者一些会分散文档注意力的代码，但是它们对测试工作是必要的。考虑下面的示例代码：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```
+/// /// Some documentation.
+/// # fn foo() {} // this function will be hidden
+/// println!(&quot;Hello, World!&quot;);
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>会渲染为：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Some documentation.
+<span class="boring">fn foo() {}
+</span>println!(&quot;Hello, World!&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>没错，这是对的，你可以加一些以 <code># </code> 开头的行，在输出中它们会隐藏，但是编译代码会用到。你可以利用这一点。在这个例子中，文档注释需要使用函数，但是我只想给你看文档注释，我需要加入函数的定义。同时，需要满足编译器编译，而隐藏这部分代码使得示例更清晰。你可以使用这个技术写出详细的示例代码并且保留你的可测试性文档。</p>
+<p>比如，想象我们想要给这些代码写文档：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+let y = 6;
+println!(&quot;{}&quot;, x + y);
+<span class="boring">}
+</span></code></pre></pre>
+<p>文档注释最终可能是这样的：</p>
+<blockquote>
+<p>First, we set <code>x</code> to five:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+<span class="boring">let y = 6;
+</span><span class="boring">println!(&quot;{}&quot;, x + y);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>Next, we set <code>y</code> to six:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let x = 5;
+</span>let y = 6;
+<span class="boring">println!(&quot;{}&quot;, x + y);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>Finally, we print the sum of <code>x</code> and <code>y</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let x = 5;
+</span><span class="boring">let y = 6;
+</span>println!(&quot;{}&quot;, x + y);
+<span class="boring">}
+</span></code></pre></pre>
+</blockquote>
+<p>为了保持每个代码块可测试，我们要在每个代码块都有完整代码，但是我们不想文档读者每次都看到全部行代码：</p>
+<pre><code class="language-markdown">First, we set `x` to five:
+
+```
+let x = 5;
+# let y = 6;
+# println!(&quot;{}&quot;, x + y);
+```
+
+Next, we set `y` to six:
+
+```
+# let x = 5;
+let y = 6;
+# println!(&quot;{}&quot;, x + y);
+```
+
+Finally, we print the sum of `x` and `y`:
+
+```
+# let x = 5;
+# let y = 6;
+println!(&quot;{}&quot;, x + y);
+```
+</code></pre>
+<p>通过复制例子的所有代码，例子可以通过编译，同时使用 <code># </code> 在文档中有些部分被隐藏。</p>
+<p><code>#</code> 的隐藏可以使用两个 <code>##</code> 来消除。 如果我们有一行注释，以 <code>#</code> 开头，那么这样写：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = &quot;foo
+# bar # baz&quot;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>我们可以转义第一个 <code>#</code> 来注释它：</p>
+<pre><code class="language-text">/// let s = &quot;foo
+/// ## bar # baz&quot;;
+</code></pre>
+<h2><a class="header" href="#在文档测试中使用-" id="在文档测试中使用-">在文档测试中使用 <code>?</code></a></h2>
+<p>当写例子时，很少会包含完整的错误处理，因为错误处理会增加很多样板代码。取而代之，你可能更希望这样：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```
+/// use std::io;
+/// let mut input = String::new();
+/// io::stdin().read_line(&amp;mut input)?;
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>问题是 <code>?</code> 返回 <code>Result&lt;T, E&gt;</code>，测试函数不能返回任何东西，所以会有类型错误。</p>
+<p>你可以通过自己增加返回 <code>Result&lt;T, E&gt;</code> 的 <code>main</code> 函数来规避这个限制，因为 <code>Result&lt;T, E&gt;</code> 实现了 <code>Termination</code> trait：</p>
+<pre><pre class="playground"><code class="language-rust no_run">/// A doc test using ?
+///
+/// ```
+/// use std::io;
+///
+/// fn main() -&gt; io::Result&lt;()&gt; {
+///     let mut input = String::new();
+///     io::stdin().read_line(&amp;mut input)?;
+///     Ok(())
+/// }
+/// ```
+<span class="boring">fn f() {}
+</span></code></pre></pre>
+<p>与下节的 <code># </code>一起，你可以得到读者舒服，编译通过的完整解决方案：</p>
+<pre><pre class="playground"><code class="language-rust no_run">/// ```
+/// use std::io;
+/// # fn main() -&gt; io::Result&lt;()&gt; {
+/// let mut input = String::new();
+/// io::stdin().read_line(&amp;mut input)?;
+/// # Ok(())
+/// # }
+/// ```
+<span class="boring">fn f() {}
+</span></code></pre></pre>
+<p>从 1.34.0 版本开始，也可以省略 <code>fn main()</code>，但是你必须消除错误类型的歧义：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```
+/// use std::io;
+/// let mut input = String::new();
+/// io::stdin().read_line(&amp;mut input)?;
+/// # Ok::&lt;(), io::Error&gt;(())
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这是 <code>?</code> 操作符隐式转换带来的不便，因为类型不唯一所以类型推断会出错。你必须写 <code>(())</code>，<code>rustdoc</code> 才能理解你想要一个隐式返回值 <code>Result</code> 的函数。</p>
+<h2><a class="header" href="#在文档测试中显示警告" id="在文档测试中显示警告">在文档测试中显示警告</a></h2>
+<p>你可以通过运行 <code>rustdoc --test --test-args=--show-output</code> 在文档测试中显示警告（或者，如果你使用 cargo，<code>cargo test --doc -- --show-output</code> 也可以）。默认会隐藏 <code>unused</code> 警告，因为很多例子使用私有函数；你可以通过在例子顶部加入<code>#![warn(unused)]</code>来对没有使用的变量或者死代码进行警告。你还可以在 crate 根使用 <a href="./the-doc-attribute.html#testattr"><code>#![doc(test(attr(warn(unused))))]</code></a> 开启全局警告。</p>
+<h2><a class="header" href="#宏的文档" id="宏的文档">宏的文档</a></h2>
+<p>这里是一个宏的文档的例子：</p>
+<pre><pre class="playground"><code class="language-rust">/// Panic with a given message unless an expression evaluates to true.
+///
+/// # Examples
+///
+/// ```
+/// # #[macro_use] extern crate foo;
+/// # fn main() {
+/// panic_unless!(1 + 1 == 2, “Math is broken.”);
+/// # }
+/// ```
+///
+/// ```should_panic
+/// # #[macro_use] extern crate foo;
+/// # fn main() {
+/// panic_unless!(true == false, “I’m broken.”);
+/// # }
+/// ```
+#[macro_export]
+macro_rules! panic_unless {
+    ($condition:expr, $($rest:expr),+) =&gt; ({ if ! $condition { panic!($($rest),+); } });
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>你注意到三件事：我们需要自己增加 <code>extern crate</code> 一行，从而我们可以加上 <code>#[macro_use]</code> 属性。第二，我们需要自己增加 <code>main()</code>，理由同上。最后 <code>#</code> 的使用使得一些内容不会出现在输出中。</p>
+<h2><a class="header" href="#属性" id="属性">属性</a></h2>
+<p>代码块可以通过属性标注帮助 <code>rustdoc</code> 在测试例子代码时处理正确。</p>
+<p><code>ignore</code> 属性告诉 Rust 忽略你的代码。 这个属性很通用，并且考虑标注 <code>文本</code>或者使用<code>#</code>隐藏不想展示的部分。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```ignore
+/// fn foo() {
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>should_panic</code> 告诉 <code>rustdoc</code> 代码应该编译通过但是运行时会 panic。如果代码没有 panic，测试失败。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```should_panic
+/// assert!(false);
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>no_run</code> 属性会编译你的代码但是不运行它。这对于类似 &quot;如果获取网页&quot; 的例子很重要，你要确保它能编译但是不想在运行测试，因为测试环境可能没有网络。这个属性也可以被用来要求代码段有未定义行为。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```no_run
+/// loop {
+///     println!(&quot;Hello, world&quot;);
+/// }
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>compile_fail</code> 告诉 <code>rustdoc</code> 应该编译失败。如果便已通过，测试失败。
+但是需要注意现在版本 Rust 编译失败可能在将来 Rust 版本编译成功。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```compile_fail
+/// let x = 5;
+/// x += 2; // shouldn't compile!
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>edition2015</code>, <code>edition2018</code> 和 <code>edition2021</code> 告诉 <code>rustdoc</code> 代码应该使用哪个 edition 版本的 Rust 来编译。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Only runs on the 2018 edition.
+///
+/// ```edition2018
+/// let result: Result&lt;i32, ParseIntError&gt; = try {
+///     &quot;1&quot;.parse::&lt;i32&gt;()?
+///         + &quot;2&quot;.parse::&lt;i32&gt;()?
+///         + &quot;3&quot;.parse::&lt;i32&gt;()?
+/// };
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#语法参考" id="语法参考">语法参考</a></h2>
+<p>代码块的 <em>exact</em> 语法，包括边缘情况，可以在 CommonMark 说明的 [Fenced Code Blocks] 一节找到。</p>
+<p>Rustdoc 也接受 <em>indented</em> 代码块作为 fenced 代码块的替代：不使用三个反引号，而是每行以四个或者以上空格开始。</p>
+<pre><code class="language-markdown">    let foo = &quot;foo&quot;;
+    assert_eq!(foo, &quot;foo&quot;);
+</code></pre>
+<p>这也在 CommonMark 说明中的 <a href="https://spec.commonmark.org/0.29/#indented-code-blocks">Indented Code Blocks</a> 小节。</p>
+<p>但是通常更常用的是 fenced 代码块。不仅是 fenced 代码块更符合 Rust 惯用法，而且 indented 代码块无法使用诸如 <code>ignore</code> 或者 <code>should_panic</code> 这些属性。</p>
+<h3><a class="header" href="#收集文档测试时包含-item" id="收集文档测试时包含-item">收集文档测试时包含 item</a></h3>
+<p>Rustdoc 文档测试可以做到一些单元测试无法做到的事，可以扩展你的文档测试但是不出现在文档中。意味着，rustdoc 允许你有不出现在
+文档中，但是会进行文档测试的 item，所以你可以利用文档测试这个功能使测试不出现在文档中，或者任意找一个私有 item 包含它。</p>
+<p>当编译 crate 用来测试文档时（使用<code>--test</code>)，<code>rustdoc</code>会设置 <code>#[cfg(doctest)]</code>。注意这只会在公共 item 上设置；如果你需要测试私有 item，你需要写单元测试。</p>
+<p>在这个例子中，我们增加不会编译的文档测试，确保我们的结构体只会获取有效数据：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// We have a struct here. Remember it doesn't accept negative numbers!
+pub struct MyStruct(pub usize);
+
+/// ```compile_fail
+/// let x = my_crate::MyStruct(-5);
+/// ```
+#[cfg(doctest)]
+pub struct MyStructOnlyTakesUsize;
+<span class="boring">}
+</span></code></pre></pre>
+<p>注意结构 <code>MyStructOnlyTakesUsize</code> 不是你的 crate 公共 API。<code>#[cfg(doctest)]</code> 的使用使得这个结构体只会在 <code>rustdoc</code> 收集文档测试时存在。这意味着当传递 <code>--test</code> 给 rustdoc 时才存在，在公共文档中是隐藏的。</p>
+<p>另一个可能用到 <code>#[cfg(doctest)]</code> 的是你的 README 文件中的文档测试。
+比如你可以在 <code>lib.rs</code> 写下面的代码来运行 README 中的文档测试：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc = include_str!(&quot;../README.md&quot;)]
+#[cfg(doctest)]
+pub struct ReadmeDoctests;
+<span class="boring">}
+</span></code></pre></pre>
+<p>这会在你的隐藏结构体 <code>ReadmeDoctests</code> 中包含你的 README 作为文档，也会作为文档测试来执行。</p>
+<h1><a class="header" href="#通过名称链接-item" id="通过名称链接-item">通过名称链接 item</a></h1>
+<p>Rustdoc 能够使用 item 的路径直接内部链接。这称为 'intra-doc link'。</p>
+<p>比如，下面的代码可以链接 <code>Bar</code> 的页面：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// This struct is not [Bar]
+pub struct Foo1;
+
+/// This struct is also not [bar](Bar)
+pub struct Foo2;
+
+/// This struct is also not [bar][b]
+///
+/// [b]: Bar
+pub struct Foo3;
+
+/// This struct is also not [`Bar`]
+pub struct Foo4;
+
+/// This struct *is* [`Bar`]!
+pub struct Bar;
+<span class="boring">}
+</span></code></pre></pre>
+<p>不像常规的 markdown，<code>[bar][Bar]</code> 语法也被支持，不需要<code>[Bar]: ...</code> 链接。</p>
+<p>反引号会被删除，所以 <code>[`Option`]</code> 可以正确地链接到<code>Option</code>。</p>
+<h2><a class="header" href="#有效链接" id="有效链接">有效链接</a></h2>
+<p>你可以链接作用域的任何东西，使用路径，包括 <code>Self</code>, <code>self</code>, <code>super</code>和 <code>crate</code>。Associated items (functions, types, and constants) 也是支持的，但是 <a href="https://github.com/rust-lang/rust/pull/79682">不能是空的 trait 实现</a>。Rustdoc 还支持 <a href="../std/index.html#primitives">the standard library documentation</a> 列出的原始类型链接。</p>
+<p>你还可以链接范型参数，比如 <code>Vec&lt;T&gt;</code>。链接会如同你写了 <code>[`Vec&lt;T&gt;`](Vec)</code>. 但是，Fully-qualified syntax（比如，<code>&lt;Vec as IntoIterator&gt;::into_iter()</code>） 还 <a href="https://github.com/rust-lang/rust/issues/74563">没有被支持</a>。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::sync::mpsc::Receiver;
+
+/// This is a version of [`Receiver&lt;T&gt;`] with support for [`std::future`].
+///
+/// You can obtain a [`std::future::Future`] by calling [`Self::recv()`].
+pub struct AsyncReceiver&lt;T&gt; {
+    sender: Receiver&lt;T&gt;
+}
+
+impl&lt;T&gt; AsyncReceiver&lt;T&gt; {
+    pub async fn recv() -&gt; T {
+        unimplemented!()
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rustdoc 允许使用 URL fragment specifiers，就如同普通的链接：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// This is a special implementation of [positional parameters].
+///
+/// [positional parameters]: std::fmt#formatting-parameters
+struct MySpecialFormatter;
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#namespaces-and-disambiguators消歧义符" id="namespaces-and-disambiguators消歧义符">Namespaces and Disambiguators（消歧义符）</a></h2>
+<p>Rust 中的路径有三种命名空间：type, value 和 macro。Item name 在命名空间内必须唯一，但是可以与其他命名空间的 item 同名。在歧义的情况下，rustdoc 会警告歧义，并给出消除歧义的建议。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// See also: [`Foo`](struct@Foo)
+struct Bar;
+
+/// This is different from [`Foo`](fn@Foo)
+struct Foo {}
+
+fn Foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这些前缀展示在文档时会被删除，所以 <code>[struct@Foo]</code> 会被渲染成 <code>Foo</code>。</p>
+<p>你也可以在函数名后加上 <code>()</code> 和在宏名后面加上 <code>!</code> 消除歧义：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// This is different from [`foo!`]
+fn foo() {}
+
+/// This is different from [`foo()`]
+macro_rules! foo {
+  () =&gt; {}
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#警告re-exports-and-scoping" id="警告re-exports-and-scoping">警告，re-exports, and scoping</a></h2>
+<p>即使 item 被 re-exported，链接也在 item 定义的模块内解析。如果来自另一个 crate 的链接解析失败，不会给出警告。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>mod inner {
+    /// Link to [f()]
+    pub struct S;
+    pub fn f() {}
+}
+pub use inner::S; // the link to `f` will still resolve correctly
+<span class="boring">}
+</span></code></pre></pre>
+<p>当一个 item 被 re-export，rustdoc 允许加入额外的文档。额外的文档在 re-export 的作用域中解析，允许你链接 re-export 的 item，并且如果解析失败会给出警告。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// See also [foo()]
+pub use std::process::Command;
+
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这对于过程宏非常有用，过程宏必须定义在自己的 crate 中。</p>
+<p>注意：因为 <code>macro_ruls!</code> 宏的作用域是整个 Rust，<code>macro_rules!</code> 的 intra-doc 链接在 <a href="https://github.com/rust-lang/rust/issues/72243">relative to the crate root</a> 解析，而不是定义的模块内。</p>
+<p>如果链接看起来不像是 intra-doc 链接，它们会被忽略并且不会生成警告，即使链接解析失败。比如，任何包含了 <code>/</code> 或者 <code>[]</code> 字符的链接都被忽略。</p>
+<h1><a class="header" href="#lints" id="lints">Lints</a></h1>
+<p><code>rustdoc</code> 提供 lints 来帮助你编写以及测试文档。你可以像使用其他 lints 来使用它们：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![allow(rustdoc::broken_intra_doc_links)] // allows the lint, no diagnostics will be reported
+#![warn(rustdoc::broken_intra_doc_links)] // warn if there are broken intra-doc links
+#![deny(rustdoc::broken_intra_doc_links)] // error if there are broken intra-doc links
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>注意，出了 <code>missing_docs</code>，这些 lints 只有当运行 <code>rustdoc</code> 的时候才会生效，<code>rustc</code> 不会。</p>
+<p>这是<code>rustdoc</code> lints 的列表：</p>
+<h2><a class="header" href="#broken_intra_doc_links" id="broken_intra_doc_links">broken_intra_doc_links</a></h2>
+<p>这个 lint 是<strong>默认警告</strong>。这个 lint 当 <a href="linking-to-items-by-name.html">intra-doc link</a> 解析错误时会提示。比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// I want to link to [`Nonexistent`] but it doesn't exist!
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>你会得到警告：</p>
+<pre><code class="language-text">warning: unresolved link to `Nonexistent`
+ --&gt; test.rs:1:24
+  |
+1 | /// I want to link to [`Nonexistent`] but it doesn't exist!
+  |                        ^^^^^^^^^^^^^ no item named `Nonexistent` in `test`
+</code></pre>
+<p>当存在歧义时也会得到警告，以及如何消除歧义的建议：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// [`Foo`]
+pub fn function() {}
+
+pub enum Foo {}
+
+pub fn Foo(){}
+<span class="boring">}
+</span></code></pre></pre>
+<pre><code class="language-text">warning: `Foo` is both an enum and a function
+ --&gt; test.rs:1:6
+  |
+1 | /// [`Foo`]
+  |      ^^^^^ ambiguous link
+  |
+  = note: `#[warn(rustdoc::broken_intra_doc_links)]` on by default
+help: to link to the enum, prefix with the item type
+  |
+1 | /// [`enum@Foo`]
+  |      ^^^^^^^^^^
+help: to link to the function, add parentheses
+  |
+1 | /// [`Foo()`]
+  |      ^^^^^^^
+
+</code></pre>
+<h2><a class="header" href="#private_intra_doc_links" id="private_intra_doc_links">private_intra_doc_links</a></h2>
+<p>这个 lint 是<strong>默认警告</strong>. 这个 lint 会在 <a href="linking-to-items-by-name.html">intra-doc links</a> 从一个公共 item 连接一个私有 item 时提示。
+比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(rustdoc::private_intra_doc_links)] // note: unnecessary - warns by default.
+
+<span class="boring">fn main() {
+</span>/// [private]
+pub fn public() {}
+fn private() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>会给出这个文档中链接时损坏的：</p>
+<pre><code class="language-text">warning: public documentation for `public` links to private item `private`
+ --&gt; priv.rs:1:6
+  |
+1 | /// [private]
+  |      ^^^^^^^ this item is private
+  |
+  = note: `#[warn(rustdoc::private_intra_doc_links)]` on by default
+  = note: this link will resolve properly if you pass `--document-private-items`
+</code></pre>
+<p>注意到取决于你是否传递 <code>--document-private-items</code> 参数会有不同的行为！如果你有私有 item 的文档，尽管会有警告，仍然会生成这个链接：</p>
+<pre><code class="language-text">warning: public documentation for `public` links to private item `private`
+ --&gt; priv.rs:1:6
+  |
+1 | /// [private]
+  |      ^^^^^^^ this item is private
+  |
+  = note: `#[warn(rustdoc::private_intra_doc_links)]` on by default
+  = note: this link resolves only because you passed `--document-private-items`, but will break without
+</code></pre>
+<h2><a class="header" href="#missing_docs" id="missing_docs">missing_docs</a></h2>
+<p>这个 lint <strong>默认允许</strong>。缺少文档时提示。比如：</p>
+<pre><pre class="playground"><code class="language-rust">#![warn(missing_docs)]
+
+pub fn undocumented() {}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><code>undocumented</code> 函数会有下面的警告：</p>
+<pre><code class="language-text">warning: missing documentation for a function
+  --&gt; your-crate/lib.rs:3:1
+   |
+ 3 | pub fn undocumented() {}
+   | ^^^^^^^^^^^^^^^^^^^^^
+</code></pre>
+<p>注意不像其他 lint，这个 lint 也对 <code>rustc</code> 有效。</p>
+<h2><a class="header" href="#missing_crate_level_docs" id="missing_crate_level_docs">missing_crate_level_docs</a></h2>
+<p>这个 lint 是<strong>默认允许</strong>。提示 crate 根没有文档。
+比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(rustdoc::missing_crate_level_docs)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>会生成下面的警告：</p>
+<pre><code class="language-text">warning: no documentation found for this crate's top-level module
+  |
+  = help: The following guide may be of use:
+          https://doc.rust-lang.org/nightly/rustdoc/how-to-write-documentation.html
+</code></pre>
+<p>当前默认是允许的，但是计划未来默认警告。这可以不使用<code>missing_docs</code>这种严重的警告，介绍给新用户如何给他们的 crate 写文档。</p>
+<h2><a class="header" href="#missing_doc_code_examples" id="missing_doc_code_examples">missing_doc_code_examples</a></h2>
+<p>这个 lint <strong>默认允许</strong> 并且 <strong>nightly-only</strong>。当文档缺少代码示例时提示。比如：</p>
+<pre><pre class="playground"><code class="language-rust">#![warn(rustdoc::missing_doc_code_examples)]
+
+/// There is no code example!
+pub fn no_code_example() {}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><code>no_code_example</code> 函数会有下面的警告：</p>
+<pre><code class="language-text">warning: Missing code example in this documentation
+  --&gt; your-crate/lib.rs:3:1
+   |
+LL | /// There is no code example!
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</code></pre>
+<p>为了修复这个 lint，你需要在文档块中加入代码示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// There is no code example!
+///
+/// ```
+/// println!(&quot;calling no_code_example...&quot;);
+/// no_code_example();
+/// println!(&quot;we called no_code_example!&quot;);
+/// ```
+pub fn no_code_example() {}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#private_doc_tests" id="private_doc_tests">private_doc_tests</a></h2>
+<p>这个 lint <strong>默认允许</strong>。 提示私有 item 有文档测试。
+比如：</p>
+<pre><pre class="playground"><code class="language-rust">#![warn(rustdoc::private_doc_tests)]
+
+mod foo {
+    /// private doc test
+    ///
+    /// ```
+    /// assert!(false);
+    /// ```
+    fn bar() {}
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>提示：</p>
+<pre><code class="language-text">warning: Documentation test in private item
+  --&gt; your-crate/lib.rs:4:1
+   |
+ 4 | /     /// private doc test
+ 5 | |     ///
+ 6 | |     /// ```
+ 7 | |     /// assert!(false);
+ 8 | |     /// ```
+   | |___________^
+</code></pre>
+<h2><a class="header" href="#invalid_codeblock_attributes" id="invalid_codeblock_attributes">invalid_codeblock_attributes</a></h2>
+<p>这个 lint <strong>默认警告</strong>。提示文档例子中的代码块属性有潜在的错误。比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(rustdoc::invalid_codeblock_attributes)]  // note: unnecessary - warns by default.
+
+<span class="boring">fn main() {
+</span>/// Example.
+///
+/// ```should-panic
+/// assert_eq!(1, 2);
+/// ```
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>提示：</p>
+<pre><code class="language-text">warning: unknown attribute `should-panic`. Did you mean `should_panic`?
+ --&gt; src/lib.rs:1:1
+  |
+1 | / /// Example.
+2 | | ///
+3 | | /// ```should-panic
+4 | | /// assert_eq!(1, 2);
+5 | | /// ```
+  | |_______^
+  |
+  = note: `#[warn(rustdoc::invalid_codeblock_attributes)]` on by default
+  = help: the code block will either not be tested if not marked as a rust one or won't fail if it doesn't panic when running
+</code></pre>
+<p>上面的例子中，正确的拼写是 <code>should_panic</code>。可以提示一些常用的属性 typo 错误。</p>
+<h2><a class="header" href="#invalid_html_tags" id="invalid_html_tags">invalid_html_tags</a></h2>
+<p>这个 lint <strong>默认允许</strong> 并且是 <strong>nightly-only</strong>。提示没有关闭的或者无效的 HTML tag。
+比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(rustdoc::invalid_html_tags)]
+
+<span class="boring">fn main() {
+</span>/// &lt;h1&gt;
+/// &lt;/script&gt;
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>提示：</p>
+<pre><code class="language-text">warning: unopened HTML tag `script`
+ --&gt; foo.rs:1:1
+  |
+1 | / /// &lt;h1&gt;
+2 | | /// &lt;/script&gt;
+  | |_____________^
+  |
+  note: the lint level is defined here
+ --&gt; foo.rs:1:9
+  |
+1 | #![warn(rustdoc::invalid_html_tags)]
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unclosed HTML tag `h1`
+ --&gt; foo.rs:1:1
+  |
+1 | / /// &lt;h1&gt;
+2 | | /// &lt;/script&gt;
+  | |_____________^
+
+warning: 2 warnings emitted
+</code></pre>
+<h2><a class="header" href="#invalid_rust_codeblocks" id="invalid_rust_codeblocks">invalid_rust_codeblocks</a></h2>
+<p>这个 lint <strong>默认警告</strong>。提示文档中的 Rust 代码块无效（比如，空的，无法被解析为 Rust 代码）。比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Empty code blocks (with and without the `rust` marker):
+///
+/// ```rust
+/// ```
+///
+/// Invalid syntax in code blocks:
+///
+/// ```rust
+/// '&lt;
+/// ```
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>提示：</p>
+<pre><code class="language-text">warning: Rust code block is empty
+ --&gt; lint.rs:3:5
+  |
+3 |   /// ```rust
+  |  _____^
+4 | | /// ```
+  | |_______^
+  |
+  = note: `#[warn(rustdoc::invalid_rust_codeblocks)]` on by default
+
+warning: could not parse code block as Rust code
+  --&gt; lint.rs:8:5
+   |
+8  |   /// ```rust
+   |  _____^
+9  | | /// '&lt;
+10 | | /// ```
+   | |_______^
+   |
+   = note: error from rustc: unterminated character literal
+</code></pre>
+<h2><a class="header" href="#bare_urls" id="bare_urls">bare_urls</a></h2>
+<p>这个 lint <strong>默认警告</strong>。提示 Url 不是一个链接。
+比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![warn(rustdoc::bare_urls)] // note: unnecessary - warns by default.
+
+<span class="boring">fn main() {
+</span>/// http://example.org
+/// [http://example.net]
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>会出现：</p>
+<pre><code class="language-text">warning: this URL is not a hyperlink
+ --&gt; links.rs:1:5
+  |
+1 | /// http://example.org
+  |     ^^^^^^^^^^^^^^^^^^ help: use an automatic link instead: `&lt;http://example.org&gt;`
+  |
+  = note: `#[warn(rustdoc::bare_urls)]` on by default
+
+warning: this URL is not a hyperlink
+ --&gt; links.rs:3:6
+  |
+3 | /// [http://example.net]
+  |      ^^^^^^^^^^^^^^^^^^ help: use an automatic link instead: `&lt;http://example.net&gt;`
+
+warning: 2 warnings emitted
+</code></pre>
+<h1><a class="header" href="#高级特性" id="高级特性">高级特性</a></h1>
+<p>本页列出的特性不属于其他的主要类别</p>
+<h2><a class="header" href="#cfgdoc-文档平台相关或者特性相关信息" id="cfgdoc-文档平台相关或者特性相关信息"><code>#[cfg(doc)]</code>: 文档平台相关或者特性相关信息</a></h2>
+<p>对于条件编译，rustdoc 会与编译器相同的方式处理。只生成目标主机可用的文档，其他的被 “过滤掉”。当对于不同目标提供不同的东西并且你希望文档反映你所有的可用项目，这可能会有问题。</p>
+<p>如果你希望确保 rustdoc 可以看到某个 item，而忽略目标的平台相关信息，你可以使用 <code>#[cfg(doc)]</code>。Rustdoc 会在构建文档时设置它，所以使用了这个的 item 会确保生成到文档中，比如 <code>#[cfg(any(windows, doc))]</code> 会在 Windows 上构建以及生成所有的文档。</p>
+<p>请注意 <code>cfg</code> 不会传递到文档测试中。</p>
+<p>比如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Token struct that can only be used on Windows.
+#[cfg(any(windows, doc))]
+pub struct WindowsToken;
+/// Token struct that can only be used on Unix.
+#[cfg(any(unix, doc))]
+pub struct UnixToken;
+<span class="boring">}
+</span></code></pre></pre>
+<p>这里，各自的 tokens 只能在各自的平台上使用，但是会同时出现在文档中。</p>
+<h3><a class="header" href="#特定平台文档之间的交互" id="特定平台文档之间的交互">特定平台文档之间的交互</a></h3>
+<p>Rustdoc 没有什么如同你在每种平台运行一次的魔法方法来编译文档（这种魔法方式被称为 <a href="https://github.com/rust-lang/rust/issues/1998">'holy grail of rustdoc'</a>）。代替的是，会一次读到你<strong>所有的</strong>代码，与 Rust 编译器通过参数 <code>--cfg doc</code> 读到的一样。但是，Rustdoc 有一个技巧可以在接收到特定平台代码时处理它。</p>
+<p>为你的 crate 生成文档，Rustdoc 只需要知道你的公共函数签名。尤其是，不需要知道你的函数实现，所以会忽略所有函数体类型错误和名称解析错误。注意，这不适用函数体之外的东西：因为 Rustdoc 会记录类型，需要知道类型是什么。比如，无论平台如何，这些代码可以工作：</p>
+<pre><code class="language-rust ignore(platform-specific rustdoc-specific-behavior)">pub fn f() {
+    use std::os::windows::ffi::OsStrExt;
+}
+</code></pre>
+<p>但是这些不行，因为函数签名中存在为止类型：</p>
+<pre><code class="language-rust ignore(platform-specific rustdoc-specific-behavior)">pub fn f() -&gt; std::os::windows::ffi::EncodeWide&lt;'static&gt; {
+    unimplemented!()
+}
+</code></pre>
+<p>更多的代码示例，请参考 <a href="https://github.com/rust-lang/rust/blob/b146000e910ccd60bdcde89363cb6aa14ecc0d95/src/test/rustdoc-ui/error-in-impl-trait/realistic-async.rs">the rustdoc test suite</a>。</p>
+<h2><a class="header" href="#增加文档搜索的-item-别名" id="增加文档搜索的-item-别名">增加文档搜索的 item 别名</a></h2>
+<p>这个特性可以通过 <code>doc(alias)</code> 属性增加 <code>rustdoc</code> 搜索 item 的别名。比如：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc(alias = &quot;x&quot;)]
+#[doc(alias = &quot;big&quot;)]
+pub struct BigX;
+<span class="boring">}
+</span></code></pre></pre>
+<p>然后，当搜索时，你可以输入 &quot;x&quot; 或者 &quot;big&quot;，搜索结果优先显示 <code>BigX</code> 结构。</p>
+<p>文档别名也有一些限制：你不能使用 <code>&quot;</code> 或者空格。</p>
+<p>你可以使用列表一次增加多个别名：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc(alias(&quot;x&quot;, &quot;big&quot;))]
+pub struct BigX;
+<span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#不稳定特性" id="不稳定特性">不稳定特性</a></h1>
+<p>Rustdoc is under active development, and like the Rust compiler, some features are only available
+on nightly releases. Some of these features are new and need some more testing before they're able to be
+released to the world at large, and some of them are tied to features in the Rust compiler that are unstable. Several features here require a matching <code>#![feature(...)]</code> attribute to
+enable, and thus are more fully documented in the <a href="../unstable-book/index.html">Unstable Book</a>. Those sections will link over
+there as necessary.</p>
+<h2><a class="header" href="#nightly-gated-functionality" id="nightly-gated-functionality">Nightly-gated functionality</a></h2>
+<p>These features just require a nightly build to operate. Unlike the other features on this page,
+these don't need to be &quot;turned on&quot; with a command-line flag or a <code>#![feature(...)]</code> attribute in
+your crate. This can give them some subtle fallback modes when used on a stable release, so be
+careful!</p>
+<h3><a class="header" href="#error-numbers-for-compile-fail-doctests" id="error-numbers-for-compile-fail-doctests">Error numbers for <code>compile-fail</code> doctests</a></h3>
+<p>As detailed in <a href="documentation-tests.html#attributes">the chapter on documentation tests</a>, you can add a
+<code>compile_fail</code> attribute to a doctest to state that the test should fail to compile. However, on
+nightly, you can optionally add an error number to state that a doctest should emit a specific error
+number:</p>
+<pre><code class="language-markdown">```compile_fail,E0044
+extern { fn some_func&lt;T&gt;(x: T); }
+```
+</code></pre>
+<p>This is used by the error index to ensure that the samples that correspond to a given error number
+properly emit that error code. However, these error codes aren't guaranteed to be the only thing
+that a piece of code emits from version to version, so this is unlikely to be stabilized in the
+future.</p>
+<p>Attempting to use these error numbers on stable will result in the code sample being interpreted as
+plain text.</p>
+<h2><a class="header" href="#extensions-to-the-doc-attribute" id="extensions-to-the-doc-attribute">Extensions to the <code>#[doc]</code> attribute</a></h2>
+<p>These features operate by extending the <code>#[doc]</code> attribute, and thus can be caught by the compiler
+and enabled with a <code>#![feature(...)]</code> attribute in your crate.</p>
+<h3><a class="header" href="#doccfg-recording-what-platforms-or-features-are-required-for-code-to-be-present" id="doccfg-recording-what-platforms-or-features-are-required-for-code-to-be-present"><code>#[doc(cfg)]</code>: Recording what platforms or features are required for code to be present</a></h3>
+<p>You can use <code>#[doc(cfg(...))]</code> to tell Rustdoc exactly which platform items appear on.
+This has two effects:</p>
+<ol>
+<li>doctests will only run on the appropriate platforms, and</li>
+<li>When Rustdoc renders documentation for that item, it will be accompanied by a banner explaining
+that the item is only available on certain platforms.</li>
+</ol>
+<p><code>#[doc(cfg)]</code> is intended to be used alongside <a href="./advanced-features.html"><code>#[cfg(doc)]</code></a>.
+For example, <code>#[cfg(any(windows, doc))]</code> will preserve the item either on Windows or during the
+documentation process. Then, adding a new attribute <code>#[doc(cfg(windows))]</code> will tell Rustdoc that
+the item is supposed to be used on Windows. For example:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![feature(doc_cfg)]
+
+<span class="boring">fn main() {
+</span>/// Token struct that can only be used on Windows.
+#[cfg(any(windows, doc))]
+#[doc(cfg(windows))]
+pub struct WindowsToken;
+
+/// Token struct that can only be used on Unix.
+#[cfg(any(unix, doc))]
+#[doc(cfg(unix))]
+pub struct UnixToken;
+
+/// Token struct that is only available with the `serde` feature
+#[cfg(feature = &quot;serde&quot;)]
+#[doc(cfg(feature = &quot;serde&quot;))]
+#[derive(serde::Deserialize)]
+pub struct SerdeToken;
+<span class="boring">}
+</span></code></pre></pre>
+<p>In this sample, the tokens will only appear on their respective platforms, but they will both appear
+in documentation.</p>
+<p><code>#[doc(cfg(...))]</code> was introduced to be used by the standard library and currently requires the
+<code>#![feature(doc_cfg)]</code> feature gate. For more information, see <a href="../unstable-book/language-features/doc-cfg.html">its chapter in the Unstable
+Book</a> and <a href="https://github.com/rust-lang/rust/issues/43781">its tracking issue</a>.</p>
+<h3><a class="header" href="#doc_auto_cfg-automatically-generate-doccfg" id="doc_auto_cfg-automatically-generate-doccfg"><code>doc_auto_cfg</code>: Automatically generate <code>#[doc(cfg)]</code></a></h3>
+<p><code>doc_auto_cfg</code> is an extension to the <code>#[doc(cfg)]</code> feature. With it, you don't need to add
+<code>#[doc(cfg(...)]</code> anymore unless you want to override the default behaviour. So if we take the
+previous source code:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![feature(doc_auto_cfg)]
+
+<span class="boring">fn main() {
+</span>/// Token struct that can only be used on Windows.
+#[cfg(any(windows, doc))]
+pub struct WindowsToken;
+
+/// Token struct that can only be used on Unix.
+#[cfg(any(unix, doc))]
+pub struct UnixToken;
+
+/// Token struct that is only available with the `serde` feature
+#[cfg(feature = &quot;serde&quot;)]
+#[derive(serde::Deserialize)]
+pub struct SerdeToken;
+<span class="boring">}
+</span></code></pre></pre>
+<p>It'll render almost the same, the difference being that <code>doc</code> will also be displayed. To fix this,
+you can use <code>doc_cfg_hide</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![feature(doc_cfg_hide)]
+#![doc(cfg_hide(doc))]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>And <code>doc</code> won't show up anymore!</p>
+<h3><a class="header" href="#adding-your-trait-to-the-notable-traits-dialog" id="adding-your-trait-to-the-notable-traits-dialog">Adding your trait to the &quot;Notable traits&quot; dialog</a></h3>
+<p>Rustdoc keeps a list of a few traits that are believed to be &quot;fundamental&quot; to
+types that implement them. These traits are intended to be the primary interface
+for their implementers, and are often most of the API available to be documented
+on their types. For this reason, Rustdoc will track when a given type implements
+one of these traits and call special attention to it when a function returns one
+of these types. This is the &quot;Notable traits&quot; dialog, accessible as a circled <code>i</code>
+button next to the function, which, when clicked, shows the dialog.</p>
+<p>In the standard library, some of the traits that are part of this list are
+<code>Iterator</code>, <code>Future</code>, <code>io::Read</code>, and <code>io::Write</code>. However, rather than being
+implemented as a hard-coded list, these traits have a special marker attribute
+on them: <code>#[doc(notable_trait)]</code>. This means that you can apply this attribute
+to your own trait to include it in the &quot;Notable traits&quot; dialog in documentation.</p>
+<p>The <code>#[doc(notable_trait)]</code> attribute currently requires the <code>#![feature(doc_notable_trait)]</code>
+feature gate. For more information, see <a href="../unstable-book/language-features/doc-notable-trait.html">its chapter in the Unstable Book</a>
+and <a href="https://github.com/rust-lang/rust/issues/45040">its tracking issue</a>.</p>
+<h3><a class="header" href="#exclude-certain-dependencies-from-documentation" id="exclude-certain-dependencies-from-documentation">Exclude certain dependencies from documentation</a></h3>
+<p>The standard library uses several dependencies which, in turn, use several types and traits from the
+standard library. In addition, there are several compiler-internal crates that are not considered to
+be part of the official standard library, and thus would be a distraction to include in
+documentation. It's not enough to exclude their crate documentation, since information about trait
+implementations appears on the pages for both the type and the trait, which can be in different
+crates!</p>
+<p>To prevent internal types from being included in documentation, the standard library adds an
+attribute to their <code>extern crate</code> declarations: <code>#[doc(masked)]</code>. This causes Rustdoc to &quot;mask out&quot;
+types from these crates when building lists of trait implementations.</p>
+<p>The <code>#[doc(masked)]</code> attribute is intended to be used internally, and requires the
+<code>#![feature(doc_masked)]</code> feature gate.  For more information, see <a href="../unstable-book/language-features/doc-masked.html">its chapter in the Unstable
+Book</a> and <a href="https://github.com/rust-lang/rust/issues/44027">its tracking issue</a>.</p>
+<h2><a class="header" href="#document-primitives" id="document-primitives">Document primitives</a></h2>
+<p>This is for Rust compiler internal use only.</p>
+<p>Since primitive types are defined in the compiler, there's no place to attach documentation
+attributes. The <code>#[doc(primitive)]</code> attribute is used by the standard library to provide a way
+to generate documentation for primitive types, and requires <code>#![feature(rustdoc_internals)]</code> to
+enable.</p>
+<h2><a class="header" href="#document-keywords" id="document-keywords">Document keywords</a></h2>
+<p>This is for Rust compiler internal use only.</p>
+<p>Rust keywords are documented in the standard library (look for <code>match</code> for example).</p>
+<p>To do so, the <code>#[doc(keyword = &quot;...&quot;)]</code> attribute is used. Example:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span>#![feature(rustdoc_internals)]
+
+<span class="boring">fn main() {
+</span>/// Some documentation about the keyword.
+#[doc(keyword = &quot;keyword&quot;)]
+mod empty_mod {}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#unstable-command-line-arguments" id="unstable-command-line-arguments">Unstable command-line arguments</a></h2>
+<p>These features are enabled by passing a command-line flag to Rustdoc, but the flags in question are
+themselves marked as unstable. To use any of these options, pass <code>-Z unstable-options</code> as well as
+the flag in question to Rustdoc on the command-line. To do this from Cargo, you can either use the
+<code>RUSTDOCFLAGS</code> environment variable or the <code>cargo rustdoc</code> command.</p>
+<h3><a class="header" href="#--markdown-before-content-include-rendered-markdown-before-the-content" id="--markdown-before-content-include-rendered-markdown-before-the-content"><code>--markdown-before-content</code>: include rendered Markdown before the content</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --markdown-before-content extra.md
+$ rustdoc README.md -Z unstable-options --markdown-before-content extra.md
+</code></pre>
+<p>Just like <code>--html-before-content</code>, this allows you to insert extra content inside the <code>&lt;body&gt;</code> tag
+but before the other content <code>rustdoc</code> would normally produce in the rendered documentation.
+However, instead of directly inserting the file verbatim, <code>rustdoc</code> will pass the files through a
+Markdown renderer before inserting the result into the file.</p>
+<h3><a class="header" href="#--markdown-after-content-include-rendered-markdown-after-the-content" id="--markdown-after-content-include-rendered-markdown-after-the-content"><code>--markdown-after-content</code>: include rendered Markdown after the content</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --markdown-after-content extra.md
+$ rustdoc README.md -Z unstable-options --markdown-after-content extra.md
+</code></pre>
+<p>Just like <code>--html-after-content</code>, this allows you to insert extra content before the <code>&lt;/body&gt;</code> tag
+but after the other content <code>rustdoc</code> would normally produce in the rendered documentation.
+However, instead of directly inserting the file verbatim, <code>rustdoc</code> will pass the files through a
+Markdown renderer before inserting the result into the file.</p>
+<h3><a class="header" href="#--playground-url-control-the-location-of-the-playground" id="--playground-url-control-the-location-of-the-playground"><code>--playground-url</code>: control the location of the playground</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --playground-url https://play.rust-lang.org/
+</code></pre>
+<p>When rendering a crate's docs, this flag gives the base URL of the Rust Playground, to use for
+generating <code>Run</code> buttons. Unlike <code>--markdown-playground-url</code>, this argument works for standalone
+Markdown files <em>and</em> Rust crates. This works the same way as adding <code>#![doc(html_playground_url = &quot;url&quot;)]</code> to your crate root, as mentioned in <a href="the-doc-attribute.html#html_playground_url">the chapter about the <code>#[doc]</code>
+attribute</a>. Please be aware that the official Rust Playground at
+https://play.rust-lang.org does not have every crate available, so if your examples require your
+crate, make sure the playground you provide has your crate available.</p>
+<p>If both <code>--playground-url</code> and <code>--markdown-playground-url</code> are present when rendering a standalone
+Markdown file, the URL given to <code>--markdown-playground-url</code> will take precedence. If both
+<code>--playground-url</code> and <code>#![doc(html_playground_url = &quot;url&quot;)]</code> are present when rendering crate docs,
+the attribute will take precedence.</p>
+<h3><a class="header" href="#--sort-modules-by-appearance-control-how-items-on-module-pages-are-sorted" id="--sort-modules-by-appearance-control-how-items-on-module-pages-are-sorted"><code>--sort-modules-by-appearance</code>: control how items on module pages are sorted</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --sort-modules-by-appearance
+</code></pre>
+<p>Ordinarily, when <code>rustdoc</code> prints items in module pages, it will sort them alphabetically (taking
+some consideration for their stability, and names that end in a number). Giving this flag to
+<code>rustdoc</code> will disable this sorting and instead make it print the items in the order they appear in
+the source.</p>
+<h3><a class="header" href="#--show-type-layout-add-a-section-to-each-types-docs-describing-its-memory-layout" id="--show-type-layout-add-a-section-to-each-types-docs-describing-its-memory-layout"><code>--show-type-layout</code>: add a section to each type's docs describing its memory layout</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --show-type-layout
+</code></pre>
+<p>When this flag is passed, rustdoc will add a &quot;Layout&quot; section at the bottom of
+each type's docs page that includes a summary of the type's memory layout as
+computed by rustc. For example, rustdoc will show the size in bytes that a value
+of that type will take in memory.</p>
+<p>Note that most layout information is <strong>completely unstable</strong> and may even differ
+between compilations.</p>
+<h3><a class="header" href="#--resource-suffix-modifying-the-name-of-cssjavascript-in-crate-docs" id="--resource-suffix-modifying-the-name-of-cssjavascript-in-crate-docs"><code>--resource-suffix</code>: modifying the name of CSS/JavaScript in crate docs</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --resource-suffix suf
+</code></pre>
+<p>When rendering docs, <code>rustdoc</code> creates several CSS and JavaScript files as part of the output. Since
+all these files are linked from every page, changing where they are can be cumbersome if you need to
+specially cache them. This flag will rename all these files in the output to include the suffix in
+the filename. For example, <code>light.css</code> would become <code>light-suf.css</code> with the above command.</p>
+<h3><a class="header" href="#--extern-html-root-url-control-how-rustdoc-links-to-non-local-crates" id="--extern-html-root-url-control-how-rustdoc-links-to-non-local-crates"><code>--extern-html-root-url</code>: control how rustdoc links to non-local crates</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --extern-html-root-url some-crate=https://example.com/some-crate/1.0.1
+</code></pre>
+<p>Ordinarily, when rustdoc wants to link to a type from a different crate, it looks in two places:
+docs that already exist in the output directory, or the <code>#![doc(doc_html_root)]</code> set in the other
+crate. However, if you want to link to docs that exist in neither of those places, you can use these
+flags to control that behavior. When the <code>--extern-html-root-url</code> flag is given with a name matching
+one of your dependencies, rustdoc use that URL for those docs. Keep in mind that if those docs exist
+in the output directory, those local docs will still override this flag.</p>
+<h3><a class="header" href="#-z-force-unstable-if-unmarked" id="-z-force-unstable-if-unmarked"><code>-Z force-unstable-if-unmarked</code></a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z force-unstable-if-unmarked
+</code></pre>
+<p>This is an internal flag intended for the standard library and compiler that applies an
+<code>#[unstable]</code> attribute to any dependent crate that doesn't have another stability attribute. This
+allows <code>rustdoc</code> to be able to generate documentation for the compiler crates and the standard
+library, as an equivalent command-line argument is provided to <code>rustc</code> when building those crates.</p>
+<h3><a class="header" href="#--index-page-provide-a-top-level-landing-page-for-docs" id="--index-page-provide-a-top-level-landing-page-for-docs"><code>--index-page</code>: provide a top-level landing page for docs</a></h3>
+<p>This feature allows you to generate an index-page with a given markdown file. A good example of it
+is the <a href="https://doc.rust-lang.org/nightly/index.html">rust documentation index</a>.</p>
+<p>With this, you'll have a page which you can custom as much as you want at the top of your crates.</p>
+<p>Using <code>index-page</code> option enables <code>enable-index-page</code> option as well.</p>
+<h3><a class="header" href="#--enable-index-page-generate-a-default-index-page-for-docs" id="--enable-index-page-generate-a-default-index-page-for-docs"><code>--enable-index-page</code>: generate a default index page for docs</a></h3>
+<p>This feature allows the generation of a default index-page which lists the generated crates.</p>
+<h3><a class="header" href="#--static-root-path-control-how-static-files-are-loaded-in-html-output" id="--static-root-path-control-how-static-files-are-loaded-in-html-output"><code>--static-root-path</code>: control how static files are loaded in HTML output</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --static-root-path '/cache/'
+</code></pre>
+<p>This flag controls how rustdoc links to its static files on HTML pages. If you're hosting a lot of
+crates' docs generated by the same version of rustdoc, you can use this flag to cache rustdoc's CSS,
+JavaScript, and font files in a single location, rather than duplicating it once per &quot;doc root&quot;
+(grouping of crate docs generated into the same output directory, like with <code>cargo doc</code>). Per-crate
+files like the search index will still load from the documentation root, but anything that gets
+renamed with <code>--resource-suffix</code> will load from the given path.</p>
+<h3><a class="header" href="#--persist-doctests-persist-doctest-executables-after-running" id="--persist-doctests-persist-doctest-executables-after-running"><code>--persist-doctests</code>: persist doctest executables after running</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --test -Z unstable-options --persist-doctests target/rustdoctest
+</code></pre>
+<p>This flag allows you to keep doctest executables around after they're compiled or run.
+Usually, rustdoc will immediately discard a compiled doctest after it's been tested, but
+with this option, you can keep those binaries around for farther testing.</p>
+<h3><a class="header" href="#--show-coverage-calculate-the-percentage-of-items-with-documentation" id="--show-coverage-calculate-the-percentage-of-items-with-documentation"><code>--show-coverage</code>: calculate the percentage of items with documentation</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --show-coverage
+</code></pre>
+<p>It generates something like this:</p>
+<pre><code class="language-bash">+-------------------------------------+------------+------------+------------+------------+
+| File                                | Documented | Percentage |   Examples | Percentage |
++-------------------------------------+------------+------------+------------+------------+
+| lib.rs                              |          4 |     100.0% |          1 |      25.0% |
++-------------------------------------+------------+------------+------------+------------+
+| Total                               |          4 |     100.0% |          1 |      25.0% |
++-------------------------------------+------------+------------+------------+------------+
+</code></pre>
+<p>If you want to determine how many items in your crate are documented, pass this flag to rustdoc.
+When it receives this flag, it will count the public items in your crate that have documentation,
+and print out the counts and a percentage instead of generating docs.</p>
+<p>Some methodology notes about what rustdoc counts in this metric:</p>
+<ul>
+<li>Rustdoc will only count items from your crate (i.e. items re-exported from other crates don't
+count).</li>
+<li>Docs written directly onto inherent impl blocks are not counted, even though their doc comments
+are displayed, because the common pattern in Rust code is to write all inherent methods into the
+same impl block.</li>
+<li>Items in a trait implementation are not counted, as those impls will inherit any docs from the
+trait itself.</li>
+<li>By default, only public items are counted. To count private items as well, pass
+<code>--document-private-items</code> at the same time.</li>
+</ul>
+<p>Public items that are not documented can be seen with the built-in <code>missing_docs</code> lint. Private
+items that are not documented can be seen with Clippy's <code>missing_docs_in_private_items</code> lint.</p>
+<p>Calculating code examples follows these rules:</p>
+<ol>
+<li>These items aren't accounted by default:</li>
+</ol>
+<ul>
+<li>struct/union field</li>
+<li>enum variant</li>
+<li>constant</li>
+<li>static</li>
+<li>typedef</li>
+</ul>
+<ol start="2">
+<li>If one of the previously listed items has a code example, then it'll be counted.</li>
+</ol>
+<h4><a class="header" href="#json-output" id="json-output">JSON output</a></h4>
+<p>When using <code>--output-format json</code> with this option, it will display the coverage information in
+JSON format. For example, here is the JSON for a file with one documented item and one
+undocumented item:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// This item has documentation
+pub fn foo() {}
+
+pub fn no_documentation() {}
+<span class="boring">}
+</span></code></pre></pre>
+<pre><code class="language-json">{&quot;no_std.rs&quot;:{&quot;total&quot;:3,&quot;with_docs&quot;:1,&quot;total_examples&quot;:3,&quot;with_examples&quot;:0}}
+</code></pre>
+<p>Note that the third item is the crate root, which in this case is undocumented.</p>
+<h3><a class="header" href="#-w--output-format-output-format" id="-w--output-format-output-format"><code>-w</code>/<code>--output-format</code>: output format</a></h3>
+<p><code>--output-format json</code> emits documentation in the experimental
+<a href="https://doc.rust-lang.org/nightly/nightly-rustc/rustdoc_json_types/">JSON format</a>. <code>--output-format html</code> has no effect,
+and is also accepted on stable toolchains.</p>
+<p>It can also be used with <code>--show-coverage</code>. Take a look at its
+<a href="unstable-features.html#--show-coverage-get-statistics-about-code-documentation-coverage">documentation</a> for more
+information.</p>
+<h3><a class="header" href="#--enable-per-target-ignores-allow-ignore-foo-style-filters-for-doctests" id="--enable-per-target-ignores-allow-ignore-foo-style-filters-for-doctests"><code>--enable-per-target-ignores</code>: allow <code>ignore-foo</code> style filters for doctests</a></h3>
+<p>Using this flag looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --enable-per-target-ignores
+</code></pre>
+<p>This flag allows you to tag doctests with compiletest style <code>ignore-foo</code> filters that prevent
+rustdoc from running that test if the target triple string contains foo. For example:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>///```ignore-foo,ignore-bar
+///assert!(2 == 2);
+///```
+struct Foo;
+<span class="boring">}
+</span></code></pre></pre>
+<p>This will not be run when the build target is <code>super-awesome-foo</code> or <code>less-bar-awesome</code>.
+If the flag is not enabled, then rustdoc will consume the filter, but do nothing with it, and
+the above example will be run for all targets.
+If you want to preserve backwards compatibility for older versions of rustdoc, you can use</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>///```ignore,ignore-foo
+///assert!(2 == 2);
+///```
+struct Foo;
+<span class="boring">}
+</span></code></pre></pre>
+<p>In older versions, this will be ignored on all targets, but on newer versions <code>ignore-gnu</code> will
+override <code>ignore</code>.</p>
+<h3><a class="header" href="#--runtool---runtool-arg-program-to-run-tests-with-args-to-pass-to-it" id="--runtool---runtool-arg-program-to-run-tests-with-args-to-pass-to-it"><code>--runtool</code>, <code>--runtool-arg</code>: program to run tests with; args to pass to it</a></h3>
+<p>Using these options looks like this:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --runtool runner --runtool-arg --do-thing --runtool-arg --do-other-thing
+</code></pre>
+<p>These options can be used to run the doctest under a program, and also pass arguments to
+that program. For example, if you want to run your doctests under valgrind you might run</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs -Z unstable-options --runtool valgrind
+</code></pre>
+<p>Another use case would be to run a test inside an emulator, or through a Virtual Machine.</p>
+<h3><a class="header" href="#--with-examples-include-examples-of-uses-of-items-as-documentation" id="--with-examples-include-examples-of-uses-of-items-as-documentation"><code>--with-examples</code>: include examples of uses of items as documentation</a></h3>
+<p>This option, combined with <code>--scrape-examples-target-crate</code> and
+<code>--scrape-examples-output-path</code>, is used to implement the functionality in <a href="https://github.com/rust-lang/rfcs/pull/3123">RFC
+#3123</a>. Uses of an item (currently
+functions / call-sites) are found in a crate and its reverse-dependencies, and
+then the uses are included as documentation for that item. This feature is
+intended to be used via <code>cargo doc --scrape-examples</code>, but the rustdoc-only
+workflow looks like:</p>
+<pre><code class="language-bash">$ rustdoc examples/ex.rs -Z unstable-options \
+    --extern foobar=target/deps/libfoobar.rmeta \
+    --scrape-examples-target-crate foobar \
+    --scrape-examples-output-path output.calls
+$ rustdoc src/lib.rs -Z unstable-options --with-examples output.calls
+</code></pre>
+<p>First, the library must be checked to generate an <code>rmeta</code>. Then a
+reverse-dependency like <code>examples/ex.rs</code> is given to rustdoc with the target
+crate being documented (<code>foobar</code>) and a path to output the calls
+(<code>output.calls</code>). Then, the generated calls file can be passed via
+<code>--with-examples</code> to the subsequent documentation of <code>foobar</code>.</p>
+<h1><a class="header" href="#website-特性" id="website-特性">Website 特性</a></h1>
+<p>这些特性是关于使用<code>rustdoc</code>生成的网站。</p>
+<h2><a class="header" href="#自定义搜索引擎" id="自定义搜索引擎">自定义搜索引擎</a></h2>
+<p>如果你经常参考在线 Rust 文档，你会喜欢使用一个自定义搜索引擎。这能让你使用导航地址栏直接搜索 <code>rustdoc</code> 网站。大多数浏览器支持这种特性，让你来定义一个包含 <code>%S</code>（你搜索的内容）的 URL 模版，比如对于标准库你可以使用这个模板：</p>
+<pre><code class="language-text">https://doc.rust-lang.org/stable/std/?search=%s
+</code></pre>
+<p>注意这会列出你搜索到的所有结果。如果你想要直接打开搜索到的第一个结果可以使用下面的模板：</p>
+<pre><code class="language-text">https://doc.rust-lang.org/stable/std/?search=%s&amp;go_to_first=true
+</code></pre>
+<p>这个 URL 在末尾加入了<code>go_to_first=true</code>搜索参数，会自动跳转到第一个搜索结果。</p>
+<h1><a class="header" href="#passes" id="passes">Passes</a></h1>
+<p>Rustdoc 有一个概念叫做 &quot;passes&quot;。在 <code>rustdoc</code> 命令最终生成文档之前存在一些转换。</p>
+<p>自定义 passes 被<strong>废弃</strong>了，已经可用的 passes 不会稳定可能随时会在发布中更改</p>
+<p>过去最常用的自定义 passes 是 <code>strip-private</code> pass。你现在可以更容易的做到这个，通过传递参数 <a href="./unstable-features.html#--document-private-items"><code>--document-private-items</code></a>.</p>
+<h1><a class="header" href="#references" id="references">References</a></h1>
+<p>有很多良好的 <code>rustdoc</code> 参考，如果你知道其他的好资源，请提交 PR！</p>
+<h2><a class="header" href="#官方" id="官方">官方</a></h2>
+<ul>
+<li><a href="https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#making-useful-documentation-comments">Learn Rust</a></li>
+<li><a href="https://doc.rust-lang.org/stable/rust-by-example/meta/doc.html">Rust By Example</a></li>
+<li><a href="https://doc.rust-lang.org/stable/reference/comments.html#doc-comments">Rust Reference</a></li>
+<li><a href="https://rust-lang.github.io/rfcs/1574-more-api-documentation-conventions.html">RFC 1574: More API Documentation Conventions</a></li>
+<li><a href="https://rust-lang.github.io/rfcs/1946-intra-rustdoc-links.html">RFC 1946: Intra Rustdoc Links</a></li>
+</ul>
+<h2><a class="header" href="#社区" id="社区">社区</a></h2>
+<ul>
+<li><a href="https://rust-lang.github.io/api-guidelines/documentation.html">API Guidelines</a></li>
+<li><a href="https://github.com/rust-lang/rfcs/issues?q=label%3AT-rustdoc">Github tagged RFCs</a></li>
+<li><a href="https://github.com/rust-lang/rust/issues?q=is%3Aissue+is%3Aopen+label%3AT-rustdoc">Github tagged issues</a></li>
+<li><a href="https://github.com/rust-lang/rfcs/pull/1687">RFC (stalled) front page styleguide</a></li>
+<li><a href="https://blog.guillaume-gomez.fr/articles/2020-03-12+Guide+on+how+to+write+documentation+for+a+Rust+crate">Guide on how to write documentation for a Rust crate</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

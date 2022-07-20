@@ -1,0 +1,926 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>总览 - Rust Cookbook 中文版 - A Rust Cookbook</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rust cookbook 中文版, Rust 实践指南, Rust 实例示例, Rust 编程实战, Rust crate 生态实践, Rust crate 集成应用">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="stylesheet" href="css/custom.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html" class="active">总览</a></li><li class="chapter-item expanded affix "><a href="about.html">关于本书</a></li><li class="chapter-item expanded "><a href="algorithms.html"><strong aria-hidden="true">1.</strong> 算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="algorithms/randomness.html"><strong aria-hidden="true">1.1.</strong> 生成随机值</a></li><li class="chapter-item expanded "><a href="algorithms/sorting.html"><strong aria-hidden="true">1.2.</strong> Vector 排序</a></li></ol></li><li class="chapter-item expanded "><a href="cli.html"><strong aria-hidden="true">2.</strong> 命令行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cli/arguments.html"><strong aria-hidden="true">2.1.</strong> 参数解析</a></li><li class="chapter-item expanded "><a href="cli/ansi_terminal.html"><strong aria-hidden="true">2.2.</strong> ANSI 终端</a></li></ol></li><li class="chapter-item expanded "><a href="compression.html"><strong aria-hidden="true">3.</strong> 压缩</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="compression/tar.html"><strong aria-hidden="true">3.1.</strong> 使用 tar 包</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">4.</strong> 并发/并行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> 显式线程</a></li><li class="chapter-item expanded "><a href="concurrency/parallel.html"><strong aria-hidden="true">4.2.</strong> 数据并行</a></li></ol></li><li class="chapter-item expanded "><a href="cryptography.html"><strong aria-hidden="true">5.</strong> 密码学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="cryptography/hashing.html"><strong aria-hidden="true">5.1.</strong> 散列（哈希）</a></li><li class="chapter-item expanded "><a href="cryptography/encryption.html"><strong aria-hidden="true">5.2.</strong> 加密</a></li></ol></li><li class="chapter-item expanded "><a href="data_structures.html"><strong aria-hidden="true">6.</strong> 数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="data_structures/bitfield.html"><strong aria-hidden="true">6.1.</strong> 位域</a></li></ol></li><li class="chapter-item expanded "><a href="database.html"><strong aria-hidden="true">7.</strong> 数据库</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="database/sqlite.html"><strong aria-hidden="true">7.1.</strong> SQLite</a></li><li class="chapter-item expanded "><a href="database/postgres.html"><strong aria-hidden="true">7.2.</strong> Postgres</a></li></ol></li><li class="chapter-item expanded "><a href="datetime.html"><strong aria-hidden="true">8.</strong> 日期及时间</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="datetime/duration.html"><strong aria-hidden="true">8.1.</strong> 期间和计算</a></li><li class="chapter-item expanded "><a href="datetime/parse.html"><strong aria-hidden="true">8.2.</strong> 解析与显示</a></li></ol></li><li class="chapter-item expanded "><a href="development_tools.html"><strong aria-hidden="true">9.</strong> 开发工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="development_tools/debugging.html"><strong aria-hidden="true">9.1.</strong> 调试工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="development_tools/debugging/log.html"><strong aria-hidden="true">9.1.1.</strong> 日志信息</a></li><li class="chapter-item expanded "><a href="development_tools/debugging/config_log.html"><strong aria-hidden="true">9.1.2.</strong> 日志配置</a></li></ol></li><li class="chapter-item expanded "><a href="development_tools/versioning.html"><strong aria-hidden="true">9.2.</strong> 版本控制</a></li><li class="chapter-item expanded "><a href="development_tools/build_tools.html"><strong aria-hidden="true">9.3.</strong> 构建工具</a></li></ol></li><li class="chapter-item expanded "><a href="encoding.html"><strong aria-hidden="true">10.</strong> 编码</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="encoding/strings.html"><strong aria-hidden="true">10.1.</strong> 字符集</a></li><li class="chapter-item expanded "><a href="encoding/csv.html"><strong aria-hidden="true">10.2.</strong> CSV 处理</a></li><li class="chapter-item expanded "><a href="encoding/complex.html"><strong aria-hidden="true">10.3.</strong> 结构化数据</a></li></ol></li><li class="chapter-item expanded "><a href="errors.html"><strong aria-hidden="true">11.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="errors/handle.html"><strong aria-hidden="true">11.1.</strong> 处理错误变量</a></li></ol></li><li class="chapter-item expanded "><a href="file.html"><strong aria-hidden="true">12.</strong> 文件系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="file/read-write.html"><strong aria-hidden="true">12.1.</strong> 文件读写</a></li><li class="chapter-item expanded "><a href="file/dir.html"><strong aria-hidden="true">12.2.</strong> 目录遍历</a></li></ol></li><li class="chapter-item expanded "><a href="hardware.html"><strong aria-hidden="true">13.</strong> 硬件支持</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="hardware/processor.html"><strong aria-hidden="true">13.1.</strong> 处理器</a></li></ol></li><li class="chapter-item expanded "><a href="mem.html"><strong aria-hidden="true">14.</strong> 内存管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="mem/global_static.html"><strong aria-hidden="true">14.1.</strong> 全局静态/全局堆栈</a></li></ol></li><li class="chapter-item expanded "><a href="net.html"><strong aria-hidden="true">15.</strong> 网络</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="net/server.html"><strong aria-hidden="true">15.1.</strong> 服务器</a></li></ol></li><li class="chapter-item expanded "><a href="os.html"><strong aria-hidden="true">16.</strong> 操作系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="os/external.html"><strong aria-hidden="true">16.1.</strong> 外部命令</a></li></ol></li><li class="chapter-item expanded "><a href="science.html"><strong aria-hidden="true">17.</strong> 科学计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="science/mathematics.html"><strong aria-hidden="true">17.1.</strong> 数学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="science/mathematics/linear_algebra.html"><strong aria-hidden="true">17.1.1.</strong> 线性代数</a></li><li class="chapter-item expanded "><a href="science/mathematics/trigonometry.html"><strong aria-hidden="true">17.1.2.</strong> 三角学</a></li><li class="chapter-item expanded "><a href="science/mathematics/complex_numbers.html"><strong aria-hidden="true">17.1.3.</strong> 复数</a></li><li class="chapter-item expanded "><a href="science/mathematics/statistics.html"><strong aria-hidden="true">17.1.4.</strong> 统计学</a></li><li class="chapter-item expanded "><a href="science/mathematics/miscellaneous.html"><strong aria-hidden="true">17.1.5.</strong> 其它数学计算</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="text.html"><strong aria-hidden="true">18.</strong> 文本处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="text/regex.html"><strong aria-hidden="true">18.1.</strong> 正则表达式</a></li><li class="chapter-item expanded "><a href="text/string_parsing.html"><strong aria-hidden="true">18.2.</strong> 字符串解析</a></li></ol></li><li class="chapter-item expanded "><a href="web.html"><strong aria-hidden="true">19.</strong> Web 编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="web/scraping.html"><strong aria-hidden="true">19.1.</strong> 提取链接</a></li><li class="chapter-item expanded "><a href="web/url.html"><strong aria-hidden="true">19.2.</strong> URL</a></li><li class="chapter-item expanded "><a href="web/mime.html"><strong aria-hidden="true">19.3.</strong> 媒介类型</a></li><li class="chapter-item expanded "><a href="web/clients.html"><strong aria-hidden="true">19.4.</strong> 客户端</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="web/clients/requests.html"><strong aria-hidden="true">19.4.1.</strong> 请求处理</a></li><li class="chapter-item expanded "><a href="web/clients/apis.html"><strong aria-hidden="true">19.4.2.</strong> Web API 调用</a></li><li class="chapter-item expanded "><a href="web/clients/download.html"><strong aria-hidden="true">19.4.3.</strong> 下载</a></li><li class="spacer"></li></ol></li></ol></li></ol>
+
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <a href="https://budshome.com/books.html" target="_blank">
+                        <img src="css/summary.jpg">
+                    </a>
+                </div>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust Cookbook 中文版 - A Rust Cookbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://budshome.com/books.html" target="_blank" title="返回书馆" aria-label="返回书馆">
+                            <span>书馆</span>
+                        </a>
+                        
+                        <a href="https://github.com/zzy/rust-cookbook-zh-cn" target="_blank" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <script type="text/javascript" src="//static.budshome.com/js/bdutop.js"></script>
+                    
+                    <main>
+                        <h1><a class="header" href="#rust-cookbook-中文版" id="rust-cookbook-中文版">Rust Cookbook 中文版</a></h1>
+<!--
+> [intro.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/intro.md)
+> <br />
+> commit - a79932c9a624fd17977eaea5df3d5a9600d014f6 - 2018.12.05
+-->
+<p>《Rust Cookbook 中文版》是 Rust 程序设计语言（<a href="https://rust-lang.budshome.com">Rust 2018 简体中文版文档</a>）的简要实例示例集合：展示了在 Rust 生态系统中，使用各类 crate 来完成常见编程任务的良好实践。</p>
+<p>了解更多关于《Rust Cookbook 中文版》一书的信息，请阅读<a href="about.html">关于本书</a>，包括：如何阅读本书的提示、如何使用实例示例，以及关于注释的约定。</p>
+<blockquote>
+<p>注1：《Rust Cookbook 中文版》翻译自 rust-lang-nursery 团队撰写的 <em>“A Rust Cookbook”</em>，感谢 rust-lang-nursery 团队的无私奉献！</p>
+</blockquote>
+<blockquote>
+<p>注2：《Rust Cookbook 中文版》计划为两个阶段：<br>
+第一阶段：经仔细斟酌，形成专业、通俗、容易理解的 Rust 生态实践指南中文版本；<br>
+第二阶段：对书中代码进行详细讲解，在实际应用场景中对 Rust 生态 crate 进行分析、比较，以及拓展。<br>
+目前，第一阶段已经完成，并且和 rust-lang-nursery 团队项目同步更新。<br>
+第二阶段正在进行中，但可能需要另开一个开源项目，欢迎参与。<br></p>
+</blockquote>
+<pre><code>欢迎您提出宝贵意见：linshi@budshome.com，budshome（个人微信），晨曦中（微信公众号）。
+</code></pre>
+<h2><a class="header" href="#做贡献" id="做贡献">做贡献</a></h2>
+<p>《Rust Cookbook 中文版》的目的是让 Rust 程序员新手能够更容易地参与到 Rust 社区中，因此欢迎你做出贡献。</p>
+<h3><a class="header" href="#构建和测试" id="构建和测试">构建和测试</a></h3>
+<p>首先，从 git 克隆《Rust Cookbook 中文版》并进入目录：</p>
+<pre><code>git clone https://github.com/zzy/rust-cookbook-zh-cn.git
+cd rust-cookbook-zh-cn
+</code></pre>
+<p>《Rust Cookbook 中文版》使用 <code>mdBook</code>（<a href="https://mdbook.budshome.com">中文文档</a>）构建，所以需要通过 <code>Cargo</code>（<a href="https://cargo.budshome.com">中文文档</a>）安装它：</p>
+<pre><code>cargo install --version 0.3.5 mdbook
+</code></pre>
+<p>若要在本地生成和阅读《Rust Cookbook 中文版》，请运行：</p>
+<pre><code>mdbook serve
+</code></pre>
+<p>然后在浏览器中打开 <code>http://localhost:3000</code>，即可阅读本书。对源代码所做的任何更改都将自动重新生成页面，并会主动刷新浏览器，因此在编辑源码时打开浏览器窗口是很有帮助的。</p>
+<p>书中的所有实例都是使用 <a href="https://github.com/brson/rust-skeptic">skeptic</a> 测试的，它是测试任意 markdown 文档的工具，风格类似于 rustdoc。</p>
+<p>提交前，请对整个仓库进行测试：</p>
+<pre><code>cargo test
+</code></pre>
+<p>祝你学习愉快，欢迎提交问题，欢迎发送 PR。</p>
+<h1><a class="header" href="#算法" id="算法">算法</a></h1>
+<!--
+> [algorithms.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/algorithms.md)
+> <br />
+> commit - 2eee7043988e4289f16b5deca9f3b36e2516362b - 2020.04.18
+-->
+<h2><a class="header" href="#生成随机值" id="生成随机值">生成随机值</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="algorithms/randomness.html#%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0">生成随机数</a></td><td><a href="https://docs.rs/rand/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand" alt="rand-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="algorithms/randomness.html#%E7%94%9F%E6%88%90%E8%8C%83%E5%9B%B4%E5%86%85%E9%9A%8F%E6%9C%BA%E6%95%B0">生成范围内随机数</a></td><td><a href="https://docs.rs/rand/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand" alt="rand-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="algorithms/randomness.html#%E7%94%9F%E6%88%90%E7%BB%99%E5%AE%9A%E5%88%86%E5%B8%83%E9%9A%8F%E6%9C%BA%E6%95%B0">生成给定分布随机数</a></td><td><a href="https://docs.rs/rand/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand" alt="rand-badge" /></a> <a href="https://docs.rs/rand_distr/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand_distr" alt="rand_distr-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="algorithms/randomness.html#%E7%94%9F%E6%88%90%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E9%9A%8F%E6%9C%BA%E5%80%BC">生成自定义类型随机值</a></td><td><a href="https://docs.rs/rand/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand" alt="rand-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="algorithms/randomness.html#%E4%BB%8E%E4%B8%80%E7%BB%84%E5%AD%97%E6%AF%8D%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E5%AF%86%E7%A0%81">从一组字母数字字符创建随机密码</a></td><td><a href="https://docs.rs/rand/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand" alt="rand-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></td></tr>
+<tr><td><a href="algorithms/randomness.html#%E4%BB%8E%E4%B8%80%E7%BB%84%E7%94%A8%E6%88%B7%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E5%88%9B%E5%BB%BA%E9%9A%8F%E6%9C%BA%E5%AF%86%E7%A0%81">从一组用户定义字符创建随机密码</a></td><td><a href="https://docs.rs/rand/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand" alt="rand-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#vector-排序" id="vector-排序">Vector 排序</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="algorithms/sorting.html#%E6%95%B4%E6%95%B0-vector-%E6%8E%92%E5%BA%8F">整数 Vector 排序</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="algorithms/sorting.html#%E6%B5%AE%E7%82%B9%E6%95%B0-vector-%E6%8E%92%E5%BA%8F">浮点数 Vector 排序</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="algorithms/sorting.html#%E7%BB%93%E6%9E%84%E4%BD%93-vector-%E6%8E%92%E5%BA%8F">结构体 Vector 排序</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#命令行" id="命令行">命令行</a></h1>
+<!--
+> [cli.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/cli.md)
+> <br />
+> commit - d4e44638ee8b87bb49459980e4eebd3a1d7463c8 - 2018.10.03
+-->
+<h2><a class="header" href="#参数解析" id="参数解析">参数解析</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="cli/arguments.html#%E8%A7%A3%E6%9E%90%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0">解析命令行参数</a></td><td><a href="https://docs.rs/clap/"><img src="https://badge-cache.kominick.com/crates/v/clap.svg?label=clap" alt="clap-badge" /></a></td><td><a href="https://crates.io/categories/command-line-interface"><img src="https://badge-cache.kominick.com/badge/command_line--x.svg?style=social" alt="cat-command-line-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#ansi-终端" id="ansi-终端">ANSI 终端</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="cli/ansi_terminal.html#ansi-%E7%BB%88%E7%AB%AF">ANSI 终端</a></td><td><a href="https://docs.rs/ansi_term/"><img src="https://badge-cache.kominick.com/crates/v/base64.svg?label=ansi_term" alt="ansi_term-badge" /></a></td><td><a href="https://crates.io/categories/command-line-interface"><img src="https://badge-cache.kominick.com/badge/command_line--x.svg?style=social" alt="cat-command-line-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#压缩" id="压缩">压缩</a></h1>
+<!--
+> [compression.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/compression.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#使用-tar-包" id="使用-tar-包">使用 tar 包</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="compression/tar.html#%E8%A7%A3%E5%8E%8B-tar-%E5%8C%85">解压 tar 包</a></td><td><a href="https://docs.rs/flate2/"><img src="https://badge-cache.kominick.com/crates/v/flate2.svg?label=flate2" alt="flate2-badge" /></a> <a href="https://docs.rs/tar/"><img src="https://badge-cache.kominick.com/crates/v/tar.svg?label=tar" alt="tar-badge" /></a></td><td><a href="https://crates.io/categories/compression"><img src="https://badge-cache.kominick.com/badge/compression--x.svg?style=social" alt="cat-compression-badge" /></a></td></tr>
+<tr><td><a href="compression/tar.html#%E5%8E%8B%E7%BC%A9%E7%9B%AE%E5%BD%95%E4%B8%BA-tar-%E5%8C%85">压缩目录为 tar 包</a></td><td><a href="https://docs.rs/flate2/"><img src="https://badge-cache.kominick.com/crates/v/flate2.svg?label=flate2" alt="flate2-badge" /></a> <a href="https://docs.rs/tar/"><img src="https://badge-cache.kominick.com/crates/v/tar.svg?label=tar" alt="tar-badge" /></a></td><td><a href="https://crates.io/categories/compression"><img src="https://badge-cache.kominick.com/badge/compression--x.svg?style=social" alt="cat-compression-badge" /></a></td></tr>
+<tr><td><a href="compression/tar.html#%E4%BB%8E%E8%B7%AF%E5%BE%84%E7%A7%BB%E9%99%A4%E5%89%8D%E7%BC%80%E6%97%B6%E8%A7%A3%E5%8E%8B-tar-%E5%8C%85">从路径移除前缀时，解压 tar 包</a></td><td><a href="https://docs.rs/flate2/"><img src="https://badge-cache.kominick.com/crates/v/flate2.svg?label=flate2" alt="flate2-badge" /></a> <a href="https://docs.rs/tar/"><img src="https://badge-cache.kominick.com/crates/v/tar.svg?label=tar" alt="tar-badge" /></a></td><td><a href="https://crates.io/categories/compression"><img src="https://badge-cache.kominick.com/badge/compression--x.svg?style=social" alt="cat-compression-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#并发并行" id="并发并行">并发/并行</a></h1>
+<!--
+> [concurrency.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/concurrency.md)
+> <br />
+> commit 3c32c84475a2d99aa1d1b2d5d2e480aeada47293 - 2020.06.07
+-->
+<h2><a class="header" href="#显式线程" id="显式线程">显式线程</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="concurrency/threads.html#%E7%94%9F%E6%88%90%E7%9F%AD%E6%9C%9F%E7%BA%BF%E7%A8%8B">生成短期线程</a></td><td><a href="https://docs.rs/crossbeam/"><img src="https://badge-cache.kominick.com/crates/v/crossbeam.svg?label=crossbeam" alt="crossbeam-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/threads.html#%E5%88%9B%E5%BB%BA%E5%B9%B6%E5%8F%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%AE%A1%E9%81%93">创建并发的数据管道</a></td><td><a href="https://docs.rs/crossbeam/"><img src="https://badge-cache.kominick.com/crates/v/crossbeam.svg?label=crossbeam" alt="crossbeam-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/threads.html#%E5%9C%A8%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E9%97%B4%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE">在两个线程间传递数据</a></td><td><a href="https://docs.rs/crossbeam/"><img src="https://badge-cache.kominick.com/crates/v/crossbeam.svg?label=crossbeam" alt="crossbeam-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/threads.html#%E4%BF%9D%E6%8C%81%E5%85%A8%E5%B1%80%E5%8F%AF%E5%8F%98%E7%8A%B6%E6%80%81">保持全局可变状态</a></td><td><a href="https://docs.rs/lazy_static/"><img src="https://badge-cache.kominick.com/crates/v/lazy_static.svg?label=lazy_static" alt="lazy_static-badge" /></a></td><td><a href="https://crates.io/categories/rust-patterns"><img src="https://badge-cache.kominick.com/badge/rust_patterns--x.svg?style=social" alt="cat-rust-patterns-badge" /></a></td></tr>
+<tr><td><a href="concurrency/threads.html#%E5%AF%B9%E6%89%80%E6%9C%89-iso-%E6%96%87%E4%BB%B6%E7%9A%84-sha256-%E5%80%BC%E5%B9%B6%E5%8F%91%E6%B1%82%E5%92%8C">对所有 iso 文件的 SHA256 值并发求和</a></td><td><a href="https://docs.rs/threadpool/"><img src="https://badge-cache.kominick.com/crates/v/threadpool.svg?label=threadpool" alt="threadpool-badge" /></a> <a href="https://docs.rs/walkdir/"><img src="https://badge-cache.kominick.com/crates/v/walkdir.svg?label=walkdir" alt="walkdir-badge" /></a> <a href="https://docs.rs/num_cpus/"><img src="https://badge-cache.kominick.com/crates/v/num_cpus.svg?label=num_cpus" alt="num_cpus-badge" /></a> <a href="https://briansmith.org/rustdoc/ring/"><img src="https://badge-cache.kominick.com/crates/v/ring.svg?label=ring" alt="ring-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="concurrency/threads.html#%E5%B0%86%E7%BB%98%E5%88%B6%E5%88%86%E5%BD%A2%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%88%86%E6%B4%BE%E5%88%B0%E7%BA%BF%E7%A8%8B%E6%B1%A0">将绘制分形的线程分派到线程池</a></td><td><a href="https://docs.rs/threadpool/"><img src="https://badge-cache.kominick.com/crates/v/threadpool.svg?label=threadpool" alt="threadpool-badge" /></a> <a href="https://docs.rs/num/"><img src="https://badge-cache.kominick.com/crates/v/num.svg?label=num" alt="num-badge" /></a> <a href="https://docs.rs/num_cpus/"><img src="https://badge-cache.kominick.com/crates/v/num_cpus.svg?label=num_cpus" alt="num_cpus-badge" /></a> <a href="https://docs.rs/image/"><img src="https://badge-cache.kominick.com/crates/v/image.svg?label=image" alt="image-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a><a href="https://crates.io/categories/rendering"><img src="https://badge-cache.kominick.com/badge/rendering--x.svg?style=social" alt="cat-rendering-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#数据并行" id="数据并行">数据并行</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="concurrency/parallel.html#%E5%B9%B6%E8%A1%8C%E6%94%B9%E5%8F%98%E6%95%B0%E7%BB%84%E4%B8%AD%E5%85%83%E7%B4%A0">并行改变数组中元素</a></td><td><a href="https://docs.rs/rayon/"><img src="https://badge-cache.kominick.com/crates/v/rayon.svg?label=rayon" alt="rayon-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/parallel.html#%E5%B9%B6%E8%A1%8C%E6%B5%8B%E8%AF%95%E9%9B%86%E5%90%88%E4%B8%AD%E4%BB%BB%E6%84%8F%E6%88%96%E6%89%80%E6%9C%89%E7%9A%84%E5%85%83%E7%B4%A0%E6%98%AF%E5%90%A6%E5%8C%B9%E9%85%8D%E7%BB%99%E5%AE%9A%E6%96%AD%E8%A8%80">并行测试集合中任意或所有的元素是否匹配给定断言</a></td><td><a href="https://docs.rs/rayon/"><img src="https://badge-cache.kominick.com/crates/v/rayon.svg?label=rayon" alt="rayon-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/parallel.html#%E4%BD%BF%E7%94%A8%E7%BB%99%E5%AE%9A%E6%96%AD%E8%A8%80%E5%B9%B6%E8%A1%8C%E6%90%9C%E7%B4%A2%E9%A1%B9">使用给定断言并行搜索项</a></td><td><a href="https://docs.rs/rayon/"><img src="https://badge-cache.kominick.com/crates/v/rayon.svg?label=rayon" alt="rayon-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/parallel.html#%E5%AF%B9-vector-%E5%B9%B6%E8%A1%8C%E6%8E%92%E5%BA%8F">对 vector 并行排序</a></td><td><a href="https://docs.rs/rayon/"><img src="https://badge-cache.kominick.com/crates/v/rayon.svg?label=rayon" alt="rayon-badge" /></a> <a href="https://docs.rs/rand/"><img src="https://badge-cache.kominick.com/crates/v/rand.svg?label=rand" alt="rand-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/parallel.html#map-reduce-%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97">Map-reduce 并行计算</a></td><td><a href="https://docs.rs/rayon/"><img src="https://badge-cache.kominick.com/crates/v/rayon.svg?label=rayon" alt="rayon-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a></td></tr>
+<tr><td><a href="concurrency/parallel.html#%E5%B9%B6%E8%A1%8C%E7%94%9F%E6%88%90-jpg-%E7%BC%A9%E7%95%A5%E5%9B%BE">并行生成 jpg 缩略图</a></td><td><a href="https://docs.rs/rayon/"><img src="https://badge-cache.kominick.com/crates/v/rayon.svg?label=rayon" alt="rayon-badge" /></a> <a href="https://docs.rs/glob/"><img src="https://badge-cache.kominick.com/crates/v/glob.svg?label=glob" alt="glob-badge" /></a> <a href="https://docs.rs/image/"><img src="https://badge-cache.kominick.com/crates/v/image.svg?label=image" alt="image-badge" /></a></td><td><a href="https://crates.io/categories/concurrency"><img src="https://badge-cache.kominick.com/badge/concurrency--x.svg?style=social" alt="cat-concurrency-badge" /></a><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#密码学" id="密码学">密码学</a></h1>
+<!--
+> [cryptography.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/cryptography.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#散列哈希" id="散列哈希">散列（哈希）</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="cryptography/hashing.html#%E8%AE%A1%E7%AE%97%E6%96%87%E4%BB%B6%E7%9A%84-sha-256-%E6%91%98%E8%A6%81">计算文件的 SHA-256 摘要</a></td><td><a href="https://briansmith.org/rustdoc/ring/"><img src="https://badge-cache.kominick.com/crates/v/ring.svg?label=ring" alt="ring-badge" /></a> <a href="https://docs.rs/data-encoding/"><img src="https://badge-cache.kominick.com/crates/v/data-encoding.svg?label=data-encoding" alt="data-encoding-badge" /></a></td><td><a href="https://crates.io/categories/cryptography"><img src="https://badge-cache.kominick.com/badge/cryptography--x.svg?style=social" alt="cat-cryptography-badge" /></a></td></tr>
+<tr><td><a href="cryptography/hashing.html#%E4%BD%BF%E7%94%A8-hmac-%E6%91%98%E8%A6%81%E5%AF%B9%E6%B6%88%E6%81%AF%E8%BF%9B%E8%A1%8C%E7%AD%BE%E5%90%8D%E5%92%8C%E9%AA%8C%E8%AF%81">使用 HMAC 摘要对消息进行签名和验证</a></td><td><a href="https://briansmith.org/rustdoc/ring/"><img src="https://badge-cache.kominick.com/crates/v/ring.svg?label=ring" alt="ring-badge" /></a></td><td><a href="https://crates.io/categories/cryptography"><img src="https://badge-cache.kominick.com/badge/cryptography--x.svg?style=social" alt="cat-cryptography-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#加密" id="加密">加密</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="cryptography/encryption.html#%E4%BD%BF%E7%94%A8-pbkdf2-%E5%AF%B9%E5%AF%86%E7%A0%81%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86salt%E5%92%8C%E6%95%A3%E5%88%97hash%E8%BF%90%E7%AE%97">使用 PBKDF2 对密码进行加密（salt）和散列（hash）运算</a></td><td><a href="https://briansmith.org/rustdoc/ring/"><img src="https://badge-cache.kominick.com/crates/v/ring.svg?label=ring" alt="ring-badge" /></a> <a href="https://docs.rs/data-encoding/"><img src="https://badge-cache.kominick.com/crates/v/data-encoding.svg?label=data-encoding" alt="data-encoding-badge" /></a></td><td><a href="https://crates.io/categories/cryptography"><img src="https://badge-cache.kominick.com/badge/cryptography--x.svg?style=social" alt="cat-cryptography-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#数据结构" id="数据结构">数据结构</a></h1>
+<!--
+> [data_structures.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/data_structures.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#位域" id="位域">位域</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="data_structures/bitfield.html#%E5%AE%9A%E4%B9%89%E5%B9%B6%E6%93%8D%E4%BD%9C%E4%BD%8D%E5%9F%9F%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%B1%BB%E5%9E%8B">定义并操作位域风格的类型</a></td><td><a href="https://docs.rs/bitflags/"><img src="https://badge-cache.kominick.com/crates/v/bitflags.svg?label=bitflags" alt="bitflags-badge" /></a></td><td><a href="https://crates.io/categories/no-std"><img src="https://badge-cache.kominick.com/badge/no_std--x.svg?style=social" alt="cat-no-std-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#数据库" id="数据库">数据库</a></h1>
+<!--
+> [database.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/database.md)
+> <br />
+> commit 5824ee21eb8100b5795053a6d3bd61ed8b569cac - 2019.04.12
+-->
+<h2><a class="header" href="#sqlite" id="sqlite">SQLite</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="database/sqlite.html#%E5%88%9B%E5%BB%BA-sqlite-%E6%95%B0%E6%8D%AE%E5%BA%93">创建 SQLite 数据库</a></td><td><a href="https://crates.io/crates/rusqlite/"><img src="https://badge-cache.kominick.com/crates/v/rusqlite.svg?label=rusqlite" alt="rusqlite-badge" /></a></td><td><a href="https://crates.io/categories/database"><img src="https://badge-cache.kominick.com/badge/database--x.svg?style=social" alt="cat-database-badge" /></a></td></tr>
+<tr><td><a href="database/sqlite.html#%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E5%92%8C%E6%9F%A5%E8%AF%A2">数据插入和查询</a></td><td><a href="https://crates.io/crates/rusqlite/"><img src="https://badge-cache.kominick.com/crates/v/rusqlite.svg?label=rusqlite" alt="rusqlite-badge" /></a></td><td><a href="https://crates.io/categories/database"><img src="https://badge-cache.kominick.com/badge/database--x.svg?style=social" alt="cat-database-badge" /></a></td></tr>
+<tr><td><a href="database/sqlite.html#%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86">事务处理</a></td><td><a href="https://crates.io/crates/rusqlite/"><img src="https://badge-cache.kominick.com/crates/v/rusqlite.svg?label=rusqlite" alt="rusqlite-badge" /></a></td><td><a href="https://crates.io/categories/database"><img src="https://badge-cache.kominick.com/badge/database--x.svg?style=social" alt="cat-database-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#使用-postgres" id="使用-postgres">使用 Postgres</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="database/postgres.html#postgres-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E5%88%9B%E5%BB%BA%E8%A1%A8">Postgres 数据库中创建表</a></td><td><a href="https://docs.rs/postgres/0.15.2/postgres/"><img src="https://badge-cache.kominick.com/crates/v/postgres.svg?label=postgres" alt="postgres-badge" /></a></td><td><a href="https://crates.io/categories/database"><img src="https://badge-cache.kominick.com/badge/database--x.svg?style=social" alt="cat-database-badge" /></a></td></tr>
+<tr><td><a href="database/postgres.html#%E6%95%B0%E6%8D%AE%E6%8F%92%E5%85%A5%E5%92%8C%E6%9F%A5%E8%AF%A2">数据插入和查询</a></td><td><a href="https://docs.rs/postgres/0.15.2/postgres/"><img src="https://badge-cache.kominick.com/crates/v/postgres.svg?label=postgres" alt="postgres-badge" /></a></td><td><a href="https://crates.io/categories/database"><img src="https://badge-cache.kominick.com/badge/database--x.svg?style=social" alt="cat-database-badge" /></a></td></tr>
+<tr><td><a href="database/postgres.html#%E6%95%B0%E6%8D%AE%E8%81%9A%E5%90%88">数据聚合</a></td><td><a href="https://docs.rs/postgres/0.15.2/postgres/"><img src="https://badge-cache.kominick.com/crates/v/postgres.svg?label=postgres" alt="postgres-badge" /></a></td><td><a href="https://crates.io/categories/database"><img src="https://badge-cache.kominick.com/badge/database--x.svg?style=social" alt="cat-database-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#日期及时间" id="日期及时间">日期及时间</a></h1>
+<!--
+> [datetime.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/datetime.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#期间和计算" id="期间和计算">期间和计算</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="datetime/duration.html#%E6%B5%8B%E9%87%8F%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4">测量运行时间</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/date-and-time"><img src="https://badge-cache.kominick.com/badge/time--x.svg?style=social" alt="cat-time-badge" /></a></td></tr>
+<tr><td><a href="datetime/duration.html#%E6%89%A7%E8%A1%8C%E6%97%A5%E6%9C%9F%E6%A3%80%E6%9F%A5%E5%92%8C%E6%97%B6%E9%97%B4%E8%AE%A1%E7%AE%97">执行日期检查和时间计算</a></td><td><a href="https://docs.rs/chrono/"><img src="https://badge-cache.kominick.com/crates/v/chrono.svg?label=chrono" alt="chrono-badge" /></a></td><td><a href="https://crates.io/categories/date-and-time"><img src="https://badge-cache.kominick.com/badge/date_and_time--x.svg?style=social" alt="cat-date-and-time-badge" /></a></td></tr>
+<tr><td><a href="datetime/duration.html#%E6%97%B6%E9%97%B4%E7%9A%84%E6%97%B6%E5%8C%BA%E8%BD%AC%E6%8D%A2">时间的时区转换</a></td><td><a href="https://docs.rs/chrono/"><img src="https://badge-cache.kominick.com/crates/v/chrono.svg?label=chrono" alt="chrono-badge" /></a></td><td><a href="https://crates.io/categories/date-and-time"><img src="https://badge-cache.kominick.com/badge/date_and_time--x.svg?style=social" alt="cat-date-and-time-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#解析与显示" id="解析与显示">解析与显示</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="datetime/parse.html#%E6%A3%80%E6%9F%A5%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4">检查日期和时间</a></td><td><a href="https://docs.rs/chrono/"><img src="https://badge-cache.kominick.com/crates/v/chrono.svg?label=chrono" alt="chrono-badge" /></a></td><td><a href="https://crates.io/categories/date-and-time"><img src="https://badge-cache.kominick.com/badge/date_and_time--x.svg?style=social" alt="cat-date-and-time-badge" /></a></td></tr>
+<tr><td><a href="datetime/parse.html#%E6%97%A5%E6%9C%9F%E5%92%8C-unix-%E6%97%B6%E9%97%B4%E6%88%B3%E7%9A%84%E4%BA%92%E7%9B%B8%E8%BD%AC%E6%8D%A2">日期和 UNIX 时间戳的互相转换</a></td><td><a href="https://docs.rs/chrono/"><img src="https://badge-cache.kominick.com/crates/v/chrono.svg?label=chrono" alt="chrono-badge" /></a></td><td><a href="https://crates.io/categories/date-and-time"><img src="https://badge-cache.kominick.com/badge/date_and_time--x.svg?style=social" alt="cat-date-and-time-badge" /></a></td></tr>
+<tr><td><a href="datetime/parse.html#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4%E7%9A%84%E6%A0%BC%E5%BC%8F%E5%8C%96%E6%98%BE%E7%A4%BA">日期和时间的格式化显示</a></td><td><a href="https://docs.rs/chrono/"><img src="https://badge-cache.kominick.com/crates/v/chrono.svg?label=chrono" alt="chrono-badge" /></a></td><td><a href="https://crates.io/categories/date-and-time"><img src="https://badge-cache.kominick.com/badge/date_and_time--x.svg?style=social" alt="cat-date-and-time-badge" /></a></td></tr>
+<tr><td><a href="datetime/parse.html#%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A7%A3%E6%9E%90%E4%B8%BA-datetime-%E7%BB%93%E6%9E%84%E4%BD%93">将字符串解析为 DateTime 结构体</a></td><td><a href="https://docs.rs/chrono/"><img src="https://badge-cache.kominick.com/crates/v/chrono.svg?label=chrono" alt="chrono-badge" /></a></td><td><a href="https://crates.io/categories/date-and-time"><img src="https://badge-cache.kominick.com/badge/date_and_time--x.svg?style=social" alt="cat-date-and-time-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#开发工具" id="开发工具">开发工具</a></h1>
+<!--
+> [development_tools.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/development_tools.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#调试工具" id="调试工具">调试工具</a></h2>
+<!--
+> [development_tools/debugging.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/development_tools/debugging.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#日志信息" id="日志信息">日志信息</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/development_tools/debugging/log.html#%E8%AE%B0%E5%BD%95%E8%B0%83%E8%AF%95%E4%BF%A1%E6%81%AF%E5%88%B0%E6%8E%A7%E5%88%B6%E5%8F%B0">记录调试信息到控制台</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/env_logger/"><img src="https://badge-cache.kominick.com/crates/v/env_logger.svg?label=env_logger" alt="env_logger-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+<tr><td><a href="/development_tools/debugging/log.html#%E8%AE%B0%E5%BD%95%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%E5%88%B0%E6%8E%A7%E5%88%B6%E5%8F%B0">记录错误信息到控制台</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/env_logger/"><img src="https://badge-cache.kominick.com/crates/v/env_logger.svg?label=env_logger" alt="env_logger-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+<tr><td><a href="/development_tools/debugging/log.html#%E8%AE%B0%E5%BD%95%E4%BF%A1%E6%81%AF%E6%97%B6%E7%94%A8%E6%A0%87%E5%87%86%E8%BE%93%E5%87%BA-stdout-%E6%9B%BF%E6%8D%A2%E6%A0%87%E5%87%86%E9%94%99%E8%AF%AF-stderr">记录信息时，用标准输出 stdout 替换标准错误 stderr</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/env_logger/"><img src="https://badge-cache.kominick.com/crates/v/env_logger.svg?label=env_logger" alt="env_logger-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+<tr><td><a href="/development_tools/debugging/log.html#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E5%99%A8%E8%AE%B0%E5%BD%95%E4%BF%A1%E6%81%AF">使用自定义日志记录器记录信息</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+<tr><td><a href="/development_tools/debugging/log.html#%E8%AE%B0%E5%BD%95%E5%88%B0-unix-%E7%B3%BB%E7%BB%9F%E6%97%A5%E5%BF%97">记录到 Unix 系统日志</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/syslog/"><img src="https://badge-cache.kominick.com/crates/v/syslog.svg?label=syslog" alt="syslog-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#日志配置" id="日志配置">日志配置</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/development_tools/debugging/config_log.html#%E5%90%AF%E7%94%A8%E6%AF%8F%E4%B8%AA%E6%A8%A1%E5%9D%97%E7%9A%84%E6%97%A5%E5%BF%97%E7%BA%A7%E5%88%AB">启用每个模块的日志级别</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/env_logger/"><img src="https://badge-cache.kominick.com/crates/v/env_logger.svg?label=env_logger" alt="env_logger-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+<tr><td><a href="/development_tools/debugging/config_log.html#%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95">用自定义环境变量设置日志记录</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/env_logger/"><img src="https://badge-cache.kominick.com/crates/v/env_logger.svg?label=env_logger" alt="env_logger-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+<tr><td><a href="/development_tools/debugging/config_log.html#%E5%9C%A8%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF%E4%B8%AD%E5%8C%85%E5%90%AB%E6%97%B6%E9%97%B4%E6%88%B3">在日志信息中包含时间戳</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/env_logger/"><img src="https://badge-cache.kominick.com/crates/v/env_logger.svg?label=env_logger" alt="env_logger-badge" /></a> <a href="https://docs.rs/chrono/"><img src="https://badge-cache.kominick.com/crates/v/chrono.svg?label=chrono" alt="chrono-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+<tr><td><a href="/development_tools/debugging/config_log.html#%E5%B0%86%E4%BF%A1%E6%81%AF%E8%AE%B0%E5%BD%95%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BD%8D%E7%BD%AE">将信息记录到自定义位置</a></td><td><a href="https://docs.rs/log/"><img src="https://badge-cache.kominick.com/crates/v/log.svg?label=log" alt="log-badge" /></a> <a href="https://docs.rs/log4rs/"><img src="https://badge-cache.kominick.com/crates/v/log4rs.svg?label=log4rs" alt="log4rs-badge" /></a></td><td><a href="https://crates.io/categories/debugging"><img src="https://badge-cache.kominick.com/badge/debugging--x.svg?style=social" alt="cat-debugging-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h2><a class="header" href="#版本控制" id="版本控制">版本控制</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="development_tools/versioning.html#%E8%A7%A3%E6%9E%90%E5%B9%B6%E9%80%92%E5%A2%9E%E7%89%88%E6%9C%AC%E5%AD%97%E7%AC%A6%E4%B8%B2">解析并递增版本字符串</a></td><td><a href="https://docs.rs/semver/"><img src="https://badge-cache.kominick.com/crates/v/semver.svg?label=semver" alt="semver-badge" /></a></td><td><a href="https://crates.io/categories/config"><img src="https://badge-cache.kominick.com/badge/config--x.svg?style=social" alt="cat-config-badge" /></a></td></tr>
+<tr><td><a href="development_tools/versioning.html#%E8%A7%A3%E6%9E%90%E5%A4%8D%E6%9D%82%E7%9A%84%E7%89%88%E6%9C%AC%E5%AD%97%E7%AC%A6%E4%B8%B2">解析复杂的版本字符串</a></td><td><a href="https://docs.rs/semver/"><img src="https://badge-cache.kominick.com/crates/v/semver.svg?label=semver" alt="semver-badge" /></a></td><td><a href="https://crates.io/categories/config"><img src="https://badge-cache.kominick.com/badge/config--x.svg?style=social" alt="cat-config-badge" /></a></td></tr>
+<tr><td><a href="development_tools/versioning.html#%E6%A3%80%E6%9F%A5%E7%BB%99%E5%AE%9A%E7%89%88%E6%9C%AC%E6%98%AF%E5%90%A6%E4%B8%BA%E9%A2%84%E5%8F%91%E5%B8%83%E7%89%88%E6%9C%AC">检查给定版本是否为预发布版本</a></td><td><a href="https://docs.rs/semver/"><img src="https://badge-cache.kominick.com/crates/v/semver.svg?label=semver" alt="semver-badge" /></a></td><td><a href="https://crates.io/categories/config"><img src="https://badge-cache.kominick.com/badge/config--x.svg?style=social" alt="cat-config-badge" /></a></td></tr>
+<tr><td><a href="development_tools/versioning.html#%E6%9F%A5%E8%AF%A2%E9%80%82%E9%85%8D%E7%BB%99%E5%AE%9A%E8%8C%83%E5%9B%B4%E7%9A%84%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC">查询适配给定范围的最新版本</a></td><td><a href="https://docs.rs/semver/"><img src="https://badge-cache.kominick.com/crates/v/semver.svg?label=semver" alt="semver-badge" /></a></td><td><a href="https://crates.io/categories/config"><img src="https://badge-cache.kominick.com/badge/config--x.svg?style=social" alt="cat-config-badge" /></a></td></tr>
+<tr><td><a href="development_tools/versioning.html#%E6%A3%80%E6%9F%A5%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E7%9A%84%E7%89%88%E6%9C%AC%E5%85%BC%E5%AE%B9%E6%80%A7">检查外部命令的版本兼容性</a></td><td><a href="https://docs.rs/semver/"><img src="https://badge-cache.kominick.com/crates/v/semver.svg?label=semver" alt="semver-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#构建时" id="构建时">构建时</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="development_tools/build_tools.html#%E7%BC%96%E8%AF%91%E5%B9%B6%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%88%B0%E7%BB%91%E5%AE%9A%E7%9A%84-c-%E8%AF%AD%E8%A8%80%E5%BA%93">编译并静态链接到绑定的 C 语言库</a></td><td><a href="https://docs.rs/cc"><img src="https://badge-cache.kominick.com/crates/v/cc.svg?label=cc" alt="cc-badge" /></a></td><td><a href="https://crates.io/categories/development-tools"><img src="https://badge-cache.kominick.com/badge/development_tools--x.svg?style=social" alt="cat-development-tools-badge" /></a></td></tr>
+<tr><td><a href="development_tools/build_tools.html#%E7%BC%96%E8%AF%91%E5%B9%B6%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E5%88%B0%E7%BB%91%E5%AE%9A%E7%9A%84-c-%E8%AF%AD%E8%A8%80%E5%BA%93-1">编译并静态链接到绑定的 C++ 语言库</a></td><td><a href="https://docs.rs/cc"><img src="https://badge-cache.kominick.com/crates/v/cc.svg?label=cc" alt="cc-badge" /></a></td><td><a href="https://crates.io/categories/development-tools"><img src="https://badge-cache.kominick.com/badge/development_tools--x.svg?style=social" alt="cat-development-tools-badge" /></a></td></tr>
+<tr><td><a href="development_tools/build_tools.html#%E7%BC%96%E8%AF%91-c-%E8%AF%AD%E8%A8%80%E5%BA%93%E6%97%B6%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE">编译 C 语言库时自定义设置</a></td><td><a href="https://docs.rs/cc"><img src="https://badge-cache.kominick.com/crates/v/cc.svg?label=cc" alt="cc-badge" /></a></td><td><a href="https://crates.io/categories/development-tools"><img src="https://badge-cache.kominick.com/badge/development_tools--x.svg?style=social" alt="cat-development-tools-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#编码" id="编码">编码</a></h1>
+<!--
+> [encoding.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding.md)
+> <br />
+> commit 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<h2><a class="header" href="#字符集" id="字符集">字符集</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="encoding/strings.html#%E7%99%BE%E5%88%86%E6%AF%94%E7%BC%96%E7%A0%81url-%E7%BC%96%E7%A0%81%E5%AD%97%E7%AC%A6%E4%B8%B2">百分比编码（URL 编码）字符串</a></td><td><a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/percent-encoding.svg?label=percent-encoding" alt="percent-encoding-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/strings.html#%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BC%96%E7%A0%81%E4%B8%BA-applicationx-www-form-urlencoded">将字符串编码为 application/x-www-form-urlencoded</a></td><td><a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/strings.html#%E7%BC%96%E7%A0%81%E5%92%8C%E8%A7%A3%E7%A0%81%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6">编码和解码十六进制</a></td><td><a href="https://docs.rs/data-encoding/"><img src="https://badge-cache.kominick.com/crates/v/data-encoding.svg?label=data-encoding" alt="data-encoding-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/strings.html#%E7%BC%96%E7%A0%81%E5%92%8C%E8%A7%A3%E7%A0%81-base64">编码和解码 base64</a></td><td><a href="https://docs.rs/base64/"><img src="https://badge-cache.kominick.com/crates/v/base64.svg?label=base64" alt="base64-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#csv-处理" id="csv-处理">CSV 处理</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="encoding/csv.html#%E8%AF%BB%E5%8F%96-csv-%E8%AE%B0%E5%BD%95">读取 CSV 记录</a></td><td><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/csv.html#%E8%AF%BB%E5%8F%96%E6%9C%89%E4%B8%8D%E5%90%8C%E5%88%86%E9%9A%94%E7%AC%A6%E7%9A%84-csv-%E8%AE%B0%E5%BD%95">读取有不同分隔符的 CSV 记录</a></td><td><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/csv.html#%E7%AD%9B%E9%80%89%E5%8C%B9%E9%85%8D%E6%96%AD%E8%A8%80%E7%9A%84-csv-%E8%AE%B0%E5%BD%95">筛选匹配断言的 CSV 记录</a></td><td><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/csv.html#%E7%94%A8-serde-%E5%A4%84%E7%90%86%E6%97%A0%E6%95%88%E7%9A%84-csv-%E6%95%B0%E6%8D%AE">用 Serde 处理无效的 CSV 数据</a></td><td><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/csv.html#%E5%B0%86%E8%AE%B0%E5%BD%95%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%BA-csv">将记录序列化为 CSV</a></td><td><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/csv.html#%E7%94%A8-serde-%E5%B0%86%E8%AE%B0%E5%BD%95%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%BA-csv">用 Serde 将记录序列化为 CSV</a></td><td><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/csv.html#%E8%BD%AC%E6%8D%A2-csv-%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%97">转换 CSV 文件的列</a></td><td><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#结构化数据" id="结构化数据">结构化数据</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="encoding/complex.html#%E5%AF%B9%E9%9D%9E%E7%BB%93%E6%9E%84%E5%8C%96-json-%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">对非结构化 JSON 序列化和反序列化</a></td><td><a href="https://docs.rs/serde_json/*/serde_json/"><img src="https://badge-cache.kominick.com/crates/v/serde_json.svg?label=serde_json" alt="serde-json-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/complex.html#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96-toml-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">反序列化 TOML 配置文件</a></td><td><a href="https://docs.rs/toml/"><img src="https://badge-cache.kominick.com/crates/v/toml.svg?label=toml" alt="toml-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="encoding/complex.html#%E4%BB%A5%E5%B0%8F%E7%AB%AF%E6%A8%A1%E5%BC%8F%E4%BD%8E%E4%BD%8D%E6%A8%A1%E5%BC%8F%E5%AD%97%E8%8A%82%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%86%99%E6%95%B4%E6%95%B0">以小端模式（低位模式）字节顺序读写整数</a></td><td><a href="https://docs.rs/byteorder/"><img src="https://badge-cache.kominick.com/crates/v/byteorder.svg?label=byteorder" alt="byteorder-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#错误处理" id="错误处理">错误处理</a></h1>
+<!--
+> [errors.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/errors.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#处理错误变量" id="处理错误变量">处理错误变量</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="errors/handle.html#%E5%9C%A8-main-%E6%96%B9%E6%B3%95%E4%B8%AD%E5%AF%B9%E9%94%99%E8%AF%AF%E9%80%82%E5%BD%93%E5%A4%84%E7%90%86">在 main 方法中对错误适当处理</a></td><td><a href="https://docs.rs/error-chain/"><img src="https://badge-cache.kominick.com/crates/v/error-chain.svg?label=error-chain" alt="error-chain-badge" /></a></td><td><a href="https://crates.io/categories/rust-patterns"><img src="https://badge-cache.kominick.com/badge/rust_patterns--x.svg?style=social" alt="cat-rust-patterns-badge" /></a></td></tr>
+<tr><td><a href="errors/handle.html#%E9%81%BF%E5%85%8D%E5%9C%A8%E9%94%99%E8%AF%AF%E8%BD%AC%E5%8F%98%E8%BF%87%E7%A8%8B%E4%B8%AD%E9%81%97%E6%BC%8F%E9%94%99%E8%AF%AF">避免在错误转变过程中遗漏错误</a></td><td><a href="https://docs.rs/error-chain/"><img src="https://badge-cache.kominick.com/crates/v/error-chain.svg?label=error-chain" alt="error-chain-badge" /></a></td><td><a href="https://crates.io/categories/rust-patterns"><img src="https://badge-cache.kominick.com/badge/rust_patterns--x.svg?style=social" alt="cat-rust-patterns-badge" /></a></td></tr>
+<tr><td><a href="errors/handle.html#%E8%8E%B7%E5%8F%96%E5%A4%8D%E6%9D%82%E9%94%99%E8%AF%AF%E5%9C%BA%E6%99%AF%E7%9A%84%E5%9B%9E%E6%BA%AF">获取复杂错误场景的回溯</a></td><td><a href="https://docs.rs/error-chain/"><img src="https://badge-cache.kominick.com/crates/v/error-chain.svg?label=error-chain" alt="error-chain-badge" /></a></td><td><a href="https://crates.io/categories/rust-patterns"><img src="https://badge-cache.kominick.com/badge/rust_patterns--x.svg?style=social" alt="cat-rust-patterns-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#文件系统" id="文件系统">文件系统</a></h1>
+<!--
+> [file.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/file.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#文件读写" id="文件读写">文件读写</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="file/read-write.html#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A1%8C">读取文件的字符串行</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/read-write.html#%E9%81%BF%E5%85%8D%E8%AF%BB%E5%8F%96%E5%86%99%E5%85%A5%E5%90%8C%E4%B8%80%E6%96%87%E4%BB%B6">避免读取写入同一文件</a></td><td><a href="https://docs.rs/same-file/"><img src="https://badge-cache.kominick.com/crates/v/same_file.svg?label=same_file" alt="same_file-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/read-write.html#%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E6%96%87%E4%BB%B6">使用内存映射随机访问文件</a></td><td><a href="https://docs.rs/memmap/"><img src="https://badge-cache.kominick.com/crates/v/memmap.svg?label=memmap" alt="memmap-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#目录遍历" id="目录遍历">目录遍历</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="file/dir.html#%E8%BF%87%E5%8E%BB-24-%E5%B0%8F%E6%97%B6%E5%86%85%E4%BF%AE%E6%94%B9%E8%BF%87%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D">过去 24 小时内修改过的文件名</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></td></tr>
+<tr><td><a href="file/dir.html#%E6%9F%A5%E6%89%BE%E7%BB%99%E5%AE%9A%E8%B7%AF%E5%BE%84%E7%9A%84%E5%BE%AA%E7%8E%AF">查找给定路径的循环</a></td><td><a href="https://docs.rs/same-file/"><img src="https://badge-cache.kominick.com/crates/v/same_file.svg?label=same_file" alt="same_file-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/dir.html#%E9%80%92%E5%BD%92%E6%9F%A5%E6%89%BE%E9%87%8D%E5%90%8D%E6%96%87%E4%BB%B6">递归查找重名文件</a></td><td><a href="https://docs.rs/walkdir/"><img src="https://badge-cache.kominick.com/crates/v/walkdir.svg?label=walkdir" alt="walkdir-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/dir.html#%E4%BD%BF%E7%94%A8%E7%BB%99%E5%AE%9A%E6%96%AD%E8%A8%80%E9%80%92%E5%BD%92%E6%9F%A5%E6%89%BE%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6">使用给定断言递归查找所有文件</a></td><td><a href="https://docs.rs/walkdir/"><img src="https://badge-cache.kominick.com/crates/v/walkdir.svg?label=walkdir" alt="walkdir-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/dir.html#%E8%B7%B3%E8%BF%87%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95">跳过隐藏文件遍历目录</a></td><td><a href="https://docs.rs/walkdir/"><img src="https://badge-cache.kominick.com/crates/v/walkdir.svg?label=walkdir" alt="walkdir-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/dir.html#%E5%9C%A8%E7%BB%99%E5%AE%9A%E6%B7%B1%E5%BA%A6%E7%9A%84%E7%9B%AE%E5%BD%95%E9%80%92%E5%BD%92%E8%AE%A1%E7%AE%97%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F">在给定深度的目录，递归计算文件大小</a></td><td><a href="https://docs.rs/walkdir/"><img src="https://badge-cache.kominick.com/crates/v/walkdir.svg?label=walkdir" alt="walkdir-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/dir.html#%E9%80%92%E5%BD%92%E6%9F%A5%E6%89%BE%E6%89%80%E6%9C%89-png-%E6%96%87%E4%BB%B6">递归查找所有 png 文件</a></td><td><a href="https://docs.rs/glob/"><img src="https://badge-cache.kominick.com/crates/v/glob.svg?label=glob" alt="glob-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="file/dir.html#%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6%E5%90%8D%E5%A4%A7%E5%B0%8F%E5%86%99%E4%BD%BF%E7%94%A8%E7%BB%99%E5%AE%9A%E6%A8%A1%E5%BC%8F%E6%9F%A5%E6%89%BE%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6">忽略文件名大小写，使用给定模式查找所有文件</a></td><td><a href="https://docs.rs/glob/"><img src="https://badge-cache.kominick.com/crates/v/glob.svg?label=glob" alt="glob-badge" /></a></td><td><a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#硬件支持" id="硬件支持">硬件支持</a></h1>
+<!--
+> [hardware.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/hardware.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#处理器" id="处理器">处理器</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="hardware/processor.html#%E6%A3%80%E6%9F%A5%E9%80%BB%E8%BE%91-cpu-%E5%86%85%E6%A0%B8%E7%9A%84%E6%95%B0%E9%87%8F">检查逻辑 cpu 内核的数量</a></td><td><a href="https://docs.rs/num_cpus/"><img src="https://badge-cache.kominick.com/crates/v/num_cpus.svg?label=num_cpus" alt="num_cpus-badge" /></a></td><td><a href="https://crates.io/categories/hardware-support"><img src="https://badge-cache.kominick.com/badge/hardware_support--x.svg?style=social" alt="cat-hardware-support-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#内存管理" id="内存管理">内存管理</a></h1>
+<!--
+> [mem.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/mem.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#常量" id="常量">常量</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="mem/global_static.html#%E5%A3%B0%E6%98%8E%E5%BB%B6%E8%BF%9F%E8%AE%A1%E7%AE%97%E5%B8%B8%E9%87%8F">声明延迟计算常量</a></td><td><a href="https://docs.rs/lazy_static/"><img src="https://badge-cache.kominick.com/crates/v/lazy_static.svg?label=lazy_static" alt="lazy_static-badge" /></a></td><td><a href="https://crates.io/categories/caching"><img src="https://badge-cache.kominick.com/badge/caching--x.svg?style=social" alt="cat-caching-badge" /></a> <a href="https://crates.io/categories/rust-patterns"><img src="https://badge-cache.kominick.com/badge/rust_patterns--x.svg?style=social" alt="cat-rust-patterns-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#网络" id="网络">网络</a></h1>
+<!--
+> [net.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/net.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#服务器" id="服务器">服务器</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="net/server.html#%E7%9B%91%E5%90%AC%E6%9C%AA%E4%BD%BF%E7%94%A8%E7%9A%84-tcpip-%E7%AB%AF%E5%8F%A3">监听未使用的 TCP/IP 端口</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#操作系统" id="操作系统">操作系统</a></h1>
+<!--
+> [os.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os.md)
+> <br />
+> commit bba147f18531934c904b1c5afaed3e6550b1c1c0 - 2020.06.14
+-->
+<h2><a class="header" href="#外部命令" id="外部命令">外部命令</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="os/external.html#%E8%BF%90%E8%A1%8C%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E5%B9%B6%E5%A4%84%E7%90%86-stdout">运行外部命令并处理 stdout</a></td><td><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a> <a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+<tr><td><a href="os/external.html#%E8%BF%90%E8%A1%8C%E4%BC%A0%E9%80%92-stdin-%E7%9A%84%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E5%B9%B6%E6%A3%80%E6%9F%A5%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81">运行传递 stdin 的外部命令，并检查错误代码</a></td><td><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a> <a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+<tr><td><a href="os/external.html#%E8%BF%90%E8%A1%8C%E7%AE%A1%E9%81%93%E4%BC%A0%E8%BE%93%E7%9A%84%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4">运行管道传输的外部命令</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></td></tr>
+<tr><td><a href="os/external.html#%E5%B0%86%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84-stdout-%E5%92%8C-stderr-%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0%E5%90%8C%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6">将子进程的 stdout 和 stderr 重定向到同一个文件</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></td></tr>
+<tr><td><a href="os/external.html#%E6%8C%81%E7%BB%AD%E5%A4%84%E7%90%86%E5%AD%90%E8%BF%9B%E7%A8%8B%E7%9A%84%E8%BE%93%E5%87%BA">持续处理子进程的输出</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+<tr><td><a href="os/external.html#%E8%AF%BB%E5%8F%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">读取环境变量</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#科学计算" id="科学计算">科学计算</a></h1>
+<!--
+> [science.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science.md)
+> <br />
+> commit 580e16feff644155826c7494cebe4d9c053d43f7 - 2018.10.09
+-->
+<h2><a class="header" href="#数学" id="数学">数学</a></h2>
+<!--
+> [science/mathematics.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics.md)
+> <br />
+> commit 714e9f4fcd2fc7649abd87eef00b13b3b571c655 2020.12.31
+-->
+<h2><a class="header" href="#线性代数" id="线性代数">线性代数</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/science/mathematics/linear_algebra.html#vector-%E8%8C%83%E6%95%B0">Vector 范数</a></td><td><a href="https://docs.rs/ndarray"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/linear_algebra.html#vector-%E6%AF%94%E8%BE%83">Vector 比较</a></td><td><a href="https://docs.rs/ndarray"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/linear_algebra.html#%E7%9F%A9%E9%98%B5%E7%9B%B8%E5%8A%A0">矩阵相加</a></td><td><a href="https://docs.rs/ndarray"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/linear_algebra.html#%E7%9F%A9%E9%98%B5%E7%9B%B8%E4%B9%98">矩阵相乘</a></td><td><a href="https://docs.rs/ndarray"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/linear_algebra.html#%E6%A0%87%E9%87%8Fvector%E7%9F%A9%E9%98%B5%E7%9B%B8%E4%B9%98">标量、vector、矩阵相乘</a></td><td><a href="https://docs.rs/ndarray"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/linear_algebra.html#%E7%9F%A9%E9%98%B5%E6%B1%82%E9%80%86">矩阵求逆</a></td><td><a href="https://docs.rs/nalgebra"><img src="https://badge-cache.kominick.com/crate/nalgebra.svg?label=nalgebra" alt="nalgebra-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/linear_algebra.html#%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9F%A9%E9%98%B5">（反）序列化矩阵</a></td><td><a href="https://docs.rs/ndarray"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#三角学" id="三角学">三角学</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/science/mathematics/trigonometry.html#%E8%AE%A1%E7%AE%97%E4%B8%89%E8%A7%92%E5%BD%A2%E7%9A%84%E8%BE%B9%E9%95%BF">计算三角形的边长</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/trigonometry.html#%E9%AA%8C%E8%AF%81%E6%AD%A3%E5%88%87tan%E7%AD%89%E4%BA%8E%E6%AD%A3%E5%BC%A6sin%E9%99%A4%E4%BB%A5%E4%BD%99%E5%BC%A6cos">验证正切（tan）等于正弦（sin）除以余弦（cos）</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/trigonometry.html#%E5%9C%B0%E7%90%83%E4%B8%8A%E4%B8%A4%E7%82%B9%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%9D%E7%A6%BB">地球上两点之间的距离</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#复数" id="复数">复数</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/science/mathematics/complex_numbers.html#%E5%88%9B%E5%BB%BA%E5%A4%8D%E6%95%B0">创建复数</a></td><td><a href="https://docs.rs/num/"><img src="https://badge-cache.kominick.com/crates/v/num.svg?label=num" alt="num-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/complex_numbers.html#%E5%A4%8D%E6%95%B0%E7%9B%B8%E5%8A%A0">复数相加</a></td><td><a href="https://docs.rs/num/"><img src="https://badge-cache.kominick.com/crates/v/num.svg?label=num" alt="num-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/complex_numbers.html#%E5%A4%8D%E6%95%B0%E7%9A%84%E6%95%B0%E5%AD%A6%E5%87%BD%E6%95%B0">复数的数学函数</a></td><td><a href="https://docs.rs/num/"><img src="https://badge-cache.kominick.com/crates/v/num.svg?label=num" alt="num-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#统计学" id="统计学">统计学</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/science/mathematics/statistics.html#%E9%9B%86%E4%B8%AD%E8%B6%8B%E5%8A%BF%E5%BA%A6%E9%87%8F">集中趋势度量</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+<tr><td><a href="/science/mathematics/statistics.html#%E8%AE%A1%E7%AE%97%E6%A0%87%E5%87%86%E5%81%8F%E5%B7%AE">计算标准偏差</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#其它数学计算" id="其它数学计算">其它数学计算</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/science/mathematics/miscellaneous.html#%E5%A4%A7%E6%95%B0">大数</a></td><td><a href="https://docs.rs/num/"><img src="https://badge-cache.kominick.com/crates/v/num.svg?label=num" alt="num-badge" /></a></td><td><a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#文本处理" id="文本处理">文本处理</a></h1>
+<!--
+> [os.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/text.md)
+> <br />
+> commit f1ad9ad44c355d12b7759dca2f700f254ca86114 - 2019.04.13
+-->
+<h2><a class="header" href="#正则表达式" id="正则表达式">正则表达式</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="text/regex.html#%E9%AA%8C%E8%AF%81%E5%B9%B6%E6%8F%90%E5%8F%96%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E7%99%BB%E5%BD%95%E4%BF%A1%E6%81%AF">验证并提取电子邮件登录信息</a></td><td><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a> <a href="https://docs.rs/lazy_static/"><img src="https://badge-cache.kominick.com/crates/v/lazy_static.svg?label=lazy_static" alt="lazy_static-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+<tr><td><a href="text/regex.html#%E4%BB%8E%E6%96%87%E6%9C%AC%E6%8F%90%E5%8F%96%E6%A0%87%E7%AD%BE%E5%85%83%E7%B4%A0%E5%94%AF%E4%B8%80%E7%9A%84%E5%88%97%E8%A1%A8">从文本提取标签元素唯一的列表</a></td><td><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a> <a href="https://docs.rs/lazy_static/"><img src="https://badge-cache.kominick.com/crates/v/lazy_static.svg?label=lazy_static" alt="lazy_static-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+<tr><td><a href="text/regex.html#%E4%BB%8E%E6%96%87%E6%9C%AC%E6%8F%90%E5%8F%96%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81">从文本提取电话号码</a></td><td><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+<tr><td><a href="text/regex.html#%E9%80%9A%E8%BF%87%E5%8C%B9%E9%85%8D%E5%A4%9A%E4%B8%AA%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9D%A5%E7%AD%9B%E9%80%89%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">通过匹配多个正则表达式来筛选日志文件</a></td><td><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+<tr><td><a href="text/regex.html#%E6%96%87%E6%9C%AC%E6%A8%A1%E5%BC%8F%E6%9B%BF%E6%8D%A2">文本模式替换</a></td><td><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a> <a href="https://docs.rs/lazy_static/"><img src="https://badge-cache.kominick.com/crates/v/lazy_static.svg?label=lazy_static" alt="lazy_static-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#字符串解析" id="字符串解析">字符串解析</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="text/string_parsing.html#%E6%94%B6%E9%9B%86-unicode-%E5%AD%97%E7%AC%A6">收集 Unicode 字符</a></td><td><a href="https://docs.rs/unicode-segmentation/"><img src="https://badge-cache.kominick.com/crates/v/unicode-segmentation.svg?label=unicode-segmentation" alt="unicode-segmentation-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="text/string_parsing.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%93%E6%9E%84%E4%BD%93%E5%B9%B6%E5%AE%9E%E7%8E%B0-fromstr-trait">自定义<code>结构体</code>并实现 <code>FromStr</code> trait</a></td><td><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a></td><td><a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<h1><a class="header" href="#web-编程" id="web-编程">Web 编程</a></h1>
+<!--
+> [web.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/web.md)
+> <br />
+> commit dd4efa8dcd8e611326caa01c08db8f227aa909d6 - 2020.06.07
+-->
+<h2><a class="header" href="#抓取网页" id="抓取网页">抓取网页</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="web/scraping.html#%E4%BB%8E-html-%E7%BD%91%E9%A1%B5%E4%B8%AD%E6%8F%90%E5%8F%96%E6%89%80%E6%9C%89%E9%93%BE%E6%8E%A5">从 HTML 网页中提取所有链接</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/select/"><img src="https://badge-cache.kominick.com/crates/v/select.svg?label=select" alt="select-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="web/scraping.html#%E6%A3%80%E6%9F%A5%E7%BD%91%E9%A1%B5%E6%AD%BB%E9%93%BE">检查网页死链</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/select/"><img src="https://badge-cache.kominick.com/crates/v/select.svg?label=select" alt="select-badge" /></a> <a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="web/scraping.html#%E4%BB%8E-mediawiki-%E6%A0%87%E8%AE%B0%E9%A1%B5%E9%9D%A2%E6%8F%90%E5%8F%96%E6%89%80%E6%9C%89%E5%94%AF%E4%B8%80%E6%80%A7%E9%93%BE%E6%8E%A5">从 MediaWiki 标记页面提取所有唯一性链接</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#url" id="url">URL</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="web/url.html#%E8%A7%A3%E6%9E%90-url-%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%BA-url-%E7%B1%BB%E5%9E%8B">解析 URL 字符串为 <code>Url</code> 类型</a></td><td><a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="web/url.html#%E9%80%9A%E8%BF%87%E7%A7%BB%E9%99%A4%E8%B7%AF%E5%BE%84%E6%AE%B5%E5%88%9B%E5%BB%BA%E5%9F%BA%E6%9C%AC-url">通过移除路径段创建基本 URL</a></td><td><a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="web/url.html#%E4%BB%8E%E5%9F%BA%E6%9C%AC-url-%E5%88%9B%E5%BB%BA%E6%96%B0-urls">从基本 URL 创建新 URLs</a></td><td><a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="web/url.html#%E6%8F%90%E5%8F%96-url-%E6%BA%90scheme-host-port">提取 URL 源（scheme/ host/ port）</a></td><td><a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="web/url.html#%E4%BB%8E-url-%E7%A7%BB%E9%99%A4%E7%89%87%E6%AE%B5%E6%A0%87%E8%AF%86%E7%AC%A6%E5%92%8C%E6%9F%A5%E8%AF%A2%E5%AF%B9">从 URL 移除片段标识符和查询对</a></td><td><a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#媒体类型mime" id="媒体类型mime">媒体类型（MIME）</a></h2>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="web/mime.html#%E4%BB%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%8E%B7%E5%8F%96-mime-%E7%B1%BB%E5%9E%8B">从字符串获取 MIME 类型</a></td><td><a href="https://docs.rs/mime/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=mime" alt="mime-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="web/mime.html#%E4%BB%8E%E6%96%87%E4%BB%B6%E5%90%8D%E8%8E%B7%E5%8F%96-mime-%E7%B1%BB%E5%9E%8B">从文件名获取 MIME 类型</a></td><td><a href="https://docs.rs/mime/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=mime" alt="mime-badge" /></a></td><td><a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="web/mime.html#%E8%A7%A3%E6%9E%90-http-%E5%93%8D%E5%BA%94%E7%9A%84-mime-%E7%B1%BB%E5%9E%8B">解析 HTTP 响应的 MIME 类型</a></td><td><a href="https://docs.rs/mime/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=mime" alt="mime-badge" /></a> <a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#客户端" id="客户端">客户端</a></h2>
+<!--
+> [web/clients.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/web/clients.md)
+> <br />
+> commit dd4efa8dcd8e611326caa01c08db8f227aa909d6 - 2020.06.07
+-->
+<h3><a class="header" href="#请求处理" id="请求处理">请求处理</a></h3>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/web/clients/requests.html#%E5%8F%91%E5%87%BA-http-get-%E8%AF%B7%E6%B1%82">发出 HTTP GET 请求</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="/web/clients/requests.html#%E4%B8%BA-rest-%E8%AF%B7%E6%B1%82%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B6%88%E6%81%AF%E6%A0%87%E5%A4%B4%E5%92%8C-url-%E5%8F%82%E6%95%B0">为 REST 请求设置自定义消息标头和 URL 参数</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/hyper/"><img src="https://badge-cache.kominick.com/crates/v/hyper.svg?label=hyper" alt="hyper-badge" /></a> <a href="https://docs.rs/url/"><img src="https://badge-cache.kominick.com/crates/v/url.svg?label=url" alt="url-badge" /></a> <a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td><td></td></tr>
+</tbody></table>
+<h3><a class="header" href="#web-api-调用" id="web-api-调用">Web API 调用</a></h3>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/web/clients/apis.html#%E6%9F%A5%E8%AF%A2-github-api">查询 GitHub API</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="/web/clients/apis.html#%E6%A3%80%E6%9F%A5-api-%E8%B5%84%E6%BA%90%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8">检查 API 资源是否存在</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="/web/clients/apis.html#%E4%BD%BF%E7%94%A8-github-api-%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4-gist">使用 GitHub API 创建和删除 Gist</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="/web/clients/apis.html#%E4%BD%BF%E7%94%A8-restful-api-%E5%88%86%E9%A1%B5">使用 RESTful API 分页</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></td></tr>
+<tr><td><a href="/web/clients/apis.html#%E5%A4%84%E7%90%86%E9%80%9F%E7%8E%87%E5%8F%97%E9%99%90-api">处理速率受限 API</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/hyper/"><img src="https://badge-cache.kominick.com/crates/v/hyper.svg?label=hyper" alt="hyper-badge" /></a> <a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td><td></td></tr>
+</tbody></table>
+<h3><a class="header" href="#下载" id="下载">下载</a></h3>
+<table><thead><tr><th>实例名称</th><th>Crates</th><th>类别</th></tr></thead><tbody>
+<tr><td><a href="/web/clients/download.html#%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E5%88%B0%E4%B8%B4%E6%97%B6%E7%9B%AE%E5%BD%95">下载文件到临时目录</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/tempdir/"><img src="https://badge-cache.kominick.com/crates/v/tempdir.svg?label=tempdir" alt="tempdir-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a> <a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></td></tr>
+<tr><td><a href="/web/clients/download.html#%E4%BD%BF%E7%94%A8-http-range-%E8%AF%B7%E6%B1%82%E5%A4%B4%E8%BF%9B%E8%A1%8C%E9%83%A8%E5%88%86%E4%B8%8B%E8%BD%BD">使用 HTTP range 请求头进行部分下载</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+<tr><td><a href="/web/clients/download.html#post-%E6%96%87%E4%BB%B6%E5%88%B0-paste-rs">POST 文件到 paste-rs</a></td><td><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a></td><td><a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></td></tr>
+</tbody></table>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="about.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+
+                    <script type="text/javascript" src="//static.budshome.com/js/bdubottom.js"></script>
+
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="about.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+        <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+        <script type="text/javascript" src="//static.budshome.com/js/bdtj-bh.js"></script>
+        <script type="text/javascript" src="//static.budshome.com/js/bdts.js"></script>
+    </body>
+</html>

@@ -1,0 +1,516 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>外部命令 - Rust Cookbook 中文版 - A Rust Cookbook</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rust cookbook 中文版, Rust 实践指南, Rust 实例示例, Rust 编程实战, Rust crate 生态实践, Rust crate 集成应用">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="stylesheet" href="../css/custom.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">总览</a></li><li class="chapter-item expanded affix "><a href="../about.html">关于本书</a></li><li class="chapter-item expanded "><a href="../algorithms.html"><strong aria-hidden="true">1.</strong> 算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/randomness.html"><strong aria-hidden="true">1.1.</strong> 生成随机值</a></li><li class="chapter-item expanded "><a href="../algorithms/sorting.html"><strong aria-hidden="true">1.2.</strong> Vector 排序</a></li></ol></li><li class="chapter-item expanded "><a href="../cli.html"><strong aria-hidden="true">2.</strong> 命令行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cli/arguments.html"><strong aria-hidden="true">2.1.</strong> 参数解析</a></li><li class="chapter-item expanded "><a href="../cli/ansi_terminal.html"><strong aria-hidden="true">2.2.</strong> ANSI 终端</a></li></ol></li><li class="chapter-item expanded "><a href="../compression.html"><strong aria-hidden="true">3.</strong> 压缩</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../compression/tar.html"><strong aria-hidden="true">3.1.</strong> 使用 tar 包</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency.html"><strong aria-hidden="true">4.</strong> 并发/并行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> 显式线程</a></li><li class="chapter-item expanded "><a href="../concurrency/parallel.html"><strong aria-hidden="true">4.2.</strong> 数据并行</a></li></ol></li><li class="chapter-item expanded "><a href="../cryptography.html"><strong aria-hidden="true">5.</strong> 密码学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cryptography/hashing.html"><strong aria-hidden="true">5.1.</strong> 散列（哈希）</a></li><li class="chapter-item expanded "><a href="../cryptography/encryption.html"><strong aria-hidden="true">5.2.</strong> 加密</a></li></ol></li><li class="chapter-item expanded "><a href="../data_structures.html"><strong aria-hidden="true">6.</strong> 数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../data_structures/bitfield.html"><strong aria-hidden="true">6.1.</strong> 位域</a></li></ol></li><li class="chapter-item expanded "><a href="../database.html"><strong aria-hidden="true">7.</strong> 数据库</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../database/sqlite.html"><strong aria-hidden="true">7.1.</strong> SQLite</a></li><li class="chapter-item expanded "><a href="../database/postgres.html"><strong aria-hidden="true">7.2.</strong> Postgres</a></li></ol></li><li class="chapter-item expanded "><a href="../datetime.html"><strong aria-hidden="true">8.</strong> 日期及时间</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datetime/duration.html"><strong aria-hidden="true">8.1.</strong> 期间和计算</a></li><li class="chapter-item expanded "><a href="../datetime/parse.html"><strong aria-hidden="true">8.2.</strong> 解析与显示</a></li></ol></li><li class="chapter-item expanded "><a href="../development_tools.html"><strong aria-hidden="true">9.</strong> 开发工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../development_tools/debugging.html"><strong aria-hidden="true">9.1.</strong> 调试工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../development_tools/debugging/log.html"><strong aria-hidden="true">9.1.1.</strong> 日志信息</a></li><li class="chapter-item expanded "><a href="../development_tools/debugging/config_log.html"><strong aria-hidden="true">9.1.2.</strong> 日志配置</a></li></ol></li><li class="chapter-item expanded "><a href="../development_tools/versioning.html"><strong aria-hidden="true">9.2.</strong> 版本控制</a></li><li class="chapter-item expanded "><a href="../development_tools/build_tools.html"><strong aria-hidden="true">9.3.</strong> 构建工具</a></li></ol></li><li class="chapter-item expanded "><a href="../encoding.html"><strong aria-hidden="true">10.</strong> 编码</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../encoding/strings.html"><strong aria-hidden="true">10.1.</strong> 字符集</a></li><li class="chapter-item expanded "><a href="../encoding/csv.html"><strong aria-hidden="true">10.2.</strong> CSV 处理</a></li><li class="chapter-item expanded "><a href="../encoding/complex.html"><strong aria-hidden="true">10.3.</strong> 结构化数据</a></li></ol></li><li class="chapter-item expanded "><a href="../errors.html"><strong aria-hidden="true">11.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../errors/handle.html"><strong aria-hidden="true">11.1.</strong> 处理错误变量</a></li></ol></li><li class="chapter-item expanded "><a href="../file.html"><strong aria-hidden="true">12.</strong> 文件系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../file/read-write.html"><strong aria-hidden="true">12.1.</strong> 文件读写</a></li><li class="chapter-item expanded "><a href="../file/dir.html"><strong aria-hidden="true">12.2.</strong> 目录遍历</a></li></ol></li><li class="chapter-item expanded "><a href="../hardware.html"><strong aria-hidden="true">13.</strong> 硬件支持</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../hardware/processor.html"><strong aria-hidden="true">13.1.</strong> 处理器</a></li></ol></li><li class="chapter-item expanded "><a href="../mem.html"><strong aria-hidden="true">14.</strong> 内存管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../mem/global_static.html"><strong aria-hidden="true">14.1.</strong> 全局静态/全局堆栈</a></li></ol></li><li class="chapter-item expanded "><a href="../net.html"><strong aria-hidden="true">15.</strong> 网络</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../net/server.html"><strong aria-hidden="true">15.1.</strong> 服务器</a></li></ol></li><li class="chapter-item expanded "><a href="../os.html"><strong aria-hidden="true">16.</strong> 操作系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../os/external.html" class="active"><strong aria-hidden="true">16.1.</strong> 外部命令</a></li></ol></li><li class="chapter-item expanded "><a href="../science.html"><strong aria-hidden="true">17.</strong> 科学计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../science/mathematics.html"><strong aria-hidden="true">17.1.</strong> 数学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../science/mathematics/linear_algebra.html"><strong aria-hidden="true">17.1.1.</strong> 线性代数</a></li><li class="chapter-item expanded "><a href="../science/mathematics/trigonometry.html"><strong aria-hidden="true">17.1.2.</strong> 三角学</a></li><li class="chapter-item expanded "><a href="../science/mathematics/complex_numbers.html"><strong aria-hidden="true">17.1.3.</strong> 复数</a></li><li class="chapter-item expanded "><a href="../science/mathematics/statistics.html"><strong aria-hidden="true">17.1.4.</strong> 统计学</a></li><li class="chapter-item expanded "><a href="../science/mathematics/miscellaneous.html"><strong aria-hidden="true">17.1.5.</strong> 其它数学计算</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../text.html"><strong aria-hidden="true">18.</strong> 文本处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../text/regex.html"><strong aria-hidden="true">18.1.</strong> 正则表达式</a></li><li class="chapter-item expanded "><a href="../text/string_parsing.html"><strong aria-hidden="true">18.2.</strong> 字符串解析</a></li></ol></li><li class="chapter-item expanded "><a href="../web.html"><strong aria-hidden="true">19.</strong> Web 编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../web/scraping.html"><strong aria-hidden="true">19.1.</strong> 提取链接</a></li><li class="chapter-item expanded "><a href="../web/url.html"><strong aria-hidden="true">19.2.</strong> URL</a></li><li class="chapter-item expanded "><a href="../web/mime.html"><strong aria-hidden="true">19.3.</strong> 媒介类型</a></li><li class="chapter-item expanded "><a href="../web/clients.html"><strong aria-hidden="true">19.4.</strong> 客户端</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../web/clients/requests.html"><strong aria-hidden="true">19.4.1.</strong> 请求处理</a></li><li class="chapter-item expanded "><a href="../web/clients/apis.html"><strong aria-hidden="true">19.4.2.</strong> Web API 调用</a></li><li class="chapter-item expanded "><a href="../web/clients/download.html"><strong aria-hidden="true">19.4.3.</strong> 下载</a></li><li class="spacer"></li></ol></li></ol></li></ol>
+
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <a href="https://budshome.com/books.html" target="_blank">
+                        <img src="../css/summary.jpg">
+                    </a>
+                </div>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust Cookbook 中文版 - A Rust Cookbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://budshome.com/books.html" target="_blank" title="返回书馆" aria-label="返回书馆">
+                            <span>书馆</span>
+                        </a>
+                        
+                        <a href="https://github.com/zzy/rust-cookbook-zh-cn" target="_blank" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <script type="text/javascript" src="//static.budshome.com/js/bdutop.js"></script>
+                    
+                    <main>
+                        <h1><a class="header" href="#外部命令" id="外部命令">外部命令</a></h1>
+<!--
+> [os/external.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os/external.md)
+> <br />
+> commit bba147f18531934c904b1c5afaed3e6550b1c1c0 - 2020.06.14
+-->
+<h2><a class="header" href="#运行外部命令并处理-stdout" id="运行外部命令并处理-stdout">运行外部命令并处理 stdout</a></h2>
+<!--
+> [os/external/process-output.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os/external/process-output.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/regex/"><img src="https://badge-cache.kominick.com/crates/v/regex.svg?label=regex" alt="regex-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a> <a href="https://crates.io/categories/text-processing"><img src="https://badge-cache.kominick.com/badge/text_processing--x.svg?style=social" alt="cat-text-processing-badge" /></a></p>
+<p>将 <code>git log --oneline</code> 作为外部命令 <a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>Command</code></a> 运行，并使用 <a href="https://docs.rs/regex/*/regex/struct.Regex.html"><code>Regex</code></a> 检查其 <a href="https://doc.rust-lang.org/std/process/struct.Output.html"><code>Output</code></a>，以获取最后 5 次提交的哈希值和消息。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run"><span class="boring">use error_chain::error_chain;
+</span>
+use std::process::Command;
+use regex::Regex;
+<span class="boring">
+</span><span class="boring">error_chain!{
+</span><span class="boring">    foreign_links {
+</span><span class="boring">        Io(std::io::Error);
+</span><span class="boring">        Regex(regex::Error);
+</span><span class="boring">        Utf8(std::string::FromUtf8Error);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>
+#[derive(PartialEq, Default, Clone, Debug)]
+struct Commit {
+    hash: String,
+    message: String,
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    let output = Command::new(&quot;git&quot;).arg(&quot;log&quot;).arg(&quot;--oneline&quot;).output()?;
+
+    if !output.status.success() {
+        error_chain::bail!(&quot;Command executed with failing error code&quot;);
+    }
+
+    let pattern = Regex::new(r&quot;(?x)
+                               ([0-9a-fA-F]+) # 提交的哈希值
+                               (.*)           # 提交信息&quot;)?;
+
+    String::from_utf8(output.stdout)?
+        .lines()
+        .filter_map(|line| pattern.captures(line))
+        .map(|cap| {
+                 Commit {
+                     hash: cap[1].to_string(),
+                     message: cap[2].trim().to_string(),
+                 }
+             })
+        .take(5)
+        .for_each(|x| println!(&quot;{:?}&quot;, x));
+
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#运行传递-stdin-的外部命令并检查错误代码" id="运行传递-stdin-的外部命令并检查错误代码">运行传递 stdin 的外部命令，并检查错误代码</a></h2>
+<!--
+> [os/external/send-input.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os/external/send-input.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></p>
+<p>使用外部命令 <a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>Command</code></a> 打开 <code>python</code> 解释器，并传递一条 python 语句供其执行，然后解析语句的输出结构体 <a href="https://doc.rust-lang.org/std/process/struct.Output.html"><code>Output</code></a>。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run"><span class="boring">use error_chain::error_chain;
+</span><span class="boring">
+</span>use std::collections::HashSet;
+use std::io::Write;
+use std::process::{Command, Stdio};
+<span class="boring">
+</span><span class="boring">error_chain!{
+</span><span class="boring">    errors { CmdError }
+</span><span class="boring">    foreign_links {
+</span><span class="boring">        Io(std::io::Error);
+</span><span class="boring">        Utf8(std::string::FromUtf8Error);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>
+fn main() -&gt; Result&lt;()&gt; {
+    let mut child = Command::new(&quot;python&quot;).stdin(Stdio::piped())
+        .stderr(Stdio::piped())
+        .stdout(Stdio::piped())
+        .spawn()?;
+
+    child.stdin
+        .as_mut()
+        .ok_or(&quot;Child process stdin has not been captured!&quot;)?
+        .write_all(b&quot;import this; copyright(); credits(); exit()&quot;)?;
+
+    let output = child.wait_with_output()?;
+
+    if output.status.success() {
+        let raw_output = String::from_utf8(output.stdout)?;
+        let words = raw_output.split_whitespace()
+            .map(|s| s.to_lowercase())
+            .collect::&lt;HashSet&lt;_&gt;&gt;();
+        println!(&quot;Found {} unique words:&quot;, words.len());
+        println!(&quot;{:#?}&quot;, words);
+        Ok(())
+    } else {
+        let err = String::from_utf8(output.stderr)?;
+        error_chain::bail!(&quot;External command failed:\n {}&quot;, err)
+    }
+}
+</code></pre></pre>
+<h2><a class="header" href="#运行管道传输的外部命令" id="运行管道传输的外部命令">运行管道传输的外部命令</a></h2>
+<!--
+> [os/external/piped.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os/external/piped.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></p>
+<p>显示当前工作目录中前 10 大的文件和子目录，它等同于运行： <code>du -ah . | sort -hr | head -n 10</code>。</p>
+<p>每个命令 <a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>Command</code></a> 代表一个进程，子进程的输出是通过父进程和子进程之间的管道 <a href="https://doc.rust-lang.org/std/process/struct.Stdio.html"><code>Stdio::piped</code></a> 捕获的。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run"><span class="boring">use error_chain::error_chain;
+</span><span class="boring">
+</span>use std::process::{Command, Stdio};
+<span class="boring">
+</span><span class="boring">error_chain! {
+</span><span class="boring">    foreign_links {
+</span><span class="boring">        Io(std::io::Error);
+</span><span class="boring">        Utf8(std::string::FromUtf8Error);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>
+fn main() -&gt; Result&lt;()&gt; {
+    let directory = std::env::current_dir()?;
+    let mut du_output_child = Command::new(&quot;du&quot;)
+        .arg(&quot;-ah&quot;)
+        .arg(&amp;directory)
+        .stdout(Stdio::piped())
+        .spawn()?;
+
+    if let Some(du_output) = du_output_child.stdout.take() {
+        let mut sort_output_child = Command::new(&quot;sort&quot;)
+            .arg(&quot;-hr&quot;)
+            .stdin(du_output)
+            .stdout(Stdio::piped())
+            .spawn()?;
+
+        du_output_child.wait()?;
+
+        if let Some(sort_output) = sort_output_child.stdout.take() {
+            let head_output_child = Command::new(&quot;head&quot;)
+                .args(&amp;[&quot;-n&quot;, &quot;10&quot;])
+                .stdin(sort_output)
+                .stdout(Stdio::piped())
+                .spawn()?;
+
+            let head_stdout = head_output_child.wait_with_output()?;
+
+            sort_output_child.wait()?;
+
+            println!(
+                &quot;Top 10 biggest files and directories in '{}':\n{}&quot;,
+                directory.display(),
+                String::from_utf8(head_stdout.stdout).unwrap()
+            );
+        }
+    }
+
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#将子进程的-stdout-和-stderr-重定向到同一个文件" id="将子进程的-stdout-和-stderr-重定向到同一个文件">将子进程的 stdout 和 stderr 重定向到同一个文件</a></h2>
+<!--
+> [os/external/error-file.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os/external/error-file.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></p>
+<p>生成子进程并将 <code>stdout</code> 和 <code>stderr</code> 重定向到同一个文件。它遵循与<a href="#%E8%BF%90%E8%A1%8C%E7%AE%A1%E9%81%93%E4%BC%A0%E8%BE%93%E7%9A%84%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4">运行管道传输的外部命令</a>相同的思想，但是 <a href="https://doc.rust-lang.org/std/process/struct.Stdio.html"><code>process::Stdio</code></a> 会将输出写入指定的文件。对 <code>stdout</code> 和 <code>stderr</code> 而言，<a href="https://doc.rust-lang.org/std/fs/struct.File.html#method.try_clone"><code>File::try_clone</code></a> 引用相同的文件句柄。它将确保两个句柄使用相同的光标位置进行写入。</p>
+<p>下面的实例等同于运行 Unix shell 命令 <code>ls . oops &gt;out.txt 2&gt;&amp;1</code>。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">use std::fs::File;
+use std::io::Error;
+use std::process::{Command, Stdio};
+
+fn main() -&gt; Result&lt;(), Error&gt; {
+    let outputs = File::create(&quot;out.txt&quot;)?;
+    let errors = outputs.try_clone()?;
+
+    Command::new(&quot;ls&quot;)
+        .args(&amp;[&quot;.&quot;, &quot;oops&quot;])
+        .stdout(Stdio::from(outputs))
+        .stderr(Stdio::from(errors))
+        .spawn()?
+        .wait_with_output()?;
+
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#持续处理子进程的输出" id="持续处理子进程的输出">持续处理子进程的输出</a></h2>
+<!--
+> [os/external/continuous.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os/external/continuous.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></p>
+<p>在<a href="#%E8%BF%90%E8%A1%8C%E5%A4%96%E9%83%A8%E5%91%BD%E4%BB%A4%E5%B9%B6%E5%A4%84%E7%90%86-stdout">运行外部命令并处理-stdout</a> 实例中，直到外部命令 <a href="https://doc.rust-lang.org/std/process/struct.Command.html"><code>Command</code></a> 完成，stdout 的处理才开始。下面的实例调用 <a href="https://doc.rust-lang.org/std/process/struct.Stdio.html"><code>Stdio::piped</code></a> 创建管道，并在 <a href="https://doc.rust-lang.org/std/io/struct.BufReader.html"><code>BufReader</code></a> 被更新后立即读取 <code>stdout</code>，持续不断地处理。</p>
+<p>下面的实例等同于 Unix shell 命令 <code>journalctl | grep usb</code>。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">use std::process::{Command, Stdio};
+use std::io::{BufRead, BufReader, Error, ErrorKind};
+
+fn main() -&gt; Result&lt;(), Error&gt; {
+    let stdout = Command::new(&quot;journalctl&quot;)
+        .stdout(Stdio::piped())
+        .spawn()?
+        .stdout
+        .ok_or_else(|| Error::new(ErrorKind::Other,&quot;Could not capture standard output.&quot;))?;
+
+    let reader = BufReader::new(stdout);
+
+    reader
+        .lines()
+        .filter_map(|line| line.ok())
+        .filter(|line| line.find(&quot;usb&quot;).is_some())
+        .for_each(|line| println!(&quot;{}&quot;, line));
+
+     Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#读取环境变量" id="读取环境变量">读取环境变量</a></h2>
+<!--
+> [os/external/read-env-variable.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/os/external/read-env-variable.md)
+> <br />
+> commit bba147f18531934c904b1c5afaed3e6550b1c1c0 - 2020.06.14
+-->
+<p><a href="https://doc.rust-lang.org/std"><img src="https://badge-cache.kominick.com/badge/std-1.29.1-blue.svg" alt="std-badge" /></a> <a href="https://crates.io/categories/os"><img src="https://badge-cache.kominick.com/badge/OS--x.svg?style=social" alt="cat-os-badge" /></a></p>
+<p>通过 <a href="https://doc.rust-lang.org/std/env/fn.var.html">std::env::var</a> 读取环境变量。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">use std::env;
+use std::fs;
+use std::io::Error;
+
+fn main() -&gt; Result&lt;(), Error&gt; {
+    // 从环境变量 `CONFIG` 读取配置路径 `config_path`。
+    // 如果 `CONFIG` 未设置，采用默认配置路径。
+    let config_path = env::var(&quot;CONFIG&quot;)
+        .unwrap_or(&quot;/etc/myapp/config&quot;.to_string());
+
+    let config: String = fs::read_to_string(config_path)?;
+    println!(&quot;Config: {}&quot;, config);
+
+    Ok(())
+}
+</code></pre></pre>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../os.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../science.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+
+                    <script type="text/javascript" src="//static.budshome.com/js/bdubottom.js"></script>
+
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../os.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../science.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+        <script type="text/javascript" src="//static.budshome.com/js/bdtj-bh.js"></script>
+        <script type="text/javascript" src="//static.budshome.com/js/bdts.js"></script>
+    </body>
+</html>

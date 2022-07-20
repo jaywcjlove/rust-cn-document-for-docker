@@ -1,0 +1,469 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>线性代数 - Rust Cookbook 中文版 - A Rust Cookbook</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rust cookbook 中文版, Rust 实践指南, Rust 实例示例, Rust 编程实战, Rust crate 生态实践, Rust crate 集成应用">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <link rel="stylesheet" href="../../css/custom.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../intro.html">总览</a></li><li class="chapter-item expanded affix "><a href="../../about.html">关于本书</a></li><li class="chapter-item expanded "><a href="../../algorithms.html"><strong aria-hidden="true">1.</strong> 算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../algorithms/randomness.html"><strong aria-hidden="true">1.1.</strong> 生成随机值</a></li><li class="chapter-item expanded "><a href="../../algorithms/sorting.html"><strong aria-hidden="true">1.2.</strong> Vector 排序</a></li></ol></li><li class="chapter-item expanded "><a href="../../cli.html"><strong aria-hidden="true">2.</strong> 命令行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cli/arguments.html"><strong aria-hidden="true">2.1.</strong> 参数解析</a></li><li class="chapter-item expanded "><a href="../../cli/ansi_terminal.html"><strong aria-hidden="true">2.2.</strong> ANSI 终端</a></li></ol></li><li class="chapter-item expanded "><a href="../../compression.html"><strong aria-hidden="true">3.</strong> 压缩</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../compression/tar.html"><strong aria-hidden="true">3.1.</strong> 使用 tar 包</a></li></ol></li><li class="chapter-item expanded "><a href="../../concurrency.html"><strong aria-hidden="true">4.</strong> 并发/并行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> 显式线程</a></li><li class="chapter-item expanded "><a href="../../concurrency/parallel.html"><strong aria-hidden="true">4.2.</strong> 数据并行</a></li></ol></li><li class="chapter-item expanded "><a href="../../cryptography.html"><strong aria-hidden="true">5.</strong> 密码学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cryptography/hashing.html"><strong aria-hidden="true">5.1.</strong> 散列（哈希）</a></li><li class="chapter-item expanded "><a href="../../cryptography/encryption.html"><strong aria-hidden="true">5.2.</strong> 加密</a></li></ol></li><li class="chapter-item expanded "><a href="../../data_structures.html"><strong aria-hidden="true">6.</strong> 数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../data_structures/bitfield.html"><strong aria-hidden="true">6.1.</strong> 位域</a></li></ol></li><li class="chapter-item expanded "><a href="../../database.html"><strong aria-hidden="true">7.</strong> 数据库</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../database/sqlite.html"><strong aria-hidden="true">7.1.</strong> SQLite</a></li><li class="chapter-item expanded "><a href="../../database/postgres.html"><strong aria-hidden="true">7.2.</strong> Postgres</a></li></ol></li><li class="chapter-item expanded "><a href="../../datetime.html"><strong aria-hidden="true">8.</strong> 日期及时间</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datetime/duration.html"><strong aria-hidden="true">8.1.</strong> 期间和计算</a></li><li class="chapter-item expanded "><a href="../../datetime/parse.html"><strong aria-hidden="true">8.2.</strong> 解析与显示</a></li></ol></li><li class="chapter-item expanded "><a href="../../development_tools.html"><strong aria-hidden="true">9.</strong> 开发工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../development_tools/debugging.html"><strong aria-hidden="true">9.1.</strong> 调试工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../development_tools/debugging/log.html"><strong aria-hidden="true">9.1.1.</strong> 日志信息</a></li><li class="chapter-item expanded "><a href="../../development_tools/debugging/config_log.html"><strong aria-hidden="true">9.1.2.</strong> 日志配置</a></li></ol></li><li class="chapter-item expanded "><a href="../../development_tools/versioning.html"><strong aria-hidden="true">9.2.</strong> 版本控制</a></li><li class="chapter-item expanded "><a href="../../development_tools/build_tools.html"><strong aria-hidden="true">9.3.</strong> 构建工具</a></li></ol></li><li class="chapter-item expanded "><a href="../../encoding.html"><strong aria-hidden="true">10.</strong> 编码</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../encoding/strings.html"><strong aria-hidden="true">10.1.</strong> 字符集</a></li><li class="chapter-item expanded "><a href="../../encoding/csv.html"><strong aria-hidden="true">10.2.</strong> CSV 处理</a></li><li class="chapter-item expanded "><a href="../../encoding/complex.html"><strong aria-hidden="true">10.3.</strong> 结构化数据</a></li></ol></li><li class="chapter-item expanded "><a href="../../errors.html"><strong aria-hidden="true">11.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../errors/handle.html"><strong aria-hidden="true">11.1.</strong> 处理错误变量</a></li></ol></li><li class="chapter-item expanded "><a href="../../file.html"><strong aria-hidden="true">12.</strong> 文件系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../file/read-write.html"><strong aria-hidden="true">12.1.</strong> 文件读写</a></li><li class="chapter-item expanded "><a href="../../file/dir.html"><strong aria-hidden="true">12.2.</strong> 目录遍历</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware.html"><strong aria-hidden="true">13.</strong> 硬件支持</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/processor.html"><strong aria-hidden="true">13.1.</strong> 处理器</a></li></ol></li><li class="chapter-item expanded "><a href="../../mem.html"><strong aria-hidden="true">14.</strong> 内存管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../mem/global_static.html"><strong aria-hidden="true">14.1.</strong> 全局静态/全局堆栈</a></li></ol></li><li class="chapter-item expanded "><a href="../../net.html"><strong aria-hidden="true">15.</strong> 网络</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../net/server.html"><strong aria-hidden="true">15.1.</strong> 服务器</a></li></ol></li><li class="chapter-item expanded "><a href="../../os.html"><strong aria-hidden="true">16.</strong> 操作系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../os/external.html"><strong aria-hidden="true">16.1.</strong> 外部命令</a></li></ol></li><li class="chapter-item expanded "><a href="../../science.html"><strong aria-hidden="true">17.</strong> 科学计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../science/mathematics.html"><strong aria-hidden="true">17.1.</strong> 数学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../science/mathematics/linear_algebra.html" class="active"><strong aria-hidden="true">17.1.1.</strong> 线性代数</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/trigonometry.html"><strong aria-hidden="true">17.1.2.</strong> 三角学</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/complex_numbers.html"><strong aria-hidden="true">17.1.3.</strong> 复数</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/statistics.html"><strong aria-hidden="true">17.1.4.</strong> 统计学</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/miscellaneous.html"><strong aria-hidden="true">17.1.5.</strong> 其它数学计算</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../text.html"><strong aria-hidden="true">18.</strong> 文本处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../text/regex.html"><strong aria-hidden="true">18.1.</strong> 正则表达式</a></li><li class="chapter-item expanded "><a href="../../text/string_parsing.html"><strong aria-hidden="true">18.2.</strong> 字符串解析</a></li></ol></li><li class="chapter-item expanded "><a href="../../web.html"><strong aria-hidden="true">19.</strong> Web 编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../web/scraping.html"><strong aria-hidden="true">19.1.</strong> 提取链接</a></li><li class="chapter-item expanded "><a href="../../web/url.html"><strong aria-hidden="true">19.2.</strong> URL</a></li><li class="chapter-item expanded "><a href="../../web/mime.html"><strong aria-hidden="true">19.3.</strong> 媒介类型</a></li><li class="chapter-item expanded "><a href="../../web/clients.html"><strong aria-hidden="true">19.4.</strong> 客户端</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../web/clients/requests.html"><strong aria-hidden="true">19.4.1.</strong> 请求处理</a></li><li class="chapter-item expanded "><a href="../../web/clients/apis.html"><strong aria-hidden="true">19.4.2.</strong> Web API 调用</a></li><li class="chapter-item expanded "><a href="../../web/clients/download.html"><strong aria-hidden="true">19.4.3.</strong> 下载</a></li><li class="spacer"></li></ol></li></ol></li></ol>
+
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <a href="https://budshome.com/books.html" target="_blank">
+                        <img src="../../css/summary.jpg">
+                    </a>
+                </div>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust Cookbook 中文版 - A Rust Cookbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://budshome.com/books.html" target="_blank" title="返回书馆" aria-label="返回书馆">
+                            <span>书馆</span>
+                        </a>
+                        
+                        <a href="https://github.com/zzy/rust-cookbook-zh-cn" target="_blank" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <script type="text/javascript" src="//static.budshome.com/js/bdutop.js"></script>
+                    
+                    <main>
+                        <h1><a class="header" href="#线性代数" id="线性代数">线性代数</a></h1>
+<!--
+> [science/mathematics/linear_algebra.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra.md)
+> <br />
+> commit 019c0a0d2cb2ffde562da4c466d090f5854c7995 - 2020.06.14
+-->
+<h2><a class="header" href="#矩阵相加" id="矩阵相加">矩阵相加</a></h2>
+<!--
+> [science/mathematics/linear_algebra/add-matrices.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra/add-matrices.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/crate/ndarray/*"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a> <a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></p>
+<p>使用 <a href="https://docs.rs/ndarray/*/ndarray/fn.arr2.html"><code>ndarray::arr2</code></a> 创建两个二维（2-D）矩阵，并按元素方式求和。</p>
+<p>注意：sum 的计算方式为 <code>let sum = &amp;a + &amp;b</code>，借用 <code>&amp;</code> 运算符获得 <code>a</code> 和 <code>b</code> 的引用，可避免销毁他们，使它们可以稍后显示。这样，就创建了一个包含其和的新数组。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use ndarray::arr2;
+
+fn main() {
+    let a = arr2(&amp;[[1, 2, 3],
+                   [4, 5, 6]]);
+
+    let b = arr2(&amp;[[6, 5, 4],
+                   [3, 2, 1]]);
+
+    let sum = &amp;a + &amp;b;
+
+    println!(&quot;{}&quot;, a);
+    println!(&quot;+&quot;);
+    println!(&quot;{}&quot;, b);
+    println!(&quot;=&quot;);
+    println!(&quot;{}&quot;, sum);
+}
+</code></pre></pre>
+<h2><a class="header" href="#矩阵相乘" id="矩阵相乘">矩阵相乘</a></h2>
+<!--
+> [science/mathematics/linear_algebra/multiply-matrices.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra/multiply-matrices.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/crate/ndarray/*"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a> <a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></p>
+<p>使用 <a href="https://docs.rs/ndarray/*/ndarray/fn.arr2.html"><code>ndarray::arr2</code></a> 创建两个矩阵，并使用 <a href="https://docs.rs/ndarray/*/ndarray/struct.ArrayBase.html#method.dot-1"><code>ndarray::ArrayBase::dot</code></a> 对它们执行矩阵乘法。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use ndarray::arr2;
+
+fn main() {
+    let a = arr2(&amp;[[1, 2, 3],
+                   [4, 5, 6]]);
+
+    let b = arr2(&amp;[[6, 3],
+                   [5, 2],
+                   [4, 1]]);
+
+    println!(&quot;{}&quot;, a.dot(&amp;b));
+}
+</code></pre></pre>
+<h2><a class="header" href="#标量vector矩阵相乘" id="标量vector矩阵相乘">标量、vector、矩阵相乘</a></h2>
+<!--
+> [science/mathematics/linear_algebra/multiply-scalar-vector-matrix.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra/multiply-scalar-vector-matrix.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/crate/ndarray/*"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a> <a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></p>
+<p>使用 <a href="https://docs.rs/ndarray/*/ndarray/fn.arr1.html"><code>ndarray::arr1</code></a> 创建一维（1-D）数组（vector），使用 <a href="https://docs.rs/ndarray/*/ndarray/fn.arr2.html"><code>ndarray::arr2</code></a> 创建二维（2-D）数组（矩阵）。</p>
+<p>首先，一个标量乘以一个 vector 得到另一个 vector。然后，使用 <a href="https://docs.rs/ndarray/*/ndarray/struct.ArrayBase.html#method.dot-1"><code>ndarray::Array2::dot</code></a> 将矩阵乘以新的 vector（矩阵相乘使用 <code>dot</code> 函数，而 <code>*</code> 运算符执行元素方式的乘法）。</p>
+<p>在 <code>ndarray</code> crate 中，根据上下文，一维数组可以解释为行 vector 或列 vector。如果 vector 表示的方向很重要，则必须使用只有一行或一列的二维（2-D）数组。在本实例中，vector 是右侧的一维（1-D）数组，因此 <code>dot</code> 函数将其处理为列 vector。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use ndarray::{arr1, arr2, Array1};
+
+fn main() {
+    let scalar = 4;
+
+    let vector = arr1(&amp;[1, 2, 3]);
+
+    let matrix = arr2(&amp;[[4, 5, 6],
+                        [7, 8, 9]]);
+
+    let new_vector: Array1&lt;_&gt; = scalar * vector;
+    println!(&quot;{}&quot;, new_vector);
+
+    let new_matrix = matrix.dot(&amp;new_vector);
+    println!(&quot;{}&quot;, new_matrix);
+}
+</code></pre></pre>
+<h2><a class="header" href="#vector-比较" id="vector-比较">Vector 比较</a></h2>
+<!--
+> [science/mathematics/linear_algebra/vector-comparison.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra/vector-comparison.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/crate/ndarray/*"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></p>
+<p><a href="https://docs.rs/crate/ndarray/*">ndarray</a> crate 支持多种创建数组的方法——此实例使用 <code>from</code> 从 <code>std::Vec</code> 创建数组 <a href="https://docs.rs/ndarray/*/ndarray/struct.ArrayBase.html"><code>ndarray::Array</code></a>。然后，对数组以元素方式求和。</p>
+<p>下面的实例按元素方式比较两个浮点型 vector。浮点数的存储通常不精确，因此很难进行精确的比较。但是，<a href="https://docs.rs/approx/*/approx/index.html"><code>approx</code></a> crate 中的 <a href="https://docs.rs/approx/*/approx/macro.assert_abs_diff_eq.html"><code>assert_abs_diff_eq!</code></a> 宏允许方便地比较浮点型元素。要将 <code>approx</code> 和 <code>ndarray</code> 两个 crate一起使用，必须在 <code>Cargo.toml</code> 文件中的 <code>ndarray</code> 依赖项添加 <code>approx</code> 特性。例如：<code>ndarray = { version = &quot;0.13&quot;, features = [&quot;approx&quot;] }</code>。</p>
+<p>此实例还包含其他所有权示例。在这里，<code>let z = a + b</code> 执行后，会销毁 <code>a</code> and <code>b</code>，然后所有权会转移到 <code>z</code>。或者，<code>let w = &amp;c + &amp;d</code> 创建一个新的 vector，而不销毁 <code>c</code> 或者 <code>d</code>，允许以后对它们进行修改。有关其他详细信息，请参见<a href="https://docs.rs/ndarray/*/ndarray/struct.ArrayBase.html#binary-operators-with-two-arrays">带有两个数组的二进制运算符</a>。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use approx::assert_abs_diff_eq;
+use ndarray::Array;
+
+fn main() {
+  let a = Array::from(vec![1., 2., 3., 4., 5.]);
+  let b = Array::from(vec![5., 4., 3., 2., 1.]);
+  let mut c = Array::from(vec![1., 2., 3., 4., 5.]);
+  let mut d = Array::from(vec![5., 4., 3., 2., 1.]);
+
+  let z = a + b;
+  let w =  &amp;c + &amp;d;
+
+  assert_abs_diff_eq!(z, Array::from(vec![6., 6., 6., 6., 6.]));
+
+  println!(&quot;c = {}&quot;, c);
+  c[0] = 10.;
+  d[1] = 10.;
+
+  assert_abs_diff_eq!(w, Array::from(vec![6., 6., 6., 6., 6.]));
+
+}
+</code></pre></pre>
+<h2><a class="header" href="#vector-范数" id="vector-范数">Vector 范数</a></h2>
+<!--
+> [science/mathematics/linear_algebra/vector-norm.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra/vector-norm.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/crate/ndarray/*"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a></p>
+<p>这个实例展示了 <a href="https://docs.rs/ndarray/*/ndarray/type.Array1.html"><code>Array1</code></a> 类型、<a href="https://docs.rs/ndarray/*/ndarray/type.ArrayView1.html"><code>ArrayView1</code></a> 类型、<a href="https://docs.rs/ndarray/*/ndarray/struct.ArrayBase.html#method.fold"><code>fold</code></a> 方法，以及 <a href="https://docs.rs/ndarray/*/ndarray/struct.ArrayBase.html#method.dot"><code>dot</code></a> 方法在计算给定 vector 的 <a href="http://mathworld.wolfram.com/L1-Norm.html">l1</a> 和 <a href="http://mathworld.wolfram.com/L2-Norm.html">l2</a> 范数时的用法。
++ <code>l2_norm</code> 函数是两者中较简单的，它计算一个 vector 与自身的点积（dot product，数量积）的平方根。
++ <code>l1_norm</code> 函数通过 <code>fold</code> 运算来计算元素的绝对值（也可以通过 <code>x.mapv(f64::abs).scalar_sum()</code> 执行，但是会为 <code>mapv</code> 的结果分配一个新的数组）。</p>
+<p>请注意：<code>l1_norm</code> 和 <code>l2_norm</code> 都采用 <a href="https://docs.rs/ndarray/*/ndarray/type.ArrayView1.html"><code>ArrayView1</code></a> 类型。这个实例考虑了 vector 范数，所以范数函数只需要接受一维视图（<a href="https://docs.rs/ndarray/*/ndarray/type.ArrayView1.html"><code>ArrayView1</code></a>）。虽然函数可以使用类型为 <code>&amp;Array1&lt;f64&gt;</code> 的参数，但这将要求调用方引用拥有所有权的数组，这比访问视图更为严格（因为视图可以从任意数组或视图创建，而不仅仅是从拥有所有权的数组创建）。</p>
+<p><code>Array</code> 和 <code>ArrayView</code> 都是 <code>ArrayBase</code> 的类型别名。于是，大多数的调用方参数类型可以是 <code>&amp;ArrayBase&lt;S, Ix1&gt; where S: Data</code>，这样调用方就可以使用 <code>&amp;array</code> 或者 <code>&amp;view</code> 而不是 <code>x.view()</code>。如果该函数是公共 API 的一部分，那么对于用户来说，这可能是一个更好的选择。对于内部函数，更简明的 <code>ArrayView1&lt;f64&gt;</code> 或许更合适。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use ndarray::{array, Array1, ArrayView1};
+
+fn l1_norm(x: ArrayView1&lt;f64&gt;) -&gt; f64 {
+    x.fold(0., |acc, elem| acc + elem.abs())
+}
+
+fn l2_norm(x: ArrayView1&lt;f64&gt;) -&gt; f64 {
+    x.dot(&amp;x).sqrt()
+}
+
+fn normalize(mut x: Array1&lt;f64&gt;) -&gt; Array1&lt;f64&gt; {
+    let norm = l2_norm(x.view());
+    x.mapv_inplace(|e| e/norm);
+    x
+}
+
+fn main() {
+    let x = array![1., 2., 3., 4., 5.];
+    println!(&quot;||x||_2 = {}&quot;, l2_norm(x.view()));
+    println!(&quot;||x||_1 = {}&quot;, l1_norm(x.view()));
+    println!(&quot;Normalizing x yields {:?}&quot;, normalize(x));
+}
+</code></pre></pre>
+<h2><a class="header" href="#矩阵求逆" id="矩阵求逆">矩阵求逆</a></h2>
+<!--
+> [science/mathematics/linear_algebra/invert-matrix.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra/invert-matrix.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/nalgebra"><img src="https://badge-cache.kominick.com/crate/nalgebra.svg?label=nalgebra" alt="nalgebra-badge" /></a> <a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></p>
+<p>用 <a href="https://docs.rs/nalgebra/*/nalgebra/base/type.Matrix3.html"><code>nalgebra::Matrix3</code></a> 创建一个 3x3 的矩阵，如果可能的话，将其求逆。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use nalgebra::Matrix3;
+
+fn main() {
+    let m1 = Matrix3::new(2.0, 1.0, 1.0, 3.0, 2.0, 1.0, 2.0, 1.0, 2.0);
+    println!(&quot;m1 = {}&quot;, m1);
+    match m1.try_inverse() {
+        Some(inv) =&gt; {
+            println!(&quot;The inverse of m1 is: {}&quot;, inv);
+        }
+        None =&gt; {
+            println!(&quot;m1 is not invertible!&quot;);
+        }
+    }
+}
+</code></pre></pre>
+<h2><a class="header" href="#反序列化矩阵" id="反序列化矩阵">（反）序列化矩阵</a></h2>
+<!--
+> [science/mathematics/linear_algebra/deserialize-matrix.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/science/mathematics/linear_algebra/deserialize-matrix.md)
+> <br />
+> commit 019c0a0d2cb2ffde562da4c466d090f5854c7995 - 2020.06.14
+-->
+<p><a href="https://docs.rs/crate/ndarray/*"><img src="https://badge-cache.kominick.com/crate/ndarray.svg?label=ndarray" alt="ndarray-badge" /></a> <a href="https://crates.io/categories/science"><img src="https://badge-cache.kominick.com/badge/science--x.svg?style=social" alt="cat-science-badge" /></a></p>
+<p>本实例实现将矩阵序列化为 JSON，以及从 JSON 反序列化出矩阵。序列化由 <a href="https://docs.rs/serde_json/*/serde_json/fn.to_string.html"><code>serde_json::to_string</code></a> 处理，<a href="https://docs.rs/serde_json/*/serde_json/fn.from_str.html"><code>serde_json::from_str</code></a> 则执行反序列化。</p>
+<p>请注意：序列化后再反序列化将返回原始矩阵。</p>
+<pre><pre class="playground"><code class="language-rust">extern crate nalgebra;
+extern crate serde_json;
+
+use nalgebra::DMatrix;
+
+fn main() -&gt; Result&lt;(), std::io::Error&gt; {
+    let row_slice: Vec&lt;i32&gt; = (1..5001).collect();
+    let matrix = DMatrix::from_row_slice(50, 100, &amp;row_slice);
+
+    // 序列化矩阵
+    let serialized_matrix = serde_json::to_string(&amp;matrix)?;
+
+    // 反序列化出矩阵
+    let deserialized_matrix: DMatrix&lt;i32&gt; = serde_json::from_str(&amp;serialized_matrix)?;
+
+    // 验证反序列化出的矩阵 `deserialized_matrix` 等同于原始矩阵 `matrix`
+    assert!(deserialized_matrix == matrix);
+
+    Ok(())
+}
+</code></pre></pre>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../science/mathematics.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../../science/mathematics/trigonometry.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+
+                    <script type="text/javascript" src="//static.budshome.com/js/bdubottom.js"></script>
+
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../science/mathematics.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../../science/mathematics/trigonometry.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+        <script type="text/javascript" src="//static.budshome.com/js/bdtj-bh.js"></script>
+        <script type="text/javascript" src="//static.budshome.com/js/bdts.js"></script>
+    </body>
+</html>

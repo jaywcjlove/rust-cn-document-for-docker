@@ -1,0 +1,440 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>下载 - Rust Cookbook 中文版 - A Rust Cookbook</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rust cookbook 中文版, Rust 实践指南, Rust 实例示例, Rust 编程实战, Rust crate 生态实践, Rust crate 集成应用">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../../favicon.png">
+        
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
+        <link rel="stylesheet" href="../../css/print.css" media="print">
+        <link rel="stylesheet" href="../../css/custom.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../../intro.html">总览</a></li><li class="chapter-item expanded affix "><a href="../../about.html">关于本书</a></li><li class="chapter-item expanded "><a href="../../algorithms.html"><strong aria-hidden="true">1.</strong> 算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../algorithms/randomness.html"><strong aria-hidden="true">1.1.</strong> 生成随机值</a></li><li class="chapter-item expanded "><a href="../../algorithms/sorting.html"><strong aria-hidden="true">1.2.</strong> Vector 排序</a></li></ol></li><li class="chapter-item expanded "><a href="../../cli.html"><strong aria-hidden="true">2.</strong> 命令行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cli/arguments.html"><strong aria-hidden="true">2.1.</strong> 参数解析</a></li><li class="chapter-item expanded "><a href="../../cli/ansi_terminal.html"><strong aria-hidden="true">2.2.</strong> ANSI 终端</a></li></ol></li><li class="chapter-item expanded "><a href="../../compression.html"><strong aria-hidden="true">3.</strong> 压缩</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../compression/tar.html"><strong aria-hidden="true">3.1.</strong> 使用 tar 包</a></li></ol></li><li class="chapter-item expanded "><a href="../../concurrency.html"><strong aria-hidden="true">4.</strong> 并发/并行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> 显式线程</a></li><li class="chapter-item expanded "><a href="../../concurrency/parallel.html"><strong aria-hidden="true">4.2.</strong> 数据并行</a></li></ol></li><li class="chapter-item expanded "><a href="../../cryptography.html"><strong aria-hidden="true">5.</strong> 密码学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../cryptography/hashing.html"><strong aria-hidden="true">5.1.</strong> 散列（哈希）</a></li><li class="chapter-item expanded "><a href="../../cryptography/encryption.html"><strong aria-hidden="true">5.2.</strong> 加密</a></li></ol></li><li class="chapter-item expanded "><a href="../../data_structures.html"><strong aria-hidden="true">6.</strong> 数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../data_structures/bitfield.html"><strong aria-hidden="true">6.1.</strong> 位域</a></li></ol></li><li class="chapter-item expanded "><a href="../../database.html"><strong aria-hidden="true">7.</strong> 数据库</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../database/sqlite.html"><strong aria-hidden="true">7.1.</strong> SQLite</a></li><li class="chapter-item expanded "><a href="../../database/postgres.html"><strong aria-hidden="true">7.2.</strong> Postgres</a></li></ol></li><li class="chapter-item expanded "><a href="../../datetime.html"><strong aria-hidden="true">8.</strong> 日期及时间</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../datetime/duration.html"><strong aria-hidden="true">8.1.</strong> 期间和计算</a></li><li class="chapter-item expanded "><a href="../../datetime/parse.html"><strong aria-hidden="true">8.2.</strong> 解析与显示</a></li></ol></li><li class="chapter-item expanded "><a href="../../development_tools.html"><strong aria-hidden="true">9.</strong> 开发工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../development_tools/debugging.html"><strong aria-hidden="true">9.1.</strong> 调试工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../development_tools/debugging/log.html"><strong aria-hidden="true">9.1.1.</strong> 日志信息</a></li><li class="chapter-item expanded "><a href="../../development_tools/debugging/config_log.html"><strong aria-hidden="true">9.1.2.</strong> 日志配置</a></li></ol></li><li class="chapter-item expanded "><a href="../../development_tools/versioning.html"><strong aria-hidden="true">9.2.</strong> 版本控制</a></li><li class="chapter-item expanded "><a href="../../development_tools/build_tools.html"><strong aria-hidden="true">9.3.</strong> 构建工具</a></li></ol></li><li class="chapter-item expanded "><a href="../../encoding.html"><strong aria-hidden="true">10.</strong> 编码</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../encoding/strings.html"><strong aria-hidden="true">10.1.</strong> 字符集</a></li><li class="chapter-item expanded "><a href="../../encoding/csv.html"><strong aria-hidden="true">10.2.</strong> CSV 处理</a></li><li class="chapter-item expanded "><a href="../../encoding/complex.html"><strong aria-hidden="true">10.3.</strong> 结构化数据</a></li></ol></li><li class="chapter-item expanded "><a href="../../errors.html"><strong aria-hidden="true">11.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../errors/handle.html"><strong aria-hidden="true">11.1.</strong> 处理错误变量</a></li></ol></li><li class="chapter-item expanded "><a href="../../file.html"><strong aria-hidden="true">12.</strong> 文件系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../file/read-write.html"><strong aria-hidden="true">12.1.</strong> 文件读写</a></li><li class="chapter-item expanded "><a href="../../file/dir.html"><strong aria-hidden="true">12.2.</strong> 目录遍历</a></li></ol></li><li class="chapter-item expanded "><a href="../../hardware.html"><strong aria-hidden="true">13.</strong> 硬件支持</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../hardware/processor.html"><strong aria-hidden="true">13.1.</strong> 处理器</a></li></ol></li><li class="chapter-item expanded "><a href="../../mem.html"><strong aria-hidden="true">14.</strong> 内存管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../mem/global_static.html"><strong aria-hidden="true">14.1.</strong> 全局静态/全局堆栈</a></li></ol></li><li class="chapter-item expanded "><a href="../../net.html"><strong aria-hidden="true">15.</strong> 网络</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../net/server.html"><strong aria-hidden="true">15.1.</strong> 服务器</a></li></ol></li><li class="chapter-item expanded "><a href="../../os.html"><strong aria-hidden="true">16.</strong> 操作系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../os/external.html"><strong aria-hidden="true">16.1.</strong> 外部命令</a></li></ol></li><li class="chapter-item expanded "><a href="../../science.html"><strong aria-hidden="true">17.</strong> 科学计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../science/mathematics.html"><strong aria-hidden="true">17.1.</strong> 数学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../science/mathematics/linear_algebra.html"><strong aria-hidden="true">17.1.1.</strong> 线性代数</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/trigonometry.html"><strong aria-hidden="true">17.1.2.</strong> 三角学</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/complex_numbers.html"><strong aria-hidden="true">17.1.3.</strong> 复数</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/statistics.html"><strong aria-hidden="true">17.1.4.</strong> 统计学</a></li><li class="chapter-item expanded "><a href="../../science/mathematics/miscellaneous.html"><strong aria-hidden="true">17.1.5.</strong> 其它数学计算</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../../text.html"><strong aria-hidden="true">18.</strong> 文本处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../text/regex.html"><strong aria-hidden="true">18.1.</strong> 正则表达式</a></li><li class="chapter-item expanded "><a href="../../text/string_parsing.html"><strong aria-hidden="true">18.2.</strong> 字符串解析</a></li></ol></li><li class="chapter-item expanded "><a href="../../web.html"><strong aria-hidden="true">19.</strong> Web 编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../web/scraping.html"><strong aria-hidden="true">19.1.</strong> 提取链接</a></li><li class="chapter-item expanded "><a href="../../web/url.html"><strong aria-hidden="true">19.2.</strong> URL</a></li><li class="chapter-item expanded "><a href="../../web/mime.html"><strong aria-hidden="true">19.3.</strong> 媒介类型</a></li><li class="chapter-item expanded "><a href="../../web/clients.html"><strong aria-hidden="true">19.4.</strong> 客户端</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../web/clients/requests.html"><strong aria-hidden="true">19.4.1.</strong> 请求处理</a></li><li class="chapter-item expanded "><a href="../../web/clients/apis.html"><strong aria-hidden="true">19.4.2.</strong> Web API 调用</a></li><li class="chapter-item expanded "><a href="../../web/clients/download.html" class="active"><strong aria-hidden="true">19.4.3.</strong> 下载</a></li><li class="spacer"></li></ol></li></ol></li></ol>
+
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <a href="https://budshome.com/books.html" target="_blank">
+                        <img src="../../css/summary.jpg">
+                    </a>
+                </div>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust Cookbook 中文版 - A Rust Cookbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://budshome.com/books.html" target="_blank" title="返回书馆" aria-label="返回书馆">
+                            <span>书馆</span>
+                        </a>
+                        
+                        <a href="https://github.com/zzy/rust-cookbook-zh-cn" target="_blank" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <script type="text/javascript" src="//static.budshome.com/js/bdutop.js"></script>
+                    
+                    <main>
+                        <h1><a class="header" href="#下载" id="下载">下载</a></h1>
+<!--
+> [web/clients/download.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/web/clients/download.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#下载文件到临时目录" id="下载文件到临时目录">下载文件到临时目录</a></h2>
+<!--
+> [web/clients/download/basic.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/web/clients/download/basic.md)
+> <br />
+> commit dd4efa8dcd8e611326caa01c08db8f227aa909d6 - 2020.06.07
+-->
+<p><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://docs.rs/tempdir/"><img src="https://badge-cache.kominick.com/crates/v/tempdir.svg?label=tempdir" alt="tempdir-badge" /></a> <a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a> <a href="https://crates.io/categories/filesystem"><img src="https://badge-cache.kominick.com/badge/filesystem--x.svg?style=social" alt="cat-filesystem-badge" /></a></p>
+<p>使用 <a href="https://docs.rs/tempfile/*/tempfile/struct.Builder.html"><code>tempfile::Builder</code></a> 创建一个临时目录，并使用 <a href="https://docs.rs/reqwest/*/reqwest/fn.get.html"><code>reqwest::get</code></a> 通过 HTTP 协议异步下载文件。</p>
+<p>使用 <a href="https://docs.rs/reqwest/*/reqwest/struct.Response.html#method.url"><code>Response::url</code></a> 方法内部的 <a href="https://docs.rs/tempfile/3.1.0/tempfile/struct.Builder.html#method.tempdir"><code>tempdir()</code></a> 方法获取文件名字，使用  <a href="https://doc.rust-lang.org/std/fs/struct.File.html"><code>File</code></a>  结构体创建目标文件，并使用 <a href="https://doc.rust-lang.org/std/io/fn.copy.html"><code>io::copy</code></a> 将下载的数据复制到文件中。程序退出时，会自动删除临时目录。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">use error_chain::error_chain;
+use std::io::copy;
+use std::fs::File;
+use tempfile::Builder;
+
+error_chain! {
+     foreign_links {
+         Io(std::io::Error);
+         HttpRequest(reqwest::Error);
+     }
+}
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;()&gt; {
+    let tmp_dir = Builder::new().prefix(&quot;example&quot;).tempdir()?;
+    let target = &quot;https://www.rust-lang.org/logos/rust-logo-512x512.png&quot;;
+    let response = reqwest::get(target).await?;
+
+    let mut dest = {
+        let fname = response
+            .url()
+            .path_segments()
+            .and_then(|segments| segments.last())
+            .and_then(|name| if name.is_empty() { None } else { Some(name) })
+            .unwrap_or(&quot;tmp.bin&quot;);
+
+        println!(&quot;file to download: '{}'&quot;, fname);
+        let fname = tmp_dir.path().join(fname);
+        println!(&quot;will be located under: '{:?}'&quot;, fname);
+        File::create(fname)?
+    };
+    let content =  response.text().await?;
+    copy(&amp;mut content.as_bytes(), &amp;mut dest)?;
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#使用-http-range-请求头进行部分下载" id="使用-http-range-请求头进行部分下载">使用 HTTP range 请求头进行部分下载</a></h2>
+<!--
+> [web/clients/download/partial.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/web/clients/download/partial.md)
+> <br />
+> commit dd4efa8dcd8e611326caa01c08db8f227aa909d6 - 2020.06.07
+-->
+<p><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></p>
+<p>使用 <a href="https://docs.rs/reqwest/*/reqwest/blocking/struct.Client.html#method.head"><code>reqwest::blocking::Client::head</code></a> 获取响应的<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Length">消息主体的大小</a>（即消息主体内容长度）。</p>
+<p>然后，使用 <a href="https://docs.rs/reqwest/*/reqwest/blocking/struct.Client.html#method.get"><code>reqwest::blocking::Client::get</code></a> 下载 10240 字节的内容，同时打印进度消息。本实例使用同步的 reqwest 模块，<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Range">消息范围</a>标头指定响应的消息块大小和位置。</p>
+<p><a href="https://tools.ietf.org/html/rfc7233#section-3.1">RFC7233</a> 中定义了<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Range">消息范围</a>标头。</p>
+<blockquote>
+<p>译者注：RFC（Request For Comments）是一系列以编号排定的文件。文件收集了有关互联网相关信息，以及 UNIX 和互联网社区的软件文件。</p>
+</blockquote>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">use error_chain::error_chain;
+use reqwest::header::{HeaderValue, CONTENT_LENGTH, RANGE};
+use reqwest::StatusCode;
+use std::fs::File;
+use std::str::FromStr;
+
+error_chain! {
+    foreign_links {
+        Io(std::io::Error);
+        Reqwest(reqwest::Error);
+        Header(reqwest::header::ToStrError);
+    }
+}
+
+struct PartialRangeIter {
+  start: u64,
+  end: u64,
+  buffer_size: u32,
+}
+
+impl PartialRangeIter {
+  pub fn new(start: u64, end: u64, buffer_size: u32) -&gt; Result&lt;Self&gt; {
+    if buffer_size == 0 {
+      Err(&quot;invalid buffer_size, give a value greater than zero.&quot;)?;
+    }
+    Ok(PartialRangeIter {
+      start,
+      end,
+      buffer_size,
+    })
+  }
+}
+
+impl Iterator for PartialRangeIter {
+  type Item = HeaderValue;
+  fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
+    if self.start &gt; self.end {
+      None
+    } else {
+      let prev_start = self.start;
+      self.start += std::cmp::min(self.buffer_size as u64, self.end - self.start + 1);
+      Some(HeaderValue::from_str(&amp;format!(&quot;bytes={}-{}&quot;, prev_start, self.start - 1)).expect(&quot;string provided by format!&quot;))
+    }
+  }
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+  let url = &quot;https://httpbin.org/range/102400?duration=2&quot;;
+  const CHUNK_SIZE: u32 = 10240;
+    
+  let client = reqwest::blocking::Client::new();
+  let response = client.head(url).send()?;
+  let length = response
+    .headers()
+    .get(CONTENT_LENGTH)
+    .ok_or(&quot;response doesn't include the content length&quot;)?;
+  let length = u64::from_str(length.to_str()?).map_err(|_| &quot;invalid Content-Length header&quot;)?;
+    
+  let mut output_file = File::create(&quot;download.bin&quot;)?;
+    
+  println!(&quot;starting download...&quot;);
+  for range in PartialRangeIter::new(0, length - 1, CHUNK_SIZE)? {
+    println!(&quot;range {:?}&quot;, range);
+    let mut response = client.get(url).header(RANGE, range).send()?;
+    
+    let status = response.status();
+    if !(status == StatusCode::OK || status == StatusCode::PARTIAL_CONTENT) {
+      error_chain::bail!(&quot;Unexpected server response: {}&quot;, status)
+    }
+    std::io::copy(&amp;mut response, &amp;mut output_file)?;
+  }
+    
+  let content = response.text()?;
+  std::io::copy(&amp;mut content.as_bytes(), &amp;mut output_file)?;
+
+  println!(&quot;Finished with success!&quot;);
+  Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#post-文件到-paste-rs" id="post-文件到-paste-rs">POST 文件到 paste-rs</a></h2>
+<!--
+> [web/clients/download/post-file.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/web/clients/download/post-file.md)
+> <br />
+> commit dd4efa8dcd8e611326caa01c08db8f227aa909d6 - 2020.06.07
+-->
+<p><a href="https://docs.rs/reqwest/"><img src="https://badge-cache.kominick.com/crates/v/reqwest.svg?label=reqwest" alt="reqwest-badge" /></a> <a href="https://crates.io/categories/network-programming"><img src="https://badge-cache.kominick.com/badge/net--x.svg?style=social" alt="cat-net-badge" /></a></p>
+<p>本实例使用 <a href="https://docs.rs/reqwest/*/reqwest/struct.Client.html"><code>reqwest::Client</code></a> 建立与 https://paste.rs 的连接，遵循 <a href="https://docs.rs/reqwest/*/reqwest/struct.RequestBuilder.html"><code>reqwest::RequestBuilder</code></a> 结构体模式。调用 <a href="https://docs.rs/reqwest/*/reqwest/struct.Client.html#method.post"><code>Client::post</code></a> 方法，以 URL 为参数连接目标，<a href="https://docs.rs/reqwest/*/reqwest/struct.RequestBuilder.html#method.body"><code>RequestBuilder::body</code></a> 通过读取文件设置要发送的内容，<a href="https://docs.rs/reqwest/*/reqwest/struct.RequestBuilder.html#method.send"><code>RequestBuilder::send</code></a> 方法在文件上传过程中将一直阻塞，直到返回响应消息。最后，<a href="https://doc.rust-lang.org/std/io/trait.Read.html#method.read_to_string"><code>read_to_string</code></a> 返回响应消息并显示在控制台中。</p>
+<pre><pre class="playground"><code class="language-rust edition2018 no_run">use error_chain::error_chain;
+use std::fs::File;
+use std::io::Read;
+
+ error_chain! {
+     foreign_links {
+         HttpRequest(reqwest::Error);
+         IoError(::std::io::Error);
+     }
+ }
+ #[tokio::main]
+
+async fn main() -&gt; Result&lt;()&gt; {
+    let paste_api = &quot;https://paste.rs&quot;;
+    let mut file = File::open(&quot;message&quot;)?;
+
+    let mut contents = String::new();
+    file.read_to_string(&amp;mut contents)?;
+
+    let client = reqwest::Client::new();
+    let res = client.post(paste_api)
+        .body(contents)
+        .send()
+        .await?;
+    let response_text = res.text().await?;
+    println!(&quot;Your paste is located at: {}&quot;,response_text );
+    Ok(())
+}
+</code></pre></pre>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../../web/clients/apis.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+
+                    <script type="text/javascript" src="//static.budshome.com/js/bdubottom.js"></script>
+
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../../web/clients/apis.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+        <script src="../../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+        <script type="text/javascript" src="//static.budshome.com/js/bdtj-bh.js"></script>
+        <script type="text/javascript" src="//static.budshome.com/js/bdts.js"></script>
+    </body>
+</html>

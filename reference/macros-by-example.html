@@ -1,0 +1,580 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>声明宏 - Rust 参考手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 参考手册是 Rust 官方编写的 Rust 语言规范手册，由于语言还在快速迭代当中，所以本手册的内容还未固定下来。但这是一本学习和了解 Rust 全面的语言特性必不可少的书籍。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/reference.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macros-by-example.html" class="active"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li></ol></li><li class="chapter-item expanded "><a href="statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 推断型</a></li></ol></li><li class="chapter-item expanded "><a href="dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态尺寸类型(DST)</a></li><li class="chapter-item expanded "><a href="type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="linkage.html"><strong aria-hidden="true">14.</strong> 链接(linkage)</a></li><li class="chapter-item expanded "><a href="unsafety.html"><strong aria-hidden="true">15.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe-functions.html"><strong aria-hidden="true">15.1.</strong> 非安全函数</a></li><li class="chapter-item expanded "><a href="unsafe-blocks.html"><strong aria-hidden="true">15.2.</strong> 非安全代码块</a></li><li class="chapter-item expanded "><a href="behavior-considered-undefined.html"><strong aria-hidden="true">15.3.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="behavior-not-considered-unsafe.html"><strong aria-hidden="true">15.4.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="const_eval.html"><strong aria-hidden="true">16.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="abi.html"><strong aria-hidden="true">17.</strong> ABI</a></li><li class="chapter-item expanded "><a href="runtime.html"><strong aria-hidden="true">18.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="appendices.html"><strong aria-hidden="true">19.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macro-ambiguity.html"><strong aria-hidden="true">19.1.</strong> 宏定义规范</a></li><li class="chapter-item expanded "><a href="influences.html"><strong aria-hidden="true">19.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">19.3.</strong> 术语表</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 参考手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/reference-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#声明宏" id="声明宏">声明宏</a></h1>
+<blockquote>
+<p><a href="https://github.com/rust-lang/reference/blob/master/src/macros-by-example.md">macros-by-example.md</a><br />
+commit: d23f9da8469617e6c81121d9fd123443df70595d <br />
+本章译文最后维护日期：2021-5-6</p>
+</blockquote>
+<blockquote>
+<p><strong><sup>句法</sup></strong><br />
+<em>MacroRulesDefinition</em> :<br />
+   <code>macro_rules</code> <code>!</code> <a href="identifiers.html">IDENTIFIER</a> <em>MacroRulesDef</em></p>
+<p><em>MacroRulesDef</em> :<br />
+      <code>(</code> <em>MacroRules</em> <code>)</code> <code>;</code><br />
+   | <code>[</code> <em>MacroRules</em> <code>]</code> <code>;</code><br />
+   | <code>{</code> <em>MacroRules</em> <code>}</code></p>
+<p><em>MacroRules</em> :<br />
+   <em>MacroRule</em> ( <code>;</code> <em>MacroRule</em> )<sup>*</sup> <code>;</code><sup>?</sup></p>
+<p><em>MacroRule</em> :<br />
+   <em>MacroMatcher</em> <code>=&gt;</code> <em>MacroTranscriber</em></p>
+<p><em>MacroMatcher</em> :<br />
+      <code>(</code> <em>MacroMatch</em><sup>*</sup> <code>)</code><br />
+   | <code>[</code> <em>MacroMatch</em><sup>*</sup> <code>]</code><br />
+   | <code>{</code> <em>MacroMatch</em><sup>*</sup> <code>}</code></p>
+<p><em>MacroMatch</em> :<br />
+      <a href="tokens.html"><em>Token</em></a><sub><em>排除 $ 和 定界符</em></sub><br />
+   | <em>MacroMatcher</em><br />
+   | <code>$</code> <a href="identifiers.html">IDENTIFIER</a> <code>:</code> <em>MacroFragSpec</em><br />
+   | <code>$</code> <code>(</code> <em>MacroMatch</em><sup>+</sup> <code>)</code> <em>MacroRepSep</em><sup>?</sup> <em>MacroRepOp</em></p>
+<p><em>MacroFragSpec</em> :<br />
+      <code>block</code> | <code>expr</code> | <code>ident</code> | <code>item</code> | <code>lifetime</code> | <code>literal</code><br />
+   | <code>meta</code> | <code>pat</code> | <code>path</code> | <code>stmt</code> | <code>tt</code> | <code>ty</code> | <code>vis</code></p>
+<p><em>MacroRepSep</em> :<br />
+   <a href="tokens.html"><em>Token</em></a><sub><em>排除 定界符 和 重复操作符</em></sub></p>
+<p><em>MacroRepOp</em> :<br />
+   <code>*</code> | <code>+</code> | <code>?</code></p>
+<p><em>MacroTranscriber</em> :<br />
+   <a href="macros.html"><em>DelimTokenTree</em></a></p>
+</blockquote>
+<p><code>macro_rules</code> 允许用户以声明性的(declarative)方式定义句法扩展。我们称这种扩展形式为“声明宏（macros by example）”或简称“宏”。</p>
+<p>每个声明宏都有一个名称和一条或多条<em>规则</em>。每条规则都有两部分：一个<em>匹配器(matcher)</em>，描述它匹配的句法；一个<em>转码器(transcriber)</em>，描述成功匹配后将执行的替代调用句法。匹配器和转码器都必须由定界符(delimiter)包围。宏可以扩展为表达式、语句、程序项（包括 trait、impl 和外来程序项）、类型或模式。</p>
+<h2><a class="header" href="#转码" id="转码">转码</a></h2>
+<p>当宏被调用时，宏扩展器(macro expander)按名称查找宏调用，并依次尝试此宏中的每条宏规则。宏会根据第一个成功的匹配进行转码；如果当前转码结果导致错误，不会再尝试进行后续匹配。在匹配时，不会执行预判；如果编译器不能明确地确定如何一个 token 一个 token 地解析宏调用，则会报错。在下面的示例中，编译器不会越过标识符，去提前查看后跟的 token 是 <code>)</code>，尽管这能帮助它明确地解析调用：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! ambiguity {
+    ($($i:ident)* $j:ident) =&gt; { };
+}
+
+ambiguity!(error); // 错误: 局部歧义(local ambiguity)
+<span class="boring">}
+</span></code></pre></pre>
+<p>在匹配器和转码器中，token <code>$</code> 用于从宏引擎中调用特殊行为（下文<a href="#metavariables">元变量</a>和<a href="#repetitions">重复元</a>中有详述）。不属于此类调用的 token 将按字面意义进行匹配和转码，除了一个例外。这个例外是匹配器的外层定界符将匹配任何一对定界符。因此，比如匹配器 <code>(())</code> 将匹配 <code>{()}</code>，而 <code>{{}}</code> 不行。字符 <code>$</code> 不能按字面意义匹配或转码。</p>
+<p>当将当前匹配的匹配段转发给另一个声明宏时，第二个宏中的匹配器看到的将是此匹配段类型的不透明抽象句法树(opaque AST)。第二个宏不能使用字面量token 来匹配匹配器中的这个匹配段，唯一可看到/使用的就是此匹配段类型一样的匹配段选择器(fragment specifier)。但匹配段类型 <code>ident</code>、<code>lifetime</code>、和 <code>tt</code> 是几个例外，它们<em>可以</em>通过字面量token 进行匹配。下面示例展示了这一限制：（译者注：匹配段选择器和匹配段，以及宏中各部件的定义可以凑合着看看译者未能翻译完成的<a href="macro-ambiguity.html">宏定义规范</a>）</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! foo {
+    ($l:expr) =&gt; { bar!($l); }
+// ERROR:               ^^ no rules expected this token in macro call
+}
+
+macro_rules! bar {
+    (3) =&gt; {}
+}
+
+foo!(3);
+<span class="boring">}
+</span></code></pre></pre>
+<p>以下示例展示了 <code>tt</code> 类型的匹配段在成功匹配（转码）一次之后生成的 tokens 如何能够再次直接匹配：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 成功编译
+macro_rules! foo {
+    ($l:tt) =&gt; { bar!($l); }
+}
+
+macro_rules! bar {
+    (3) =&gt; {}
+}
+
+foo!(3);
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#元变量" id="元变量">元变量</a></h2>
+<p>在匹配器中，<code>$</code><em>名称</em><code>:</code><em>匹配段选择器</em> 这种句法格式匹配符合指定句法类型的 Rust 句法段，并将其绑定到元变量 <code>$</code><em>名称</em> 上。有效的匹配段选择器包括：</p>
+<ul>
+<li><code>item</code>: <a href="items.html"><em>程序项</em></a></li>
+<li><code>block</code>: <a href="expressions/block-expr.html"><em>块表达式</em></a></li>
+<li><code>stmt</code>: <a href="statements.html"><em>语句</em></a>，注意此选择器不匹配句尾的分号（如果匹配器中提供了分号，会被当做分隔符），但碰到分号是自身的一部分的程序项语句的情况又会匹配。</li>
+<li><code>pat</code>: <a href="patterns.html"><em>模式</em></a></li>
+<li><code>expr</code>: <a href="expressions.html"><em>表达式</em></a></li>
+<li><code>ty</code>: <a href="types.html#type-expressions"><em>类型</em></a></li>
+<li><code>ident</code>: <a href="identifiers.html">标识符或关键字</a></li>
+<li><code>path</code>: <a href="paths.html#paths-in-types"><em>类型表达式</em></a> 形式的路径</li>
+<li><code>tt</code>: <a href="macros.html#macro-invocation"><em>token树</em></a> (单个 <a href="tokens.html">token</a> 或宏匹配定界符 <code>()</code>、<code>[]</code> 或<code>{}</code> 中的标记)</li>
+<li><code>meta</code>: <a href="attributes.html"><em>属性</em></a>，属性中的内容</li>
+<li><code>lifetime</code>: <a href="tokens.html#lifetimes-and-loop-labels">生存期token</a></li>
+<li><code>vis</code>: 可能为空的<a href="visibility-and-privacy.html"><em>可见性</em></a>限定符</li>
+<li><code>literal</code>: 匹配 <code>-</code><sup>?</sup><a href="expressions/literal-expr.html"><em>字面量表达式</em></a></li>
+</ul>
+<p>因为匹配段类型已在匹配器中指定了，则在转码器中，元变量只简单地用 <code>$</code><em>名称</em> 这种形式来指代就行了。元变量最终将被替换为跟它们匹配上的句法元素。元变量关键字 <code>$crate</code> 可以用来指代当前的 crate（请参阅后面的<a href="#hygiene">卫生性(hygiene)</a>章节）。元变量可以被多次转码，也可以完全不转码。</p>
+<h2><a class="header" href="#重复元" id="重复元">重复元</a></h2>
+<p>在匹配器和转码器中，重复元被表示为：将需要重复的 token 放在 <code>$(</code>…<code>)</code> 内，然后后跟一个重复运算符(repetition operator)，这两者之间可以放置一个可选的分隔符(separator token)。分隔符可以是除定界符或重复运算符之外的任何 token，其中分号(<code>;</code>)和逗号(<code>,</code>)最常见。例如： <code>$( $i:ident ),*</code> 表示用逗号分隔的任何数量的标识符。嵌套的重复元是合法的。</p>
+<p>重复运算符为：</p>
+<ul>
+<li><code>*</code> — 表示任意数量的重复元。</li>
+<li><code>+</code> — 表示至少有一个重复元。</li>
+<li><code>?</code> — 表示一个可选的匹配段，可以出现零次或一次。</li>
+</ul>
+<p>因为 <code>?</code> 表示最多出现一次，所以它不能与分隔符一起使用。</p>
+<p>通过分隔符的分隔，重复的匹配段都会被匹配和转码为指定的数量的匹配段。元变量就和这些每个段中的重复元相匹配。例如，之前示例中的 <code>$( $i:ident ),*</code> 将 <code>$i</code> 去匹配列表中的所有标识符。</p>
+<p>在转码过程中，重复元会受到额外的限制，以便于编译器知道该如何正确地扩展它们：</p>
+<ol>
+<li>在转码器中，元变量必须与它在匹配器中出现的次数、指示符类型以及其在重复元内的嵌套顺序都完全相同。因此，对于匹配器 <code>$( $i:ident ),*</code>，转码器 <code>=&gt; { $i }</code>, <code>=&gt; { $( $( $i)* )* }</code> 和 <code>=&gt; { $( $i )+ }</code> 都是非法的，但是 <code>=&gt; { $( $i );* }</code> 是正确的，它用分号分隔的标识符列表替换了逗号分隔的标识符列表。</li>
+<li>转码器中的每个重复元必须至少包含一个元变量，以便确定扩展多少次。如果在同一个重复元中出现多个元变量，则它们必须绑定到相同数量的匹配段上，不能有的多，有的少。例如，<code>( $( $i:ident ),* ; $( $j:ident ),* ) =&gt; (( $( ($i,$j) ),* ))</code> 里，绑定到 <code>$j</code> 的匹配段的数量必须与绑定到 <code>$i</code> 上的相同。这意味着用 <code>(a, b, c; d, e, f)</code> 调用这个宏是合法的，并且可扩展到 <code>((a,d), (b,e), (c,f))</code>，但是 <code>(a, b, c; d, e)</code> 是非法的，因为前后绑定的数量不同。此要求适用于嵌套的重复元的每一层。</li>
+</ol>
+<h2><a class="header" href="#作用域导出以及导入" id="作用域导出以及导入">作用域、导出以及导入</a></h2>
+<p>由于历史原因，声明宏的作用域并不完全像各种程序项那样工作。宏有两种形式的作用域：文本作用域(textual scope)和基于路径的作用域(path-based scope)。文本作用域基于宏在源文件中（定义和使用所）出现的顺序，或是跨多个源文件出现的顺序，文本作用域是默认的作用域。（后本节面将进一步解释这个。）基于路径的作用域与其他程序项作用域的运行方式相同。宏的作用域、导出和导入主要由其属性控制。</p>
+<p>当声明宏被非限定标识符(unqualified identifier)（非多段路径段组成的限定性路径）调用时，会首先在文本作用域中查找。如果文本作用域中没有任何结果，则继续在基于路径的作用域中查找。如果宏的名称由路径限定，则只在基于路径的作用域中查找。</p>
+<!-- ignore: requires external crates -->
+<pre><code class="language-rust ignore">use lazy_static::lazy_static; // 基于路径的导入.
+
+macro_rules! lazy_static { // 文本定义.
+    (lazy) =&gt; {};
+}
+
+lazy_static!{lazy} // 首先通过文本作用域来查找我们的宏.
+self::lazy_static!{} // 忽略文本作用域查找，直接使用基于路径的查找方式找到一个导入的宏.
+</code></pre>
+<h3><a class="header" href="#文本作用域" id="文本作用域">文本作用域</a></h3>
+<p>文本作用域很大程度上取决于宏本身在源文件中的出现顺序，其工作方式与用 <code>let</code>语句声明的局部变量的作用域类似，只不过它可以直接位于模块下。当使用 <code>macro_rules!</code> 定义宏时，宏在定义之后进入其作用域（请注意，这不影响宏在定义中递归调用自己，因为宏调用的入口还是在定义之后的某次调用点上，此点开始的宏名称递归查找一定有效），在封闭它的作用域（通常是模块）结束时离开。文本作用域可以覆盖/进入子模块，甚至跨越多个文件：</p>
+<!-- ignore: requires external modules -->
+<pre><code class="language-rust ignore">//// src/lib.rs
+mod has_macro {
+    // m!{} // 报错: m 未在作用域内.
+
+    macro_rules! m {
+        () =&gt; {};
+    }
+    m!{} // OK: 在声明 m 后使用.
+
+    mod uses_macro;
+}
+
+// m!{} // Error: m 未在作用域内.
+
+//// src/has_macro/uses_macro.rs
+
+m!{} // OK: m 在上层模块文件 src/lib.rs 中声明后使用
+</code></pre>
+<p>多次定义宏并不报错；除非超出作用域，否则最近的宏声明将屏蔽前一个。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! m {
+    (1) =&gt; {};
+}
+
+m!(1);
+
+mod inner {
+    m!(1);
+
+    macro_rules! m {
+        (2) =&gt; {};
+    }
+    // m!(1); // 报错: 没有设定规则来匹配 '1'
+    m!(2);
+
+    macro_rules! m {
+        (3) =&gt; {};
+    }
+    m!(3);
+}
+
+m!(1);
+<span class="boring">}
+</span></code></pre></pre>
+<p>宏也可以在函数内部声明和使用，其工作方式类似：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn foo() {
+    // m!(); // 报错: m 未在作用域内.
+    macro_rules! m {
+        () =&gt; {};
+    }
+    m!();
+}
+
+
+// m!(); // Error: m 未在作用域内.
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#macro_use属性" id="macro_use属性"><code>macro_use</code>属性</a></h3>
+<p><em><code>macro_use</code>属性</em>有两种用途。首先，它可以通过作用于模块的方式让模块内的宏的作用域在模块关闭时不结束：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[macro_use]
+mod inner {
+    macro_rules! m {
+        () =&gt; {};
+    }
+}
+
+m!();
+<span class="boring">}
+</span></code></pre></pre>
+<p>其次，它可以用于从另一个 crate 里来导入宏，方法是将它附加到当前 crate 根模块中的 <code>extern crate</code> 声明前。以这种方式导入的宏会被导入到<a href="names/preludes.html#macro_use-prelude"><code>macro_use</code>预导入包</a>里，而不是直接文本导入，这意味着它们可以被任何其他同名宏屏蔽。虽然可以在导入语句之前使用 <code>#[macro_use]</code> 导入宏，但如果发生冲突，则最后导入的宏将胜出。可以使用可选的 <a href="attributes.html#meta-item-attribute-syntax"><em>MetaListIdents</em></a>元项属性句法指定要导入的宏列表；当将 <code>#[macro_use]</code> 应用于模块上时，则不支持此指定操作。</p>
+<!-- ignore: requires external crates -->
+<pre><code class="language-rust ignore">#[macro_use(lazy_static)] // 或者使用 #[macro_use] 来导入所有宏.
+extern crate lazy_static;
+
+lazy_static!{}
+// self::lazy_static!{} // 报错: lazy_static 没在 `self` 中定义
+</code></pre>
+<p>要用 <code>#[macro_use]</code> 导入宏必须先使用 <code>#[macro_export]</code> 导出，下文会有讲解。</p>
+<h3><a class="header" href="#基于路径的作用域" id="基于路径的作用域">基于路径的作用域</a></h3>
+<p>默认情况下，宏没有基于路径的作用域。但是如果该宏带有 <code>#[macro_export]</code> 属性，则相当于它在当前 crate 的根作用域的顶部被声明，它通常可以这样引用：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>self::m!();
+m!(); // OK: 基于路径的查找发现 m 在当前模块中有声明.
+
+mod inner {
+    super::m!();
+    crate::m!();
+}
+
+mod mac {
+    #[macro_export]
+    macro_rules! m {
+        () =&gt; {};
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>标有 <code>#[macro_export]</code> 的宏始终是 <code>pub</code> 的，以便可以通过路径或前面所述的 <code>#[macro_use]</code> 方式让其他 crate 来引用。</p>
+<h2><a class="header" href="#卫生性" id="卫生性">卫生性</a></h2>
+<p>默认情况下，宏中引用的所有标识符都按原样展开，并在宏的调用位置上去查找。如果宏引用的程序项或宏不在调用位置的作用域内，则这可能会导致问题。为了解决这个问题，可以替代在路径的开头使用元变量 <code>$crate</code>，强制在定义宏的 crate 中进行查找。</p>
+<!-- ignore: requires external crates -->
+<pre><code class="language-rust ignore">//// 在 `helper_macro` crate 中.
+#[macro_export]
+macro_rules! helped {
+    // () =&gt; { helper!() } // 这可能会导致错误，因为 'helper' 在当前作用域之后才定义.
+    () =&gt; { $crate::helper!() }
+}
+
+#[macro_export]
+macro_rules! helper {
+    () =&gt; { () }
+}
+
+//// 在另一个 crate 中使用.
+// 注意没有导入 `helper_macro::helper`!
+use helper_macro::helped;
+
+fn unit() {
+    helped!();
+}
+</code></pre>
+<p>请注意，由于 <code>$crate</code> 指的是当前的（<code>$crate</code> 源码出现的）crate，因此在引用非宏程序项时，它必须与全限定模块路径一起使用：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub mod inner {
+    #[macro_export]
+    macro_rules! call_foo {
+        () =&gt; { $crate::inner::foo() };
+    }
+
+    pub fn foo() {}
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>此外，尽管 <code>$crate</code> 允许宏在扩展时引用其自身 crate 中的程序项，但它的使用对可见性没有影响（，或者说它的使用仍受可见性条件的约束）。引用的程序项或宏必须仍然在调用位置处可见。在下面的示例中，任何试图从此 crate 外部调用 <code>call_foo!()</code> 的行为都将失败，因为 <code>foo()</code> 不是公有的。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[macro_export]
+macro_rules! call_foo {
+    () =&gt; { $crate::foo() };
+}
+
+fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>（译者注：原文给出的这个例子是能正常调用的，原文并没有给出在 crate 外部调用的例子）</p>
+<blockquote>
+<p><strong>版本&amp;版次差异</strong>：在 Rust 1.30 之前，<code>$crate</code> 和 <code>local_inner_macros</code>（后面会讲）不受支持。从该版本开始，它们与基于路径的宏导入（前面讲过）一起被添加进来，用以确保不需要在当前 crate 已经使用导入了某导出宏的情况下再额外手动导入此导出宏下面用到的辅助宏。如果要让 Rust 的早期版本编写的 crate 要使用辅助宏，需要修改为使用 <code>$crate</code> 或 <code>local_inner_macros</code>，以便与基于路径的导入一起工作。</p>
+</blockquote>
+<p>当一个宏被导出时，可以在 <code>#[macro_export]</code> 属性里添加 <code>local_inner_macros</code> 属性值，用以自动为该属性修饰的宏内包含的所有宏调用自动添加 <code>$crate::</code> 前缀。这主要是作为一个工具来迁移那些在引入 <code>$crate</code> 之前的版本编写的 Rust 代码，以便它们能与 Rust 2018 版中基于路径的宏导入一起工作。在使用新版本编写的代码中不鼓励使用它。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[macro_export(local_inner_macros)]
+macro_rules! helped {
+    () =&gt; { helper!() } // 自动转码为 $crate::helper!().
+}
+
+#[macro_export]
+macro_rules! helper {
+    () =&gt; { () }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂" id="随集歧义限制译者注该节还需要继续校对打磨主要难点还是因为附录的宏定义规范译者还没有能全部搞懂">随集歧义限制（译者注：该节还需要继续校对打磨，主要难点还是因为附录的宏定义规范译者还没有能全部搞懂）</a></h2>
+<p>宏系统使用的解析器相当强大，但是为了防止其在 Rust 的当前或未来版本中出现二义性解析，因此对它做出了限制。特别地，在消除二义性展开的基本规则之外又增加了一条：元变量匹配的非终结符(nonterminal)必须后跟一个已经确定为可以用来安全分隔匹配段的分隔符。</p>
+<p>例如，像 <code>$i:expr [ , ]</code> 这样的宏匹配器在现今的 Rust 中理论上是可以接受的，因为现在 <code>[,]</code> 不可能是合法表达式的一部分，因此解析始终是明确的。但是，由于 <code>[</code> 可以开始一个尾随表达式(trailing expressions)，因此 <code>[</code> 不是一个可以安全排除在表达式后面出现的字符。如果在接下来的 Rust 版本中接受了 <code>[,]</code>，那么这个匹配器就会产生歧义或是错误解析，破坏正常代码。但是，像<code>$i:expr,</code> 或 <code>$i:expr;</code> 这样的匹配符始终是合法的，因为 <code>,</code> 和<code>;</code> 是合法的表达式分隔符。目前规范中的规则是：（译者注：下面的规则不是绝对的，因为宏的基础理论还在发展中。）</p>
+<ul>
+<li>
+<p><code>expr</code> 和 <code>stmt</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>;</code>。</p>
+</li>
+<li>
+<p><code>pat</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>if</code>、<code>in</code>。</p>
+</li>
+<li>
+<p><code>path</code> 和 <code>ty</code> 只能后跟一个： <code>=&gt;</code>、<code>,</code>、<code>=</code>、<code>|</code>、<code>;</code>、<code>:</code>、<code>&gt;</code>、<code>&gt;&gt;</code>、<code>[</code>、<code>{</code>、<code>as</code>、<code>where</code>、块(<code>block</code>)型非终结符(block nonterminals)。</p>
+</li>
+<li>
+<p><code>vis</code> 只能后跟一个：<code>,</code>、非原生字符串 <code>priv</code> 以外的任何标识符和关键字、可以表示类型开始的任何 token、<code>ident</code>或<code>ty</code>或<code>path</code>型非终结符。</p>
+<p>（译者注：可以表示类型开始的 token 有：{<code>(</code>, <code>[</code>, <code>!</code>, <code>\*</code>,<code>&amp;</code>, <code>&amp;&amp;</code>, <code>?</code>, 生存期, <code>&gt;</code>, <code>&gt;&gt;</code>, <code>::</code>, 非关键字标识符, <code>super</code>,<code>self</code>, <code>Self</code>, <code>extern</code>, <code>crate</code>, <code>$crate</code>, <code>_</code>, <code>for</code>, <code>impl</code>, <code>fn</code>, <code>unsafe</code>,<code>typeof</code>, <code>dyn</code>}。注意这个列表也不一定全。）</p>
+</li>
+<li>
+<p>其它所有的匹配段选择器没有限制。</p>
+</li>
+</ul>
+<p>当涉及到重复元时，随集歧义限制适用于所有可能的展开次数，注意需将重复元中的分隔符考虑在内。这意味着：</p>
+<ul>
+<li>如果重复元包含分隔符，则分隔符必须能够跟随重复元的内容重复。</li>
+<li>如果重复元可以重复多次（<code>*</code> 或 <code>+</code>），那么重复元的内容必须能自我重复。</li>
+<li>重复元前后内容必须严格匹配匹配器中指定的前后内容。</li>
+<li>如果重复元可以匹配零次（<code>*</code> 或 <code>?</code>），那么它后面的内容必须能够直接跟在它前面的内容后面。</li>
+</ul>
+<p>有关更多详细信息，请参阅[正式规范]。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="macros.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="procedural-macros.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="macros.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="procedural-macros.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

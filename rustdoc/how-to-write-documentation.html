@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>如何写文档 - rustdoc 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rustdoc 手册详细介绍了如何使用 rustdoc 命令或 cargo doc 来生成漂亮的 crate 文档，发布 crate 前很有必要熟悉 rustdoc 的相关内容。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what-is-rustdoc.html"><strong aria-hidden="true">1.</strong> 什么是 rustdoc?</a></li><li class="chapter-item expanded "><a href="how-to-read-rustdoc.html"><strong aria-hidden="true">2.</strong> 如何阅读 rustdoc 的输出</a></li><li class="chapter-item expanded "><a href="how-to-write-documentation.html" class="active"><strong aria-hidden="true">3.</strong> 如何写文档</a></li><li class="chapter-item expanded "><a href="what-to-include.html"><strong aria-hidden="true">4.</strong> 什么被包含（和排除）</a></li><li class="chapter-item expanded "><a href="command-line-arguments.html"><strong aria-hidden="true">5.</strong> 命令行参数</a></li><li class="chapter-item expanded "><a href="the-doc-attribute.html"><strong aria-hidden="true">6.</strong> #[doc] 属性</a></li><li class="chapter-item expanded "><a href="documentation-tests.html"><strong aria-hidden="true">7.</strong> 文档测试</a></li><li class="chapter-item expanded "><a href="linking-to-items-by-name.html"><strong aria-hidden="true">8.</strong> 通过 items 名称链接</a></li><li class="chapter-item expanded "><a href="lints.html"><strong aria-hidden="true">9.</strong> Lints</a></li><li class="chapter-item expanded "><a href="advanced-features.html"><strong aria-hidden="true">10.</strong> 高级特性</a></li><li class="chapter-item expanded "><a href="unstable-features.html"><strong aria-hidden="true">11.</strong> 不稳定特性</a></li><li class="chapter-item expanded "><a href="website-features.html"><strong aria-hidden="true">12.</strong> Website features</a></li><li class="chapter-item expanded "><a href="passes.html"><strong aria-hidden="true">13.</strong> Passes</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">14.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rustdoc 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/rustdoc-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#如何写文档" id="如何写文档">如何写文档</a></h1>
+<p>好的文档并不自然。存在一些矛盾的目标使得写好文档很困难。即要求对领域很专业又要写出对新手很友好的文档。文档因此经常隐去一些细节，或者留给读者一些未解答的问题。</p>
+<p>Rust 文档有一些原则指导任何人来写文档，从而每个人都有机会来使用代码。</p>
+<p>本章不仅覆盖如何编写文档，还介绍了如何写出<strong>好</strong>文档。尽可能清晰完整非常重要。根据经验：你编写的文档越多你的 crate 越好。如果 item 是公共的，就应该有文档。</p>
+<h2><a class="header" href="#开始" id="开始">开始</a></h2>
+<p>编写 crate 文档首先应该从首页开始。例如 <a href="https://docs.rs/hashbrown/0.8.2/hashbrown/"><code>hashbrown</code></a> crate 级别的文档总结了这个 crate 的角色是什么，说明了使用的详细技术，以及为什么你需要这个 crate。</p>
+<p>在介绍了 crate 之后，首页给出使用 crate 的代码示例很重要。在代码例子中展示库如何使用，不要使用裁剪过的代码，
+使得用户可以直接复制粘贴就能运行。</p>
+<p><a href="https://docs.rs/futures/0.3.5/futures/"><code>futures</code></a> 使用内联注释逐行解释使用 <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>Future</code></a> 的复杂性，因为用户接触 rust 的 <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>Future</code></a> 的第一个例子可能就是这个。</p>
+<p><a href="https://docs.rs/backtrace/0.3.50/backtrace/"><code>backtrace</code></a> 文档描述了整个使用过程，说明了 <code>Cargo.toml</code> 文件应该如何修改，传递命令行参数给编译器，并展示了一个使用 backtrace 的例子。</p>
+<p>最后，首页会成为如何使用 crate 的综合参考，就像 <a href="https://docs.rs/regex/1.3.9/regex/"><code>regex</code></a>。在这个首页，所有的依赖被列出，边缘情况被列出，实际例子被列出。然后首页继续展示如何使用正则表达式，然后还列出了 crate 的特性。</p>
+<p>不要担心你的新 crate 与已经开发一段时间的 crate 比较。要是文档逐步完善，请逐步开始添加介绍，示例和特性。罗马不是一天建成的！</p>
+<p><code>lib.rs</code> 的第一行开始会是首页，它们与 rustdoc 其他部分不同，要以 <code>//!</code> 开始表明这是模块级别或者 crate 级别的文档。这是一个简单的例子：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! Fast and easy queue abstraction.
+//!
+//! Provides an abstraction over a queue.  When the abstraction is used
+//! there are these advantages:
+//! - Fast
+//! - [`Easy`]
+//!
+//! [`Easy`]: http://thatwaseasy.example.com
+
+/// This module makes it easy.
+pub mod easy {
+
+    /// Use the abstraction function to do this specific thing.
+    pub fn abstraction() {}
+
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>理想情况下，文档第一行是没有技术细节的句子，但是很好的描述了在 Rust 生态中的位置。
+阅读这行后，用户应该知道 crate 是否满足他们的需要。</p>
+<h2><a class="header" href="#文档组成" id="文档组成">文档组成</a></h2>
+<p>无论是 modules, structs, funtions, macros：代码的公共 API 都应该有文档。很少有人嫌弃文档太多！</p>
+<p>每个 item 的文档应该都以下面的结构构成：</p>
+<pre><code class="language-text">[short sentence explaining what it is]
+
+[more detailed explanation]
+
+[at least one code example that users can copy/paste to try it]
+
+[even more advanced explanations if necessary]
+</code></pre>
+<p>编写文档时，基本结构应该很容易遵循；你可能认为代码示例微不足道，但是它真的很重要，
+能帮助用户理解 item 是什么，如何使用，以及存在的目的是什么。</p>
+<p>让我们看一个来自 <a href="https://doc.rust-lang.org/stable/std/index.html">standard library</a> 的例子，
+<a href="https://doc.rust-lang.org/stable/std/env/fn.args.html"><code>std::env::args()</code></a> 函数：</p>
+<pre><code class="language-markdown">Returns the arguments which this program was started with (normally passed
+via the command line).
+
+The first element is traditionally the path of the executable, but it can be
+set to arbitrary text, and may not even exist. This means this property should
+not be relied upon for security purposes.
+
+On Unix systems shell usually expands unquoted arguments with glob patterns
+(such as `*` and `?`). On Windows this is not done, and such arguments are
+passed as-is.
+
+# Panics
+
+The returned iterator will panic during iteration if any argument to the
+process is not valid unicode. If this is not desired,
+use the [`args_os`] function instead.
+
+# Examples
+
+```
+use std::env;
+
+// Prints each argument on a separate line
+for argument in env::args() {
+    println!(&quot;{}&quot;, argument);
+}
+```
+
+[`args_os`]: ./fn.args_os.html
+</code></pre>
+<p>在第一个空行之间的所有内容都会被用于搜索和模块的简介。比如，上面的 <code>std::enve::args()</code> 函数就会在展示在 <a href="https://doc.rust-lang.org/stable/std/env/index.html#functions"><code>std::env</code></a> 模块文档中。将摘要保持在一行是良好习惯：简介是好文档的目标。</p>
+<p>因为类型系统很好定义了函数的参数和返回值类型，所以将其显式写入文档没有好处，尤其是 <code>rustdoc</code> 会自动在函数签名中添加指向类型的超链接。</p>
+<p>在上面的例子中，<code>Panics</code> 小节解释了代码何时可能会意外退出，可以帮助读者规避 panic。如果你知道代码的边缘情况，尽可能增加 panic 小节。</p>
+<p>如同你所看到的，它遵循了给出的结构建议：简短描述函数的作用，然后提供了更多信息以及最后提供了代码示例。</p>
+<h2><a class="header" href="#markdown" id="markdown">Markdown</a></h2>
+<p><code>rustdoc</code> 使用 <a href="https://commonmark.org/">CommonMark Markdown specification</a>。你可能会对它们的网站感兴趣：</p>
+<ul>
+<li><a href="https://commonmark.org/help/">CommonMark quick reference</a></li>
+<li><a href="https://spec.commonmark.org/current/">current spec</a></li>
+</ul>
+<p>补充了标准 CommonMark 语法， <code>rustdoc</code> 支持几种扩展：</p>
+<h3><a class="header" href="#strikethrough删除线" id="strikethrough删除线">Strikethrough（删除线）</a></h3>
+<p>文本可以通过两个波浪线来渲染删除线：</p>
+<pre><code class="language-text">An example of ~~strikethrough text~~.
+</code></pre>
+<p>这个例子会渲染成：</p>
+<blockquote>
+<p>An example of <del>strikethrough text</del>.</p>
+</blockquote>
+<p>这使用 <a href="https://github.github.com/gfm/#strikethrough-extension-">GitHub Strikethrough extension</a>。</p>
+<h3><a class="header" href="#footnotes角标" id="footnotes角标">Footnotes（角标）</a></h3>
+<p>角标会生成一个小号数字链接，点击数字链接会跳转到这个 item 的位置。角标标签类似与链接语法。例子如下：</p>
+<pre><code class="language-text">This is an example of a footnote[^note].
+
+[^note]: This text is the contents of the footnote, which will be rendered
+    towards the bottom.
+</code></pre>
+<p>这个例子会渲染成：</p>
+<blockquote>
+<p>This is an example of a footnote<sup class="footnote-reference"><a href="#note">1</a></sup>.</p>
+<div class="footnote-definition" id="note"><sup class="footnote-definition-label">1</sup>
+<blockquote>
+<pre><code>This text is the contents of the footnote, which will be rendered
+</code></pre>
+</blockquote>
+<pre><code>towards the bottom.
+</code></pre>
+</div>
+</blockquote>
+<p>角标数字会根据角标位置自动生成。</p>
+<h3><a class="header" href="#tables表格" id="tables表格">Tables（表格）</a></h3>
+<p>表格可以可以通过竖线和短横线来表示表格的行和列。被转换为符合 HTML 形状的表格。比如：</p>
+<pre><code class="language-text">| Header1 | Header2 |
+|---------|---------|
+| abc     | def     |
+</code></pre>
+<p>这个例子会被渲染成类似这样：</p>
+<blockquote>
+<table><thead><tr><th>Header1</th><th>Header2</th></tr></thead><tbody>
+<tr><td>abc</td><td>def</td></tr>
+</tbody></table>
+</blockquote>
+<p>阅读 <a href="https://github.github.com/gfm/#tables-extension-">GitHub Tables extension</a> 的说明获取更多细节。</p>
+<h3><a class="header" href="#task-lists" id="task-lists">Task lists</a></h3>
+<p>任务列表可以用于检查需要完成的条目。
+比如：</p>
+<pre><code class="language-md">- [x] Complete task
+- [ ] Incomplete task
+</code></pre>
+<p>会被渲染成：</p>
+<blockquote>
+<ul>
+<li><input disabled="" type="checkbox" checked=""/>
+Complete task</li>
+<li><input disabled="" type="checkbox"/>
+Incomplete task</li>
+</ul>
+</blockquote>
+<p>阅读 <a href="https://github.github.com/gfm/#task-list-items-extension-">task list extension</a> 获得更多细节。</p>
+<h3><a class="header" href="#smart-punctuation标点符号" id="smart-punctuation标点符号">Smart punctuation（标点符号）</a></h3>
+<p>一些 ASCII 符号可以自动转换为更好看的 Unicode 符号：</p>
+<table><thead><tr><th>ASCII sequence</th><th>Unicode</th></tr></thead><tbody>
+<tr><td><code>--</code></td><td>–</td></tr>
+<tr><td><code>---</code></td><td>—</td></tr>
+<tr><td><code>...</code></td><td>…</td></tr>
+<tr><td><code>&quot;</code></td><td>“ or ”, depending on context</td></tr>
+<tr><td><code>'</code></td><td>‘ or ’, depending on context</td></tr>
+</tbody></table>
+<p>所以，不需要手工输入这些 Unicode 符号！</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="how-to-read-rustdoc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="what-to-include.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="how-to-read-rustdoc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="what-to-include.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

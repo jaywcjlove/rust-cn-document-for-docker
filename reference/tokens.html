@@ -1,0 +1,688 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>token - Rust 参考手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 参考手册是 Rust 官方编写的 Rust 语言规范手册，由于语言还在快速迭代当中，所以本手册的内容还未固定下来。但这是一本学习和了解 Rust 全面的语言特性必不可少的书籍。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/reference.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="tokens.html" class="active"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li></ol></li><li class="chapter-item expanded "><a href="statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 推断型</a></li></ol></li><li class="chapter-item expanded "><a href="dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态尺寸类型(DST)</a></li><li class="chapter-item expanded "><a href="type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="linkage.html"><strong aria-hidden="true">14.</strong> 链接(linkage)</a></li><li class="chapter-item expanded "><a href="unsafety.html"><strong aria-hidden="true">15.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe-functions.html"><strong aria-hidden="true">15.1.</strong> 非安全函数</a></li><li class="chapter-item expanded "><a href="unsafe-blocks.html"><strong aria-hidden="true">15.2.</strong> 非安全代码块</a></li><li class="chapter-item expanded "><a href="behavior-considered-undefined.html"><strong aria-hidden="true">15.3.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="behavior-not-considered-unsafe.html"><strong aria-hidden="true">15.4.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="const_eval.html"><strong aria-hidden="true">16.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="abi.html"><strong aria-hidden="true">17.</strong> ABI</a></li><li class="chapter-item expanded "><a href="runtime.html"><strong aria-hidden="true">18.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="appendices.html"><strong aria-hidden="true">19.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macro-ambiguity.html"><strong aria-hidden="true">19.1.</strong> 宏定义规范</a></li><li class="chapter-item expanded "><a href="influences.html"><strong aria-hidden="true">19.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="glossary.html"><strong aria-hidden="true">19.3.</strong> 术语表</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 参考手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/reference-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#token" id="token">token</a></h1>
+<p>token 是采用非递归方式的正则文法(regular languages)定义的基本语法产生式(primitive productions)。Rust 源码输入可以被分解成以下几类 token：</p>
+<ul>
+<li><a href="keywords.html">关键字</a></li>
+<li><a href="identifiers.html">标识符</a></li>
+<li><a href="#literals">字面量</a></li>
+<li><a href="#lifetimes-and-loop-labels">生存期</a></li>
+<li><a href="#punctuation">标点符号</a></li>
+<li><a href="#delimiters">分隔符</a></li>
+</ul>
+<p>在本文档中，“简单”token 会直接在（相关章节头部的）[字符串表产生式(production)][string table production]表单中给出，并以 <code>monospace</code> 字体显示。（译者注：本译作的原文中，在文法表之外的行文中也会大量出现这种直接使用简单token 来替代相关名词的做法，一般此时如果译者觉得这种 token 需要翻译时，会使用诸如：结构体(<code>struct</code>) 这种形式来翻译。读者需要意识到“struct”是文法里的一个 token，能以其字面形式直接出现在源码里。）</p>
+<h2><a class="header" href="#字面量" id="字面量">字面量</a></h2>
+<p>字面量是一个由单一 token（而不是由一连串 tokens）组成的表达式，它立即、直接表示它所代表的值，而不是通过名称或其他一些求值/计算规则来引用它。字面量是<a href="const_eval.html#constant-expressions">常量表达式</a>的一种形式，所以它（主要）用在编译时求值。</p>
+<h3><a class="header" href="#示例" id="示例">示例</a></h3>
+<h4><a class="header" href="#字符和字符串" id="字符和字符串">字符和字符串</a></h4>
+<table><thead><tr><th></th><th>举例</th><th><code>#</code> 号的数量</th><th>字符集</th><th>转义</th></tr></thead><tbody>
+<tr><td><a href="#character-literals">字符</a></td><td><code>'H'</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
+<tr><td><a href="#string-literals">字符串</a></td><td><code>&quot;hello&quot;</code></td><td>0</td><td>全部 Unicode</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#ascii-escapes">ASCII</a> &amp; <a href="#unicode-escapes">Unicode</a></td></tr>
+<tr><td><a href="#raw-string-literals">原生字符串</a></td><td><code>r#&quot;hello&quot;#</code></td><td>0 或更多*</td><td>全部 Unicode</td><td><code>N/A</code></td></tr>
+<tr><td><a href="#byte-literals">字节</a></td><td><code>b'H'</code></td><td>0</td><td>全部 ASCII</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#byte-escapes">字节</a></td></tr>
+<tr><td><a href="#byte-string-literals">字节串</a></td><td><code>b&quot;hello&quot;</code></td><td>0</td><td>全部 ASCII</td><td><a href="#quote-escapes">引号</a> &amp; <a href="#byte-escapes">字节</a></td></tr>
+<tr><td><a href="#raw-byte-string-literals">原生字节串</a></td><td><code>br#&quot;hello&quot;#</code></td><td>0 或更多*</td><td>全部 ASCII</td><td><code>N/A</code></td></tr>
+</tbody></table>
+<p>* 字面量两侧的 <code>#</code> 数量必须相同。</p>
+<h4><a class="header" href="#ascii-转义" id="ascii-转义">ASCII 转义</a></h4>
+<table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
+<tr><td><code>\x41</code></td><td>7-bit 字符编码（2位数字，最大值为 <code>0x7F</code>）</td></tr>
+<tr><td><code>\n</code></td><td>换行符</td></tr>
+<tr><td><code>\r</code></td><td>回车符</td></tr>
+<tr><td><code>\t</code></td><td>制表符</td></tr>
+<tr><td><code>\\</code></td><td>反斜线</td></tr>
+<tr><td><code>\0</code></td><td>Null</td></tr>
+</tbody></table>
+<h4><a class="header" href="#字节转义" id="字节转义">字节转义</a></h4>
+<table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
+<tr><td><code>\x7F</code></td><td>8-bit 字符编码（2位数字）</td></tr>
+<tr><td><code>\n</code></td><td>换行符</td></tr>
+<tr><td><code>\r</code></td><td>回车符</td></tr>
+<tr><td><code>\t</code></td><td>制表符</td></tr>
+<tr><td><code>\\</code></td><td>反斜线</td></tr>
+<tr><td><code>\0</code></td><td>Null</td></tr>
+</tbody></table>
+<h4><a class="header" href="#unicode-转义" id="unicode-转义">unicode 转义</a></h4>
+<table><thead><tr><th></th><th>名称</th></tr></thead><tbody>
+<tr><td><code>\u{7FFF}</code></td><td>24-bit Unicode 字符编码（最多6个数字）</td></tr>
+</tbody></table>
+<h4><a class="header" href="#引号转义" id="引号转义">引号转义</a></h4>
+<table><thead><tr><th></th><th>Name</th></tr></thead><tbody>
+<tr><td><code>\'</code></td><td>单引号</td></tr>
+<tr><td><code>\&quot;</code></td><td>双引号</td></tr>
+</tbody></table>
+<h4><a class="header" href="#数字" id="数字">数字</a></h4>
+<table><thead><tr><th><a href="#%E6%95%B0%E5%AD%97%E5%AD%97%E9%9D%A2%E9%87%8F">数字字面量</a><code>*</code></th><th>示例</th><th>指数</th><th>后缀</th></tr></thead><tbody>
+<tr><td>十进制整数</td><td><code>98_222</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
+<tr><td>十六进制整数</td><td><code>0xff</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
+<tr><td>八进制整数</td><td><code>0o77</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
+<tr><td>二进制整数</td><td><code>0b1111_0000</code></td><td><code>N/A</code></td><td>整数后缀</td></tr>
+<tr><td>浮点数</td><td><code>123.0E+77</code></td><td><code>Optional</code></td><td>浮点数后缀</td></tr>
+</tbody></table>
+<p><code>*</code> 所有数字字面量允许使用 <code>_</code> 作为可视分隔符，比如：<code>1_234.0E+18f64</code></p>
+<h4><a class="header" href="#后缀" id="后缀">后缀</a></h4>
+<p>后缀是紧跟（无空白符）在字面量主体部分之后的非<a href="identifiers.html">原生标识符</a>(non-raw identifier)。</p>
+<p>任何带有后缀的字面量（如字符串、整数等）都可以作为有效的 token，并且可以传递给宏而不会产生错误。宏自己决定如何解释这种 token，以及是否该报错。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>macro_rules! blackhole { ($tt:tt) =&gt; () }
+
+blackhole!(&quot;string&quot;suffix); // OK
+<span class="boring">}
+</span></code></pre></pre>
+<p>但是，最终被解析为 Rust 代码的字面量token 上的后缀是受限制的。对于非数字字面量token，任何后缀都最终将被弃用，而数字字面量token 只接受下表中的后缀。</p>
+<table><thead><tr><th>整数</th><th>浮点数</th></tr></thead><tbody>
+<tr><td><code>u8</code>, <code>i8</code>, <code>u16</code>, <code>i16</code>, <code>u32</code>, <code>i32</code>, <code>u64</code>, <code>i64</code>, <code>u128</code>, <code>i128</code>, <code>usize</code>, <code>isize</code></td><td><code>f32</code>, <code>f64</code></td></tr>
+</tbody></table>
+<h3><a class="header" href="#字符和字符串字面量" id="字符和字符串字面量">字符和字符串字面量</a></h3>
+<h4><a class="header" href="#字符字面量" id="字符字面量">字符字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+CHAR_LITERAL :<br />
+   <code>'</code> ( ~[<code>'</code> <code>\</code> \n \r \t] | QUOTE_ESCAPE | ASCII_ESCAPE | UNICODE_ESCAPE ) <code>'</code></p>
+<p>QUOTE_ESCAPE :<br />
+   <code>\'</code> | <code>\&quot;</code></p>
+<p>ASCII_ESCAPE :<br />
+      <code>\x</code> OCT_DIGIT HEX_DIGIT<br />
+   | <code>\n</code> | <code>\r</code> | <code>\t</code> | <code>\\</code> | <code>\0</code></p>
+<p>UNICODE_ESCAPE :<br />
+   <code>\u{</code> ( HEX_DIGIT <code>_</code><sup>*</sup> )<sup>1..6</sup> <code>}</code></p>
+</blockquote>
+<p><em>字符字面量</em>是位于两个 <code>U+0027</code>（单引号 <code>'</code>）字符内的单个 Unicode 字符。当它是 <code>U+0027</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
+<h4><a class="header" href="#字符串字面量" id="字符串字面量">字符串字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+STRING_LITERAL :<br />
+   <code>&quot;</code> (<br />
+      ~[<code>&quot;</code> <code>\</code> <em>IsolatedCR</em>]  (译者注：IsolatedCR：后面没有跟 <code>\n</code> 的 <code>\r</code>，首次定义见<a href="comments.html">注释</a>)<br />
+      | QUOTE_ESCAPE<br />
+      | ASCII_ESCAPE<br />
+      | UNICODE_ESCAPE<br />
+      | STRING_CONTINUE<br />
+   )<sup>*</sup> <code>&quot;</code></p>
+<p>STRING_CONTINUE :<br />
+   <code>\</code> <em>后跟</em> \n</p>
+</blockquote>
+<p><em>字符串字面量</em>是位于两个 <code>U+0022</code> （双引号 <code>&quot;</code>）字符内的任意 Unicode 字符序列。当它是 <code>U+0022</code> 自身时，必须前置<em>转义</em>字符 <code>U+005C</code>（<code>\</code>）。</p>
+<p>字符串字面量允许换行书写。换行可以用换行符（<code>U+000A</code>）表示，也可以用一对回车符换行符（<code>U+000D</code>, <code>U+000A</code>）的字节序列表示。这两种字节序列通常都会被转换为 <code>U+000A</code>，但有例外：当换行符前置一个未转义的字符 <code>U+005C</code>（<code>\</code>）时，会导致字符 <code>U+005C</code>、换行符和下一行开头的所有空白符都被忽略。因此下述示例中，<code>a</code> 和 <code>b</code> 是一样的：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let a = &quot;foobar&quot;;
+let b = &quot;foo\
+         bar&quot;;
+
+assert_eq!(a,b);
+<span class="boring">}
+</span></code></pre></pre>
+<h4><a class="header" href="#字符转义" id="字符转义">字符转义</a></h4>
+<p>不管是字符字面量，还是非原生字符串字面量，Rust 都为其提供了额外的<em>转义</em>功能。转义以一个 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
+<ul>
+<li><em>7-bit 码点转义</em>以 <code>U+0078</code>（<code>x</code>）开头，后面紧跟两个<em>十六进制数字</em>，其最大值为 <code>0x7F</code>。它表示 ASCII 字符，其码值就等于字面提供的十六进制值。不允许使用更大的值，因为不能确定其是 Unicode 码点还是字节值(byte values)。</li>
+<li><em>24-bit 码点转义</em>以 <code>U+0075</code>（<code>u</code>）开头，后跟多达六位<em>十六进制数字</em>，位于花括号 <code>U+007B</code>（<code>{</code>）和 <code>U+007D</code>（<code>}</code>）之间。这表示（需转义到的）Unicode 字符的码点等于花括号里的十六进制值。</li>
+<li><em>空白符转义</em>是 <code>U+006E</code> (<code>n</code>)、<code>U+0072</code> (<code>r</code>) 或者 <code>U+0074</code> (<code>t</code>) 之一，依次分别表示 Unicode 码点 <code>U+000A</code>（LF），<code>U+000D</code>（CR），或者 <code>U+0009</code>（HT）。</li>
+<li><em>null转义</em> 是字符 <code>U+0030</code>（<code>0</code>），表示 Unicode 码点 <code>U+0000</code>（NUL）。</li>
+<li><em>反斜线转义</em> 是字符 <code>U+005C</code>（<code>\</code>），反斜线必须通过转义才能表示其自身。</li>
+</ul>
+<h4><a class="header" href="#原生字符串字面量" id="原生字符串字面量">原生字符串字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+RAW_STRING_LITERAL :<br />
+   <code>r</code> RAW_STRING_CONTENT</p>
+<p>RAW_STRING_CONTENT :<br />
+      <code>&quot;</code> ( ~ <em>IsolatedCR</em> )<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
+   | <code>#</code> RAW_STRING_CONTENT <code>#</code></p>
+</blockquote>
+<p>原生字符串字面量不做任何转义。它以字符 <code>U+0072</code>（<code>r</code>）后跟零个或多个字符 <code>U+0023</code>（<code>#</code>），以及一个字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；中间<em>原生字符串文本主体</em>部分可包含任意的 Unicode 字符序列；再后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。</p>
+<p>所有包含在原生字符串文本主体中的 Unicode 字符都代表他们自身：字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code> (<code>#</code>)字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
+<p>字符串字面量示例:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>&quot;foo&quot;; r&quot;foo&quot;;                     // foo
+&quot;\&quot;foo\&quot;&quot;; r#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+
+&quot;foo #\&quot;# bar&quot;;
+r##&quot;foo #&quot;# bar&quot;##;                // foo #&quot;# bar
+
+&quot;\x52&quot;; &quot;R&quot;; r&quot;R&quot;;                 // R
+&quot;\\x52&quot;; r&quot;\x52&quot;;                  // \x52
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#字节和字节串字面量" id="字节和字节串字面量">字节和字节串字面量</a></h3>
+<h4><a class="header" href="#字节字面量" id="字节字面量">字节字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+BYTE_LITERAL :<br />
+   <code>b'</code> ( ASCII_FOR_CHAR | BYTE_ESCAPE )  <code>'</code></p>
+<p>ASCII_FOR_CHAR :<br />
+   <em>任何 ASCII 字符 （0x00 到 0x7F）, 排除</em> <code>'</code>, <code>\</code>, \n, \r 或者 \t</p>
+<p>BYTE_ESCAPE :<br />
+      <code>\x</code> HEX_DIGIT HEX_DIGIT<br />
+   | <code>\n</code> | <code>\r</code> | <code>\t</code> | <code>\\</code> | <code>\0</code></p>
+</blockquote>
+<p><em>字节字面量</em>是单个 ASCII 字符（码值在 <code>U+0000</code> 到 <code>U+007F</code> 区间内）或一个<em>转义字节</em>作为字节字面量的真实主体跟在表示形式意义的字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0027</code>（单引号 <code>'</code>）组合之后，然后再后接字符 <code>U+0027</code>。如果字符 <code>U+0027</code> 本身要出现在字面量中，它必须经由前置字符 <code>U+005C</code>（<code>\</code>）<em>转义</em>。字节字面量等价于一个 <code>u8</code> 8-bit 无符号整型<em>数字字面量</em>。</p>
+<h4><a class="header" href="#字节串字面量" id="字节串字面量">字节串字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+BYTE_STRING_LITERAL :<br />
+   <code>b&quot;</code> ( ASCII_FOR_STRING | BYTE_ESCAPE | STRING_CONTINUE )<sup>*</sup> <code>&quot;</code></p>
+<p>ASCII_FOR_STRING :<br />
+   <em>任何 ASCII 字符(码值位于 0x00 到 0x7F 之间), 排除</em> <code>&quot;</code>, <code>\</code> <em>和 IsolatedCR</em></p>
+</blockquote>
+<p>非原生<em>字节串字面量</em>是 ASCII 字符和转义字符组成的字符序列，形式是以字符 <code>U+0062</code>（<code>b</code>）和字符 <code>U+0022</code>（双引号 <code>&quot;</code>）组合开头，以字符 <code>U+0022</code> 结尾。如果字面量中包含字符 <code>U+0022</code>，则必须由前置的 <code>U+005C</code>（<code>\</code>）<em>转义</em>。此外，字节串字面量也可以是<em>原生字节串字面量</em>（下面有其定义）。长度为 <code>n</code> 的字节串字面量类型为 <code>&amp;'static [u8; n]</code>。</p>
+<p>一些额外的<em>转义</em>可以在字节或非原生字节串字面量中使用，转义以 <code>U+005C</code>（<code>\</code>）开始，并后跟如下形式之一：</p>
+<ul>
+<li><em>字节转义</em>以 <code>U+0078</code> (<code>x</code>)开始，后跟恰好两位<em>十六进制数字</em>来表示十六进制值代表的字节。</li>
+<li><em>空白符转义</em>是字符 <code>U+006E</code>（<code>n</code>）、<code>U+0072</code>（<code>r</code>），或 <code>U+0074</code>（<code>t</code>）之一，分别表示字节值 <code>0x0A</code>（ASCII LF）、<code>0x0D</code>（ASCII CR），或 <code>0x09</code>（ASCII HT）。</li>
+<li><em>null转义</em>是字符 <code>U+0030</code>（<code>0</code>），表示字节值 <code>0x00</code> （ASCII NUL）。</li>
+<li><em>反斜线转义</em>是字符 <code>U+005C</code>（<code>\</code>），必须被转义以表示其 ASCII 编码 <code>0x5C</code>。</li>
+</ul>
+<h4><a class="header" href="#原生字节串字面量" id="原生字节串字面量">原生字节串字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+RAW_BYTE_STRING_LITERAL :<br />
+   <code>br</code> RAW_BYTE_STRING_CONTENT</p>
+<p>RAW_BYTE_STRING_CONTENT :<br />
+      <code>&quot;</code> ASCII<sup>* (非贪婪模式)</sup> <code>&quot;</code><br />
+   | <code>#</code> RAW_BYTE_STRING_CONTENT <code>#</code></p>
+<p>ASCII :<br />
+   <em>任何 ASCII 字符（0x00 到 0x7F）</em></p>
+</blockquote>
+<p>原生字节串字面量不做任何转义。它们以字符 <code>U+0062</code>（<code>b</code>）后跟 <code>U+0072</code>（<code>r</code>），再后跟零个或多个字符 <code>U+0023</code>（<code>#</code>）及字符 <code>U+0022</code>（双引号 <code>&quot;</code>），这样的字符组合开始；之后是<em>原生字节串文本主体</em>，这部分可包含任意的 ASCII 字符序列；后跟另一个 <code>U+0022</code>（双引号 <code>&quot;</code>）字符表示文本主体结束；最后再后跟与文本主体前的那段字符组合中的同等数量的 <code>U+0023</code>（<code>#</code>）字符。原生字节串字面量不能包含任何非 ASCII 字节。</p>
+<p>原生字节串文本主体中的所有字符都代表它们自身的 ASCII 编码，字符 <code>U+0022</code>（双引号 <code>&quot;</code>）（除非后跟的纯 <code>U+0023</code>（<code>#</code>）字符串与文本主体开始前的对称相等）或字符 <code>U+005C</code>（<code>\</code>）此时都没有特殊含义。</p>
+<p>字节串字面量示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>b&quot;foo&quot;; br&quot;foo&quot;;                     // foo
+b&quot;\&quot;foo\&quot;&quot;; br#&quot;&quot;foo&quot;&quot;#;             // &quot;foo&quot;
+
+b&quot;foo #\&quot;# bar&quot;;
+br##&quot;foo #&quot;# bar&quot;##;                 // foo #&quot;# bar
+
+b&quot;\x52&quot;; b&quot;R&quot;; br&quot;R&quot;;                // R
+b&quot;\\x52&quot;; br&quot;\x52&quot;;                  // \x52
+<span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#数字字面量" id="数字字面量">数字字面量</a></h3>
+<p><em>数字字面量</em>可以是<em>整型字面量</em>，也可以是<em>浮点型字面量</em>，识别这两种字面量的文法是混合在一起的。</p>
+<h4><a class="header" href="#整型字面量" id="整型字面量">整型字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+INTEGER_LITERAL :<br />
+   ( DEC_LITERAL | BIN_LITERAL | OCT_LITERAL | HEX_LITERAL )
+INTEGER_SUFFIX<sup>?</sup></p>
+<p>DEC_LITERAL :<br />
+   DEC_DIGIT (DEC_DIGIT|<code>_</code>)<sup>*</sup></p>
+<p>BIN_LITERAL :<br />
+   <code>0b</code> (BIN_DIGIT|<code>_</code>)<sup>*</sup> BIN_DIGIT (BIN_DIGIT|<code>_</code>)<sup>*</sup></p>
+<p>OCT_LITERAL :<br />
+   <code>0o</code> (OCT_DIGIT|<code>_</code>)<sup>*</sup> OCT_DIGIT (OCT_DIGIT|<code>_</code>)<sup>*</sup></p>
+<p>HEX_LITERAL :<br />
+   <code>0x</code> (HEX_DIGIT|<code>_</code>)<sup>*</sup> HEX_DIGIT (HEX_DIGIT|<code>_</code>)<sup>*</sup></p>
+<p>BIN_DIGIT : [<code>0</code>-<code>1</code>]</p>
+<p>OCT_DIGIT : [<code>0</code>-<code>7</code>]</p>
+<p>DEC_DIGIT : [<code>0</code>-<code>9</code>]</p>
+<p>HEX_DIGIT : [<code>0</code>-<code>9</code> <code>a</code>-<code>f</code> <code>A</code>-<code>F</code>]</p>
+<p>INTEGER_SUFFIX :<br />
+      <code>u8</code> | <code>u16</code> | <code>u32</code> | <code>u64</code> | <code>u128</code> | <code>usize</code><br />
+   | <code>i8</code> | <code>i16</code> | <code>i32</code> | <code>i64</code> | <code>i128</code> | <code>isize</code></p>
+</blockquote>
+<p><em>整型字面量</em>具备下述 4 种形式之一：</p>
+<ul>
+<li><em>十进制字面量</em>以<em>十进制数字</em>开头，后跟<em>十进制数字</em>和*下划线(<code>_</code>)*的任意组合。</li>
+<li><em>十六进制字面量</em>以字符序列 <code>U+0030</code> <code>U+0078</code>（<code>0x</code>）开头，后跟十六进制数字和下划线的任意组合（至少一个数字）。</li>
+<li><em>八进制字面量</em>以字符序列 <code>U+0030</code> <code>U+006F</code>（<code>0o</code>）开头，后跟八进制数字和下划线的任意组合（至少一个数字）。</li>
+<li><em>二进制字面量</em>以字符序列 <code>U+0030</code> <code>U+0062</code>（<code>0b</code>）开头，后跟二进制数字和下划线的任意组合（至少一个数字）。</li>
+</ul>
+<p>与其它字面量一样，整型字面量后面可紧跟一个<em>整型后缀</em>，该后缀强制设定了字面量的数据类型。整型后缀须为如下整型类型之一：<code>u8</code>、<code>i8</code>、<code>u16</code>、<code>i16</code>、<code>u32</code>、<code>i32</code>、<code>u64</code>、<code>i64</code>、<code>u128</code>、<code>i128</code>、<code>usize</code> 或 <code>isize</code>。</p>
+<p><em>无后缀</em>整型字面量的类型通过类型推断确定：</p>
+<ul>
+<li>如果整型类型可以通过程序上下文<em>唯一</em>确定，则无后缀整型字面量的类型即为该类型。</li>
+<li>如果程序上下文对类型约束不足，则默认为 32-bit 有符号整型，即 <code>i32</code>。</li>
+<li>如果程序上下文对类型约束过度，则报静态类型错误。</li>
+</ul>
+<p>各种形式的整型字面量示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>123;                               // 类型 i32
+123i32;                            // 类型 i32
+123u32;                            // 类型 u32
+123_u32;                           // 类型 u32
+let a: u64 = 123;                  // 类型 u64
+
+0xff;                              // 类型 i32
+0xff_u8;                           // 类型 u8
+
+0o70;                              // 类型 i32
+0o70_i16;                          // 类型 i16
+
+0b1111_1111_1001_0000;             // 类型 i32
+0b1111_1111_1001_0000i64;          // 类型 i64
+0b________1;                       // 类型 i32
+
+0usize;                            // 类型 usize
+<span class="boring">}
+</span></code></pre></pre>
+<p>无效整型字面量示例:</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 无效后缀
+
+0invalidSuffix;
+
+// 数字进制错误
+
+123AFB43;
+0b0102;
+0o0581;
+
+// 类型溢出
+
+128_i8;
+256_u8;
+
+// 二进制、十六进制、八进制的进制前缀后至少需要一个数字
+
+0b_;
+0b____;
+<span class="boring">}
+</span></code></pre></pre>
+<p>请注意，Rust 句法将 <code>-1i8</code> 视为<a href="expressions/operator-expr.html#negation-operators">一元取反运算符</a>对整型字面量 <code>1i8</code> 的应用，而不是将它视为单个整型字面量。</p>
+<h4><a class="header" href="#元组索引" id="元组索引">元组索引</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+TUPLE_INDEX: <br />
+   INTEGER_LITERAL</p>
+</blockquote>
+<p>元组索引用于引用<a href="types/tuple.html">元组</a>、<a href="items/structs.html">元组结构体</a>和<a href="items/enumerations.html">元组变体</a>的字段。</p>
+<p>元组索引直接与字面量token 进行比较。元组索引以 <code>0</code> 开始，每个后续索引的值以十进制的 <code>1</code> 递增。因此，元组索引只能匹配十进制值，并且该值不能用 <code>0</code> 做前缀字符。</p>
+<pre><pre class="playground"><code class="language-rust compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let example = (&quot;dog&quot;, &quot;cat&quot;, &quot;horse&quot;);
+let dog = example.0;
+let cat = example.1;
+// 下面的示例非法.
+let cat = example.01;  // 错误：没有 `01` 字段
+let horse = example.0b10;  // 错误：没有 `0b10` 字段
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p><strong>注意</strong>: 元组索引可能包含一个 <code>INTEGER_SUFFIX</code> ，但是这不是有效的，可能会在将来的版本中被删除。更多信息请参见<a href="https://github.com/rust-lang/rust/issues/60210">https://github.com/rust-lang/rust/issues/60210</a>。</p>
+</blockquote>
+<h4><a class="header" href="#浮点型字面量" id="浮点型字面量">浮点型字面量</a></h4>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+FLOAT_LITERAL :<br />
+      DEC_LITERAL <code>.</code>
+<em>（紧跟着的不能是 <code>.</code>, <code>_</code> 或者<a href="identifiers.html">标识符</a>）</em><br />
+   | DEC_LITERAL FLOAT_EXPONENT<br />
+   | DEC_LITERAL <code>.</code> DEC_LITERAL FLOAT_EXPONENT<sup>?</sup><br />
+   | DEC_LITERAL (<code>.</code> DEC_LITERAL)<sup>?</sup>
+FLOAT_EXPONENT<sup>?</sup> FLOAT_SUFFIX</p>
+<p>FLOAT_EXPONENT :<br />
+   (<code>e</code>|<code>E</code>) (<code>+</code>|<code>-</code>)?
+(DEC_DIGIT|<code>_</code>)<sup>*</sup> DEC_DIGIT (DEC_DIGIT|<code>_</code>)<sup>*</sup></p>
+<p>FLOAT_SUFFIX :<br />
+   <code>f32</code> | <code>f64</code></p>
+</blockquote>
+<p><em>浮点型字面量</em>有如下两种形式：</p>
+<ul>
+<li><em>十进制字面量</em>后跟句点字符 <code>U+002E</code> (<code>.</code>)。后面可选地跟着另一个十进制数字，还可以再接一个可选的<em>指数</em>。</li>
+<li><em>十进制字面量</em>后跟一个<em>指数</em>。</li>
+</ul>
+<p>如同整型字面量，浮点型字面量也可后跟一个后缀，但在后缀之前，浮点型字面量部分不以 <code>U+002E</code>（<code>.</code>）结尾。后缀强制设定了字面量类型。有两种有效的<em>浮点型后缀</em>：<code>f32</code> 和 <code>f64</code>（32-bit 和 64-bit 浮点类型），它们显式地指定了字面量的类型。</p>
+<ul>
+<li>
+<p>If the program context under-constrains the type, it defaults to <code>f64</code>.</p>
+</li>
+<li>
+<p>If the program context over-constrains the type, it is considered a
+static type error.
+<em>无后缀</em>浮点型字面量的类型通过类型推断确定：</p>
+</li>
+<li>
+<p>如果浮点型类型可以通过程序上下文<em>唯一</em>确定，则无后缀浮点型字面量的类型即为该类型。</p>
+</li>
+<li>
+<p>如果程序上下文对类型约束不足，则默认为 <code>f64</code>。</p>
+</li>
+<li>
+<p>如果程序上下文对类型过度约束，则报静态类型错误。</p>
+</li>
+</ul>
+<p>各种形式的浮点型字面量示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>123.0f64;        // 类型 f64
+0.1f64;          // 类型 f64
+0.1f32;          // 类型 f32
+12E+99_f64;      // 类型 f64
+5f32;            // 类型 f32
+let x: f64 = 2.; // 类型 f64
+<span class="boring">}
+</span></code></pre></pre>
+<p>最后一个例子稍显不同，因为不能对一个以句点结尾的浮点型字面量使用后缀句法，<code>2.f64</code> 会尝试在 <code>2</code> 上调用名为 <code>f64</code> 的方法。</p>
+<p>浮点数的表形(representation)语义在<a href="types/numeric.html">“和平台相关的类型”</a>中有描述。</p>
+<h3><a class="header" href="#布尔型字面量" id="布尔型字面量">布尔型字面量</a></h3>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+BOOLEAN_LITERAL :<br />
+      <code>true</code><br />
+   | <code>false</code></p>
+</blockquote>
+<p>布尔类型有两个值，写为：<code>true</code> 和 <code>false</code>。</p>
+<h2><a class="header" href="#生存期和循环标签" id="生存期和循环标签">生存期和循环标签</a></h2>
+<blockquote>
+<p><strong><sup>词法</sup></strong><br />
+LIFETIME_TOKEN :<br />
+      <code>'</code> <a href="identifiers.html">IDENTIFIER_OR_KEYWORD</a><br />
+   | <code>'_</code></p>
+<p>LIFETIME_OR_LABEL :<br />
+      <code>'</code> <a href="identifiers.html">NON_KEYWORD_IDENTIFIER</a></p>
+</blockquote>
+<p>生存期参数和<a href="expressions/loop-expr.html">循环标签</a>使用 LIFETIME_OR_LABEL 类型的 token。（尽管 LIFETIME_OR_LABEL 是 LIFETIME_TOKEN 的子集，但）任何符合 LIFETIME_TOKEN 约定的 token 也都能被上述词法分析规则所接受，比如 LIFETIME_TOKEN 类型的 token 在宏中就可以畅通无阻的使用。</p>
+<h2><a class="header" href="#标点符号" id="标点符号">标点符号</a></h2>
+<p>为了完整起见，这里列出了（Rust 里）所有的标点符号的 symbol token。它们各自的用法和含义在链接页面中都有定义。</p>
+<table><thead><tr><th>符号</th><th>名称</th><th>使用方法</th></tr></thead><tbody>
+<tr><td><code>+</code></td><td>Plus</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术加法</a>, <a href="trait-bounds.html">trait约束</a>, <a href="macros-by-example.html">可匹配空的宏匹配器</a>(Macro Kleene Matcher)</td></tr>
+<tr><td><code>-</code></td><td>Minus</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术减法</a>, <a href="expressions/operator-expr.html#negation-operators">取反</a></td></tr>
+<tr><td><code>*</code></td><td>Star</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术乘法</a>, <a href="expressions/operator-expr.html#the-dereference-operator">解引用</a>, <a href="types/pointer.html#raw-pointers-const-and-mut">裸指针</a>, <a href="macros-by-example.html">可匹配空的宏匹配器</a>, <a href="items/use-declarations.html">use 通配符</a></td></tr>
+<tr><td><code>/</code></td><td>Slash</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术除法</a></td></tr>
+<tr><td><code>%</code></td><td>Percent</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">算术取模</a></td></tr>
+<tr><td><code>^</code></td><td>Caret</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">位和逻辑异或</a></td></tr>
+<tr><td><code>!</code></td><td>Not</td><td><a href="expressions/operator-expr.html#negation-operators">位和逻辑非</a>, <a href="macros-by-example.html">宏调用</a>, <a href="attributes.html">内部属性</a>, <a href="types/never.html">never型</a>, <a href="items/implementations.html">否定实现</a></td></tr>
+<tr><td><code>&amp;</code></td><td>And</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">位和逻辑与</a>, <a href="expressions/operator-expr.html#borrow-operators">借用</a>, <a href="types/pointer.html">引用</a>, <a href="patterns.html#reference-patterns">引用模式</a></td></tr>
+<tr><td><code>|</code></td><td>Or</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">位和逻辑或</a>, <a href="expressions/closure-expr.html">闭包</a>, <a href="expressions/match-expr.html">match</a> 中的模式, <a href="expressions/if-expr.html#if-let-expressions"><code>if let</code></a>, 和 <a href="expressions/loop-expr.html#predicate-pattern-loops"><code>while let</code></a></td></tr>
+<tr><td><code>&amp;&amp;</code></td><td>AndAnd</td><td><a href="expressions/operator-expr.html#lazy-boolean-operators">短路与</a>, <a href="expressions/operator-expr.html#borrow-operators">借用</a>, <a href="types/pointer.html">引用</a>, <a href="patterns.html#reference-patterns">引用模式</a></td></tr>
+<tr><td><code>||</code></td><td>OrOr</td><td><a href="expressions/operator-expr.html#lazy-boolean-operators">短路或</a>, <a href="expressions/closure-expr.html">闭包</a></td></tr>
+<tr><td><code>&lt;&lt;</code></td><td>Shl</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">左移位</a>, <a href="items/generics.html">嵌套泛型</a></td></tr>
+<tr><td><code>&gt;&gt;</code></td><td>Shr</td><td><a href="expressions/operator-expr.html#arithmetic-and-logical-binary-operators">右移位</a>, <a href="items/generics.html">嵌套泛型</a></td></tr>
+<tr><td><code>+=</code></td><td>PlusEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">加法及赋值</a></td></tr>
+<tr><td><code>-=</code></td><td>MinusEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">减法及赋值</a></td></tr>
+<tr><td><code>*=</code></td><td>StarEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">乘法及赋值</a></td></tr>
+<tr><td><code>/=</code></td><td>SlashEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">除法及赋值</a></td></tr>
+<tr><td><code>%=</code></td><td>PercentEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">取模及赋值</a></td></tr>
+<tr><td><code>^=</code></td><td>CaretEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">按位异或及赋值</a></td></tr>
+<tr><td><code>&amp;=</code></td><td>AndEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">按位与及赋值</a></td></tr>
+<tr><td><code>|=</code></td><td>OrEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">按位或及赋值</a></td></tr>
+<tr><td><code>&lt;&lt;=</code></td><td>ShlEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">左移位及赋值</a></td></tr>
+<tr><td><code>&gt;&gt;=</code></td><td>ShrEq</td><td><a href="expressions/operator-expr.html#compound-assignment-expressions">右移位及赋值</a>, <a href="items/generics.html">嵌套泛型</a></td></tr>
+<tr><td><code>=</code></td><td>Eq</td><td><a href="expressions/operator-expr.html#assignment-expressions">赋值</a>, <a href="attributes.html">属性</a>, 各种类型定义</td></tr>
+<tr><td><code>==</code></td><td>EqEq</td><td><a href="expressions/operator-expr.html#comparison-operators">等于</a></td></tr>
+<tr><td><code>!=</code></td><td>Ne</td><td><a href="expressions/operator-expr.html#comparison-operators">不等于</a></td></tr>
+<tr><td><code>&gt;</code></td><td>Gt</td><td><a href="expressions/operator-expr.html#comparison-operators">大于</a>, <a href="items/generics.html">泛型</a>, <a href="paths.html">路径</a></td></tr>
+<tr><td><code>&lt;</code></td><td>Lt</td><td><a href="expressions/operator-expr.html#comparison-operators">小于</a>, <a href="items/generics.html">泛型</a>, <a href="paths.html">路径</a></td></tr>
+<tr><td><code>&gt;=</code></td><td>Ge</td><td><a href="expressions/operator-expr.html#comparison-operators">大于或等于</a>, <a href="items/generics.html">泛型</a></td></tr>
+<tr><td><code>&lt;=</code></td><td>Le</td><td><a href="expressions/operator-expr.html#comparison-operators">小于或等于</a></td></tr>
+<tr><td><code>@</code></td><td>At</td><td><a href="patterns.html#identifier-patterns">子模式绑定</a></td></tr>
+<tr><td><code>_</code></td><td>Underscore</td><td><a href="patterns.html#wildcard-pattern">通配符模式</a>, <a href="types/inferred.html">自动推断型类型</a>, <a href="items/constant-items.html">常量项</a>中的非命名程序项, <a href="items/extern-crates.html">外部 crate</a>, 和 <a href="items/use-declarations.html">use声明</a></td></tr>
+<tr><td><code>.</code></td><td>Dot</td><td><a href="expressions/field-expr.html">字段访问</a>, <a href="expressions/tuple-expr.html#tuple-indexing-expressions">元组索引</a></td></tr>
+<tr><td><code>..</code></td><td>DotDot</td><td><a href="expressions/range-expr.html">区间</a>, <a href="expressions/struct-expr.html">结构体表达式</a>, <a href="patterns.html">模式</a></td></tr>
+<tr><td><code>...</code></td><td>DotDotDot</td><td><a href="items/external-blocks.html">可变参数函数</a>, <a href="patterns.html#range-patterns">区间模式</a></td></tr>
+<tr><td><code>..=</code></td><td>DotDotEq</td><td><a href="expressions/range-expr.html">闭区间</a>, <a href="patterns.html#range-patterns">区间模式</a></td></tr>
+<tr><td><code>,</code></td><td>Comma</td><td>各种分隔符</td></tr>
+<tr><td><code>;</code></td><td>Semi</td><td>各种程序项和语句的结束符, <a href="types/array.html">数组类型</a></td></tr>
+<tr><td><code>:</code></td><td>Colon</td><td>各种分隔符</td></tr>
+<tr><td><code>::</code></td><td>PathSep</td><td>[路径分隔符]<a href="paths.html">路径</a></td></tr>
+<tr><td><code>-&gt;</code></td><td>RArrow</td><td><a href="items/functions.html">函数返回类型</a>, <a href="expressions/closure-expr.html">闭包返回类型</a>, <a href="types/function-pointer.html">数组指针类型</a></td></tr>
+<tr><td><code>=&gt;</code></td><td>FatArrow</td><td><a href="expressions/match-expr.html">匹配臂</a>, <a href="macros-by-example.html">宏</a></td></tr>
+<tr><td><code>#</code></td><td>Pound</td><td><a href="attributes.html">属性</a></td></tr>
+<tr><td><code>$</code></td><td>Dollar</td><td><a href="macros-by-example.html">宏</a></td></tr>
+<tr><td><code>?</code></td><td>Question</td><td><a href="expressions/operator-expr.html#the-question-mark-operator">问号运算符</a>, <a href="trait-bounds.html#sized">非确定性尺寸</a>, <a href="macros-by-example.html">可匹配空的宏匹配器</a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#定界符" id="定界符">定界符</a></h2>
+<p>括号用于文法的各个部分，左括号必须始终与右括号配对。括号以及其内的 token 在<a href="macros-by-example.html">宏</a>中被称作“token树(token trees)”。括号有三种类型：</p>
+<table><thead><tr><th>括号</th><th>类型</th></tr></thead><tbody>
+<tr><td><code>{</code> <code>}</code></td><td>花/大括号</td></tr>
+<tr><td><code>[</code> <code>]</code></td><td>方/中括号</td></tr>
+<tr><td><code>(</code> <code>)</code></td><td>圆/小括号</td></tr>
+</tbody></table>
+<!-- 2020-11-12-->
+<!-- checked -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="whitespace.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="macros.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="whitespace.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="macros.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>#[doc] 属性 - rustdoc 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rustdoc 手册详细介绍了如何使用 rustdoc 命令或 cargo doc 来生成漂亮的 crate 文档，发布 crate 前很有必要熟悉 rustdoc 的相关内容。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what-is-rustdoc.html"><strong aria-hidden="true">1.</strong> 什么是 rustdoc?</a></li><li class="chapter-item expanded "><a href="how-to-read-rustdoc.html"><strong aria-hidden="true">2.</strong> 如何阅读 rustdoc 的输出</a></li><li class="chapter-item expanded "><a href="how-to-write-documentation.html"><strong aria-hidden="true">3.</strong> 如何写文档</a></li><li class="chapter-item expanded "><a href="what-to-include.html"><strong aria-hidden="true">4.</strong> 什么被包含（和排除）</a></li><li class="chapter-item expanded "><a href="command-line-arguments.html"><strong aria-hidden="true">5.</strong> 命令行参数</a></li><li class="chapter-item expanded "><a href="the-doc-attribute.html" class="active"><strong aria-hidden="true">6.</strong> #[doc] 属性</a></li><li class="chapter-item expanded "><a href="documentation-tests.html"><strong aria-hidden="true">7.</strong> 文档测试</a></li><li class="chapter-item expanded "><a href="linking-to-items-by-name.html"><strong aria-hidden="true">8.</strong> 通过 items 名称链接</a></li><li class="chapter-item expanded "><a href="lints.html"><strong aria-hidden="true">9.</strong> Lints</a></li><li class="chapter-item expanded "><a href="advanced-features.html"><strong aria-hidden="true">10.</strong> 高级特性</a></li><li class="chapter-item expanded "><a href="unstable-features.html"><strong aria-hidden="true">11.</strong> 不稳定特性</a></li><li class="chapter-item expanded "><a href="website-features.html"><strong aria-hidden="true">12.</strong> Website features</a></li><li class="chapter-item expanded "><a href="passes.html"><strong aria-hidden="true">13.</strong> Passes</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">14.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rustdoc 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/rustdoc-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#doc-属性" id="doc-属性"><code>#[doc]</code> 属性</a></h1>
+<p><code>#[doc]</code> 属性可以让你控制 <code>rustdoc</code> 工作的各个方面。</p>
+<p><code>#[doc]</code> 最基本的作用就是处理文档内容。就是说，<code>///</code> 就是 <code>#[doc]</code> 的语法糖。下面的两行注释是一样的：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// This is a doc comment.
+#[doc = &quot; This is a doc comment.&quot;]
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>（请注意属性版本的开始的空格。）</p>
+<p>在大多数情况下，<code>///</code> 比 <code>#[doc]</code> 更容易使用。一种后面更容易使用的场景是给宏生成文档；<code>collapse-docs</code> 会组合多个 <code>#[doc]</code>属性为一条文档注释，比如：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc = &quot;This is&quot;]
+#[doc = &quot; a &quot;]
+#[doc = &quot;doc comment&quot;]
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这样可能感觉更灵活。注意这跟下面的写法是一样的：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc = &quot;This is\n a \ndoc comment&quot;]
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>给出的文档会渲染成 markdown，会删除换行符。</p>
+<p>另一个有用的场景是引入外部文件：</p>
+<pre><code class="language-rust no_run ignore">#[doc = include_str!(&quot;../README.md&quot;)]
+<span class="boring">fn f() {}
+</span></code></pre>
+<p><code>doc</code> 属性有更多的选项！不会包含在输出中，但是可以控制输出的表示。我们将它们分为两大类：在 crate 层面使用的，和在 item 层面使用的。</p>
+<h2><a class="header" href="#crate-层面" id="crate-层面">crate 层面</a></h2>
+<p>这些选项控制文档在 crate 层面如何表示。</p>
+<h3><a class="header" href="#html_favicon_url" id="html_favicon_url"><code>html_favicon_url</code></a></h3>
+<p>这个 <code>doc</code> 属性让你控制你的文档图标。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_favicon_url = &quot;https://example.com/favicon.ico&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这会在你的文档中加入 <code>&lt;link rel=&quot;shortcut icon&quot; href=&quot;{}&quot;&gt;</code>，属性的值会填入 <code>{}</code>。</p>
+<p>如果你不使用这个属性，就没有图标。</p>
+<h3><a class="header" href="#html_logo_url" id="html_logo_url"><code>html_logo_url</code></a></h3>
+<p>这个 <code>doc</code> 属性可以让你控制左上角的 logo。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_logo_url = &quot;https://example.com/logo.jpg&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这会在你的文档中加入 <code>&lt;a href='index.html'&gt;&lt;img src='{}' alt='logo' width='100'&gt;&lt;/a&gt;</code>，属性的值会填入 <code>{}</code>。</p>
+<p>如果你不使用这个属性，就没有 logo。</p>
+<h3><a class="header" href="#html_playground_url" id="html_playground_url"><code>html_playground_url</code></a></h3>
+<p>这个 <code>doc</code> 属性让你控制文档示例中的 &quot;run&quot; 按钮的请求到哪里。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_playground_url = &quot;https://playground.example.com/&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>现在，当你按下 &quot;run&quot;，会向对应网站发出请求。</p>
+<p>如果你没有使用这个属性，没有运行按钮。</p>
+<h3><a class="header" href="#issue_tracker_base_url" id="issue_tracker_base_url"><code>issue_tracker_base_url</code></a></h3>
+<p>这个 <code>doc</code> 属性在标准库中使用最多；当一个特性未稳定时，需要提供 issue number 来追踪这个特性。<code>rustdoc</code> 使用这个 number，加入到给定的基本 URL 来链接到追踪的网址。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(issue_tracker_base_url = &quot;https://github.com/rust-lang/rust/issues/&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#html_root_url" id="html_root_url"><code>html_root_url</code></a></h3>
+<p><code>#[doc(html_root_url = &quot;…&quot;)]</code> 属性的值表明了生成外部 crate 的 URL。当 rustdoc 需要生成一个外部 crate item 的链接时，首先检查本地外部 crate 的文档，如果存在直接链接指向。如果失败，就会使用 <code>--extern-html-root-url</code> 命令行参数的值，如果没有这个参数，才会使用 <code>html_root_url</code> ，如果还是无效，外部 item 不会链接。</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_root_url = &quot;https://docs.rs/serde/1.0&quot;)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<h3><a class="header" href="#html_no_source" id="html_no_source"><code>html_no_source</code></a></h3>
+<p>默认情况下，<code>rustdoc</code> 会包含你的源码链接到文档中。
+但是如果你这样写：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(html_no_source)]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>就不会。</p>
+<h3><a class="header" href="#testno_crate_inject" id="testno_crate_inject"><code>test(no_crate_inject)</code></a></h3>
+<p>默认情况下，<code>rustdoc</code> 会自动加一行 <code>extern crate my_crate;</code> 到每个文档测试中。
+但是如果你这样写了：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(test(no_crate_inject))]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>就不会。</p>
+<h3><a class="header" href="#testattr" id="testattr"><code>test(attr(...))</code></a></h3>
+<p>这个 <code>doc</code> 属性允许你对你所有的文档测试加上某个属性。比如，如果你想要你的文档测试存在警告时失败，可以这样写：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span>#![doc(test(attr(deny(warnings))))]
+<span class="boring">fn main() {
+</span><span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#item-层面" id="item-层面">item 层面</a></h2>
+<p>这些 <code>#[doc]</code> 属性单独给 item 使用，控制 item 文档表示。</p>
+<h3><a class="header" href="#inline-and-no_inline" id="inline-and-no_inline"><code>inline</code> and <code>no_inline</code></a></h3>
+<p><span id="docno_inlinedocinline"></span></p>
+<p>这两个属性可以用于 <code>use</code> 声明。比如，考虑如下 Rust 代码：</p>
+<pre><pre class="playground"><code class="language-rust no_run">pub use bar::Bar;
+
+/// bar docs
+pub mod bar {
+    /// the docs for Bar
+    pub struct Bar;
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>文档会生成 &quot;Re-exports&quot; 小节，表示 <code>pub use bar::Bar;</code> 其中 <code>Bar</code> 会链接到自己的页面。</p>
+<p>如果我们将代码改为：</p>
+<pre><pre class="playground"><code class="language-rust no_run">#[doc(inline)]
+pub use bar::Bar;
+<span class="boring">pub mod bar { pub struct Bar; }
+</span><span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><code>Bar</code> 就会出现在 <code>Structs</code> 小节，就像 <code>Bar</code> 就定义在顶层一样，而不是 <code>pub use</code> 的。</p>
+<p>然后我们修改原始的例子，使 <code>bar</code> 私有：</p>
+<pre><pre class="playground"><code class="language-rust no_run">pub use bar::Bar;
+
+/// bar docs
+mod bar {
+    /// the docs for Bar
+    pub struct Bar;
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>这里，因为 <code>bar</code> 不是公共的，<code>Bar</code> 没有自己的页面，所有没有链接可以指向。<code>rustdoc</code> 将会内联定义，所以会得到与 <code>#[doc(inline)]</code> 一样的结果：<code>Bar</code> 就会出现在 <code>Structs</code> 小节，就像 <code>Bar</code> 就定义在顶层一样。如果我们加上 <code>no_inline</code> 属性：</p>
+<pre><pre class="playground"><code class="language-rust no_run">#[doc(no_inline)]
+pub use bar::Bar;
+
+/// bar docs
+mod bar {
+    /// the docs for Bar
+    pub struct Bar;
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>现在我们有了 <code>Re-exports</code>，并且 <code>Bar</code> 没有链接到任何页面。</p>
+<p>一个特殊情况：在 Rust 2018 以及更高版本，如果你 <code>pub use</code> 你的依赖，<code>rustdoc</code> 不会作为 modules 内联除非你加上 <code>#[doc(inline)]</code>。</p>
+<h3><a class="header" href="#hidden" id="hidden"><code>hidden</code></a></h3>
+<p><span id="dochidden"></span></p>
+<p>任何标注了 <code>#[doc(hidden)]</code> 的 item 不会出现在文档中，除非 <code>strip-hidden</code> pass 被删除。</p>
+<h3><a class="header" href="#alias" id="alias"><code>alias</code></a></h3>
+<p>这个属性给搜索索引增加了别名。</p>
+<p>让我们举个例子：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc(alias = &quot;TheAlias&quot;)]
+pub struct SomeType;
+<span class="boring">}
+</span></code></pre></pre>
+<p>现在，如果你输入 &quot;TheAlias&quot; 搜索，也会显示 <code>SomeType</code>。当然如果你输入 <code>SomeType</code> 也会显示 <code>SomeType</code>！</p>
+<h4><a class="header" href="#ffi-例子" id="ffi-例子">FFI 例子</a></h4>
+<p>文档属性在写 c 库的 bingding 时尤其有用。比如，我们有一个下面这样的 C 函数：</p>
+<pre><code class="language-c">int lib_name_do_something(Obj *obj);
+</code></pre>
+<p>它输入一个指向 <code>Obj</code> 类型的指针返回一个整数。在 Rust 中，可能会这样写：</p>
+<pre><code class="language-ignore(usingnon-existingffitypes)">pub struct Obj {
+    inner: *mut ffi::Obj,
+}
+
+impl Obj {
+    pub fn do_something(&amp;mut self) -&gt; i32 {
+        unsafe { ffi::lib_name_do_something(self.inner) }
+    }
+}
+</code></pre>
+<p>函数已经被转换为一个方法便于使用。但是如果你想要寻找 Rust 相当的 <code>lib_name_do_something</code>，你没有办法做到。</p>
+<p>为了避免这个限制，我们只需要在 <code>do_something</code> 方法加上 <code>#[doc(alias = &quot;lib_name_do_something&quot;)]</code>，然后就可以了！</p>
+<p>用户可以直接搜索 <code>lib_name_do_something</code> 然后找到<code>Obj::do_something</code>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="command-line-arguments.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="documentation-tests.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="command-line-arguments.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="documentation-tests.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

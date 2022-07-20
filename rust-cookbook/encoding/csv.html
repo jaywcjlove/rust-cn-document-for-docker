@@ -1,0 +1,611 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CSV 处理 - Rust Cookbook 中文版 - A Rust Cookbook</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rust cookbook 中文版, Rust 实践指南, Rust 实例示例, Rust 编程实战, Rust crate 生态实践, Rust crate 集成应用">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <link rel="stylesheet" href="../css/custom.css">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../intro.html">总览</a></li><li class="chapter-item expanded affix "><a href="../about.html">关于本书</a></li><li class="chapter-item expanded "><a href="../algorithms.html"><strong aria-hidden="true">1.</strong> 算法</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/randomness.html"><strong aria-hidden="true">1.1.</strong> 生成随机值</a></li><li class="chapter-item expanded "><a href="../algorithms/sorting.html"><strong aria-hidden="true">1.2.</strong> Vector 排序</a></li></ol></li><li class="chapter-item expanded "><a href="../cli.html"><strong aria-hidden="true">2.</strong> 命令行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cli/arguments.html"><strong aria-hidden="true">2.1.</strong> 参数解析</a></li><li class="chapter-item expanded "><a href="../cli/ansi_terminal.html"><strong aria-hidden="true">2.2.</strong> ANSI 终端</a></li></ol></li><li class="chapter-item expanded "><a href="../compression.html"><strong aria-hidden="true">3.</strong> 压缩</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../compression/tar.html"><strong aria-hidden="true">3.1.</strong> 使用 tar 包</a></li></ol></li><li class="chapter-item expanded "><a href="../concurrency.html"><strong aria-hidden="true">4.</strong> 并发/并行</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../concurrency/threads.html"><strong aria-hidden="true">4.1.</strong> 显式线程</a></li><li class="chapter-item expanded "><a href="../concurrency/parallel.html"><strong aria-hidden="true">4.2.</strong> 数据并行</a></li></ol></li><li class="chapter-item expanded "><a href="../cryptography.html"><strong aria-hidden="true">5.</strong> 密码学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cryptography/hashing.html"><strong aria-hidden="true">5.1.</strong> 散列（哈希）</a></li><li class="chapter-item expanded "><a href="../cryptography/encryption.html"><strong aria-hidden="true">5.2.</strong> 加密</a></li></ol></li><li class="chapter-item expanded "><a href="../data_structures.html"><strong aria-hidden="true">6.</strong> 数据结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../data_structures/bitfield.html"><strong aria-hidden="true">6.1.</strong> 位域</a></li></ol></li><li class="chapter-item expanded "><a href="../database.html"><strong aria-hidden="true">7.</strong> 数据库</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../database/sqlite.html"><strong aria-hidden="true">7.1.</strong> SQLite</a></li><li class="chapter-item expanded "><a href="../database/postgres.html"><strong aria-hidden="true">7.2.</strong> Postgres</a></li></ol></li><li class="chapter-item expanded "><a href="../datetime.html"><strong aria-hidden="true">8.</strong> 日期及时间</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../datetime/duration.html"><strong aria-hidden="true">8.1.</strong> 期间和计算</a></li><li class="chapter-item expanded "><a href="../datetime/parse.html"><strong aria-hidden="true">8.2.</strong> 解析与显示</a></li></ol></li><li class="chapter-item expanded "><a href="../development_tools.html"><strong aria-hidden="true">9.</strong> 开发工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../development_tools/debugging.html"><strong aria-hidden="true">9.1.</strong> 调试工具</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../development_tools/debugging/log.html"><strong aria-hidden="true">9.1.1.</strong> 日志信息</a></li><li class="chapter-item expanded "><a href="../development_tools/debugging/config_log.html"><strong aria-hidden="true">9.1.2.</strong> 日志配置</a></li></ol></li><li class="chapter-item expanded "><a href="../development_tools/versioning.html"><strong aria-hidden="true">9.2.</strong> 版本控制</a></li><li class="chapter-item expanded "><a href="../development_tools/build_tools.html"><strong aria-hidden="true">9.3.</strong> 构建工具</a></li></ol></li><li class="chapter-item expanded "><a href="../encoding.html"><strong aria-hidden="true">10.</strong> 编码</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../encoding/strings.html"><strong aria-hidden="true">10.1.</strong> 字符集</a></li><li class="chapter-item expanded "><a href="../encoding/csv.html" class="active"><strong aria-hidden="true">10.2.</strong> CSV 处理</a></li><li class="chapter-item expanded "><a href="../encoding/complex.html"><strong aria-hidden="true">10.3.</strong> 结构化数据</a></li></ol></li><li class="chapter-item expanded "><a href="../errors.html"><strong aria-hidden="true">11.</strong> 错误处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../errors/handle.html"><strong aria-hidden="true">11.1.</strong> 处理错误变量</a></li></ol></li><li class="chapter-item expanded "><a href="../file.html"><strong aria-hidden="true">12.</strong> 文件系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../file/read-write.html"><strong aria-hidden="true">12.1.</strong> 文件读写</a></li><li class="chapter-item expanded "><a href="../file/dir.html"><strong aria-hidden="true">12.2.</strong> 目录遍历</a></li></ol></li><li class="chapter-item expanded "><a href="../hardware.html"><strong aria-hidden="true">13.</strong> 硬件支持</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../hardware/processor.html"><strong aria-hidden="true">13.1.</strong> 处理器</a></li></ol></li><li class="chapter-item expanded "><a href="../mem.html"><strong aria-hidden="true">14.</strong> 内存管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../mem/global_static.html"><strong aria-hidden="true">14.1.</strong> 全局静态/全局堆栈</a></li></ol></li><li class="chapter-item expanded "><a href="../net.html"><strong aria-hidden="true">15.</strong> 网络</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../net/server.html"><strong aria-hidden="true">15.1.</strong> 服务器</a></li></ol></li><li class="chapter-item expanded "><a href="../os.html"><strong aria-hidden="true">16.</strong> 操作系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../os/external.html"><strong aria-hidden="true">16.1.</strong> 外部命令</a></li></ol></li><li class="chapter-item expanded "><a href="../science.html"><strong aria-hidden="true">17.</strong> 科学计算</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../science/mathematics.html"><strong aria-hidden="true">17.1.</strong> 数学</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../science/mathematics/linear_algebra.html"><strong aria-hidden="true">17.1.1.</strong> 线性代数</a></li><li class="chapter-item expanded "><a href="../science/mathematics/trigonometry.html"><strong aria-hidden="true">17.1.2.</strong> 三角学</a></li><li class="chapter-item expanded "><a href="../science/mathematics/complex_numbers.html"><strong aria-hidden="true">17.1.3.</strong> 复数</a></li><li class="chapter-item expanded "><a href="../science/mathematics/statistics.html"><strong aria-hidden="true">17.1.4.</strong> 统计学</a></li><li class="chapter-item expanded "><a href="../science/mathematics/miscellaneous.html"><strong aria-hidden="true">17.1.5.</strong> 其它数学计算</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../text.html"><strong aria-hidden="true">18.</strong> 文本处理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../text/regex.html"><strong aria-hidden="true">18.1.</strong> 正则表达式</a></li><li class="chapter-item expanded "><a href="../text/string_parsing.html"><strong aria-hidden="true">18.2.</strong> 字符串解析</a></li></ol></li><li class="chapter-item expanded "><a href="../web.html"><strong aria-hidden="true">19.</strong> Web 编程</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../web/scraping.html"><strong aria-hidden="true">19.1.</strong> 提取链接</a></li><li class="chapter-item expanded "><a href="../web/url.html"><strong aria-hidden="true">19.2.</strong> URL</a></li><li class="chapter-item expanded "><a href="../web/mime.html"><strong aria-hidden="true">19.3.</strong> 媒介类型</a></li><li class="chapter-item expanded "><a href="../web/clients.html"><strong aria-hidden="true">19.4.</strong> 客户端</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../web/clients/requests.html"><strong aria-hidden="true">19.4.1.</strong> 请求处理</a></li><li class="chapter-item expanded "><a href="../web/clients/apis.html"><strong aria-hidden="true">19.4.2.</strong> Web API 调用</a></li><li class="chapter-item expanded "><a href="../web/clients/download.html"><strong aria-hidden="true">19.4.3.</strong> 下载</a></li><li class="spacer"></li></ol></li></ol></li></ol>
+
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <a href="https://budshome.com/books.html" target="_blank">
+                        <img src="../css/summary.jpg">
+                    </a>
+                </div>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust Cookbook 中文版 - A Rust Cookbook</h1>
+
+                    <div class="right-buttons">
+                        <a href="https://budshome.com/books.html" target="_blank" title="返回书馆" aria-label="返回书馆">
+                            <span>书馆</span>
+                        </a>
+                        
+                        <a href="https://github.com/zzy/rust-cookbook-zh-cn" target="_blank" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <script type="text/javascript" src="//static.budshome.com/js/bdutop.js"></script>
+                    
+                    <main>
+                        <h1><a class="header" href="#csv-处理" id="csv-处理">CSV 处理</a></h1>
+<!--
+> [encoding/csv.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv.md)
+> <br />
+> commit 97dabe59ae705bf6a2aaebbcd1d189ec2a83f98b - 2018.07.11
+-->
+<h2><a class="header" href="#读取-csv-记录" id="读取-csv-记录">读取 CSV 记录</a></h2>
+<!--
+> [encoding/csv/read.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv/read.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></p>
+<p>将标准的 CSV 记录读入 <a href="https://docs.rs/csv/*/csv/struct.StringRecord.html"><code>csv::StringRecord</code></a>——一种弱类型的数据表示方式，它需要 CSV 中的行数据是有效的 UTF-8 字符编码。另外，<a href="https://docs.rs/csv/*/csv/struct.ByteRecord.html"><code>csv::ByteRecord</code></a> 对 UTF-8 不做任何预设。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use csv::Error;
+
+fn main() -&gt; Result&lt;(), Error&gt; {
+    let csv = &quot;year,make,model,description
+		1948,Porsche,356,Luxury sports car
+		1967,Ford,Mustang fastback 1967,American car&quot;;
+
+    let mut reader = csv::Reader::from_reader(csv.as_bytes());
+    for record in reader.records() {
+        let record = record?;
+        println!(
+            &quot;In {}, {} built the {} model. It is a {}.&quot;,
+            &amp;record[0],
+            &amp;record[1],
+            &amp;record[2],
+            &amp;record[3]
+        );
+    }
+
+    Ok(())
+}
+</code></pre></pre>
+<p>Serde 将数据反序列化为强类型结构体。具体查阅 <a href="https://docs.rs/csv/*/csv/struct.Reader.html#method.deserialize"><code>csv::Reader::deserialize</code></a> 方法。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use serde::Deserialize;
+#[derive(Deserialize)]
+struct Record {
+    year: u16,
+    make: String,
+    model: String,
+    description: String,
+}
+
+fn main() -&gt; Result&lt;(), csv::Error&gt; {
+    let csv = &quot;year,make,model,description
+1948,Porsche,356,Luxury sports car
+1967,Ford,Mustang fastback 1967,American car&quot;;
+
+    let mut reader = csv::Reader::from_reader(csv.as_bytes());
+
+    for record in reader.deserialize() {
+        let record: Record = record?;
+        println!(
+            &quot;In {}, {} built the {} model. It is a {}.&quot;,
+            record.year,
+            record.make,
+            record.model,
+            record.description
+        );
+    }
+
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#读取有不同分隔符的-csv-记录" id="读取有不同分隔符的-csv-记录">读取有不同分隔符的 CSV 记录</a></h2>
+<!--
+> [encoding/csv/delimiter.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv/delimiter.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></p>
+<p>使用制表（tab）分隔符 <a href="https://docs.rs/csv/1.0.0-beta.3/csv/struct.ReaderBuilder.html#method.delimiter"><code>delimiter</code></a> 读取 CSV 记录。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use csv::Error;
+use serde::Deserialize;
+#[derive(Debug, Deserialize)]
+struct Record {
+    name: String,
+    place: String,
+    #[serde(deserialize_with = &quot;csv::invalid_option&quot;)]
+    id: Option&lt;u64&gt;,
+}
+
+use csv::ReaderBuilder;
+
+fn main() -&gt; Result&lt;(), Error&gt; {
+    let data = &quot;name\tplace\tid
+		Mark\tMelbourne\t46
+		Ashley\tZurich\t92&quot;;
+
+    let mut reader = ReaderBuilder::new().delimiter(b'\t').from_reader(data.as_bytes());
+    for result in reader.deserialize::&lt;Record&gt;() {
+        println!(&quot;{:?}&quot;, result?);
+    }
+
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#筛选匹配断言的-csv-记录" id="筛选匹配断言的-csv-记录">筛选匹配断言的 CSV 记录</a></h2>
+<!--
+> [encoding/csv/filter.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv/filter.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></p>
+<p><em>仅仅</em> 返回 <code>data</code> 中字段（field）与 <code>query</code> 匹配的的行。</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">use error_chain::error_chain;
+</span>
+use std::io;
+<span class="boring">
+</span><span class="boring">error_chain!{
+</span><span class="boring">    foreign_links {
+</span><span class="boring">        Io(std::io::Error);
+</span><span class="boring">        CsvError(csv::Error);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>
+fn main() -&gt; Result&lt;()&gt; {
+    let query = &quot;CA&quot;;
+    let data = &quot;\
+City,State,Population,Latitude,Longitude
+Kenai,AK,7610,60.5544444,-151.2583333
+Oakman,AL,,33.7133333,-87.3886111
+Sandfort,AL,,32.3380556,-85.2233333
+West Hollywood,CA,37031,34.0900000,-118.3608333&quot;;
+
+    let mut rdr = csv::ReaderBuilder::new().from_reader(data.as_bytes());
+    let mut wtr = csv::Writer::from_writer(io::stdout());
+
+    wtr.write_record(rdr.headers()?)?;
+
+    for result in rdr.records() {
+        let record = result?;
+        if record.iter().any(|field| field == query) {
+            wtr.write_record(&amp;record)?;
+        }
+    }
+
+    wtr.flush()?;
+    Ok(())
+}
+</code></pre></pre>
+<p><em>免责声明：此实例改编自<a href="https://docs.rs/csv/*/csv/tutorial/index.html#filter-by-search">csv crate 教程</a></em>。</p>
+<h2><a class="header" href="#用-serde-处理无效的-csv-数据" id="用-serde-处理无效的-csv-数据">用 Serde 处理无效的 CSV 数据</a></h2>
+<!--
+> [encoding/csv/invalid.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv/invalid.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></p>
+<p>CSV 文件通常包含无效数据。对于这些情形，<code>csv</code> crate 提供了一个自定义的反序列化程序 <a href="https://docs.rs/csv/*/csv/fn.invalid_option.html"><code>csv::invalid_option</code></a>，它自动将无效数据转换为 None 值。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use csv::Error;
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+struct Record {
+    name: String,
+    place: String,
+    #[serde(deserialize_with = &quot;csv::invalid_option&quot;)]
+    id: Option&lt;u64&gt;,
+}
+
+fn main() -&gt; Result&lt;(), Error&gt; {
+    let data = &quot;name,place,id
+mark,sydney,46.5
+ashley,zurich,92
+akshat,delhi,37
+alisha,colombo,xyz&quot;;
+
+    let mut rdr = csv::Reader::from_reader(data.as_bytes());
+    for result in rdr.deserialize() {
+        let record: Record = result?;
+        println!(&quot;{:?}&quot;, record);
+    }
+
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#将记录序列化为-csv" id="将记录序列化为-csv">将记录序列化为 CSV</a></h2>
+<!--
+> [encoding/csv/serialize.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv/serialize.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></p>
+<p>本实例展示了如何序列化 Rust 元组。<a href="https://docs.rs/csv/*/csv/struct.Writer.html"><code>csv::writer</code></a> 支持从 Rust 类型到 CSV 记录的自动序列化。<a href="https://docs.rs/csv/*/csv/struct.Writer.html#method.write_record"><code>write_record</code></a> 只写入包含字符串数据的简单记录。具有更复杂值（如数字、浮点和选项）的数据使用 <a href="https://docs.rs/csv/*/csv/struct.Writer.html#method.serialize"><code>serialize</code></a> 进行序列化。因为 <a href="https://docs.rs/csv/*/csv/struct.Writer.html"><code>csv::writer</code></a> 使用内部缓冲区，所以在完成时总是显式刷新 <a href="https://docs.rs/csv/*/csv/struct.Writer.html#method.flush"><code>flush</code></a>。</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">use error_chain::error_chain;
+</span>
+use std::io;
+<span class="boring">
+</span><span class="boring">error_chain! {
+</span><span class="boring">    foreign_links {
+</span><span class="boring">        CSVError(csv::Error);
+</span><span class="boring">        IOError(std::io::Error);
+</span><span class="boring">   }
+</span><span class="boring">}
+</span>
+fn main() -&gt; Result&lt;()&gt; {
+    let mut wtr = csv::Writer::from_writer(io::stdout());
+
+    wtr.write_record(&amp;[&quot;Name&quot;, &quot;Place&quot;, &quot;ID&quot;])?;
+
+    wtr.serialize((&quot;Mark&quot;, &quot;Sydney&quot;, 87))?;
+    wtr.serialize((&quot;Ashley&quot;, &quot;Dublin&quot;, 32))?;
+    wtr.serialize((&quot;Akshat&quot;, &quot;Delhi&quot;, 11))?;
+
+    wtr.flush()?;
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#用-serde-将记录序列化为-csv" id="用-serde-将记录序列化为-csv">用 Serde 将记录序列化为 CSV</a></h2>
+<!--
+> [encoding/csv/serde-serialize.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv/serde-serialize.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></p>
+<p>下面的实例展示如何使用 <a href="https://docs.rs/serde/">serde</a> crate 将自定义结构体序列化为 CSV 记录。</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">use error_chain::error_chain;
+</span>use serde::Serialize;
+use std::io;
+<span class="boring">
+</span><span class="boring">error_chain! {
+</span><span class="boring">   foreign_links {
+</span><span class="boring">       IOError(std::io::Error);
+</span><span class="boring">       CSVError(csv::Error);
+</span><span class="boring">   }
+</span><span class="boring">}
+</span>
+#[derive(Serialize)]
+struct Record&lt;'a&gt; {
+    name: &amp;'a str,
+    place: &amp;'a str,
+    id: u64,
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    let mut wtr = csv::Writer::from_writer(io::stdout());
+
+    let rec1 = Record { name: &quot;Mark&quot;, place: &quot;Melbourne&quot;, id: 56};
+    let rec2 = Record { name: &quot;Ashley&quot;, place: &quot;Sydney&quot;, id: 64};
+    let rec3 = Record { name: &quot;Akshat&quot;, place: &quot;Delhi&quot;, id: 98};
+
+    wtr.serialize(rec1)?;
+    wtr.serialize(rec2)?;
+    wtr.serialize(rec3)?;
+
+    wtr.flush()?;
+
+    Ok(())
+}
+</code></pre></pre>
+<h2><a class="header" href="#转换-csv-文件的列" id="转换-csv-文件的列">转换 CSV 文件的列</a></h2>
+<!--
+> [encoding/csv/transform.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/encoding/csv/transform.md)
+> <br />
+> commit b61c8e588ad8445de36cd5f28e99232b5f858a41 - 2020.06.01
+-->
+<p><a href="https://docs.rs/csv/"><img src="https://badge-cache.kominick.com/crates/v/csv.svg?label=csv" alt="csv-badge" /></a> <a href="https://docs.rs/serde/"><img src="https://badge-cache.kominick.com/crates/v/serde.svg?label=serde" alt="serde-badge" /></a> <a href="https://crates.io/categories/encoding"><img src="https://badge-cache.kominick.com/badge/encoding--x.svg?style=social" alt="cat-encoding-badge" /></a></p>
+<p>将包含颜色名称和十六进制颜色值的 CSV 文件转换为具有颜色名称和 rgb 颜色值的 CSV 文件。使用 <a href="https://docs.rs/csv/">csv</a> crate 读写 csv 文件，使用 <a href="https://docs.rs/serde/">serde</a> crate 对行输入字节进行反序列化，对行输出字节进行序列化。</p>
+<p>详细请参阅 <a href="https://docs.rs/csv/*/csv/struct.Reader.html#method.deserialize"><code>csv::Reader::deserialize</code></a>、<a href="https://docs.rs/serde/*/serde/trait.Deserialize.html"><code>serde::Deserialize</code></a>，以及 <a href="https://doc.rust-lang.org/std/str/trait.FromStr.html"><code>std::str::FromStr</code></a>。</p>
+<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">use error_chain::error_chain;
+</span>use csv::{Reader, Writer};
+use serde::{de, Deserialize, Deserializer};
+use std::str::FromStr;
+<span class="boring">
+</span><span class="boring">error_chain! {
+</span><span class="boring">   foreign_links {
+</span><span class="boring">       CsvError(csv::Error);
+</span><span class="boring">       ParseInt(std::num::ParseIntError);
+</span><span class="boring">       CsvInnerError(csv::IntoInnerError&lt;Writer&lt;Vec&lt;u8&gt;&gt;&gt;);
+</span><span class="boring">       IO(std::fmt::Error);
+</span><span class="boring">       UTF8(std::string::FromUtf8Error);
+</span><span class="boring">   }
+</span><span class="boring">}
+</span>
+#[derive(Debug)]
+struct HexColor {
+    red: u8,
+    green: u8,
+    blue: u8,
+}
+
+#[derive(Debug, Deserialize)]
+struct Row {
+    color_name: String,
+    color: HexColor,
+}
+
+impl FromStr for HexColor {
+    type Err = Error;
+
+    fn from_str(hex_color: &amp;str) -&gt; std::result::Result&lt;Self, Self::Err&gt; {
+        let trimmed = hex_color.trim_matches('#');
+        if trimmed.len() != 6 {
+            Err(&quot;Invalid length of hex string&quot;.into())
+        } else {
+            Ok(HexColor {
+                red: u8::from_str_radix(&amp;trimmed[..2], 16)?,
+                green: u8::from_str_radix(&amp;trimmed[2..4], 16)?,
+                blue: u8::from_str_radix(&amp;trimmed[4..6], 16)?,
+            })
+        }
+    }
+}
+
+impl&lt;'de&gt; Deserialize&lt;'de&gt; for HexColor {
+    fn deserialize&lt;D&gt;(deserializer: D) -&gt; std::result::Result&lt;Self, D::Error&gt;
+    where
+        D: Deserializer&lt;'de&gt;,
+    {
+        let s = String::deserialize(deserializer)?;
+        FromStr::from_str(&amp;s).map_err(de::Error::custom)
+    }
+}
+
+fn main() -&gt; Result&lt;()&gt; {
+    let data = &quot;color_name,color
+red,#ff0000
+green,#00ff00
+blue,#0000FF
+periwinkle,#ccccff
+magenta,#ff00ff&quot;
+        .to_owned();
+    let mut out = Writer::from_writer(vec![]);
+    let mut reader = Reader::from_reader(data.as_bytes());
+    for result in reader.deserialize::&lt;Row&gt;() {
+        let res = result?;
+        out.serialize((
+            res.color_name,
+            res.color.red,
+            res.color.green,
+            res.color.blue,
+        ))?;
+    }
+    let written = String::from_utf8(out.into_inner()?)?;
+    assert_eq!(Some(&quot;magenta,255,0,255&quot;), written.lines().last());
+    println!(&quot;{}&quot;, written);
+    Ok(())
+}
+</code></pre></pre>
+<!--
+> [links.md](https://github.com/rust-lang-nursery/rust-cookbook/blob/master/src/links.md)
+> <br />
+> commit - 7a06c79008f3998fc03d23c56aee885ddcf366ac - 2020.05.05
+-->
+<!--
+Links, in a few categories. Follow the existing structure.
+Keep lines sorted.
+-->
+<!-- Categories -->
+<!-- Crates -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../encoding/strings.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../encoding/complex.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+
+                    <script type="text/javascript" src="//static.budshome.com/js/bdubottom.js"></script>
+
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../encoding/strings.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../encoding/complex.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+        <script src="../ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../editor.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mode-rust.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+        <script type="text/javascript" src="//static.budshome.com/js/bdtj-bh.js"></script>
+        <script type="text/javascript" src="//static.budshome.com/js/bdts.js"></script>
+    </body>
+</html>

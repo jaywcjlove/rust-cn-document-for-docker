@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>术语表 - Rust 参考手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 参考手册是 Rust 官方编写的 Rust 语言规范手册，由于语言还在快速迭代当中，所以本手册的内容还未固定下来。但这是一本学习和了解 Rust 全面的语言特性必不可少的书籍。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/reference.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="notation.html"><strong aria-hidden="true">1.</strong> 表义符</a></li><li class="chapter-item expanded "><a href="lexical-structure.html"><strong aria-hidden="true">2.</strong> 词法结构</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="input-format.html"><strong aria-hidden="true">2.1.</strong> 输入格式</a></li><li class="chapter-item expanded "><a href="keywords.html"><strong aria-hidden="true">2.2.</strong> 关键字</a></li><li class="chapter-item expanded "><a href="identifiers.html"><strong aria-hidden="true">2.3.</strong> 标识符</a></li><li class="chapter-item expanded "><a href="comments.html"><strong aria-hidden="true">2.4.</strong> 注释</a></li><li class="chapter-item expanded "><a href="whitespace.html"><strong aria-hidden="true">2.5.</strong> 空白符</a></li><li class="chapter-item expanded "><a href="tokens.html"><strong aria-hidden="true">2.6.</strong> token</a></li></ol></li><li class="chapter-item expanded "><a href="macros.html"><strong aria-hidden="true">3.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macros-by-example.html"><strong aria-hidden="true">3.1.</strong> 声明宏</a></li><li class="chapter-item expanded "><a href="procedural-macros.html"><strong aria-hidden="true">3.2.</strong> 过程宏</a></li></ol></li><li class="chapter-item expanded "><a href="crates-and-source-files.html"><strong aria-hidden="true">4.</strong> crate 和源文件</a></li><li class="chapter-item expanded "><a href="conditional-compilation.html"><strong aria-hidden="true">5.</strong> 条件编译</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">6.</strong> 程序项</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="items/modules.html"><strong aria-hidden="true">6.1.</strong> 模块</a></li><li class="chapter-item expanded "><a href="items/extern-crates.html"><strong aria-hidden="true">6.2.</strong> 外部crate</a></li><li class="chapter-item expanded "><a href="items/use-declarations.html"><strong aria-hidden="true">6.3.</strong> use声明</a></li><li class="chapter-item expanded "><a href="items/functions.html"><strong aria-hidden="true">6.4.</strong> 函数</a></li><li class="chapter-item expanded "><a href="items/type-aliases.html"><strong aria-hidden="true">6.5.</strong> 类型别名</a></li><li class="chapter-item expanded "><a href="items/structs.html"><strong aria-hidden="true">6.6.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="items/enumerations.html"><strong aria-hidden="true">6.7.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="items/unions.html"><strong aria-hidden="true">6.8.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="items/constant-items.html"><strong aria-hidden="true">6.9.</strong> 常量项</a></li><li class="chapter-item expanded "><a href="items/static-items.html"><strong aria-hidden="true">6.10.</strong> 静态项</a></li><li class="chapter-item expanded "><a href="items/traits.html"><strong aria-hidden="true">6.11.</strong> trait</a></li><li class="chapter-item expanded "><a href="items/implementations.html"><strong aria-hidden="true">6.12.</strong> 实现</a></li><li class="chapter-item expanded "><a href="items/external-blocks.html"><strong aria-hidden="true">6.13.</strong> 外部块</a></li><li class="chapter-item expanded "><a href="items/generics.html"><strong aria-hidden="true">6.14.</strong> 泛型参数</a></li><li class="chapter-item expanded "><a href="items/associated-items.html"><strong aria-hidden="true">6.15.</strong> 关联程序项</a></li></ol></li><li class="chapter-item expanded "><a href="attributes.html"><strong aria-hidden="true">7.</strong> 属性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="attributes/testing.html"><strong aria-hidden="true">7.1.</strong> 测试</a></li><li class="chapter-item expanded "><a href="attributes/derive.html"><strong aria-hidden="true">7.2.</strong> 派生</a></li><li class="chapter-item expanded "><a href="attributes/diagnostics.html"><strong aria-hidden="true">7.3.</strong> 诊断</a></li><li class="chapter-item expanded "><a href="attributes/codegen.html"><strong aria-hidden="true">7.4.</strong> 代码生成</a></li><li class="chapter-item expanded "><a href="attributes/limits.html"><strong aria-hidden="true">7.5.</strong> 极限值设置</a></li><li class="chapter-item expanded "><a href="attributes/type_system.html"><strong aria-hidden="true">7.6.</strong> 类型系统</a></li></ol></li><li class="chapter-item expanded "><a href="statements-and-expressions.html"><strong aria-hidden="true">8.</strong> 语句和表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">8.1.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">8.2.</strong> 表达式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="expressions/literal-expr.html"><strong aria-hidden="true">8.2.1.</strong> 字面量表达式</a></li><li class="chapter-item expanded "><a href="expressions/path-expr.html"><strong aria-hidden="true">8.2.2.</strong> 路径表达式</a></li><li class="chapter-item expanded "><a href="expressions/block-expr.html"><strong aria-hidden="true">8.2.3.</strong> 块表达式</a></li><li class="chapter-item expanded "><a href="expressions/operator-expr.html"><strong aria-hidden="true">8.2.4.</strong> 运算符表达式</a></li><li class="chapter-item expanded "><a href="expressions/grouped-expr.html"><strong aria-hidden="true">8.2.5.</strong> 分组表达式</a></li><li class="chapter-item expanded "><a href="expressions/array-expr.html"><strong aria-hidden="true">8.2.6.</strong> 数组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/tuple-expr.html"><strong aria-hidden="true">8.2.7.</strong> 元组和索引表达式</a></li><li class="chapter-item expanded "><a href="expressions/struct-expr.html"><strong aria-hidden="true">8.2.8.</strong> 结构体表达式</a></li><li class="chapter-item expanded "><a href="expressions/call-expr.html"><strong aria-hidden="true">8.2.9.</strong> 调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/method-call-expr.html"><strong aria-hidden="true">8.2.10.</strong> 方法调用表达式</a></li><li class="chapter-item expanded "><a href="expressions/field-expr.html"><strong aria-hidden="true">8.2.11.</strong> 字段访问表达式</a></li><li class="chapter-item expanded "><a href="expressions/closure-expr.html"><strong aria-hidden="true">8.2.12.</strong> 闭包表达式</a></li><li class="chapter-item expanded "><a href="expressions/loop-expr.html"><strong aria-hidden="true">8.2.13.</strong> 循环表达式</a></li><li class="chapter-item expanded "><a href="expressions/range-expr.html"><strong aria-hidden="true">8.2.14.</strong> 区间表达式</a></li><li class="chapter-item expanded "><a href="expressions/if-expr.html"><strong aria-hidden="true">8.2.15.</strong> if 和 if let 表达式</a></li><li class="chapter-item expanded "><a href="expressions/match-expr.html"><strong aria-hidden="true">8.2.16.</strong> 匹配表达式</a></li><li class="chapter-item expanded "><a href="expressions/return-expr.html"><strong aria-hidden="true">8.2.17.</strong> 返回表达式</a></li><li class="chapter-item expanded "><a href="expressions/await-expr.html"><strong aria-hidden="true">8.2.18.</strong> 等待(await)表达式</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="patterns.html"><strong aria-hidden="true">9.</strong> 模式</a></li><li class="chapter-item expanded "><a href="type-system.html"><strong aria-hidden="true">10.</strong> 类型系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">10.1.</strong> 类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="types/boolean.html"><strong aria-hidden="true">10.1.1.</strong> 布尔型</a></li><li class="chapter-item expanded "><a href="types/numeric.html"><strong aria-hidden="true">10.1.2.</strong> 数字型</a></li><li class="chapter-item expanded "><a href="types/textual.html"><strong aria-hidden="true">10.1.3.</strong> 字符型</a></li><li class="chapter-item expanded "><a href="types/never.html"><strong aria-hidden="true">10.1.4.</strong> never类型</a></li><li class="chapter-item expanded "><a href="types/tuple.html"><strong aria-hidden="true">10.1.5.</strong> 元组</a></li><li class="chapter-item expanded "><a href="types/array.html"><strong aria-hidden="true">10.1.6.</strong> 数组</a></li><li class="chapter-item expanded "><a href="types/slice.html"><strong aria-hidden="true">10.1.7.</strong> 切片</a></li><li class="chapter-item expanded "><a href="types/struct.html"><strong aria-hidden="true">10.1.8.</strong> 结构体</a></li><li class="chapter-item expanded "><a href="types/enum.html"><strong aria-hidden="true">10.1.9.</strong> 枚举</a></li><li class="chapter-item expanded "><a href="types/union.html"><strong aria-hidden="true">10.1.10.</strong> 联合体</a></li><li class="chapter-item expanded "><a href="types/function-item.html"><strong aria-hidden="true">10.1.11.</strong> 函数项类型</a></li><li class="chapter-item expanded "><a href="types/closure.html"><strong aria-hidden="true">10.1.12.</strong> 闭包</a></li><li class="chapter-item expanded "><a href="types/pointer.html"><strong aria-hidden="true">10.1.13.</strong> 指针型</a></li><li class="chapter-item expanded "><a href="types/function-pointer.html"><strong aria-hidden="true">10.1.14.</strong> 函数指针</a></li><li class="chapter-item expanded "><a href="types/trait-object.html"><strong aria-hidden="true">10.1.15.</strong> trait对象</a></li><li class="chapter-item expanded "><a href="types/impl-trait.html"><strong aria-hidden="true">10.1.16.</strong> 实现trait</a></li><li class="chapter-item expanded "><a href="types/parameters.html"><strong aria-hidden="true">10.1.17.</strong> 类型参数</a></li><li class="chapter-item expanded "><a href="types/inferred.html"><strong aria-hidden="true">10.1.18.</strong> 推断型</a></li></ol></li><li class="chapter-item expanded "><a href="dynamically-sized-types.html"><strong aria-hidden="true">10.2.</strong> 动态尺寸类型(DST)</a></li><li class="chapter-item expanded "><a href="type-layout.html"><strong aria-hidden="true">10.3.</strong> 类型布局 </a></li><li class="chapter-item expanded "><a href="interior-mutability.html"><strong aria-hidden="true">10.4.</strong> 内部可变性</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">10.5.</strong> 子类型和型变</a></li><li class="chapter-item expanded "><a href="trait-bounds.html"><strong aria-hidden="true">10.6.</strong> trait约束及其生存期约束</a></li><li class="chapter-item expanded "><a href="type-coercions.html"><strong aria-hidden="true">10.7.</strong> 类型自动强转</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">10.8.</strong> 析构函数</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">10.9.</strong> 生存期省略</a></li></ol></li><li class="chapter-item expanded "><a href="special-types-and-traits.html"><strong aria-hidden="true">11.</strong> 特殊类型和 trait</a></li><li class="chapter-item expanded "><a href="names.html"><strong aria-hidden="true">12.</strong> 名称</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="names/namespaces.html"><strong aria-hidden="true">12.1.</strong> 命名空间</a></li><li class="chapter-item expanded "><a href="names/scopes.html"><strong aria-hidden="true">12.2.</strong> 作用域</a></li><li class="chapter-item expanded "><a href="names/preludes.html"><strong aria-hidden="true">12.3.</strong> 预导入包</a></li><li class="chapter-item expanded "><a href="paths.html"><strong aria-hidden="true">12.4.</strong> 路径</a></li><li class="chapter-item expanded "><a href="names/name-resolution.html"><strong aria-hidden="true">12.5.</strong> 名称解析</a></li><li class="chapter-item expanded "><a href="visibility-and-privacy.html"><strong aria-hidden="true">12.6.</strong> 可见性与隐私权</a></li></ol></li><li class="chapter-item expanded "><a href="memory-model.html"><strong aria-hidden="true">13.</strong> 内存模型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory-allocation-and-lifetime.html"><strong aria-hidden="true">13.1.</strong> 内存分配和生存期</a></li><li class="chapter-item expanded "><a href="variables.html"><strong aria-hidden="true">13.2.</strong> 变量</a></li></ol></li><li class="chapter-item expanded "><a href="linkage.html"><strong aria-hidden="true">14.</strong> 链接(linkage)</a></li><li class="chapter-item expanded "><a href="unsafety.html"><strong aria-hidden="true">15.</strong> 非安全性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="unsafe-functions.html"><strong aria-hidden="true">15.1.</strong> 非安全函数</a></li><li class="chapter-item expanded "><a href="unsafe-blocks.html"><strong aria-hidden="true">15.2.</strong> 非安全代码块</a></li><li class="chapter-item expanded "><a href="behavior-considered-undefined.html"><strong aria-hidden="true">15.3.</strong> 未定义行为</a></li><li class="chapter-item expanded "><a href="behavior-not-considered-unsafe.html"><strong aria-hidden="true">15.4.</strong> 不被认为是非安全的行为</a></li></ol></li><li class="chapter-item expanded "><a href="const_eval.html"><strong aria-hidden="true">16.</strong> 常量求值</a></li><li class="chapter-item expanded "><a href="abi.html"><strong aria-hidden="true">17.</strong> ABI</a></li><li class="chapter-item expanded "><a href="runtime.html"><strong aria-hidden="true">18.</strong> Rust运行时</a></li><li class="chapter-item expanded "><a href="appendices.html"><strong aria-hidden="true">19.</strong> 附录</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="macro-ambiguity.html"><strong aria-hidden="true">19.1.</strong> 宏定义规范</a></li><li class="chapter-item expanded "><a href="influences.html"><strong aria-hidden="true">19.2.</strong> 影响来源</a></li><li class="chapter-item expanded "><a href="glossary.html" class="active"><strong aria-hidden="true">19.3.</strong> 术语表</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 参考手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/reference-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#术语表" id="术语表">术语表</a></h1>
+<blockquote>
+<p><a href="https://github.com/rust-lang/reference/blob/master/src/glossary.md">glossary.md</a><br />
+commit: c28dfe483375849678793dbe86c69a1953f3bb00 <br />
+本章译文最后维护日期：2021-02-21</p>
+</blockquote>
+<h3><a class="header" href="#抽象句法树" id="抽象句法树">抽象句法树</a></h3>
+<p>“抽象句法树”，或“AST”，是编译器编译程序时，程序结构的中间表示形式。<br />
+An ‘abstract syntax tree’, or ‘AST’, is an intermediate representation of the structure of the program when the compiler is compiling it.</p>
+<h3><a class="header" href="#对齐量" id="对齐量">对齐量</a></h3>
+<p>值的对齐量指定值的首选起始存储地址。对齐量总是2的幂次。值的引用必须是对齐的。<a href="type-layout.html#size-and-alignment">更多</a>。<br />
+The alignment of a value specifies what addresses values are preferred to start at. Always a power of two. References to a value must be aligned. <a href="type-layout.html#size-and-alignment">More</a>.</p>
+<h3><a class="header" href="#元数" id="元数">元数</a></h3>
+<p>元数是指函数或运算符接受的参数个数。例如，<code>f(2, 3)</code> 和 <code>g(4, 6)</code> 的元数为2，而 <code>h(8, 2, 6)</code> 的元数为3。 <code>!</code> 运算符的元数为1。<br />
+Arity refers to the number of arguments a function or operator takes. For some examples, <code>f(2, 3)</code> and <code>g(4, 6)</code> have arity 2, while <code>h(8, 2, 6)</code> has arity 3. The <code>!</code> operator has arity 1.</p>
+<h3><a class="header" href="#数组" id="数组">数组</a></h3>
+<p>数组，有时也称为固定大小数组或内联数组，是描述关于元素集合的值，每个元素都可由程序在运行时计算的索引选择。内存模型上，数组占用连续的内存区域。<br />
+An array, sometimes also called a fixed-size array or an inline array, is a value describing a collection of elements, each selected by an index that can be computed at run time by the program. It occupies a contiguous region of memory.</p>
+<h3><a class="header" href="#关联程序项关联项" id="关联程序项关联项">关联程序项/关联项</a></h3>
+<p>关联程序项是与另一个程序项关联的程序项。关联程序项在 <a href="items/traits.html">trait</a> 中声明，在<a href="items/implementations.html">实现</a>中定义。只有函数、常量和类型别名可以作为关联程序项。它与<a href="#free-item">自由程序项</a>形成对比。<br />
+An associated item is an item that is associated with another item. Associated items are defined in <a href="items/implementations.html">implementations</a> and declared in <a href="items/traits.html">traits</a>. Only functions, constants, and type aliases can be associated. Contrast to a <a href="#free-item">free item</a>.</p>
+<h3><a class="header" href="#blanket实现" id="blanket实现">blanket实现</a></h3>
+<p>指为<a href="#uncovered-type">无覆盖类型</a>实现的任何实现。<code>impl&lt;T&gt; Foo for T</code>、<code>impl&lt;T&gt; Bar&lt;T&gt; for T</code>、<code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for T</code>、 和 <code>impl&lt;T&gt; Bar&lt;T&gt; for Vec&lt;T&gt;</code> 被认为是 blanket实现。但是，<code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for Vec&lt;T&gt;</code> 不被认为是，因为这个 <code>impl</code> 中所有的 <code>T</code> 的实例都被 <code>Vec</code> 覆盖。<br />
+Any implementation where a type appears <a href="#uncovered-type">uncovered</a>. <code>impl&lt;T&gt; Foo for T</code>, <code>impl&lt;T&gt; Bar&lt;T&gt; for T</code>, <code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for T</code>, and <code>impl&lt;T&gt; Bar&lt;T&gt; for Vec&lt;T&gt;</code> are considered blanket impls. However, <code>impl&lt;T&gt; Bar&lt;Vec&lt;T&gt;&gt; for Vec&lt;T&gt;</code> is not a blanket impl, as all instances of <code>T</code> which appear in this <code>impl</code> are covered by <code>Vec</code>.</p>
+<h3><a class="header" href="#约束" id="约束">约束</a></h3>
+<p>约束是对类型或 trait 的限制。例如，如果在函数的形数上设置了约束，则传递给该函数的实参的类型必须遵守该约束。<br />
+Bounds are constraints on a type or trait. For example, if a bound is placed on the argument a function takes, types passed to that function must abide by that constraint.</p>
+<h3><a class="header" href="#组合算子" id="组合算子">组合算子</a></h3>
+<p>组合子是高阶函数，它的参数全是函数或之前定义的组合子。组合子利用这些函数或组合子返回的结果作为入参进行进一步的逻辑计算和输出。组合子可用于以模块化的方式管理控制流。<br />
+Combinators are higher-order functions that apply only functions and earlier defined combinators to provide a result from its arguments. They can be used to manage control flow in a modular fashion.</p>
+<h3><a class="header" href="#分发" id="分发">分发</a></h3>
+<p>分发是一种机制，用于确定涉及到多态性时实际运行的是哪个版本的代码。分发的两种主要形式是静态分发和动态分发。虽然 Rust 支持静态分发，但它也通过一种称为 trait对象的机制支持动态分发。<br />
+Dispatch is the mechanism to determine which specific version of code is actually run when it involves polymorphism. Two major forms of dispatch are static dispatch and dynamic dispatch. While Rust favors static dispatch, it also supports dynamic dispatch through a mechanism called ‘trait objects’.</p>
+<h3><a class="header" href="#动态尺寸类型" id="动态尺寸类型">动态尺寸类型</a></h3>
+<p>动态尺寸类型(DST)是一种没有静态已知尺寸或对齐量的类型。<br />
+A dynamically sized type (DST) is a type without a statically known size or alignment.</p>
+<h3><a class="header" href="#实体" id="实体">实体</a></h3>
+<p><a href="names.html"><em>实体(entity)</em></a>是一种语言结构，在源程序中可以以某种方式被引用，通常是通过<a href="paths.html">路径(path)</a>。实体包括<a href="types.html">类型</a>、<a href="items.html">程序项</a>、<a href="items/generics.html">泛型参数</a>、<a href="patterns.html">变量绑定</a>、<a href="tokens.html#lifetimes-and-loop-labels">循环标签</a>、<a href="tokens.html#lifetimes-and-loop-labels">生存期</a>、<a href="expressions/field-expr.html">字段</a>、<a href="attributes.html">属性</a>和<a href="attributes/diagnostics.html#lint-check-attributes">lints</a>。<br />
+An <a href="names.html"><em>entity</em></a> is a language construct that can be referred to in some way within the source program, usually via a <a href="paths.html">path</a>. Entities include <a href="types.html">types</a>, <a href="items.html">items</a>, <a href="items/generics.html">generic parameters</a>, <a href="patterns.html">variable bindings</a>, <a href="tokens.html#lifetimes-and-loop-labels">loop labels</a>, <a href="tokens.html#lifetimes-and-loop-labels">lifetimes</a>, <a href="expressions/field-expr.html">fields</a>, <a href="attributes.html">attributes</a>, and <a href="attributes/diagnostics.html#lint-check-attributes">lints</a>.</p>
+<h3><a class="header" href="#表达式" id="表达式">表达式</a></h3>
+<p>表达式是值、常量、变量、运算符/操作符和函数的组合，计算/求值结果为单个值，有或没有副作用都有可能。<br />
+比如，<code>2 + (3 * 4)</code> 是一个返回值为14的表达式。<br />
+An expression is a combination of values, constants, variables, operators and functions that evaluate to a single value, with or without side-effects.<br />
+For example, <code>2 + (3 * 4)</code> is an expression that returns the value 14.</p>
+<h3><a class="header" href="#自由程序项" id="自由程序项">自由程序项</a></h3>
+<p>不是任何<a href="items/implementations.html">实现</a>的成员的<a href="items.html">程序项</a>，如<em>自由函数</em>或<em>自由常量</em>。自由程序项是与<a href="#associated-item">关联程序项</a>相对的概念。<br />
+An <a href="items.html">item</a> that is not a member of an <a href="items/implementations.html">implementation</a>, such as a <em>free function</em> or a <em>free const</em>. Contrast to an <a href="#associated-item">associated item</a>.</p>
+<h3><a class="header" href="#基础性trait" id="基础性trait">基础性trait</a></h3>
+<p>基础性trait 就是如果为现有的类型实现它，就会为该类型带来突破性改变的 trait。比如 <code>Fn</code> 和 <code>Sized</code> 就是基础性trait。<br />
+A fundamental trait is one where adding an impl of it for an existing type is a breaking change. The <code>Fn</code> traits and <code>Sized</code> are fundamental.</p>
+<h3><a class="header" href="#基本类型构造器" id="基本类型构造器">基本类型构造器</a></h3>
+<p>基本类型构造器是这样一种类型，在它之上实现一个 <a href="#blanket-implementation">blanket实现</a>是一个突破性的改变。<code>&amp;</code>、<code>&amp;mut</code>、<code>Box</code>、和 <code>Pin</code> 是基本类型构造器。<br />
+如果任何时候 <code>T</code> 都被认为是<a href="#local-type">本地类型</a>，那 <code>&amp;T</code>、<code>&amp;mut T</code>、<code>Box&lt;T&gt;</code>、和 <code>Pin&lt;T&gt;</code> 也被认为是本地类型。基本类型构造器不能<a href="#uncovered-type">覆盖</a>其他类型。任何时候使用术语“有覆盖类型”时，都默认把<code>&amp;T</code>、<code>&amp;mut T</code>、<code>Box&lt;T&gt;</code>、和<code>Pin&lt;T&gt;</code> 排除在外。<br />
+A fundamental type constructor is a type where implementing a <a href="#blanket-implementation">blanket implementation</a> over it is a breaking change. <code>&amp;</code>, <code>&amp;mut</code>, <code>Box</code>, and <code>Pin</code>  are fundamental. <br />
+Any time a type <code>T</code> is considered <a href="#local-type">local</a>, <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> are also considered local. Fundamental type constructors cannot <a href="#uncovered-type">cover</a> other types. Any time the term &quot;covered type&quot; is used, the <code>T</code> in <code>&amp;T</code>, <code>&amp;mut T</code>, <code>Box&lt;T&gt;</code>, and <code>Pin&lt;T&gt;</code> is not considered covered.</p>
+<h3><a class="header" href="#inhabited" id="inhabited">Inhabited</a></h3>
+<p>如果类型具有构造函数，因此可以实例化，则该类型是 inhabited。inhabited 类型不是“空的”，因为可以有类型对应的值。与之相对的是 <a href="#uninhabited">Uninhabited</a>。<br />
+A type is inhabited if it has constructors and therefore can be instantiated. An inhabited type is not &quot;empty&quot; in the sense that there can be values of the type. Opposite of <a href="#uninhabited">Uninhabited</a>.</p>
+<h3><a class="header" href="#固有实现" id="固有实现">固有实现</a></h3>
+<p>单独标称类型上的<a href="items/implementations.html">实现</a> ，注意关键字 <code>impl</code> 后直接是标称类型，而非 trait-标称类型对(trait-type pair)上的实现。<a href="items/implementations.html#inherent-implementations">更多</a>。 <br />
+An <a href="items/implementations.html">implementation</a> that applies to a nominal type, not to a trait-type pair. <a href="items/implementations.html#inherent-implementations">More</a>.</p>
+<h3><a class="header" href="#固有方法" id="固有方法">固有方法</a></h3>
+<p>在<a href="items/implementations.html#inherent-implementations">固有实现</a>中而不是在 trait实现中定义的<a href="items/associated-items.html#methods">方法</a>。<br />
+A <a href="items/associated-items.html#methods">method</a> defined in an <a href="items/implementations.html#inherent-implementations">inherent implementation</a>, not in a trait implementation.</p>
+<h3><a class="header" href="#初始化" id="初始化">初始化</a></h3>
+<p>如果一个变量已经被分配了一个值，并且此值还没有被移动走，那此变量就被初始化了。对此变量而言，它会假设它之外的所有其他内存位置都未初始化。只有非安全Rust 可以在不初始化的情况下开辟内存新区域。<br />
+A variable is initialized if it has been assigned a value and hasn't since been moved from. All other memory locations are assumed to be uninitialized. Only unsafe Rust can create such a memory without initializing it.</p>
+<h3><a class="header" href="#本地-trait" id="本地-trait">本地 trait</a></h3>
+<p>本地 trait 是在当前 crate 中定义的 <code>trait</code>。它可以在模块局部定义，也可以是依附于其他类型参数而定义。给定 <code>trait Foo&lt;T, U&gt;</code>，<code>Foo</code> 总是本地的，不管替代 <code>T</code> 和 <code>U</code> 的类型是什么。<br />
+A <code>trait</code> which was defined in the current crate. A trait definition is local or not independent of applied type arguments. Given <code>trait Foo&lt;T, U&gt;</code>, <code>Foo</code> is always local, regardless of the types substituted for <code>T</code> and <code>U</code>.</p>
+<h3><a class="header" href="#turbofish" id="turbofish">Turbofish</a></h3>
+<p>表达式中带有泛型参数的路径必须在左尖括号前加上一个 <code>::</code>。
+这种为表达泛型而结合起来形式（<code>::&lt;&gt;</code>）看起来有些像一条鱼。
+因此，在口头上就被称为 turbofish句法。<br />
+Paths with generic parameters in expressions must prefix the opening brackets with a <code>::</code>.
+Combined with the angular brackets for generics, this looks like a fish <code>::&lt;&gt;</code>.
+As such, this syntax is colloquially referred to as turbofish syntax.</p>
+<p>例如：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let ok_num = Ok::&lt;_, ()&gt;(5);
+let vec = [1, 2, 3].iter().map(|n| n * 2).collect::&lt;Vec&lt;_&gt;&gt;();
+<span class="boring">}
+</span></code></pre></pre>
+<p>这里必须使用 <code>::</code>前缀，以便在逗号分隔的列表中进行多次比较时消除泛型路径可能的歧义。
+参见 <a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-of-the-turbofish.rs">the bastion of the turbofish</a> 中因为没有此前缀的而引起歧义的示例。<br />
+This <code>::</code> prefix is required to disambiguate generic paths with multiple comparisons in a comma-separate list.
+See <a href="https://github.com/rust-lang/rust/blob/master/src/test/ui/bastion-of-the-turbofish.rs">the bastion of the turbofish</a> for an example where not having the prefix would be ambiguous.</p>
+<h3><a class="header" href="#本地类型" id="本地类型">本地类型</a></h3>
+<p>指在当前 crate 中定义的 <code>struct</code>、<code>enum</code>、或 <code>union</code> 。本地类型不会受到类型参数的影响。<code>struct Foo</code> 被认为是本地的，但 <code>Vec&lt;Foo&gt;</code> 不是。<code>LocalType&lt;ForeignType&gt;</code> 是本地的。类型别名不影响本地性。<br />
+A <code>struct</code>, <code>enum</code>, or <code>union</code> which was defined in the current crate. This is not affected by applied type arguments. <code>struct Foo</code> is considered local, but <code>Vec&lt;Foo&gt;</code> is not. <code>LocalType&lt;ForeignType&gt;</code> is local. Type aliases do not affect locality.</p>
+<h3><a class="header" href="#名称" id="名称">名称</a></h3>
+<p><a href="names.html"><em>名称</em></a>是一个指向<a href="#entity">实体</a>的<a href="identifiers.html">标识符</a>或<a href="tokens.html#lifetimes-and-loop-labels">生存期或循环标签</a>。*名称绑定(name binding)*是指实体声明时引入了与该实体相关联的标识符或标签。<a href="paths.html">路径</a>、标识符和标签用于引用实体。<br />
+A <a href="names.html"><em>name</em></a> is an <a href="identifiers.html">identifier</a> or <a href="tokens.html#lifetimes-and-loop-labels">lifetime or loop label</a> that refers to an <a href="#entity">entity</a>. A <em>name binding</em> is when an entity declaration introduces an identifier or label associated with that entity. <a href="paths.html">Paths</a>, identifiers, and labels are used to refer to an entity.</p>
+<h3><a class="header" href="#名称解析" id="名称解析">名称解析</a></h3>
+<p><a href="names/name-resolution.html"><em>名称解析</em></a>是将<a href="paths.html">路径</a>、<a href="identifiers.html">标识符</a>、<a href="tokens.html#lifetimes-and-loop-labels">标签</a>和<a href="#entity">实体(entity)</a>声明绑定在一起的的编译过程。<br />
+<a href="names/name-resolution.html"><em>Name resolution</em></a> is the compile-time process of tying <a href="paths.html">paths</a>, <a href="identifiers.html">identifiers</a>, and <a href="tokens.html#lifetimes-and-loop-labels">labels</a> to <a href="#entity">entity</a> declarations.</p>
+<h3><a class="header" href="#命名空间" id="命名空间">命名空间</a></h3>
+<p><em>命名空间</em>是基于名称所引用的<a href="#entity">实体</a>类型的声明<a href="#name">名称</a>的逻辑分组。命名空间让在一个命名空间中出现的名称不会与另一个命名空间中的相同名称冲突。<br />
+A <em>namespace</em> is a logical grouping of declared <a href="#name">names</a> based on the kind of <a href="#entity">entity</a> the name refers to. Namespaces allow the occurrence of a name in one namespace to not conflict with the same name in another namespace.<br />
+在命名空间中，名称统一组织在一个层次结构中，层次结构的每一层都有自己的命名实体集合。<br />
+Within a namespace, names are organized in a hierarchy, where each level of the hierarchy has its own collection of named entities.</p>
+<h3><a class="header" href="#标称类型" id="标称类型">标称类型</a></h3>
+<p>可用路径直接引用的类型。具体来说就是<a href="items/enumerations.html">枚举(<code>enum</code>)</a>、<a href="items/structs.html">结构体(<code>struct</code>)</a>、<a href="items/unions.html">联合体(<code>union</code>)</a>和 <a href="types/trait-object.html">trait对象</a>。<br />
+Types that can be referred to by a path directly. Specifically <a href="items/enumerations.html">enums</a>, <a href="items/structs.html">structs</a>, <a href="items/unions.html">unions</a>, and <a href="types/trait-object.html">trait objects</a>.</p>
+<h3><a class="header" href="#对象安全-trait" id="对象安全-trait">对象安全 trait</a></h3>
+<p>可以用作 <a href="types/trait-object.html">trait对象</a>的 <a href="items/traits.html">trait</a>。只有遵循特定<a href="items/traits.html#object-safety">规则</a>的 trait 才是对象安全的。<br />
+<a href="items/traits.html">Traits</a> that can be used as <a href="types/trait-object.html">trait objects</a>. Only traits that follow specific <a href="items/traits.html#object-safety">rules</a> are object safe.</p>
+<h3><a class="header" href="#路径" id="路径">路径</a></h3>
+<p><a href="paths.html"><em>路径</em></a>是一个或多个路径段组成的序列，用于引用当前作用域或某<a href="#namespace">命名空间</a>层次结构中的<a href="#entity">实体</a>。<br />
+A <a href="paths.html"><em>path</em></a> is a sequence of one or more path segments used to refer to an <a href="#entity">entity</a> in the current scope or other levels of a <a href="#namespace">namespace</a> hierarchy.</p>
+<h3><a class="header" href="#预加载模块集预导入包" id="预加载模块集预导入包">预加载模块集/预导入包</a></h3>
+<p>预加载模块集，或者 Rust 预加载模块集，是一个会被导入到每个 crate 中的每个模块的小型程序项集合（其中大部分是 trait）。trait 在预加载模块集中很普遍。<br />
+Prelude, or The Rust Prelude, is a small collection of items - mostly traits - that are imported into every module of every crate. The traits in the prelude are pervasive.</p>
+<h3><a class="header" href="#作用域" id="作用域">作用域</a></h3>
+<p><a href="names/scopes.html"><em>作用域</em></a>是源文本的一个区域，在该区域中可以直接使用其名称来引用在其下命名的命名<a href="#entity">实体</a>。<br />
+A <a href="names/scopes.html"><em>scope</em></a> is the region of source text where a named <a href="#entity">entity</a> may be referenced with that name.</p>
+<h3><a class="header" href="#检验对象检验对象表达式" id="检验对象检验对象表达式">检验对象\检验对象表达式</a></h3>
+<p>检验对象是在匹配(<code>match</code>)表达式和类似的模式匹配结构上匹配的表达式。例如，在 <code>match x { A =&gt; 1, B =&gt; 2 }</code> 中，表达式 <code>x</code> 是 scrutinee。<br />
+A scrutinee is the expression that is matched on in <code>match</code> expressions and similar pattern matching constructs. For example, in <code>match x { A =&gt; 1, B =&gt; 2 }</code>, the expression <code>x</code> is the scrutinee.</p>
+<h3><a class="header" href="#类型尺寸尺寸" id="类型尺寸尺寸">类型尺寸/尺寸</a></h3>
+<p>值的尺寸有两个定义。<br />
+第一个是必须分配多少内存来存储这个值。<br />
+第二个是它是在具有该项类型的数组中连续元素之间的字节偏移量。<br />
+它是对齐量的整数倍数，包括零倍。尺寸会根据编译器版本(进行新的优化时)和目标平台(类似于 <code>usize</code> 在不同平台上的变化)而变化。<br />
+查看<a href="type-layout.html#size-and-alignment">更多</a>.
+The size of a value has two definitions.<br />
+The first is that it is how much memory must be allocated to store that value.<br />
+The second is that it is the offset in bytes between successive elements in an array with that item type.
+It is a multiple of the alignment, including zero. The size can change depending on compiler version (as new optimizations are made) and target platform (similar to how <code>usize</code> varies per-platform).</p>
+<h3><a class="header" href="#切片" id="切片">切片</a></h3>
+<p>切片是一段连续的内存序列上的具有动态尺寸视图功能的类型，写为 <code>[T]</code>。<br />
+它经常以借用的形式出现，可变借用和共享借用都有可能。共享借用切片类型是 <code>&amp;[T]</code>，可变借用切片类型是 <code>&amp;mut [T]</code>，其中 <code>T</code> 表示元素类型。<br />
+A slice is dynamically-sized view into a contiguous sequence, written as <code>[T]</code>.<br />
+It is often seen in its borrowed forms, either mutable or shared. The shared slice type is <code>&amp;[T]</code>, while the mutable slice type is <code>&amp;mut [T]</code>, where <code>T</code> represents the element type.</p>
+<h3><a class="header" href="#语句" id="语句">语句</a></h3>
+<p>语句是编程语言中最小的独立元素，它命令计算机执行一个动作。<br />
+A statement is the smallest standalone element of a programming language that commands a computer to perform an action.</p>
+<h3><a class="header" href="#字符串字面量" id="字符串字面量">字符串字面量</a></h3>
+<p>字符串字面量是直接存储在最终二进制文件中的字符串，因此在 <code>'static</code> 生存期内是有效的。<br />
+它的类型是借用形式的生存期 <code>'static</code> 的字符串切片，即：<code>&amp;'static str</code>。<br />
+A string literal is a string stored directly in the final binary, and so will be valid for the <code>'static</code> duration.<br />
+Its type is <code>'static</code> duration borrowed string slice, <code>&amp;'static str</code>.</p>
+<h3><a class="header" href="#字符串切片str" id="字符串切片str">字符串切片(<code>str</code>)</a></h3>
+<p>字符串切片是 Rust 中最基础的字符串类型，写为 <code>str</code>。它经常以借用的形式出现，可变借用和共享借用都有可能。共享借用的字符串切片类型是  <code>&amp;str</code>，可变借用的字符串切片类型是 <code>&amp;mut str</code>。<br />
+字符串切片总是有效的 UTF-8。<br />
+A string slice is the most primitive string type in Rust, written as <code>str</code>. It is often seen in its borrowed forms, either mutable or shared. The shared string slice type is <code>&amp;str</code>, while the mutable string slice type is <code>&amp;mut str</code>.<br />
+Strings slices are always valid UTF-8.</p>
+<h3><a class="header" href="#trait" id="trait">Trait</a></h3>
+<p>trait 是一种程序项，用于描述类型必须提供的功能。它允许类型对其行为做出某些承诺。<br />
+泛型函数和泛型结构体可以使用 trait 来限制或约束它们所接受的类型。<br />
+A trait is a language item that is used for describing the functionalities a type must provide. It allows a type to make certain promises about its behavior.<br />
+Generic functions and generic structs can use traits to constrain, or bound, the types they accept.</p>
+<h3><a class="header" href="#无覆盖类型" id="无覆盖类型">无覆盖类型</a></h3>
+<p>不作为其他类型的参数出现的类型。例如，<code>T</code> 就是无覆盖的，但 <code>Vec&lt;T&gt;</code> 中的 <code>T</code> 就是有覆盖的。这（种说法）只与类型参数相关。<br />
+A type which does not appear as an argument to another type. For example, <code>T</code> is uncovered, but the <code>T</code> in <code>Vec&lt;T&gt;</code> is covered. This is only relevant for type arguments.</p>
+<h3><a class="header" href="#未定义行为" id="未定义行为">未定义行为</a></h3>
+<p>非指定的编译时或运行时行为。这可能导致，但不限于：进程终止或崩溃；不正确的、不正确的或非预定计算；或特定于平台的结果。查看<a href="behavior-considered-undefined.html">更多</a><br />
+Compile-time or run-time behavior that is not specified. This may result in, but is not limited to: process termination or corruption; improper, incorrect, or unintended computation; or platform-specific results. <a href="behavior-considered-undefined.html">More</a>.</p>
+<h3><a class="header" href="#uninhabited" id="uninhabited">Uninhabited</a></h3>
+<p>如果类型没有构造函数，因此永远不能实例化，则该类型是 Uninhabited。一个 Uninhabited 类型是“空的”，意思是该类型没有值。Uninhabited 类型的典型例子是 <a href="types/never.html">never type</a> <code>!</code>，或不带变体的 <code>enum Never { }</code>。与之相对的是 <a href="#inhabited">Inhabited</a>。<br />
+A type is uninhabited if it has no constructors and therefore can never be instantiated. An uninhabited type is &quot;empty&quot; in the sense that there are no values of the type. The canonical example of an uninhabited type is the <a href="types/never.html">never type</a> <code>!</code>, or an enum with no variants <code>enum Never { }</code>. Opposite of <a href="#inhabited">Inhabited</a>.</p>
+<!-- 2021-1-24-->
+<!-- checked -->
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="influences.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="influences.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

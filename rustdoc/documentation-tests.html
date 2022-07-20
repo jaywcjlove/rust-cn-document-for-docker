@@ -1,0 +1,568 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>文档测试 - rustdoc 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rustdoc 手册详细介绍了如何使用 rustdoc 命令或 cargo doc 来生成漂亮的 crate 文档，发布 crate 前很有必要熟悉 rustdoc 的相关内容。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what-is-rustdoc.html"><strong aria-hidden="true">1.</strong> 什么是 rustdoc?</a></li><li class="chapter-item expanded "><a href="how-to-read-rustdoc.html"><strong aria-hidden="true">2.</strong> 如何阅读 rustdoc 的输出</a></li><li class="chapter-item expanded "><a href="how-to-write-documentation.html"><strong aria-hidden="true">3.</strong> 如何写文档</a></li><li class="chapter-item expanded "><a href="what-to-include.html"><strong aria-hidden="true">4.</strong> 什么被包含（和排除）</a></li><li class="chapter-item expanded "><a href="command-line-arguments.html"><strong aria-hidden="true">5.</strong> 命令行参数</a></li><li class="chapter-item expanded "><a href="the-doc-attribute.html"><strong aria-hidden="true">6.</strong> #[doc] 属性</a></li><li class="chapter-item expanded "><a href="documentation-tests.html" class="active"><strong aria-hidden="true">7.</strong> 文档测试</a></li><li class="chapter-item expanded "><a href="linking-to-items-by-name.html"><strong aria-hidden="true">8.</strong> 通过 items 名称链接</a></li><li class="chapter-item expanded "><a href="lints.html"><strong aria-hidden="true">9.</strong> Lints</a></li><li class="chapter-item expanded "><a href="advanced-features.html"><strong aria-hidden="true">10.</strong> 高级特性</a></li><li class="chapter-item expanded "><a href="unstable-features.html"><strong aria-hidden="true">11.</strong> 不稳定特性</a></li><li class="chapter-item expanded "><a href="website-features.html"><strong aria-hidden="true">12.</strong> Website features</a></li><li class="chapter-item expanded "><a href="passes.html"><strong aria-hidden="true">13.</strong> Passes</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">14.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rustdoc 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/rustdoc-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#文档测试" id="文档测试">文档测试</a></h1>
+<p><code>rustdoc</code> 支持将你文档中的代码示例作为测试执行。这确保了文档中的代码示例保持更新。</p>
+<p>基本写法是这样的：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// # Examples
+///
+/// ```
+/// let x = 5;
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>三个反引号中的代码块。如果有一个文件名叫做<code>foo.rs</code>，运行<code>rustdoc --test foo.rs</code>会提取这个例子，然后作为测试执行。</p>
+<p>需要注意的是，如果代码块没有设置语言，rustdoc 默认是 Rust 代码，所以下面的：</p>
+<pre><code class="language-markdown">```rust
+let x = 5;
+```
+</code></pre>
+<p>跟这个是相等的</p>
+<pre><code class="language-markdown">```
+let x = 5;
+```
+</code></pre>
+<p>还有一些微妙之处！请阅读获得更多详情。</p>
+<h2><a class="header" href="#文档测试通过或者失败" id="文档测试通过或者失败">文档测试通过或者失败</a></h2>
+<p>就像常规的单元测试，常规的文档测试也需要编译和运行“通过”。所以如果需要计算给出一个结果，可以使用<code>assert!</code>系列宏来检查：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let foo = &quot;foo&quot;;
+assert_eq!(foo, &quot;foo&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>这样，如果计算返回的结果不符合预期，代码就会 panic，文档测试会失败。</p>
+<h2><a class="header" href="#预处理例子" id="预处理例子">预处理例子</a></h2>
+<p>在上面的例子中，你注意到奇怪的事情：没有<code>main</code>函数！如果强制你为每个例子写<code>main</code>，增加了难度。
+所以<code>rustdoc</code>在运行例子前会帮你处理好这个。这里是<code>rustdoc</code>预处理的完整算法：</p>
+<ol>
+<li>一些常用的 <code>allow</code> 属性会被插入，包括 <code>unused_variables</code>, <code>unused_assignments</code>, <code>unused_mut</code>, <code>unused_attributes</code>, 和 <code>dead_code</code>。小型示例经常出发这些警告。</li>
+<li>如果存在 <code>#![doc(test(attr(...)))]</code> 的属性会被加入。</li>
+<li><code>#![foo]</code> 属性会被作为 crate 属性保留。</li>
+<li>如果例子不包含 <code>extern crate</code>, 并且 <code>#![doc(test(no_crate_inject))]</code> 没有被指定，<code>extern crate &lt;mycrate&gt;;</code> 被插入（注意 <code>#[macro_use]</code> 要手动写一般）。</li>
+<li>最后，如果例子不包含 <code>fn main</code>，剩下的代码会被 main 函数 wrap：<code>fn main() { your_code }</code>。</li>
+</ol>
+<p>对于第 4 条的详细解释，请阅读下面的“宏的文档”</p>
+<h2><a class="header" href="#隐藏例子的一部分" id="隐藏例子的一部分">隐藏例子的一部分</a></h2>
+<p>有时，你需要一些初始代码，或者一些会分散文档注意力的代码，但是它们对测试工作是必要的。考虑下面的示例代码：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```
+/// /// Some documentation.
+/// # fn foo() {} // this function will be hidden
+/// println!(&quot;Hello, World!&quot;);
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>会渲染为：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Some documentation.
+<span class="boring">fn foo() {}
+</span>println!(&quot;Hello, World!&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>没错，这是对的，你可以加一些以 <code># </code> 开头的行，在输出中它们会隐藏，但是编译代码会用到。你可以利用这一点。在这个例子中，文档注释需要使用函数，但是我只想给你看文档注释，我需要加入函数的定义。同时，需要满足编译器编译，而隐藏这部分代码使得示例更清晰。你可以使用这个技术写出详细的示例代码并且保留你的可测试性文档。</p>
+<p>比如，想象我们想要给这些代码写文档：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+let y = 6;
+println!(&quot;{}&quot;, x + y);
+<span class="boring">}
+</span></code></pre></pre>
+<p>文档注释最终可能是这样的：</p>
+<blockquote>
+<p>First, we set <code>x</code> to five:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+<span class="boring">let y = 6;
+</span><span class="boring">println!(&quot;{}&quot;, x + y);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>Next, we set <code>y</code> to six:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let x = 5;
+</span>let y = 6;
+<span class="boring">println!(&quot;{}&quot;, x + y);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>Finally, we print the sum of <code>x</code> and <code>y</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let x = 5;
+</span><span class="boring">let y = 6;
+</span>println!(&quot;{}&quot;, x + y);
+<span class="boring">}
+</span></code></pre></pre>
+</blockquote>
+<p>为了保持每个代码块可测试，我们要在每个代码块都有完整代码，但是我们不想文档读者每次都看到全部行代码：</p>
+<pre><code class="language-markdown">First, we set `x` to five:
+
+```
+let x = 5;
+# let y = 6;
+# println!(&quot;{}&quot;, x + y);
+```
+
+Next, we set `y` to six:
+
+```
+# let x = 5;
+let y = 6;
+# println!(&quot;{}&quot;, x + y);
+```
+
+Finally, we print the sum of `x` and `y`:
+
+```
+# let x = 5;
+# let y = 6;
+println!(&quot;{}&quot;, x + y);
+```
+</code></pre>
+<p>通过复制例子的所有代码，例子可以通过编译，同时使用 <code># </code> 在文档中有些部分被隐藏。</p>
+<p><code>#</code> 的隐藏可以使用两个 <code>##</code> 来消除。 如果我们有一行注释，以 <code>#</code> 开头，那么这样写：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = &quot;foo
+# bar # baz&quot;;
+<span class="boring">}
+</span></code></pre></pre>
+<p>我们可以转义第一个 <code>#</code> 来注释它：</p>
+<pre><code class="language-text">/// let s = &quot;foo
+/// ## bar # baz&quot;;
+</code></pre>
+<h2><a class="header" href="#在文档测试中使用-" id="在文档测试中使用-">在文档测试中使用 <code>?</code></a></h2>
+<p>当写例子时，很少会包含完整的错误处理，因为错误处理会增加很多样板代码。取而代之，你可能更希望这样：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```
+/// use std::io;
+/// let mut input = String::new();
+/// io::stdin().read_line(&amp;mut input)?;
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>问题是 <code>?</code> 返回 <code>Result&lt;T, E&gt;</code>，测试函数不能返回任何东西，所以会有类型错误。</p>
+<p>你可以通过自己增加返回 <code>Result&lt;T, E&gt;</code> 的 <code>main</code> 函数来规避这个限制，因为 <code>Result&lt;T, E&gt;</code> 实现了 <code>Termination</code> trait：</p>
+<pre><pre class="playground"><code class="language-rust no_run">/// A doc test using ?
+///
+/// ```
+/// use std::io;
+///
+/// fn main() -&gt; io::Result&lt;()&gt; {
+///     let mut input = String::new();
+///     io::stdin().read_line(&amp;mut input)?;
+///     Ok(())
+/// }
+/// ```
+<span class="boring">fn f() {}
+</span></code></pre></pre>
+<p>与下节的 <code># </code>一起，你可以得到读者舒服，编译通过的完整解决方案：</p>
+<pre><pre class="playground"><code class="language-rust no_run">/// ```
+/// use std::io;
+/// # fn main() -&gt; io::Result&lt;()&gt; {
+/// let mut input = String::new();
+/// io::stdin().read_line(&amp;mut input)?;
+/// # Ok(())
+/// # }
+/// ```
+<span class="boring">fn f() {}
+</span></code></pre></pre>
+<p>从 1.34.0 版本开始，也可以省略 <code>fn main()</code>，但是你必须消除错误类型的歧义：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```
+/// use std::io;
+/// let mut input = String::new();
+/// io::stdin().read_line(&amp;mut input)?;
+/// # Ok::&lt;(), io::Error&gt;(())
+/// ```
+<span class="boring">fn f() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这是 <code>?</code> 操作符隐式转换带来的不便，因为类型不唯一所以类型推断会出错。你必须写 <code>(())</code>，<code>rustdoc</code> 才能理解你想要一个隐式返回值 <code>Result</code> 的函数。</p>
+<h2><a class="header" href="#在文档测试中显示警告" id="在文档测试中显示警告">在文档测试中显示警告</a></h2>
+<p>你可以通过运行 <code>rustdoc --test --test-args=--show-output</code> 在文档测试中显示警告（或者，如果你使用 cargo，<code>cargo test --doc -- --show-output</code> 也可以）。默认会隐藏 <code>unused</code> 警告，因为很多例子使用私有函数；你可以通过在例子顶部加入<code>#![warn(unused)]</code>来对没有使用的变量或者死代码进行警告。你还可以在 crate 根使用 <a href="./the-doc-attribute.html#testattr"><code>#![doc(test(attr(warn(unused))))]</code></a> 开启全局警告。</p>
+<h2><a class="header" href="#宏的文档" id="宏的文档">宏的文档</a></h2>
+<p>这里是一个宏的文档的例子：</p>
+<pre><pre class="playground"><code class="language-rust">/// Panic with a given message unless an expression evaluates to true.
+///
+/// # Examples
+///
+/// ```
+/// # #[macro_use] extern crate foo;
+/// # fn main() {
+/// panic_unless!(1 + 1 == 2, “Math is broken.”);
+/// # }
+/// ```
+///
+/// ```should_panic
+/// # #[macro_use] extern crate foo;
+/// # fn main() {
+/// panic_unless!(true == false, “I’m broken.”);
+/// # }
+/// ```
+#[macro_export]
+macro_rules! panic_unless {
+    ($condition:expr, $($rest:expr),+) =&gt; ({ if ! $condition { panic!($($rest),+); } });
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>你注意到三件事：我们需要自己增加 <code>extern crate</code> 一行，从而我们可以加上 <code>#[macro_use]</code> 属性。第二，我们需要自己增加 <code>main()</code>，理由同上。最后 <code>#</code> 的使用使得一些内容不会出现在输出中。</p>
+<h2><a class="header" href="#属性" id="属性">属性</a></h2>
+<p>代码块可以通过属性标注帮助 <code>rustdoc</code> 在测试例子代码时处理正确。</p>
+<p><code>ignore</code> 属性告诉 Rust 忽略你的代码。 这个属性很通用，并且考虑标注 <code>文本</code>或者使用<code>#</code>隐藏不想展示的部分。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```ignore
+/// fn foo() {
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>should_panic</code> 告诉 <code>rustdoc</code> 代码应该编译通过但是运行时会 panic。如果代码没有 panic，测试失败。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```should_panic
+/// assert!(false);
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>no_run</code> 属性会编译你的代码但是不运行它。这对于类似 &quot;如果获取网页&quot; 的例子很重要，你要确保它能编译但是不想在运行测试，因为测试环境可能没有网络。这个属性也可以被用来要求代码段有未定义行为。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```no_run
+/// loop {
+///     println!(&quot;Hello, world&quot;);
+/// }
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>compile_fail</code> 告诉 <code>rustdoc</code> 应该编译失败。如果便已通过，测试失败。
+但是需要注意现在版本 Rust 编译失败可能在将来 Rust 版本编译成功。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// ```compile_fail
+/// let x = 5;
+/// x += 2; // shouldn't compile!
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><code>edition2015</code>, <code>edition2018</code> 和 <code>edition2021</code> 告诉 <code>rustdoc</code> 代码应该使用哪个 edition 版本的 Rust 来编译。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Only runs on the 2018 edition.
+///
+/// ```edition2018
+/// let result: Result&lt;i32, ParseIntError&gt; = try {
+///     &quot;1&quot;.parse::&lt;i32&gt;()?
+///         + &quot;2&quot;.parse::&lt;i32&gt;()?
+///         + &quot;3&quot;.parse::&lt;i32&gt;()?
+/// };
+/// ```
+<span class="boring">fn foo() {}
+</span><span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#语法参考" id="语法参考">语法参考</a></h2>
+<p>代码块的 <em>exact</em> 语法，包括边缘情况，可以在 CommonMark 说明的 [Fenced Code Blocks] 一节找到。</p>
+<p>Rustdoc 也接受 <em>indented</em> 代码块作为 fenced 代码块的替代：不使用三个反引号，而是每行以四个或者以上空格开始。</p>
+<pre><code class="language-markdown">    let foo = &quot;foo&quot;;
+    assert_eq!(foo, &quot;foo&quot;);
+</code></pre>
+<p>这也在 CommonMark 说明中的 <a href="https://spec.commonmark.org/0.29/#indented-code-blocks">Indented Code Blocks</a> 小节。</p>
+<p>但是通常更常用的是 fenced 代码块。不仅是 fenced 代码块更符合 Rust 惯用法，而且 indented 代码块无法使用诸如 <code>ignore</code> 或者 <code>should_panic</code> 这些属性。</p>
+<h3><a class="header" href="#收集文档测试时包含-item" id="收集文档测试时包含-item">收集文档测试时包含 item</a></h3>
+<p>Rustdoc 文档测试可以做到一些单元测试无法做到的事，可以扩展你的文档测试但是不出现在文档中。意味着，rustdoc 允许你有不出现在
+文档中，但是会进行文档测试的 item，所以你可以利用文档测试这个功能使测试不出现在文档中，或者任意找一个私有 item 包含它。</p>
+<p>当编译 crate 用来测试文档时（使用<code>--test</code>)，<code>rustdoc</code>会设置 <code>#[cfg(doctest)]</code>。注意这只会在公共 item 上设置；如果你需要测试私有 item，你需要写单元测试。</p>
+<p>在这个例子中，我们增加不会编译的文档测试，确保我们的结构体只会获取有效数据：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// We have a struct here. Remember it doesn't accept negative numbers!
+pub struct MyStruct(pub usize);
+
+/// ```compile_fail
+/// let x = my_crate::MyStruct(-5);
+/// ```
+#[cfg(doctest)]
+pub struct MyStructOnlyTakesUsize;
+<span class="boring">}
+</span></code></pre></pre>
+<p>注意结构 <code>MyStructOnlyTakesUsize</code> 不是你的 crate 公共 API。<code>#[cfg(doctest)]</code> 的使用使得这个结构体只会在 <code>rustdoc</code> 收集文档测试时存在。这意味着当传递 <code>--test</code> 给 rustdoc 时才存在，在公共文档中是隐藏的。</p>
+<p>另一个可能用到 <code>#[cfg(doctest)]</code> 的是你的 README 文件中的文档测试。
+比如你可以在 <code>lib.rs</code> 写下面的代码来运行 README 中的文档测试：</p>
+<pre><pre class="playground"><code class="language-rust no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[doc = include_str!(&quot;../README.md&quot;)]
+#[cfg(doctest)]
+pub struct ReadmeDoctests;
+<span class="boring">}
+</span></code></pre></pre>
+<p>这会在你的隐藏结构体 <code>ReadmeDoctests</code> 中包含你的 README 作为文档，也会作为文档测试来执行。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="the-doc-attribute.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="linking-to-items-by-name.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="the-doc-attribute.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="linking-to-items-by-name.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

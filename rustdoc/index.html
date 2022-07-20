@@ -1,0 +1,327 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>什么是 rustdoc? - rustdoc 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="rustdoc 手册详细介绍了如何使用 rustdoc 命令或 cargo doc 来生成漂亮的 crate 文档，发布 crate 前很有必要熟悉 rustdoc 的相关内容。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="what-is-rustdoc.html"><strong aria-hidden="true">1.</strong> 什么是 rustdoc?</a></li><li class="chapter-item expanded "><a href="how-to-read-rustdoc.html"><strong aria-hidden="true">2.</strong> 如何阅读 rustdoc 的输出</a></li><li class="chapter-item expanded "><a href="how-to-write-documentation.html"><strong aria-hidden="true">3.</strong> 如何写文档</a></li><li class="chapter-item expanded "><a href="what-to-include.html"><strong aria-hidden="true">4.</strong> 什么被包含（和排除）</a></li><li class="chapter-item expanded "><a href="command-line-arguments.html"><strong aria-hidden="true">5.</strong> 命令行参数</a></li><li class="chapter-item expanded "><a href="the-doc-attribute.html"><strong aria-hidden="true">6.</strong> #[doc] 属性</a></li><li class="chapter-item expanded "><a href="documentation-tests.html"><strong aria-hidden="true">7.</strong> 文档测试</a></li><li class="chapter-item expanded "><a href="linking-to-items-by-name.html"><strong aria-hidden="true">8.</strong> 通过 items 名称链接</a></li><li class="chapter-item expanded "><a href="lints.html"><strong aria-hidden="true">9.</strong> Lints</a></li><li class="chapter-item expanded "><a href="advanced-features.html"><strong aria-hidden="true">10.</strong> 高级特性</a></li><li class="chapter-item expanded "><a href="unstable-features.html"><strong aria-hidden="true">11.</strong> 不稳定特性</a></li><li class="chapter-item expanded "><a href="website-features.html"><strong aria-hidden="true">12.</strong> Website features</a></li><li class="chapter-item expanded "><a href="passes.html"><strong aria-hidden="true">13.</strong> Passes</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">14.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">rustdoc 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/rustdoc-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#什么是-rustdoc" id="什么是-rustdoc">什么是 rustdoc？</a></h1>
+<blockquote>
+<p>中文翻译注（The Chinese translation of <a href="https://doc.rust-lang.org/rustdoc/">The rustdoc Book</a>）：</p>
+<ul>
+<li>👉 查看更多 <a href="https://rustwiki.org/" style="color:#97ca00;font-weight:bold;">Rust 官方文档中英文双语教程</a>，包括双语版<a href="https://rustwiki.org/zh-CN/book/">《Rust 程序设计语言》</a>（出版书名为《Rust 权威指南》），本站还提供了 <a href="https://rustwiki.org/zh-CN/std/">Rust 标准库中文版</a>。</li>
+<li>《rustdoc 手册》（<em>rustdoc Book</em> 中文版）翻译自 <a href="https://doc.rust-lang.org/rustdoc/"><em>rustdoc Book</em></a>，内容已全部翻译完成，查看此书的 <a href="https://github.com/rust-lang-cn/rustdoc-cn">Github 翻译项目和源码</a>。</li>
+<li>本文版最后更新时间：2022-02-04。</li>
+<li>本书主要译者：<a href="https://github.com/wendajiang"><em>David</em></a>，<a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a> 成员。</li>
+<li><a href="https://rustwiki.org/en/rustdoc/" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，<strong>英文版每天都会自动同步一次官方的最新版本</strong>。</li>
+<li>若发现当前页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开该页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！</li>
+</ul>
+</blockquote>
+<p>标准 Rust 版本包含了名为 <code>rustdoc</code> 的工具。它的作用是为 Rust 项目生成文档，Rustdoc 接受一个 crate 根目录或者一个 markdown 文件作为参数，生成 HTML，CSS 和 JavaScript 文件。</p>
+<h2><a class="header" href="#基本使用" id="基本使用">基本使用</a></h2>
+<p>让我们试用一下，使用 Cargo 创建一个新项目</p>
+<pre><code class="language-bash">$ cargo new docs --lib
+$ cd docs
+</code></pre>
+<p>在 <code>src/lib.rs</code> 中，Cargo 生成了一些事例代码，删掉使用下面的代码代替</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// foo is a function
+fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>然后我们运行 <code>rustdoc</code>。我们可以在 crate 根目录执行下面的命令</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs
+</code></pre>
+<p>这会创建一个新目录 <code>doc</code>，其中是一个网站结构。在我们的例子中，主页面是 <code>doc/lib/index.html</code>。如果你使用浏览器打开，可以在 tab 栏看到 &quot;Crate lib&quot;，页面没有内容。</p>
+<h2><a class="header" href="#配置-rustdoc" id="配置-rustdoc">配置 rustdoc</a></h2>
+<p>现在有两个问题：第一，为什么我们的包名字是 &quot;lib&quot;？第二，为什么没有任何内容？</p>
+<p>第一个问题的原因是因为 <code>rustdoc</code> 试图更好用，像 <code>rustc</code> 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name docs
+</code></pre>
+<p>现在， <code>doc/docs/index.html</code> 文件生成，页面名称为 &quot;Crate docs&quot;。</p>
+<p>对于第二个问题，因为我们的函数 <code>foo</code> 不是公共的；<code>rustdoc</code> 默认只会为公共函数生成文档，如果我们将代码修改为</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// foo is a function
+pub fn foo() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>然后重新运行 <code>rustdoc</code>:</p>
+<pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name docs
+</code></pre>
+<p>现在我们生成了文档，打开 <code>doc/docs/index.html</code>，显示了 <code>foo</code> 函数的连接页面，文件位置是 <code>doc/docs/fn.foo.html</code>。在函数的页面上，你可以看到我们写的注释 &quot;foo is a function&quot;。</p>
+<h2><a class="header" href="#通过-cargo-使用-rustdoc" id="通过-cargo-使用-rustdoc">通过 Cargo 使用 rustdoc</a></h2>
+<p>Cargo 整合了 <code>rustdoc</code>，使得生成文档更容易。代替 <code>rustdoc</code> 命令，我们可以这样做：</p>
+<pre><code class="language-bash">$ cargo doc
+</code></pre>
+<p>实际上，会这样调用 <code>rustdoc</code>:</p>
+<pre><code class="language-bash">$ rustdoc --crate-name docs src/lib.rs -o &lt;path&gt;/docs/target/doc -L
+dependency=&lt;path&gt;/docs/target/debug/deps
+</code></pre>
+<p>你可以使用 <code>cargo doc --verbose</code> 看到这个过程。</p>
+<p>它会自动生成正确的 crate 名称 <code>--crate-name</code>，同时指向 <code>src/lib.rs</code>。但是其他的参数表示什么呢？</p>
+<ul>
+<li><code>-o</code> 控制文档的输出。不使用顶层的 <code>doc</code> 目录，Cargo 会把生成的文档生成在 <code>target</code>。这是 Cargo 项目的惯用生成文件的位置。</li>
+<li><code>-L</code> 帮助 rustdoc 找到代码的依赖，如果我们的项目有依赖，也会生成依赖的文档。</li>
+</ul>
+<h2><a class="header" href="#outer-和-inner-文档" id="outer-和-inner-文档">Outer 和 inner 文档</a></h2>
+<p><code>///</code> 语法用来对下面一个 item 生成文档，所以称为 outer 文档。还有语法<code>//!</code>，用来生成 item 内部的文档，也叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要这样用 <code>//!</code>：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! This is my first rust crate
+<span class="boring">}
+</span></code></pre></pre>
+<p>当这样用的时候，会生成 item 内部的文档，也就是 crate 自己。</p>
+<p>为了获取更多 <code>//!</code> 的信息，请看 <a href="https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#commenting-contained-items">the Book</a></p>
+<h2><a class="header" href="#利用单独的-markdown-文件" id="利用单独的-markdown-文件">利用单独的 Markdown 文件</a></h2>
+<p><code>rustdoc</code> 可以为单独的 markdown 文件生成 HTML。让我们尝试一下，创建<code>README.md</code>，并输入如下内容</p>
+<pre><code class="language-text"># Docs
+
+This is a project to test out `rustdoc`.
+
+[Here is a link!](https://www.rust-lang.org)
+
+## Example
+
+```rust
+fn foo() -&gt; i32 {
+    1 + 1
+}
+```
+</code></pre>
+<p>然后运行 <code>rustdoc</code> 命令：</p>
+<pre><code class="language-bash">$ rustdoc README.md
+</code></pre>
+<p>你能发现生成的 <code>docs/doc/README.html</code> 文件。</p>
+<p>不过现在 Cargo 不能这样操作 markdown 文件。</p>
+<h2><a class="header" href="#总结" id="总结">总结</a></h2>
+<p>本节涵盖了 <code>rustdoc</code> 的基本使用方法。本书的剩余部分会展示 <code>rustdoc</code> 所有的可选功能，以及如何使用它们。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="how-to-read-rustdoc.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="how-to-read-rustdoc.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>
