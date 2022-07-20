@@ -8,6 +8,7 @@ Rust 中文文档示例文档
 - [Rust 标准库文档中文版](https://github.com/rust-lang-cn/std-cn)
 - [Rust 程序设计语言 中文版](https://github.com/rust-lang-cn/book-cn)
 - [Rust By Example 中文版](https://github.com/rust-lang-cn/rust-by-example-cn)
+- [Rust 参考手册](https://github.com/rust-lang-cn/reference-cn)
 
 用于 Docker 部署，本地预览。
 
@@ -25,7 +26,8 @@ docker run --name rust-cn-document-for-docker -itd -p 9613:3000 ghcr.io/jaywcjlo
 
 在浏览器中访问以下 URL
 
-http://localhost:9613/
-http://localhost:9613/book/
-http://localhost:9613/std/std/
-http://localhost:9613/rust-by-example-cn/
+http://localhost:9613/  
+http://localhost:9613/book/  
+http://localhost:9613/reference/  
+http://localhost:9613/std/std/  
+http://localhost:9613/rust-by-example-cn/  
