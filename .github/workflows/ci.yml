@@ -81,12 +81,14 @@ jobs:
         working-directory: ./dist
         run: |
             cat > index.html << EOF
-            <a href="book/" target="__blank"> book </a>
-            <a href="reference/" target="__blank"> reference </a>
-            <a href="rustdoc/" target="__blank"> rustdoc </a>
-            <a href="rust-cookbook/" target="__blank"> rust-cookbook </a>
-            <a href="std/std/" target="__blank"> std </a>
-            <a href="rust-by-example-cn/" target="__blank"> rust-by-example-cn </a>
+            <ul>
+              <li><a href="book/" target="__blank"> book </a></li>
+              <li><a href="reference/" target="__blank"> reference </a></li>
+              <li><a href="rustdoc/" target="__blank"> rustdoc </a></li>
+              <li><a href="rust-cookbook/" target="__blank"> rust-cookbook </a></li>
+              <li><a href="std/std/" target="__blank"> std </a></li>
+              <li><a href="rust-by-example-cn/" target="__blank"> rust-by-example-cn </a></li>
+            <ul>
             EOF
       
       - name: Create README.md
