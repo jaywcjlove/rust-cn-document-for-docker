@@ -71,10 +71,10 @@ jobs:
         run: |
           mdbook build
 
+
       - run: |
           cp -rp reference-cn/book dist/reference
           cp -rp rustdoc-cn/book dist/rustdoc
-          cp -rp edition-guide-cn/book dist/rustdoc
           cp -rp rust-cookbook-cn/book dist/rust-cookbook
 
 
