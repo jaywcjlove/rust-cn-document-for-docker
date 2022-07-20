@@ -9,7 +9,7 @@ Rust 中文文档示例文档
 - [Rust 标准库文档中文版](https://github.com/rust-lang-cn/std-cn)
 - [Rust 程序设计语言 中文版](https://github.com/rust-lang-cn/book-cn)
 - [Rust By Example 中文版](https://github.com/rust-lang-cn/rust-by-example-cn)
-- [Rust 参考手册](https://github.com/rust-lang-cn/reference-cn)
+- [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn)
 - [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn)
 - [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn)
 
