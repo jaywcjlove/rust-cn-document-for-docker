@@ -11,6 +11,7 @@ Rust 中文文档示例文档
 - [Rust By Example 中文版](https://github.com/rust-lang-cn/rust-by-example-cn)
 - [Rust 参考手册](https://github.com/rust-lang-cn/reference-cn)
 - [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn)
+- [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn)
 
 ## Docker
 
@@ -30,5 +31,6 @@ http://localhost:9613/
 http://localhost:9613/book/  
 http://localhost:9613/reference/  
 http://localhost:9613/rustdoc/  
+http://localhost:9613/rust-cookbook/  
 http://localhost:9613/std/std/  
 http://localhost:9613/rust-by-example-cn/  
