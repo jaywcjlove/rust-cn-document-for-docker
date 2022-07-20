@@ -9,6 +9,7 @@ Rust 中文文档示例文档
 - [Rust 程序设计语言 中文版](https://github.com/rust-lang-cn/book-cn)
 - [Rust By Example 中文版](https://github.com/rust-lang-cn/rust-by-example-cn)
 - [Rust 参考手册](https://github.com/rust-lang-cn/reference-cn)
+- [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn)
 
 用于 Docker 部署，本地预览。
 
