@@ -49,6 +49,8 @@ jobs:
           git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
 
           cp -rp std/doc dist/std
+          rm -rf dist/book/.git
+          rm -rf dist/rust-by-example-cn/.git
 
       - name: reference-cn
         working-directory: reference-cn
