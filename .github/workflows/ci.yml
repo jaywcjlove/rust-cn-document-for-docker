@@ -40,17 +40,15 @@ jobs:
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.5/mdbook-v0.4.5-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
           echo "$(pwd)/bin" >> $GITHUB_PATH
 
-      - name: clone static resources
-        run: |
-          mkdir dist
-          git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b gh-pages dist/rust-by-example-cn --depth 1
-          git clone https://github.com/rust-lang-cn/book-cn.git -b gh-pages dist/book --depth 1
-          git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
-          git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
+      - run: mkdir dist
+      - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b gh-pages dist/rust-by-example-cn --depth 1
+      - run: git clone https://github.com/rust-lang-cn/book-cn.git -b gh-pages dist/book --depth 1
+      - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
+      - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
 
-          cp -rp std/doc dist/std
-          rm -rf dist/book/.git
-          rm -rf dist/rust-by-example-cn/.git
+      - run: cp -rp std/doc dist/std
+      - run: rm -rf dist/book/.git
+      - run: rm -rf dist/rust-by-example-cn/.git
 
       - name: reference-cn
         working-directory: reference-cn
