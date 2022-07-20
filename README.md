@@ -2,16 +2,15 @@ Rust 中文文档示例文档
 ===
 
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/wcjiang/rust-cn-document-for-docker?logo=docker)](https://hub.docker.com/r/wcjiang/rust-cn-document-for-docker)
+[![CI](https://github.com/jaywcjlove/rust-cn-document-for-docker/actions/workflows/ci.yml/badge.svg)](https://github.com/jaywcjlove/rust-cn-document-for-docker/actions/workflows/ci.yml)
 
-文档网站来自 [**@rust-lang-cn**](https://github.com/rust-lang-cn) 中相关仓库：
+本仓库，将文档网站来自 [**@rust-lang-cn**](https://github.com/rust-lang-cn) 中相关仓库打包到 Docker 中，用于本地部署预览：
 
 - [Rust 标准库文档中文版](https://github.com/rust-lang-cn/std-cn)
 - [Rust 程序设计语言 中文版](https://github.com/rust-lang-cn/book-cn)
 - [Rust By Example 中文版](https://github.com/rust-lang-cn/rust-by-example-cn)
 - [Rust 参考手册](https://github.com/rust-lang-cn/reference-cn)
 - [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn)
-
-用于 Docker 部署，本地预览。
 
 ## Docker
 
@@ -30,5 +29,6 @@ docker run --name rust-cn-document-for-docker -itd -p 9613:3000 ghcr.io/jaywcjlo
 http://localhost:9613/  
 http://localhost:9613/book/  
 http://localhost:9613/reference/  
+http://localhost:9613/rustdoc/  
 http://localhost:9613/std/std/  
 http://localhost:9613/rust-by-example-cn/  
