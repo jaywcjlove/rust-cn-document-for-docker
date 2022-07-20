@@ -46,12 +46,15 @@ jobs:
       - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
       - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/rustdoc-cn.git -b master rustdoc-cn --depth 1
+      # - run: git clone https://github.com/rust-lang-cn/edition-guide-cn.git -b master edition-guide-cn --depth 1
+      - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
 
       - run: cp -rp std/doc dist/std
       - run: rm -rf dist/book/.git
       - run: rm -rf dist/rust-by-example-cn/.git
       - run: rm -rf rustdoc-cn/.git
       - run: rm -rf reference-cn/.git
+      - run: rm -rf rust-cookbook-cn/.git
 
       - name: reference-cn
         working-directory: reference-cn
@@ -63,9 +66,16 @@ jobs:
         run: |
           mdbook build
 
+      - name: rust-cookbook-cn
+        working-directory: rust-cookbook-cn
+        run: |
+          mdbook build
+
       - run: |
           cp -rp reference-cn/book dist/reference
           cp -rp rustdoc-cn/book dist/rustdoc
+          cp -rp edition-guide-cn/book dist/rustdoc
+          cp -rp rust-cookbook-cn/book dist/rust-cookbook
 
       # Create Docker Image
       - name: Docker login
