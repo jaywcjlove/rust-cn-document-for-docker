@@ -82,7 +82,7 @@ jobs:
           cp -rp reference-cn/book dist/reference
           cp -rp rustdoc-cn/book dist/rustdoc
           cp -rp rust-cookbook-cn/book dist/rust-cookbook
-          cp -rp cargo-cn/book dist/rust-cookbook
+          cp -rp cargo-cn/book dist/cargo-cn
       
       - name: Create index.html
         working-directory: ./dist
