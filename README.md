@@ -14,7 +14,7 @@ Repo | last commit | home
 [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/reference-cn?style=flat&label=last)](https://github.com/rust-lang-cn/reference-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/)
 [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rustdoc-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rustdoc-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/)
 [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-cookbook-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-cookbook-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/)
-[Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo-cn/)
+[Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/)
 
 ## Docker
 
@@ -23,15 +23,16 @@ docker pull wcjiang/rust-cn-document-for-docker
 ```
 
 ```bash
-docker run --name rust-cn-document-for-docker -itd -p 9613:3000 wcjiang/rust-cn-document-for-docker:latest
+docker run --name rust-document --restart always -itd -p 9613:3000 wcjiang/rust-cn-document-for-docker:latest
 # Or
-docker run --name rust-cn-document-for-docker -itd -p 9613:3000 ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest
+docker run --name rust-document --restart always -itd -p 9613:3000 ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest
 ```
 
 在浏览器中访问以下 URL
 
 http://localhost:9613/  
 http://localhost:9613/book/  
+http://localhost:9613/cargo/  
 http://localhost:9613/cargo-cn/  
 http://localhost:9613/reference/  
 http://localhost:9613/rustdoc/  
