@@ -6,6 +6,7 @@
 - [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn)
 - [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn)
 - [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn)
+- [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn)
 
 在浏览器中访问以下 URL
 

@@ -1,0 +1,574 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>构建脚本 - Cargo 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <style>
+    dd {
+        margin-bottom: 1em;
+    }
+</style>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Cargo 手册是使用 Cargo 全面指南教程，Cargo 是 Rust 的包管理器，通过本手册全面了解如何构建 Rust 程序和大型项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">简介</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">1.</strong> 入门</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li><li class="chapter-item expanded "><a href="../getting-started/first-steps.html"><strong aria-hidden="true">1.2.</strong> 初次使用 Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="../guide/index.html"><strong aria-hidden="true">2.</strong> Cargo 指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../guide/why-cargo-exists.html"><strong aria-hidden="true">2.1.</strong> 为什么存在 Cargo</a></li><li class="chapter-item expanded "><a href="../guide/creating-a-new-project.html"><strong aria-hidden="true">2.2.</strong> 创建一个新的包</a></li><li class="chapter-item expanded "><a href="../guide/working-on-an-existing-project.html"><strong aria-hidden="true">2.3.</strong> 处理现有包</a></li><li class="chapter-item expanded "><a href="../guide/dependencies.html"><strong aria-hidden="true">2.4.</strong> 依赖</a></li><li class="chapter-item expanded "><a href="../guide/project-layout.html"><strong aria-hidden="true">2.5.</strong> 项目布局</a></li><li class="chapter-item expanded "><a href="../guide/cargo-toml-vs-cargo-lock.html"><strong aria-hidden="true">2.6.</strong> Cargo.toml 和 Cargo.lock</a></li><li class="chapter-item expanded "><a href="../guide/tests.html"><strong aria-hidden="true">2.7.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../guide/continuous-integration.html"><strong aria-hidden="true">2.8.</strong> 持续集成</a></li><li class="chapter-item expanded "><a href="../guide/cargo-home.html"><strong aria-hidden="true">2.9.</strong> Cargo Home</a></li><li class="chapter-item expanded "><a href="../guide/build-cache.html"><strong aria-hidden="true">2.10.</strong> 构建缓存</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">3.</strong> Cargo 参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/specifying-dependencies.html"><strong aria-hidden="true">3.1.</strong> 指定依赖</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/overriding-dependencies.html"><strong aria-hidden="true">3.1.1.</strong> Overriding Dependencies</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/manifest.html"><strong aria-hidden="true">3.2.</strong> 清单格式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/cargo-targets.html"><strong aria-hidden="true">3.2.1.</strong> Cargo Targets</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/workspaces.html"><strong aria-hidden="true">3.3.</strong> Workspaces</a></li><li class="chapter-item expanded "><a href="../reference/features.html"><strong aria-hidden="true">3.4.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/features-examples.html"><strong aria-hidden="true">3.4.1.</strong> Features Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/profiles.html"><strong aria-hidden="true">3.5.</strong> Profiles</a></li><li class="chapter-item expanded "><a href="../reference/config.html"><strong aria-hidden="true">3.6.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../reference/environment-variables.html"><strong aria-hidden="true">3.7.</strong> 环境变量</a></li><li class="chapter-item expanded "><a href="../reference/build-scripts.html" class="active"><strong aria-hidden="true">3.8.</strong> 构建脚本</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/build-script-examples.html"><strong aria-hidden="true">3.8.1.</strong> Build Script Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/publishing.html"><strong aria-hidden="true">3.9.</strong> 将 crate 发布到 Crates.io</a></li><li class="chapter-item expanded "><a href="../reference/pkgid-spec.html"><strong aria-hidden="true">3.10.</strong> 包 ID 规格</a></li><li class="chapter-item expanded "><a href="../reference/source-replacement.html"><strong aria-hidden="true">3.11.</strong> 更换源</a></li><li class="chapter-item expanded "><a href="../reference/external-tools.html"><strong aria-hidden="true">3.12.</strong> 外部工具</a></li><li class="chapter-item expanded "><a href="../reference/registries.html"><strong aria-hidden="true">3.13.</strong> Registries</a></li><li class="chapter-item expanded "><a href="../reference/resolver.html"><strong aria-hidden="true">3.14.</strong> Dependency Resolution</a></li><li class="chapter-item expanded "><a href="../reference/semver.html"><strong aria-hidden="true">3.15.</strong> SemVer Compatibility</a></li><li class="chapter-item expanded "><a href="../reference/unstable.html"><strong aria-hidden="true">3.16.</strong> 不稳定功能</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">4.</strong> Cargo Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/general-commands.html"><strong aria-hidden="true">4.1.</strong> General Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo.html"><strong aria-hidden="true">4.1.1.</strong> cargo</a></li><li class="chapter-item expanded "><a href="../commands/cargo-help.html"><strong aria-hidden="true">4.1.2.</strong> cargo help</a></li><li class="chapter-item expanded "><a href="../commands/cargo-version.html"><strong aria-hidden="true">4.1.3.</strong> cargo version</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/build-commands.html"><strong aria-hidden="true">4.2.</strong> Build Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-bench.html"><strong aria-hidden="true">4.2.1.</strong> cargo bench</a></li><li class="chapter-item expanded "><a href="../commands/cargo-build.html"><strong aria-hidden="true">4.2.2.</strong> cargo build</a></li><li class="chapter-item expanded "><a href="../commands/cargo-check.html"><strong aria-hidden="true">4.2.3.</strong> cargo check</a></li><li class="chapter-item expanded "><a href="../commands/cargo-clean.html"><strong aria-hidden="true">4.2.4.</strong> cargo clean</a></li><li class="chapter-item expanded "><a href="../commands/cargo-doc.html"><strong aria-hidden="true">4.2.5.</strong> cargo doc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fetch.html"><strong aria-hidden="true">4.2.6.</strong> cargo fetch</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fix.html"><strong aria-hidden="true">4.2.7.</strong> cargo fix</a></li><li class="chapter-item expanded "><a href="../commands/cargo-run.html"><strong aria-hidden="true">4.2.8.</strong> cargo run</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustc.html"><strong aria-hidden="true">4.2.9.</strong> cargo rustc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustdoc.html"><strong aria-hidden="true">4.2.10.</strong> cargo rustdoc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-test.html"><strong aria-hidden="true">4.2.11.</strong> cargo test</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/manifest-commands.html"><strong aria-hidden="true">4.3.</strong> Manifest Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-generate-lockfile.html"><strong aria-hidden="true">4.3.1.</strong> cargo generate-lockfile</a></li><li class="chapter-item expanded "><a href="../commands/cargo-locate-project.html"><strong aria-hidden="true">4.3.2.</strong> cargo locate-project</a></li><li class="chapter-item expanded "><a href="../commands/cargo-metadata.html"><strong aria-hidden="true">4.3.3.</strong> cargo metadata</a></li><li class="chapter-item expanded "><a href="../commands/cargo-pkgid.html"><strong aria-hidden="true">4.3.4.</strong> cargo pkgid</a></li><li class="chapter-item expanded "><a href="../commands/cargo-tree.html"><strong aria-hidden="true">4.3.5.</strong> cargo tree</a></li><li class="chapter-item expanded "><a href="../commands/cargo-update.html"><strong aria-hidden="true">4.3.6.</strong> cargo update</a></li><li class="chapter-item expanded "><a href="../commands/cargo-vendor.html"><strong aria-hidden="true">4.3.7.</strong> cargo vendor</a></li><li class="chapter-item expanded "><a href="../commands/cargo-verify-project.html"><strong aria-hidden="true">4.3.8.</strong> cargo verify-project</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/package-commands.html"><strong aria-hidden="true">4.4.</strong> Package Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-init.html"><strong aria-hidden="true">4.4.1.</strong> cargo init</a></li><li class="chapter-item expanded "><a href="../commands/cargo-install.html"><strong aria-hidden="true">4.4.2.</strong> cargo install</a></li><li class="chapter-item expanded "><a href="../commands/cargo-new.html"><strong aria-hidden="true">4.4.3.</strong> cargo new</a></li><li class="chapter-item expanded "><a href="../commands/cargo-search.html"><strong aria-hidden="true">4.4.4.</strong> cargo search</a></li><li class="chapter-item expanded "><a href="../commands/cargo-uninstall.html"><strong aria-hidden="true">4.4.5.</strong> cargo uninstall</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/publishing-commands.html"><strong aria-hidden="true">4.5.</strong> Publishing Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-login.html"><strong aria-hidden="true">4.5.1.</strong> cargo login</a></li><li class="chapter-item expanded "><a href="../commands/cargo-owner.html"><strong aria-hidden="true">4.5.2.</strong> cargo owner</a></li><li class="chapter-item expanded "><a href="../commands/cargo-package.html"><strong aria-hidden="true">4.5.3.</strong> cargo package</a></li><li class="chapter-item expanded "><a href="../commands/cargo-publish.html"><strong aria-hidden="true">4.5.4.</strong> cargo publish</a></li><li class="chapter-item expanded "><a href="../commands/cargo-yank.html"><strong aria-hidden="true">4.5.5.</strong> cargo yank</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../faq.html"><strong aria-hidden="true">5.</strong> 参见问题</a></li><li class="chapter-item expanded "><a href="../appendix/glossary.html"><strong aria-hidden="true">6.</strong> 附录：术语白</a></li><li class="chapter-item expanded "><a href="../appendix/git-authentication.html"><strong aria-hidden="true">7.</strong> Appendix: Git Authentication</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Cargo 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/cargo-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#build-scripts" id="build-scripts">Build Scripts</a></h2>
+<blockquote>
+<p>构建脚本</p>
+</blockquote>
+<p>一些包需要编译第三方非 Rust 代码，例如 C 库。其他的包需要链接到 C 库，当然这些库既可以位于系统上，也可以从源代码构建。其他人或许还需要功能工具，比如构建之前的代码生成(想想解析生成器)。</p>
+<p>Cargo 并不打算替换为这些能良好优化任务的其他工具，但是它与<code>build</code>配置选项.</p>
+<pre><code class="language-toml">[package]
+# ...
+build = &quot;build.rs&quot;
+</code></pre>
+<p>指定的<code>build</code>命令应执行的 Rust 文件(相对于包根)，将在包编译其他内容之前，被编译和调用，从而具备 Rust 代码所依赖的构建或生成的工件。默认情况下 Cargo 在包根文件中寻找<code>&quot;build.rs&quot;</code>(即使您没有给<code>build</code>字段指定值)使用<code>build = &quot;custom_build_name.rs&quot;</code>指定自定义生成名，或<code>build = false</code>禁用对构建脚本的自动检测。</p>
+<p>Build 命令的一些用例是:</p>
+<ul>
+<li>构建一个捆绑的 C 库.</li>
+<li>在主机系统上找到 C 库.</li>
+<li>从规范中生成 Rust 模块.</li>
+<li>为箱，执行所需的某平台特定配置.</li>
+</ul>
+<p>下面将详细介绍每一个用例，以给出构建命令如何工作的示例.</p>
+<h3><a class="header" href="#inputs-to-the-build-script" id="inputs-to-the-build-script">Inputs to the Build Script</a></h3>
+<blockquote>
+<p>输入到构建脚本</p>
+</blockquote>
+<p>当运行构建脚本时，存在许多构建脚本用到的输入，所有输入都以<a href="./environment-variables.html">环境变量</a>传入。</p>
+<p>除了环境变量之外，构建脚本的当前目录是构建脚本包的源目录.</p>
+<h3><a class="header" href="#outputs-of-the-build-script" id="outputs-of-the-build-script">Outputs of the Build Script</a></h3>
+<blockquote>
+<p>构建脚本的输出</p>
+</blockquote>
+<p>由构建脚本打印到 stdout 的所有行都被写入像<code>target/debug/build/&lt;pkg&gt;/output</code>这样的文件(精确的位置可能取决于你的配置)。如果您希望直接在终端中看到这样的输出，那么使用非常详细<code>-vv</code>标志。注意，如果既不修改构建脚本也不修改包源文件，下一次的<code>-vv</code>调用将<strong>不</strong>打印重复输出到终端，因为没有执行新的构建。可执行<code>cargo clean</code>，如果希望确保输出始终显示在终端上，但要在每次 Cargo 调用之前执行。任何一行以<code>cargo:</code>开始的，直接由 Cargo 解释。行必须是<code>cargo:key=value</code>形式，就像下面的例子:</p>
+<pre><code># specially recognized by Cargo
+cargo:rustc-link-lib=static=foo
+cargo:rustc-link-search=native=/path/to/foo
+cargo:rustc-cfg=foo
+cargo:rustc-env=FOO=bar
+# arbitrary user-defined metadata
+cargo:root=/path/to/foo
+cargo:libdir=/path/to/foo/lib
+cargo:include=/path/to/foo/include
+</code></pre>
+<p>另一方面，打印到 stderr 的行被写入像<code>target/debug/build/&lt;pkg&gt;/stderr</code>这样的文件，但不被 Cargo 解释。</p>
+<p>Cargo 识别一些特殊的 key，其中一些影响箱的构造:</p>
+<ul>
+<li>
+<p><code>rustc-link-lib=[KIND=]NAME</code>说明了，指定值是库名，且会作为<code>-l</code>标志传递给编译器。<code>KIND</code>可选为<code>static</code>，<code>dylib</code>(默认值)，或<code>framework</code>的其中之一，用<code>rustc --help</code>见更多细节。</p>
+</li>
+<li>
+<p><code>rustc-link-search=[KIND=]PATH</code>说明了，指定值是库搜索路径，且会作为<code>-L</code>标志传递给编译器。<code>KIND</code>可选为<code>dependency</code>，<code>crate</code>，<code>native</code>，<code>framework</code>或<code>all</code>(默认值)的其中之一，使用<code>rustc --help</code>见更多细节.</p>
+</li>
+<li>
+<p><code>rustc-flags=FLAGS</code>是传递给编译器的一组标志，仅支持<code>-l</code>和<code>-L</code>标志。</p>
+</li>
+<li>
+<p><code>rustc-cfg=FEATURE</code>说明了，指定的特性，且会作为<code>--cfg</code>标志传递给编译器。这通常对检测，执行各种特征的编译时间，是有用的。</p>
+</li>
+<li>
+<p><code>rustc-env=VAR=VALUE</code>说明了，指定的环境变量，且会被添加到编译器所在的环境中。然后，可以通过编译箱中的<code>env!</code>宏检索该值。这对于在箱的代码中嵌入额外的元数据很有用，比如 Git HEAD 的散列，或持续集成服务器的唯一标识符。</p>
+</li>
+<li>
+<p><code>rerun-if-changed=PATH</code>是文件或目录的路径，说明了如果构建脚本发生更改(由文件上最近修改的时间戳检测到)，则应重新运行构建脚本。通常，如果箱根目录中的任何文件发生更改，则重新运行构建脚本，但这可用于将更改范围扩展到仅一小组文件。(如果这个路径指向一个目录，则不会遍历整个目录以进行更改——只对目录本身的时间戳进行更改(该时间戳对应于目录中的某些类型的更改，取决于平台)，将触发重新构建。要请求重新运行整个目录中的任何更改，请递归地为该目录打印一行，为该目录内的所有内容打印另一行。)请注意，如果构建脚本本身(或其依赖项之一)更改，则无条件地重新构建和重新运行该脚本，因此，<code>cargo:rerun-if-changed=build.rs</code>几乎总是冗余(除非您想要忽略除了<code>build.rs</code>，所有其他文件的变化)</p>
+</li>
+<li>
+<p><code>rerun-if-env-changed=VAR</code>是环境变量的名称，说明了它指示如果环境变量的值发生变化，则应重新运行构建脚本。这基本上与<code>rerun-if-changed</code>是一样的，除了它与环境变量一起工作。注意，这里的环境变量用于全局环境变量，如<code>CC</code>这样的，对于 Cargo 所设的像<code>TARGET</code>，就不必使用它。还要注意，如果<code>rerun-if-env-changed</code>打印出来，然后 Cargo 将<em>只</em>在，那些环境变量发生变化，或者打印出<code>rerun-if-changed</code>改变的文件的情况下，才重新运行构建脚本。</p>
+</li>
+<li>
+<p><code>warning=MESSAGE</code>是构建脚本运行完毕后，打印到主控制台的消息/警告只针对路径依赖项(即，您在本地工作的那些依赖项)显示，因此如， crates.io 的箱在默认情况下不会打印警告。</p>
+</li>
+</ul>
+<p>其他哪些元素都是用户定义的元数据，这些元数据传递给了依赖的。关于这个的更多信息可以在<a href="#the-links-manifest-key"><code>links</code></a>部分查看.</p>
+<h3><a class="header" href="#build-dependencies" id="build-dependencies">Build Dependencies</a></h3>
+<blockquote>
+<p>构建依赖</p>
+</blockquote>
+<p>构建脚本也可以依赖其他基于 Cargo 的箱。依赖关系通过清单的<code>build-dependencies</code>部分指定。</p>
+<pre><code class="language-toml">[build-dependencies]
+foo = { git = &quot;https://github.com/your-packages/foo&quot; }
+</code></pre>
+<p>构建脚本<strong>不</strong>可以访问<code>dependencies</code>或<code>dev-dependencies</code>部分列表中的依赖项(它们还没有建成!)，除非明确声明，否则包本身也不能使用所有构建依赖项。</p>
+<h3><a class="header" href="#the-links-manifest-key" id="the-links-manifest-key">The <code>links</code> Manifest Key</a></h3>
+<blockquote>
+<p><code>links</code> 清单 键</p>
+</blockquote>
+<p>除了清单键<code>build</code>，Cargo 也支持一个，要链接到本地库的名称声明，那就是<code>links</code>清单键:</p>
+<pre><code class="language-toml">[package]
+# ...
+links = &quot;foo&quot;
+build = &quot;build.rs&quot;
+</code></pre>
+<p>此清单说明了包会链接到本机库<code>libfoo</code>，并且它还具有定位和/或构建该本机库的构建脚本。Cargo 要求<code>build</code>如果有值，那<code>links</code>也要有值。</p>
+<p>这个清单键的目的是，让 Cargo 了解包所具有的本地依赖项集合，并提供在包构建脚本之间，传递元数据的合适的系统.</p>
+<p>首先，Cargo 要求一个包最多只有一个<code>links</code>值。换句话说，禁止两个包链接到同一个本机库。然而，这里也有<a href="#a-sys-packages">约定位置</a>的方式，用来缓解这个问题。</p>
+<p>如上面在输出格式中提到的，每个构建脚本可以以键-值对的形式生成一组任意的元数据。此元数据传递给<strong>依赖的</strong>包。例如，如果<code>libbar</code>依赖<code>libfoo</code>，当<code>libfoo</code>生成<code>key=value</code>作为其元数据的一部分，那<code>libbar</code>的构建脚本会有<code>DEP_FOO_KEY=value</code>环境变量。</p>
+<p>注意，元数据只传递给直接依赖项，而不是把依赖项串起来。此元数据传递的动机，会在接下来，关联到系统库案例研究中概述。</p>
+<h3><a class="header" href="#overriding-build-scripts" id="overriding-build-scripts">Overriding Build Scripts</a></h3>
+<blockquote>
+<p>覆盖 构建脚本</p>
+</blockquote>
+<p>如果一个清单包含<code>links</code>关键字，那 Cargo 支持重写用自定义库指定的构建脚本。此功能的目的是防止完全运行有问题的构建脚本，而是提前提供下元数据。</p>
+<p>要覆盖构建脚本，请将下列配置放在任何可接受的 Cargo 的<a href="./config.html">配置位置</a>中。</p>
+<pre><code class="language-toml">[target.x86_64-unknown-linux-gnu.foo]
+rustc-link-search = [&quot;/path/to/foo&quot;]
+rustc-link-lib = [&quot;foo&quot;]
+root = &quot;/path/to/foo&quot;
+key = &quot;value&quot;
+</code></pre>
+<p>本节说明目标<code>x86_64-unknown-linux-gnu</code>，命名为<code>foo</code>的库，具有指定的元数据。此元数据与构建脚本时生成的元数据相同，提供了许多键/值对，其中<code>rustc-flags</code>，<code>rustc-link-search</code>和<code>rustc-link-lib</code>有点特殊.</p>
+<p>使用此配置，如果一个包声明它链接到此<code>foo</code>，那构建脚本将<strong>不</strong>编译或运行，而会使用指定的元数据。</p>
+<h3><a class="header" href="#case-study-code-generation" id="case-study-code-generation">Case study: Code generation</a></h3>
+<blockquote>
+<p>案例学习: 代码生成</p>
+</blockquote>
+<p>由于各种原因，一些 Cargo 包在编译之前需要生成代码。这里我们将介绍一个简单的示例，该示例把，'生成库调用'作为构建脚本的一部分.</p>
+<p>首先，让我们看一下这个包的目录结构:</p>
+<pre><code>.
+├── Cargo.toml
+├── build.rs
+└── src
+    └── main.rs
+
+1 directory, 3 files
+</code></pre>
+<p>在这里我们可以看到我们有一个<code>build.rs</code>构建脚本，和二进制文件<code>main.rs</code>。 接下来，让我们看一下清单:</p>
+<pre><code class="language-toml"># Cargo.toml
+
+[package]
+name = &quot;hello-from-generated-code&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;you@example.com&quot;]
+build = &quot;build.rs&quot;
+</code></pre>
+<p>在这里，我们可以看到，我们已经指定了一个构建脚本<code>build.rs</code>，我们将使用它来生成一些代码。让我们看看构建脚本里面有什么:</p>
+<pre><pre class="playground"><code class="language-rust no_run">// build.rs
+
+use std::env;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
+
+fn main() {
+    let out_dir = env::var(&quot;OUT_DIR&quot;).unwrap();
+    let dest_path = Path::new(&amp;out_dir).join(&quot;hello.rs&quot;);
+    let mut f = File::create(&amp;dest_path).unwrap();
+
+    f.write_all(b&quot;
+        pub fn message() -&gt; &amp;'static str {
+            \&quot;Hello, World!\&quot;
+        }
+    &quot;).unwrap();
+}
+</code></pre></pre>
+<p>这里有两点值得注意的地方:</p>
+<ul>
+<li>脚本使用<code>OUT_DIR</code>环境变量，以知道输出文件到哪里。它可以使用进程的当前工作目录，来查找输入文件应该到哪里，但是在这种情况下，我们是没有任何输入文件的。</li>
+<li>一般来说，构建脚本不应该修改<code>OUT_DIR</code>目录外的任何文件。 乍看之下，似乎不错，但当您使用这种箱子作为依赖项时，它确会带来问题，因为<code>.cargo/registry</code>源中的<em>隐性的</em>常量应该是不变的。<code>cargo</code>在打包时不会允许这样的脚本。</li>
+<li>这个脚本相对简单，只是写出一个小生成的文件。可以想象，其他更奇特的操作也可能发生，例如从 C 头文件或其他定义的语言生成 Rust 模块。</li>
+</ul>
+<p>接下来，我们来看看库本身:</p>
+<pre><code class="language-rust ignore">// src/main.rs
+
+include!(concat!(env!(&quot;OUT_DIR&quot;), &quot;/hello.rs&quot;));
+
+fn main() {
+    println!(&quot;{}&quot;, message());
+}
+</code></pre>
+<p>这就是真正的魔法发生的地方。该库正在使用 rustc 定义的 <code>include!</code>宏，它又结合<code>concat!</code>与<code>env!</code>宏去包含生成文件(<code>hello.rs</code>)，从而进入箱的编译。</p>
+<p>使用此处所示的结构，箱可以包括(include)构建脚本在内的，任何数量的生成文件。</p>
+<h3><a class="header" href="#case-study-building-some-native-code" id="case-study-building-some-native-code">Case study: Building some native code</a></h3>
+<blockquote>
+<p>案例学习: 构建一些原生代码</p>
+</blockquote>
+<p>有时需要建立一些本地 C 或 C++代码作为包的一部分。这是在用构建脚本到 Rust 箱本身之前，构建本机库的另一个极好用例。作为一个例子，我们将创建一个 Rust 库，它调用 C 来打印&quot;Hello,World!&quot;.</p>
+<p>和上面一样，让我们先来看看包的布局:</p>
+<pre><code>.
+├── Cargo.toml
+├── build.rs
+└── src
+    ├── hello.c
+    └── main.rs
+
+1 directory, 4 files
+</code></pre>
+<p>很像之前的吧! 下一步，清单如下:</p>
+<pre><code class="language-toml"># Cargo.toml
+
+[package]
+name = &quot;hello-world-from-c&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;you@example.com&quot;]
+build = &quot;build.rs&quot;
+</code></pre>
+<p>现在，我们不打算使用任何-构建的依赖项，所以现在让我们看一下构建脚本:</p>
+<pre><pre class="playground"><code class="language-rust no_run">// build.rs
+
+use std::process::Command;
+use std::env;
+use std::path::Path;
+
+fn main() {
+    let out_dir = env::var(&quot;OUT_DIR&quot;).unwrap();
+
+    // 请注意，这种方法存在许多缺点，
+    // 下个代码展示，会详细介绍如何提高这些命令的可移植性。
+    Command::new(&quot;gcc&quot;).args(&amp;[&quot;src/hello.c&quot;, &quot;-c&quot;, &quot;-fPIC&quot;, &quot;-o&quot;])
+                       .arg(&amp;format!(&quot;{}/hello.o&quot;, out_dir))
+                       .status().unwrap();
+    Command::new(&quot;ar&quot;).args(&amp;[&quot;crus&quot;, &quot;libhello.a&quot;, &quot;hello.o&quot;])
+                      .current_dir(&amp;Path::new(&amp;out_dir))
+                      .status().unwrap();
+
+    println!(&quot;cargo:rustc-link-search=native={}&quot;, out_dir);
+    println!(&quot;cargo:rustc-link-lib=static=hello&quot;);
+}
+</code></pre></pre>
+<p>此构建脚本首先将 C 文件编译为对象文件(通过调用<code>gcc</code>)，然后将这个对象文件转换为静态库(通过调用<code>ar</code>)，最后一步是反馈给 Cargo ，以表示我们的输出在<code>out_dir</code>和通过<code>-l static=hello</code>标志，编译器应该将箱静态链接到<code>libhello.a</code>。</p>
+<p>请注意，这种硬编码方法有许多缺点:</p>
+<ul>
+<li>这个<code>gcc</code>命令本身不是跨平台可移植的。如，在 Windows 平台不太可能<code>gcc</code>，甚至不是所有 UNIX 平台都可能有<code>gcc</code>。 这个<code>ar</code>命令也处于类似的情况。</li>
+<li>这些命令不考虑跨编译。如果我们为 Android 这样的平台进行跨编译，<code>gcc</code>就不太可能产生一个可执行的 ARM.</li>
+</ul>
+<p>但不要害怕，这里<code>build-dependencies</code>就帮到你! Cargo 生态系统有许多包，为了使此类任务更加容易、可移植和标准化。构建脚本可以写成:</p>
+<pre><code class="language-rust ignore">// build.rs
+
+// 依赖于外部维护的`cc`包，管理
+// 调用C编译器。
+extern crate cc;
+
+fn main() {
+    cc::Build::new()
+        .file(&quot;src/hello.c&quot;)
+        .compile(&quot;hello&quot;);
+}
+</code></pre>
+<p>添加<code>cc</code>箱，这样将构建，依赖<code>cc</code>就好啦，将下面的添加到您的<code>Cargo.toml</code>:</p>
+<pre><code class="language-toml">[build-dependencies]
+cc = &quot;1.0&quot;
+</code></pre>
+<p>这个<a href="https://crates.io/crates/cc"><code>cc</code>箱</a>抽象了 C 代码构建，主要用于脚本需求范围:</p>
+<ul>
+<li>它调用适当的编译器(Windows 的 MSVC，<code>gcc</code>对 MinGW ，<code>cc</code>对 UNIX 平台等等).</li>
+<li>通过向正在使用的编译器传递适当的标志，获取<code>TARGET</code>变量.</li>
+<li>其他环境变量，如<code>OPT_LEVEL</code>，<code>DEBUG</code>等等，都是自动处理的.</li>
+<li>stdout 输出和<code>OUT_DIR</code>位置也由<code>cc</code>库控制.</li>
+</ul>
+<p>在这里，我们可以开始看到，将尽可能多的功能移植到公共构建依赖项，而不是在所有构建脚本之间复制来复制去，的一些主要好处!</p>
+<p>回到案例研究，让我们快速浏览一下<code>src</code>目录中的内容:</p>
+<pre><code class="language-c">// src/hello.c
+
+#include &lt;stdio.h&gt;
+
+void hello() {
+    printf(&quot;Hello, World!\n&quot;);
+}
+</code></pre>
+<pre><code class="language-rust ignore">// src/main.rs
+
+// 注意缺少`#[link]`属性。 我们选择，将责任委派给
+// 构建脚本的链接，而不是硬编码
+// 它在源文件中.
+extern { fn hello(); }
+
+fn main() {
+    unsafe { hello(); }
+}
+</code></pre>
+<p>然后，就好啦! 这就完成了使用构建脚本，从 Cargo 包构建一些 C 代码的示例。这也说明了为什么在许多情况下使，用构建依赖项非常重要，甚至更加简洁!</p>
+<p>我们还看到了构建脚本使用箱，纯粹作为用于构建过程的依赖项，而不是在运行时，用作箱本身的依赖项的简要示例。</p>
+<h3><a class="header" href="#case-study-linking-to-system-libraries" id="case-study-linking-to-system-libraries">Case study: Linking to system libraries</a></h3>
+<blockquote>
+<p>案例学习: 链接到系统库</p>
+</blockquote>
+<p>这里的最后一个案例研究，将研究 Cargo 库如何链接到系统库，以及构建脚本如何支持这个用例。</p>
+<p>通常，Rust 箱希望链接到系统上经常提供的本地库，以绑定其功能，或者只是将其用作实现细节的一部分。想以不管平台的方式执行这个操作，而这却是一个相当微妙的问题，再次说明下，构建脚本的目的是尽可能多地分配这些(微妙)内容，以便让消费者尽可能容易地使用它.</p>
+<p>作为一个例子，让我们来看一个<a href="https://github.com/alexcrichton/git2-rs/tree/master/libgit2-sys">Cargo 本身的依赖</a>，<a href="https://github.com/libgit2/libgit2">libgit2</a>。这个 C 库其实有许多约束条件:</p>
+<ul>
+<li>它可选为依赖 Unix 上的 OpenSSL ，来实现 https 传输.</li>
+<li>它可选为依赖所有平台上的 libssh2 ，来实现 ssh 传输.</li>
+<li>默认情况下，它通常不安装在所有系统上.</li>
+<li>它可以从源代码使用<code>cmake</code>构建.</li>
+</ul>
+<p>为了可视化这里发生的事情，让我们看一下，链接本机 C 库的相关 Cargo 包的清单。</p>
+<pre><code class="language-toml">[package]
+name = &quot;libgit2-sys&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;...&quot;]
+links = &quot;git2&quot;
+build = &quot;build.rs&quot;
+
+[dependencies]
+libssh2-sys = { git = &quot;https://github.com/alexcrichton/ssh2-rs&quot; }
+
+[target.'cfg(unix)'.dependencies]
+openssl-sys = { git = &quot;https://github.com/alexcrichton/openssl-sys&quot; }
+
+# ...
+</code></pre>
+<p>正如上面的清单所显示的，我们指定了一个<code>build</code>脚本，但值得注意的是，该示例具有<code>links</code>项，说明该箱(<code>libgit2-sys</code>)链接到了这个本地库<code>git2</code>。</p>
+<p>在这里，我们还看到，我们选择让 Rust 箱有一个无条件的，通过<code>libssh2-sys</code>箱依赖<code>libssh2</code>(ssh2-rs)，以及(有条件的)特定于平 unix 台的<code>openssl-sys</code>依赖(其他平台现在被漠视)。这似乎有点违反在 <em>Cargo 清单</em> 的 <em>C 依赖</em> 的明确性，但这实际上是这'地方'中使用 Cargo 的一种约定.</p>
+<h3><a class="header" href="#-sys-packages" id="-sys-packages"><code>*-sys</code> Packages</a></h3>
+<blockquote>
+<p><code>*-sys</code> 包们</p>
+</blockquote>
+<p>为了减轻对系统库的链接，crates.io 有一个包命名和功能的<em>惯例</em>。比如包名<code>foo-sys</code>，它应该提供两个主要功能:</p>
+<ul>
+<li>库箱应链接到本地库<code>libfoo</code>。 在源代码最后构建之前，这将经常探测当前的系统的<code>libfoo</code>。</li>
+<li>库箱应提供在<code>libfoo</code>的<strong>声明</strong>函数，但是<strong>不</strong>绑定或高级抽象。</li>
+</ul>
+<p>一套<code>*-sys</code>包，提供了一组用于连接到本地库的公共依赖项。通过这种'本机库相关'的包约定，可以获得许多好处:</p>
+<ul>
+<li><code>foo-sys</code>的公共依赖，会减轻上面所说的，关于一个包的<code>links</code>的每个值规则。</li>
+<li>一个公共依赖关系，更能发现<code>libfoo</code>本身的集中逻辑(或者从源代码构建它).</li>
+<li>这些依赖关系很容易被重写.</li>
+</ul>
+<h3><a class="header" href="#building-libgit2" id="building-libgit2">Building libgit2</a></h3>
+<blockquote>
+<p>构建 libgit2 吧</p>
+</blockquote>
+<p>现在我们已经整理了 libgit2 的依赖，我们需要实际编写下构建脚本。我们这里不讨论特定的代码片段，而只研究<code>libgit2-sys</code>构建脚本的高层细节。这并不是建议所有包都遵循这个策略，而仅概述一个特定的策略。</p>
+<p>构建脚本应该做的第一步是查询 libgit2 是否已经安装在主机系统上。要做到这一点，我们将利用现有的工具<code>pkg-config</code>(当它可用时)。我们也会使用<code>build-dependencies</code>部分重构成<code>pkg-config</code>相关的所有代码(或者有人已经这样做了!)。</p>
+<p>如果<code>pkg-config</code>找不到 libgit2，或者如果<code>pkg-config</code>只是没有安装，下一步就要从捆绑源代码构建 libgit2 (捆绑源码作为<code>libgit2-sys</code>本身的一部分)。然而，在这样做时有一些细微差别，我们需要加以考虑:</p>
+<ul>
+<li>
+<p>libgit2 的构建系统，<code>cmake</code>需要能够找到 libgit2 可选依赖 libssh2 。而我们确信我们已经构建了它(因它是一个 Cargo 依赖项)，我们只需要传递这个信息。为此，我们利用元数据格式，在构建脚本之间传递信息。在这个例子中，打印出的 libssh2 包信息是<code>cargo:root=...</code>，它来告诉我们 libssh2 安装在哪里，然后我们可以通过<code>CMAKE_PREFIX_PATH</code>环境变量让 cmkae 知道。</p>
+</li>
+<li>
+<p>我们需要处理下，编译 C 代码时的一些<code>CFLAGS</code>值(也要告诉<code>cmake</code>关于这个信息)。我们想传递的一些标志是 64 位的<code>-m64</code>，32 位的<code>-m32</code>，或<code>-fPIC</code>也适用于 64 位。</p>
+</li>
+<li>
+<p>最后，我们调用<code>cmake</code>将所有输出放入环境变量<code>OUT_DIR</code>目录，然后打印必要的元数据，以指导 rustc 如何链接到 libgit2。</p>
+</li>
+</ul>
+<p>这个构建脚本的大部分功能，很容易就重构为常见的依赖项，因此我们的构建脚本不像这个描述那样长烦! 实际上，通过构建依赖项，构建脚本应该非常简单。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../reference/environment-variables.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../reference/build-script-examples.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../reference/environment-variables.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../reference/build-script-examples.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../language.js"></script>
+        
+
+        
+
+    </body>
+</html>

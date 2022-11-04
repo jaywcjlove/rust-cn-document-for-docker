@@ -1,0 +1,786 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Registries - Cargo 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <style>
+    dd {
+        margin-bottom: 1em;
+    }
+</style>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Cargo 手册是使用 Cargo 全面指南教程，Cargo 是 Rust 的包管理器，通过本手册全面了解如何构建 Rust 程序和大型项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">简介</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">1.</strong> 入门</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li><li class="chapter-item expanded "><a href="../getting-started/first-steps.html"><strong aria-hidden="true">1.2.</strong> 初次使用 Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="../guide/index.html"><strong aria-hidden="true">2.</strong> Cargo 指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../guide/why-cargo-exists.html"><strong aria-hidden="true">2.1.</strong> 为什么存在 Cargo</a></li><li class="chapter-item expanded "><a href="../guide/creating-a-new-project.html"><strong aria-hidden="true">2.2.</strong> 创建一个新的包</a></li><li class="chapter-item expanded "><a href="../guide/working-on-an-existing-project.html"><strong aria-hidden="true">2.3.</strong> 处理现有包</a></li><li class="chapter-item expanded "><a href="../guide/dependencies.html"><strong aria-hidden="true">2.4.</strong> 依赖</a></li><li class="chapter-item expanded "><a href="../guide/project-layout.html"><strong aria-hidden="true">2.5.</strong> 项目布局</a></li><li class="chapter-item expanded "><a href="../guide/cargo-toml-vs-cargo-lock.html"><strong aria-hidden="true">2.6.</strong> Cargo.toml 和 Cargo.lock</a></li><li class="chapter-item expanded "><a href="../guide/tests.html"><strong aria-hidden="true">2.7.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../guide/continuous-integration.html"><strong aria-hidden="true">2.8.</strong> 持续集成</a></li><li class="chapter-item expanded "><a href="../guide/cargo-home.html"><strong aria-hidden="true">2.9.</strong> Cargo Home</a></li><li class="chapter-item expanded "><a href="../guide/build-cache.html"><strong aria-hidden="true">2.10.</strong> 构建缓存</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">3.</strong> Cargo 参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/specifying-dependencies.html"><strong aria-hidden="true">3.1.</strong> 指定依赖</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/overriding-dependencies.html"><strong aria-hidden="true">3.1.1.</strong> Overriding Dependencies</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/manifest.html"><strong aria-hidden="true">3.2.</strong> 清单格式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/cargo-targets.html"><strong aria-hidden="true">3.2.1.</strong> Cargo Targets</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/workspaces.html"><strong aria-hidden="true">3.3.</strong> Workspaces</a></li><li class="chapter-item expanded "><a href="../reference/features.html"><strong aria-hidden="true">3.4.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/features-examples.html"><strong aria-hidden="true">3.4.1.</strong> Features Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/profiles.html"><strong aria-hidden="true">3.5.</strong> Profiles</a></li><li class="chapter-item expanded "><a href="../reference/config.html"><strong aria-hidden="true">3.6.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../reference/environment-variables.html"><strong aria-hidden="true">3.7.</strong> 环境变量</a></li><li class="chapter-item expanded "><a href="../reference/build-scripts.html"><strong aria-hidden="true">3.8.</strong> 构建脚本</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/build-script-examples.html"><strong aria-hidden="true">3.8.1.</strong> Build Script Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/publishing.html"><strong aria-hidden="true">3.9.</strong> 将 crate 发布到 Crates.io</a></li><li class="chapter-item expanded "><a href="../reference/pkgid-spec.html"><strong aria-hidden="true">3.10.</strong> 包 ID 规格</a></li><li class="chapter-item expanded "><a href="../reference/source-replacement.html"><strong aria-hidden="true">3.11.</strong> 更换源</a></li><li class="chapter-item expanded "><a href="../reference/external-tools.html"><strong aria-hidden="true">3.12.</strong> 外部工具</a></li><li class="chapter-item expanded "><a href="../reference/registries.html" class="active"><strong aria-hidden="true">3.13.</strong> Registries</a></li><li class="chapter-item expanded "><a href="../reference/resolver.html"><strong aria-hidden="true">3.14.</strong> Dependency Resolution</a></li><li class="chapter-item expanded "><a href="../reference/semver.html"><strong aria-hidden="true">3.15.</strong> SemVer Compatibility</a></li><li class="chapter-item expanded "><a href="../reference/unstable.html"><strong aria-hidden="true">3.16.</strong> 不稳定功能</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">4.</strong> Cargo Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/general-commands.html"><strong aria-hidden="true">4.1.</strong> General Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo.html"><strong aria-hidden="true">4.1.1.</strong> cargo</a></li><li class="chapter-item expanded "><a href="../commands/cargo-help.html"><strong aria-hidden="true">4.1.2.</strong> cargo help</a></li><li class="chapter-item expanded "><a href="../commands/cargo-version.html"><strong aria-hidden="true">4.1.3.</strong> cargo version</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/build-commands.html"><strong aria-hidden="true">4.2.</strong> Build Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-bench.html"><strong aria-hidden="true">4.2.1.</strong> cargo bench</a></li><li class="chapter-item expanded "><a href="../commands/cargo-build.html"><strong aria-hidden="true">4.2.2.</strong> cargo build</a></li><li class="chapter-item expanded "><a href="../commands/cargo-check.html"><strong aria-hidden="true">4.2.3.</strong> cargo check</a></li><li class="chapter-item expanded "><a href="../commands/cargo-clean.html"><strong aria-hidden="true">4.2.4.</strong> cargo clean</a></li><li class="chapter-item expanded "><a href="../commands/cargo-doc.html"><strong aria-hidden="true">4.2.5.</strong> cargo doc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fetch.html"><strong aria-hidden="true">4.2.6.</strong> cargo fetch</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fix.html"><strong aria-hidden="true">4.2.7.</strong> cargo fix</a></li><li class="chapter-item expanded "><a href="../commands/cargo-run.html"><strong aria-hidden="true">4.2.8.</strong> cargo run</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustc.html"><strong aria-hidden="true">4.2.9.</strong> cargo rustc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustdoc.html"><strong aria-hidden="true">4.2.10.</strong> cargo rustdoc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-test.html"><strong aria-hidden="true">4.2.11.</strong> cargo test</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/manifest-commands.html"><strong aria-hidden="true">4.3.</strong> Manifest Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-generate-lockfile.html"><strong aria-hidden="true">4.3.1.</strong> cargo generate-lockfile</a></li><li class="chapter-item expanded "><a href="../commands/cargo-locate-project.html"><strong aria-hidden="true">4.3.2.</strong> cargo locate-project</a></li><li class="chapter-item expanded "><a href="../commands/cargo-metadata.html"><strong aria-hidden="true">4.3.3.</strong> cargo metadata</a></li><li class="chapter-item expanded "><a href="../commands/cargo-pkgid.html"><strong aria-hidden="true">4.3.4.</strong> cargo pkgid</a></li><li class="chapter-item expanded "><a href="../commands/cargo-tree.html"><strong aria-hidden="true">4.3.5.</strong> cargo tree</a></li><li class="chapter-item expanded "><a href="../commands/cargo-update.html"><strong aria-hidden="true">4.3.6.</strong> cargo update</a></li><li class="chapter-item expanded "><a href="../commands/cargo-vendor.html"><strong aria-hidden="true">4.3.7.</strong> cargo vendor</a></li><li class="chapter-item expanded "><a href="../commands/cargo-verify-project.html"><strong aria-hidden="true">4.3.8.</strong> cargo verify-project</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/package-commands.html"><strong aria-hidden="true">4.4.</strong> Package Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-init.html"><strong aria-hidden="true">4.4.1.</strong> cargo init</a></li><li class="chapter-item expanded "><a href="../commands/cargo-install.html"><strong aria-hidden="true">4.4.2.</strong> cargo install</a></li><li class="chapter-item expanded "><a href="../commands/cargo-new.html"><strong aria-hidden="true">4.4.3.</strong> cargo new</a></li><li class="chapter-item expanded "><a href="../commands/cargo-search.html"><strong aria-hidden="true">4.4.4.</strong> cargo search</a></li><li class="chapter-item expanded "><a href="../commands/cargo-uninstall.html"><strong aria-hidden="true">4.4.5.</strong> cargo uninstall</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/publishing-commands.html"><strong aria-hidden="true">4.5.</strong> Publishing Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-login.html"><strong aria-hidden="true">4.5.1.</strong> cargo login</a></li><li class="chapter-item expanded "><a href="../commands/cargo-owner.html"><strong aria-hidden="true">4.5.2.</strong> cargo owner</a></li><li class="chapter-item expanded "><a href="../commands/cargo-package.html"><strong aria-hidden="true">4.5.3.</strong> cargo package</a></li><li class="chapter-item expanded "><a href="../commands/cargo-publish.html"><strong aria-hidden="true">4.5.4.</strong> cargo publish</a></li><li class="chapter-item expanded "><a href="../commands/cargo-yank.html"><strong aria-hidden="true">4.5.5.</strong> cargo yank</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../faq.html"><strong aria-hidden="true">5.</strong> 参见问题</a></li><li class="chapter-item expanded "><a href="../appendix/glossary.html"><strong aria-hidden="true">6.</strong> 附录：术语白</a></li><li class="chapter-item expanded "><a href="../appendix/git-authentication.html"><strong aria-hidden="true">7.</strong> Appendix: Git Authentication</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Cargo 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/cargo-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#registries" id="registries">Registries</a></h2>
+<p>Cargo installs crates and fetches dependencies from a &quot;registry&quot;. The default
+registry is <a href="https://crates.io/">crates.io</a>. A registry contains an &quot;index&quot; which contains a
+searchable list of available crates. A registry may also provide a web API to
+support publishing new crates directly from Cargo.</p>
+<blockquote>
+<p>Note: If you are interested in mirroring or vendoring an existing registry,
+take a look at <a href="source-replacement.html">Source Replacement</a>.</p>
+</blockquote>
+<h3><a class="header" href="#using-an-alternate-registry" id="using-an-alternate-registry">Using an Alternate Registry</a></h3>
+<p>To use a registry other than <a href="https://crates.io/">crates.io</a>, the name and index URL of the
+registry must be added to a <a href="config.html"><code>.cargo/config.toml</code> file</a>. The <code>registries</code>
+table has a key for each registry, for example:</p>
+<pre><code class="language-toml">[registries]
+my-registry = { index = &quot;https://my-intranet:8080/git/index&quot; }
+</code></pre>
+<p>The <code>index</code> key should be a URL to a git repository with the registry's index.
+A crate can then depend on a crate from another registry by specifying the
+<code>registry</code> key and a value of the registry's name in that dependency's entry
+in <code>Cargo.toml</code>:</p>
+<pre><code class="language-toml"># Sample Cargo.toml
+[package]
+name = &quot;my-project&quot;
+version = &quot;0.1.0&quot;
+
+[dependencies]
+other-crate = { version = &quot;1.0&quot;, registry = &quot;my-registry&quot; }
+</code></pre>
+<p>As with most config values, the index may be specified with an environment
+variable instead of a config file. For example, setting the following
+environment variable will accomplish the same thing as defining a config file:</p>
+<pre><code class="language-ignore">CARGO_REGISTRIES_MY_REGISTRY_INDEX=https://my-intranet:8080/git/index
+</code></pre>
+<blockquote>
+<p>Note: <a href="https://crates.io/">crates.io</a> does not accept packages that depend on crates from other
+registries.</p>
+</blockquote>
+<h3><a class="header" href="#publishing-to-an-alternate-registry" id="publishing-to-an-alternate-registry">Publishing to an Alternate Registry</a></h3>
+<p>If the registry supports web API access, then packages can be published
+directly to the registry from Cargo. Several of Cargo's commands such as
+<a href="../commands/cargo-publish.html"><code>cargo publish</code></a> take a <code>--registry</code> command-line flag to indicate which
+registry to use. For example, to publish the package in the current directory:</p>
+<ol>
+<li>
+<p><code>cargo login --registry=my-registry</code></p>
+<p>This only needs to be done once. You must enter the secret API token
+retrieved from the registry's website. Alternatively the token may be
+passed directly to the <code>publish</code> command with the <code>--token</code> command-line
+flag or an environment variable with the name of the registry such as
+<code>CARGO_REGISTRIES_MY_REGISTRY_TOKEN</code>.</p>
+</li>
+<li>
+<p><code>cargo publish --registry=my-registry</code></p>
+</li>
+</ol>
+<p>Instead of always passing the <code>--registry</code> command-line option, the default
+registry may be set in <a href="config.html"><code>.cargo/config.toml</code></a> with the <code>registry.default</code>
+key.</p>
+<p>Setting the <code>package.publish</code> key in the <code>Cargo.toml</code> manifest restricts which
+registries the package is allowed to be published to. This is useful to
+prevent accidentally publishing a closed-source package to <a href="https://crates.io/">crates.io</a>. The
+value may be a list of registry names, for example:</p>
+<pre><code class="language-toml">[package]
+# ...
+publish = [&quot;my-registry&quot;]
+</code></pre>
+<p>The <code>publish</code> value may also be <code>false</code> to restrict all publishing, which is
+the same as an empty list.</p>
+<p>The authentication information saved by <a href="../commands/cargo-login.html"><code>cargo login</code></a> is stored in the
+<code>credentials.toml</code> file in the Cargo home directory (default <code>$HOME/.cargo</code>). It
+has a separate table for each registry, for example:</p>
+<pre><code class="language-toml">[registries.my-registry]
+token = &quot;854DvwSlUwEHtIo3kWy6x7UCPKHfzCmy&quot;
+</code></pre>
+<h3><a class="header" href="#running-a-registry" id="running-a-registry">Running a Registry</a></h3>
+<p>A minimal registry can be implemented by having a git repository that contains
+an index, and a server that contains the compressed <code>.crate</code> files created by
+<a href="../commands/cargo-package.html"><code>cargo package</code></a>. Users won't be able to use Cargo to publish to it, but this
+may be sufficient for closed environments.</p>
+<p>A full-featured registry that supports publishing will additionally need to
+have a web API service that conforms to the API used by Cargo. The web API is
+documented below.</p>
+<p>At this time, there is no widely used software for running a custom registry.
+There is interest in documenting projects that implement registry support, or
+existing package caches that add support for Cargo.</p>
+<h3><a class="header" href="#index-format" id="index-format">Index Format</a></h3>
+<p>The following defines the format of the index. New features are occasionally
+added, which are only understood starting with the version of Cargo that
+introduced them. Older versions of Cargo may not be able to use packages that
+make use of new features. However, the format for older packages should not
+change, so older versions of Cargo should be able to use them.</p>
+<p>The index is stored in a git repository so that Cargo can efficiently fetch
+incremental updates to the index. In the root of the repository is a file
+named <code>config.json</code> which contains JSON information used by Cargo for
+accessing the registry. This is an example of what the <a href="https://crates.io/">crates.io</a> config file
+looks like:</p>
+<pre><code class="language-javascript">{
+    &quot;dl&quot;: &quot;https://crates.io/api/v1/crates&quot;,
+    &quot;api&quot;: &quot;https://crates.io&quot;
+}
+</code></pre>
+<p>The keys are:</p>
+<ul>
+<li>
+<p><code>dl</code>: This is the URL for downloading crates listed in the index. The value
+may have the following markers which will be replaced with their
+corresponding value:</p>
+<ul>
+<li><code>{crate}</code>: The name of crate.</li>
+<li><code>{version}</code>: The crate version.</li>
+<li><code>{prefix}</code>: A directory prefix computed from the crate name. For example,
+a crate named <code>cargo</code> has a prefix of <code>ca/rg</code>. See below for details.</li>
+<li><code>{lowerprefix}</code>: Lowercase variant of <code>{prefix}</code>.</li>
+</ul>
+<p>If none of the markers are present, then the value
+<code>/{crate}/{version}/download</code> is appended to the end.</p>
+</li>
+<li>
+<p><code>api</code>: This is the base URL for the web API. This key is optional, but if it
+is not specified, commands such as <a href="../commands/cargo-publish.html"><code>cargo publish</code></a> will not work. The web
+API is described below.</p>
+</li>
+</ul>
+<p>The download endpoint should send the <code>.crate</code> file for the requested package.
+Cargo supports https, http, and file URLs, HTTP redirects, HTTP1 and HTTP2.
+The exact specifics of TLS support depend on the platform that Cargo is
+running on, the version of Cargo, and how it was compiled.</p>
+<p>The rest of the index repository contains one file for each package, where the
+filename is the name of the package in lowercase. Each version of the package
+has a separate line in the file. The files are organized in a tier of
+directories:</p>
+<ul>
+<li>Packages with 1 character names are placed in a directory named <code>1</code>.</li>
+<li>Packages with 2 character names are placed in a directory named <code>2</code>.</li>
+<li>Packages with 3 character names are placed in the directory
+<code>3/{first-character}</code> where <code>{first-character}</code> is the first character of
+the package name.</li>
+<li>All other packages are stored in directories named
+<code>{first-two}/{second-two}</code> where the top directory is the first two
+characters of the package name, and the next subdirectory is the third and
+fourth characters of the package name. For example, <code>cargo</code> would be stored
+in a file named <code>ca/rg/cargo</code>.</li>
+</ul>
+<blockquote>
+<p>Note: Although the index filenames are in lowercase, the fields that contain
+package names in <code>Cargo.toml</code> and the index JSON data are case-sensitive and
+may contain upper and lower case characters.</p>
+</blockquote>
+<p>The directory name above is calculated based on the package name converted to
+lowercase; it is represented by the marker <code>{lowerprefix}</code>.  When the original
+package name is used without case conversion, the resulting directory name is
+represented by the marker <code>{prefix}</code>.  For example, the package <code>MyCrate</code> would
+have a <code>{prefix}</code> of <code>My/Cr</code> and a <code>{lowerprefix}</code> of <code>my/cr</code>.  In general,
+using <code>{prefix}</code> is recommended over <code>{lowerprefix}</code>, but there are pros and
+cons to each choice.  Using <code>{prefix}</code> on case-insensitive filesystems results
+in (harmless-but-inelegant) directory aliasing.  For example, <code>crate</code> and
+<code>CrateTwo</code> have <code>{prefix}</code> values of <code>cr/at</code> and <code>Cr/at</code>; these are distinct on
+Unix machines but alias to the same directory on Windows.  Using directories
+with normalized case avoids aliasing, but on case-sensitive filesystems it's
+harder to support older versions of Cargo that lack <code>{prefix}</code>/<code>{lowerprefix}</code>.
+For example, nginx rewrite rules can easily construct <code>{prefix}</code> but can't
+perform case-conversion to construct <code>{lowerprefix}</code>.</p>
+<p>Registries should consider enforcing limitations on package names added to
+their index. Cargo itself allows names with any <a href="../../std/primitive.char.html#method.is_alphanumeric">alphanumeric</a>, <code>-</code>, or <code>_</code>
+characters. <a href="https://crates.io/">crates.io</a> imposes its own limitations, including the following:</p>
+<ul>
+<li>Only allows ASCII characters.</li>
+<li>Only alphanumeric, <code>-</code>, and <code>_</code> characters.</li>
+<li>First character must be alphabetic.</li>
+<li>Case-insensitive collision detection.</li>
+<li>Prevent differences of <code>-</code> vs <code>_</code>.</li>
+<li>Under a specific length (max 64).</li>
+<li>Rejects reserved names, such as Windows special filenames like &quot;nul&quot;.</li>
+</ul>
+<p>Registries should consider incorporating similar restrictions, and consider
+the security implications, such as <a href="https://en.wikipedia.org/wiki/IDN_homograph_attack">IDN homograph
+attacks</a> and other
+concerns in <a href="https://www.unicode.org/reports/tr36/">UTR36</a> and
+<a href="https://www.unicode.org/reports/tr39/">UTS39</a>.</p>
+<p>Each line in a package file contains a JSON object that describes a published
+version of the package. The following is a pretty-printed example with comments
+explaining the format of the entry.</p>
+<pre><code class="language-javascript">{
+    // The name of the package.
+    // This must only contain alphanumeric, `-`, or `_` characters.
+    &quot;name&quot;: &quot;foo&quot;,
+    // The version of the package this row is describing.
+    // This must be a valid version number according to the Semantic
+    // Versioning 2.0.0 spec at https://semver.org/.
+    &quot;vers&quot;: &quot;0.1.0&quot;,
+    // Array of direct dependencies of the package.
+    &quot;deps&quot;: [
+        {
+            // Name of the dependency.
+            // If the dependency is renamed from the original package name,
+            // this is the new name. The original package name is stored in
+            // the `package` field.
+            &quot;name&quot;: &quot;rand&quot;,
+            // The semver requirement for this dependency.
+            // This must be a valid version requirement defined at
+            // https://github.com/steveklabnik/semver#requirements.
+            &quot;req&quot;: &quot;^0.6&quot;,
+            // Array of features (as strings) enabled for this dependency.
+            &quot;features&quot;: [&quot;i128_support&quot;],
+            // Boolean of whether or not this is an optional dependency.
+            &quot;optional&quot;: false,
+            // Boolean of whether or not default features are enabled.
+            &quot;default_features&quot;: true,
+            // The target platform for the dependency.
+            // null if not a target dependency.
+            // Otherwise, a string such as &quot;cfg(windows)&quot;.
+            &quot;target&quot;: null,
+            // The dependency kind.
+            // &quot;dev&quot;, &quot;build&quot;, or &quot;normal&quot;.
+            // Note: this is a required field, but a small number of entries
+            // exist in the crates.io index with either a missing or null
+            // `kind` field due to implementation bugs.
+            &quot;kind&quot;: &quot;normal&quot;,
+            // The URL of the index of the registry where this dependency is
+            // from as a string. If not specified or null, it is assumed the
+            // dependency is in the current registry.
+            &quot;registry&quot;: null,
+            // If the dependency is renamed, this is a string of the actual
+            // package name. If not specified or null, this dependency is not
+            // renamed.
+            &quot;package&quot;: null,
+        }
+    ],
+    // A SHA256 checksum of the `.crate` file.
+    &quot;cksum&quot;: &quot;d867001db0e2b6e0496f9fac96930e2d42233ecd3ca0413e0753d4c7695d289c&quot;,
+    // Set of features defined for the package.
+    // Each feature maps to an array of features or dependencies it enables.
+    &quot;features&quot;: {
+        &quot;extras&quot;: [&quot;rand/simd_support&quot;]
+    },
+    // Boolean of whether or not this version has been yanked.
+    &quot;yanked&quot;: false,
+    // The `links` string value from the package's manifest, or null if not
+    // specified. This field is optional and defaults to null.
+    &quot;links&quot;: null
+}
+</code></pre>
+<p>The JSON objects should not be modified after they are added except for the
+<code>yanked</code> field whose value may change at any time.</p>
+<h3><a class="header" href="#web-api" id="web-api">Web API</a></h3>
+<p>A registry may host a web API at the location defined in <code>config.json</code> to
+support any of the actions listed below.</p>
+<p>Cargo includes the <code>Authorization</code> header for requests that require
+authentication. The header value is the API token. The server should respond
+with a 403 response code if the token is not valid. Users are expected to
+visit the registry's website to obtain a token, and Cargo can store the token
+using the <a href="../commands/cargo-login.html"><code>cargo login</code></a> command, or by passing the token on the
+command-line.</p>
+<p>Responses use a 200 response code for both success and errors. Cargo looks at
+the JSON response to determine if there was success or failure. Failure
+responses have a JSON object with the following structure:</p>
+<pre><code class="language-javascript">{
+    // Array of errors to display to the user.
+    &quot;errors&quot;: [
+        {
+            // The error message as a string.
+            &quot;detail&quot;: &quot;error message text&quot;
+        }
+    ]
+}
+</code></pre>
+<p>Servers may also respond with a 404 response code to indicate the requested
+resource is not found (for example, an unknown crate name). However, using a
+200 response with an <code>errors</code> object allows a registry to provide a more
+detailed error message if desired.</p>
+<p>For backwards compatibility, servers should ignore any unexpected query
+parameters or JSON fields. If a JSON field is missing, it should be assumed to
+be null. The endpoints are versioned with the <code>v1</code> component of the path, and
+Cargo is responsible for handling backwards compatibility fallbacks should any
+be required in the future.</p>
+<p>Cargo sets the following headers for all requests:</p>
+<ul>
+<li><code>Content-Type</code>: <code>application/json</code></li>
+<li><code>Accept</code>: <code>application/json</code></li>
+<li><code>User-Agent</code>: The Cargo version such as <code>cargo 1.32.0 (8610973aa 2019-01-02)</code>. This may be modified by the user in a configuration value.
+Added in 1.29.</li>
+</ul>
+<h4><a class="header" href="#publish" id="publish">Publish</a></h4>
+<ul>
+<li>Endpoint: <code>/api/v1/crates/new</code></li>
+<li>Method: PUT</li>
+<li>Authorization: Included</li>
+</ul>
+<p>The publish endpoint is used to publish a new version of a crate. The server
+should validate the crate, make it available for download, and add it to the
+index.</p>
+<p>The body of the data sent by Cargo is:</p>
+<ul>
+<li>32-bit unsigned little-endian integer of the length of JSON data.</li>
+<li>Metadata of the package as a JSON object.</li>
+<li>32-bit unsigned little-endian integer of the length of the <code>.crate</code> file.</li>
+<li>The <code>.crate</code> file.</li>
+</ul>
+<p>The following is a commented example of the JSON object. Some notes of some
+restrictions imposed by <a href="https://crates.io/">crates.io</a> are included only to illustrate some
+suggestions on types of validation that may be done, and should not be
+considered as an exhaustive list of restrictions <a href="https://crates.io/">crates.io</a> imposes.</p>
+<pre><code class="language-javascript">{
+    // The name of the package.
+    &quot;name&quot;: &quot;foo&quot;,
+    // The version of the package being published.
+    &quot;vers&quot;: &quot;0.1.0&quot;,
+    // Array of direct dependencies of the package.
+    &quot;deps&quot;: [
+        {
+            // Name of the dependency.
+            // If the dependency is renamed from the original package name,
+            // this is the original name. The new package name is stored in
+            // the `explicit_name_in_toml` field.
+            &quot;name&quot;: &quot;rand&quot;,
+            // The semver requirement for this dependency.
+            &quot;version_req&quot;: &quot;^0.6&quot;,
+            // Array of features (as strings) enabled for this dependency.
+            &quot;features&quot;: [&quot;i128_support&quot;],
+            // Boolean of whether or not this is an optional dependency.
+            &quot;optional&quot;: false,
+            // Boolean of whether or not default features are enabled.
+            &quot;default_features&quot;: true,
+            // The target platform for the dependency.
+            // null if not a target dependency.
+            // Otherwise, a string such as &quot;cfg(windows)&quot;.
+            &quot;target&quot;: null,
+            // The dependency kind.
+            // &quot;dev&quot;, &quot;build&quot;, or &quot;normal&quot;.
+            &quot;kind&quot;: &quot;normal&quot;,
+            // The URL of the index of the registry where this dependency is
+            // from as a string. If not specified or null, it is assumed the
+            // dependency is in the current registry.
+            &quot;registry&quot;: null,
+            // If the dependency is renamed, this is a string of the new
+            // package name. If not specified or null, this dependency is not
+            // renamed.
+            &quot;explicit_name_in_toml&quot;: null,
+        }
+    ],
+    // Set of features defined for the package.
+    // Each feature maps to an array of features or dependencies it enables.
+    // Cargo does not impose limitations on feature names, but crates.io
+    // requires alphanumeric ASCII, `_` or `-` characters.
+    &quot;features&quot;: {
+        &quot;extras&quot;: [&quot;rand/simd_support&quot;]
+    },
+    // List of strings of the authors.
+    // May be empty.
+    &quot;authors&quot;: [&quot;Alice &lt;a@example.com&gt;&quot;],
+    // Description field from the manifest.
+    // May be null. crates.io requires at least some content.
+    &quot;description&quot;: null,
+    // String of the URL to the website for this package's documentation.
+    // May be null.
+    &quot;documentation&quot;: null,
+    // String of the URL to the website for this package's home page.
+    // May be null.
+    &quot;homepage&quot;: null,
+    // String of the content of the README file.
+    // May be null.
+    &quot;readme&quot;: null,
+    // String of a relative path to a README file in the crate.
+    // May be null.
+    &quot;readme_file&quot;: null,
+    // Array of strings of keywords for the package.
+    &quot;keywords&quot;: [],
+    // Array of strings of categories for the package.
+    &quot;categories&quot;: [],
+    // String of the license for the package.
+    // May be null. crates.io requires either `license` or `license_file` to be set.
+    &quot;license&quot;: null,
+    // String of a relative path to a license file in the crate.
+    // May be null.
+    &quot;license_file&quot;: null,
+    // String of the URL to the website for the source repository of this package.
+    // May be null.
+    &quot;repository&quot;: null,
+    // Optional object of &quot;status&quot; badges. Each value is an object of
+    // arbitrary string to string mappings.
+    // crates.io has special interpretation of the format of the badges.
+    &quot;badges&quot;: {
+        &quot;travis-ci&quot;: {
+            &quot;branch&quot;: &quot;master&quot;,
+            &quot;repository&quot;: &quot;rust-lang/cargo&quot;
+        }
+    },
+    // The `links` string value from the package's manifest, or null if not
+    // specified. This field is optional and defaults to null.
+    &quot;links&quot;: null
+}
+</code></pre>
+<p>A successful response includes the JSON object:</p>
+<pre><code class="language-javascript">{
+    // Optional object of warnings to display to the user.
+    &quot;warnings&quot;: {
+        // Array of strings of categories that are invalid and ignored.
+        &quot;invalid_categories&quot;: [],
+        // Array of strings of badge names that are invalid and ignored.
+        &quot;invalid_badges&quot;: [],
+        // Array of strings of arbitrary warnings to display to the user.
+        &quot;other&quot;: []
+    }
+}
+</code></pre>
+<h4><a class="header" href="#yank" id="yank">Yank</a></h4>
+<ul>
+<li>Endpoint: <code>/api/v1/crates/{crate_name}/{version}/yank</code></li>
+<li>Method: DELETE</li>
+<li>Authorization: Included</li>
+</ul>
+<p>The yank endpoint will set the <code>yank</code> field of the given version of a crate to
+<code>true</code> in the index.</p>
+<p>A successful response includes the JSON object:</p>
+<pre><code class="language-javascript">{
+    // Indicates the delete succeeded, always true.
+    &quot;ok&quot;: true,
+}
+</code></pre>
+<h4><a class="header" href="#unyank" id="unyank">Unyank</a></h4>
+<ul>
+<li>Endpoint: <code>/api/v1/crates/{crate_name}/{version}/unyank</code></li>
+<li>Method: PUT</li>
+<li>Authorization: Included</li>
+</ul>
+<p>The unyank endpoint will set the <code>yank</code> field of the given version of a crate
+to <code>false</code> in the index.</p>
+<p>A successful response includes the JSON object:</p>
+<pre><code class="language-javascript">{
+    // Indicates the delete succeeded, always true.
+    &quot;ok&quot;: true,
+}
+</code></pre>
+<h4><a class="header" href="#owners" id="owners">Owners</a></h4>
+<p>Cargo does not have an inherent notion of users and owners, but it does
+provide the <code>owner</code> command to assist managing who has authorization to
+control a crate. It is up to the registry to decide exactly how users and
+owners are handled. See the <a href="publishing.html#cargo-owner">publishing documentation</a> for a description of
+how <a href="https://crates.io/">crates.io</a> handles owners via GitHub users and teams.</p>
+<h5><a class="header" href="#owners-list" id="owners-list">Owners: List</a></h5>
+<ul>
+<li>Endpoint: <code>/api/v1/crates/{crate_name}/owners</code></li>
+<li>Method: GET</li>
+<li>Authorization: Included</li>
+</ul>
+<p>The owners endpoint returns a list of owners of the crate.</p>
+<p>A successful response includes the JSON object:</p>
+<pre><code class="language-javascript">{
+    // Array of owners of the crate.
+    &quot;users&quot;: [
+        {
+            // Unique unsigned 32-bit integer of the owner.
+            &quot;id&quot;: 70,
+            // The unique username of the owner.
+            &quot;login&quot;: &quot;github:rust-lang:core&quot;,
+            // Name of the owner.
+            // This is optional and may be null.
+            &quot;name&quot;: &quot;Core&quot;,
+        }
+    ]
+}
+</code></pre>
+<h5><a class="header" href="#owners-add" id="owners-add">Owners: Add</a></h5>
+<ul>
+<li>Endpoint: <code>/api/v1/crates/{crate_name}/owners</code></li>
+<li>Method: PUT</li>
+<li>Authorization: Included</li>
+</ul>
+<p>A PUT request will send a request to the registry to add a new owner to a
+crate. It is up to the registry how to handle the request. For example,
+<a href="https://crates.io/">crates.io</a> sends an invite to the user that they must accept before being
+added.</p>
+<p>The request should include the following JSON object:</p>
+<pre><code class="language-javascript">{
+    // Array of `login` strings of owners to add.
+    &quot;users&quot;: [&quot;login_name&quot;]
+}
+</code></pre>
+<p>A successful response includes the JSON object:</p>
+<pre><code class="language-javascript">{
+    // Indicates the add succeeded, always true.
+    &quot;ok&quot;: true,
+    // A string to be displayed to the user.
+    &quot;msg&quot;: &quot;user ehuss has been invited to be an owner of crate cargo&quot;
+}
+</code></pre>
+<h5><a class="header" href="#owners-remove" id="owners-remove">Owners: Remove</a></h5>
+<ul>
+<li>Endpoint: <code>/api/v1/crates/{crate_name}/owners</code></li>
+<li>Method: DELETE</li>
+<li>Authorization: Included</li>
+</ul>
+<p>A DELETE request will remove an owner from a crate. The request should include
+the following JSON object:</p>
+<pre><code class="language-javascript">{
+    // Array of `login` strings of owners to remove.
+    &quot;users&quot;: [&quot;login_name&quot;]
+}
+</code></pre>
+<p>A successful response includes the JSON object:</p>
+<pre><code class="language-javascript">{
+    // Indicates the remove succeeded, always true.
+    &quot;ok&quot;: true
+}
+</code></pre>
+<h4><a class="header" href="#search" id="search">Search</a></h4>
+<ul>
+<li>Endpoint: <code>/api/v1/crates</code></li>
+<li>Method: GET</li>
+<li>Query Parameters:
+<ul>
+<li><code>q</code>: The search query string.</li>
+<li><code>per_page</code>: Number of results, default 10, max 100.</li>
+</ul>
+</li>
+</ul>
+<p>The search request will perform a search for crates, using criteria defined on
+the server.</p>
+<p>A successful response includes the JSON object:</p>
+<pre><code class="language-javascript">{
+    // Array of results.
+    &quot;crates&quot;: [
+        {
+            // Name of the crate.
+            &quot;name&quot;: &quot;rand&quot;,
+            // The highest version available.
+            &quot;max_version&quot;: &quot;0.6.1&quot;,
+            // Textual description of the crate.
+            &quot;description&quot;: &quot;Random number generators and other randomness functionality.\n&quot;,
+        }
+    ],
+    &quot;meta&quot;: {
+        // Total number of results available on the server.
+        &quot;total&quot;: 119
+    }
+}
+</code></pre>
+<h4><a class="header" href="#login" id="login">Login</a></h4>
+<ul>
+<li>Endpoint: <code>/me</code></li>
+</ul>
+<p>The &quot;login&quot; endpoint is not an actual API request. It exists solely for the
+<a href="../commands/cargo-login.html"><code>cargo login</code></a> command to display a URL to instruct a user to visit in a web
+browser to log in and retrieve an API token.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../reference/external-tools.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../reference/resolver.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../reference/external-tools.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../reference/resolver.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../language.js"></script>
+        
+
+        
+
+    </body>
+</html>

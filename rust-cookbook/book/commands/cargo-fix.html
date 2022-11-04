@@ -1,0 +1,530 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>cargo fix - Cargo 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <style>
+    dd {
+        margin-bottom: 1em;
+    }
+</style>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Cargo 手册是使用 Cargo 全面指南教程，Cargo 是 Rust 的包管理器，通过本手册全面了解如何构建 Rust 程序和大型项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">简介</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">1.</strong> 入门</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li><li class="chapter-item expanded "><a href="../getting-started/first-steps.html"><strong aria-hidden="true">1.2.</strong> 初次使用 Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="../guide/index.html"><strong aria-hidden="true">2.</strong> Cargo 指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../guide/why-cargo-exists.html"><strong aria-hidden="true">2.1.</strong> 为什么存在 Cargo</a></li><li class="chapter-item expanded "><a href="../guide/creating-a-new-project.html"><strong aria-hidden="true">2.2.</strong> 创建一个新的包</a></li><li class="chapter-item expanded "><a href="../guide/working-on-an-existing-project.html"><strong aria-hidden="true">2.3.</strong> 处理现有包</a></li><li class="chapter-item expanded "><a href="../guide/dependencies.html"><strong aria-hidden="true">2.4.</strong> 依赖</a></li><li class="chapter-item expanded "><a href="../guide/project-layout.html"><strong aria-hidden="true">2.5.</strong> 项目布局</a></li><li class="chapter-item expanded "><a href="../guide/cargo-toml-vs-cargo-lock.html"><strong aria-hidden="true">2.6.</strong> Cargo.toml 和 Cargo.lock</a></li><li class="chapter-item expanded "><a href="../guide/tests.html"><strong aria-hidden="true">2.7.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../guide/continuous-integration.html"><strong aria-hidden="true">2.8.</strong> 持续集成</a></li><li class="chapter-item expanded "><a href="../guide/cargo-home.html"><strong aria-hidden="true">2.9.</strong> Cargo Home</a></li><li class="chapter-item expanded "><a href="../guide/build-cache.html"><strong aria-hidden="true">2.10.</strong> 构建缓存</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">3.</strong> Cargo 参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/specifying-dependencies.html"><strong aria-hidden="true">3.1.</strong> 指定依赖</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/overriding-dependencies.html"><strong aria-hidden="true">3.1.1.</strong> Overriding Dependencies</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/manifest.html"><strong aria-hidden="true">3.2.</strong> 清单格式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/cargo-targets.html"><strong aria-hidden="true">3.2.1.</strong> Cargo Targets</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/workspaces.html"><strong aria-hidden="true">3.3.</strong> Workspaces</a></li><li class="chapter-item expanded "><a href="../reference/features.html"><strong aria-hidden="true">3.4.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/features-examples.html"><strong aria-hidden="true">3.4.1.</strong> Features Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/profiles.html"><strong aria-hidden="true">3.5.</strong> Profiles</a></li><li class="chapter-item expanded "><a href="../reference/config.html"><strong aria-hidden="true">3.6.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../reference/environment-variables.html"><strong aria-hidden="true">3.7.</strong> 环境变量</a></li><li class="chapter-item expanded "><a href="../reference/build-scripts.html"><strong aria-hidden="true">3.8.</strong> 构建脚本</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/build-script-examples.html"><strong aria-hidden="true">3.8.1.</strong> Build Script Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/publishing.html"><strong aria-hidden="true">3.9.</strong> 将 crate 发布到 Crates.io</a></li><li class="chapter-item expanded "><a href="../reference/pkgid-spec.html"><strong aria-hidden="true">3.10.</strong> 包 ID 规格</a></li><li class="chapter-item expanded "><a href="../reference/source-replacement.html"><strong aria-hidden="true">3.11.</strong> 更换源</a></li><li class="chapter-item expanded "><a href="../reference/external-tools.html"><strong aria-hidden="true">3.12.</strong> 外部工具</a></li><li class="chapter-item expanded "><a href="../reference/registries.html"><strong aria-hidden="true">3.13.</strong> Registries</a></li><li class="chapter-item expanded "><a href="../reference/resolver.html"><strong aria-hidden="true">3.14.</strong> Dependency Resolution</a></li><li class="chapter-item expanded "><a href="../reference/semver.html"><strong aria-hidden="true">3.15.</strong> SemVer Compatibility</a></li><li class="chapter-item expanded "><a href="../reference/unstable.html"><strong aria-hidden="true">3.16.</strong> 不稳定功能</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">4.</strong> Cargo Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/general-commands.html"><strong aria-hidden="true">4.1.</strong> General Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo.html"><strong aria-hidden="true">4.1.1.</strong> cargo</a></li><li class="chapter-item expanded "><a href="../commands/cargo-help.html"><strong aria-hidden="true">4.1.2.</strong> cargo help</a></li><li class="chapter-item expanded "><a href="../commands/cargo-version.html"><strong aria-hidden="true">4.1.3.</strong> cargo version</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/build-commands.html"><strong aria-hidden="true">4.2.</strong> Build Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-bench.html"><strong aria-hidden="true">4.2.1.</strong> cargo bench</a></li><li class="chapter-item expanded "><a href="../commands/cargo-build.html"><strong aria-hidden="true">4.2.2.</strong> cargo build</a></li><li class="chapter-item expanded "><a href="../commands/cargo-check.html"><strong aria-hidden="true">4.2.3.</strong> cargo check</a></li><li class="chapter-item expanded "><a href="../commands/cargo-clean.html"><strong aria-hidden="true">4.2.4.</strong> cargo clean</a></li><li class="chapter-item expanded "><a href="../commands/cargo-doc.html"><strong aria-hidden="true">4.2.5.</strong> cargo doc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fetch.html"><strong aria-hidden="true">4.2.6.</strong> cargo fetch</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fix.html" class="active"><strong aria-hidden="true">4.2.7.</strong> cargo fix</a></li><li class="chapter-item expanded "><a href="../commands/cargo-run.html"><strong aria-hidden="true">4.2.8.</strong> cargo run</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustc.html"><strong aria-hidden="true">4.2.9.</strong> cargo rustc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustdoc.html"><strong aria-hidden="true">4.2.10.</strong> cargo rustdoc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-test.html"><strong aria-hidden="true">4.2.11.</strong> cargo test</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/manifest-commands.html"><strong aria-hidden="true">4.3.</strong> Manifest Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-generate-lockfile.html"><strong aria-hidden="true">4.3.1.</strong> cargo generate-lockfile</a></li><li class="chapter-item expanded "><a href="../commands/cargo-locate-project.html"><strong aria-hidden="true">4.3.2.</strong> cargo locate-project</a></li><li class="chapter-item expanded "><a href="../commands/cargo-metadata.html"><strong aria-hidden="true">4.3.3.</strong> cargo metadata</a></li><li class="chapter-item expanded "><a href="../commands/cargo-pkgid.html"><strong aria-hidden="true">4.3.4.</strong> cargo pkgid</a></li><li class="chapter-item expanded "><a href="../commands/cargo-tree.html"><strong aria-hidden="true">4.3.5.</strong> cargo tree</a></li><li class="chapter-item expanded "><a href="../commands/cargo-update.html"><strong aria-hidden="true">4.3.6.</strong> cargo update</a></li><li class="chapter-item expanded "><a href="../commands/cargo-vendor.html"><strong aria-hidden="true">4.3.7.</strong> cargo vendor</a></li><li class="chapter-item expanded "><a href="../commands/cargo-verify-project.html"><strong aria-hidden="true">4.3.8.</strong> cargo verify-project</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/package-commands.html"><strong aria-hidden="true">4.4.</strong> Package Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-init.html"><strong aria-hidden="true">4.4.1.</strong> cargo init</a></li><li class="chapter-item expanded "><a href="../commands/cargo-install.html"><strong aria-hidden="true">4.4.2.</strong> cargo install</a></li><li class="chapter-item expanded "><a href="../commands/cargo-new.html"><strong aria-hidden="true">4.4.3.</strong> cargo new</a></li><li class="chapter-item expanded "><a href="../commands/cargo-search.html"><strong aria-hidden="true">4.4.4.</strong> cargo search</a></li><li class="chapter-item expanded "><a href="../commands/cargo-uninstall.html"><strong aria-hidden="true">4.4.5.</strong> cargo uninstall</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/publishing-commands.html"><strong aria-hidden="true">4.5.</strong> Publishing Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-login.html"><strong aria-hidden="true">4.5.1.</strong> cargo login</a></li><li class="chapter-item expanded "><a href="../commands/cargo-owner.html"><strong aria-hidden="true">4.5.2.</strong> cargo owner</a></li><li class="chapter-item expanded "><a href="../commands/cargo-package.html"><strong aria-hidden="true">4.5.3.</strong> cargo package</a></li><li class="chapter-item expanded "><a href="../commands/cargo-publish.html"><strong aria-hidden="true">4.5.4.</strong> cargo publish</a></li><li class="chapter-item expanded "><a href="../commands/cargo-yank.html"><strong aria-hidden="true">4.5.5.</strong> cargo yank</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../faq.html"><strong aria-hidden="true">5.</strong> 参见问题</a></li><li class="chapter-item expanded "><a href="../appendix/glossary.html"><strong aria-hidden="true">6.</strong> 附录：术语白</a></li><li class="chapter-item expanded "><a href="../appendix/git-authentication.html"><strong aria-hidden="true">7.</strong> Appendix: Git Authentication</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Cargo 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/cargo-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#cargo-fix1" id="cargo-fix1">cargo-fix(1)</a></h1>
+<h2><a class="header" href="#name" id="name">NAME</a></h2>
+<p>cargo-fix - Automatically fix lint warnings reported by rustc</p>
+<h2><a class="header" href="#synopsis" id="synopsis">SYNOPSIS</a></h2>
+<p><code>cargo fix</code> [<em>options</em>]</p>
+<h2><a class="header" href="#description" id="description">DESCRIPTION</a></h2>
+<p>This Cargo subcommand will automatically take rustc's suggestions from
+diagnostics like warnings and apply them to your source code. This is intended
+to help automate tasks that rustc itself already knows how to tell you to fix!</p>
+<p>Executing <code>cargo fix</code> will under the hood execute <a href="cargo-check.html">cargo-check(1)</a>. Any warnings
+applicable to your crate will be automatically fixed (if possible) and all
+remaining warnings will be displayed when the check process is finished. For
+example if you'd like to apply all fixes to the current package, you can run:</p>
+<pre><code>cargo fix
+</code></pre>
+<p>which behaves the same as <code>cargo check --all-targets</code>.</p>
+<p><code>cargo fix</code> is only capable of fixing code that is normally compiled with
+<code>cargo check</code>. If code is conditionally enabled with optional features, you
+will need to enable those features for that code to be analyzed:</p>
+<pre><code>cargo fix --features foo
+</code></pre>
+<p>Similarly, other <code>cfg</code> expressions like platform-specific code will need to
+pass <code>--target</code> to fix code for the given target.</p>
+<pre><code>cargo fix --target x86_64-pc-windows-gnu
+</code></pre>
+<p>If you encounter any problems with <code>cargo fix</code> or otherwise have any questions
+or feature requests please don't hesitate to file an issue at
+<a href="https://github.com/rust-lang/cargo">https://github.com/rust-lang/cargo</a>.</p>
+<h3><a class="header" href="#edition-migration" id="edition-migration">Edition migration</a></h3>
+<p>The <code>cargo fix</code> subcommand can also be used to migrate a package from one
+<a href="https://doc.rust-lang.org/edition-guide/editions/transitioning-an-existing-project-to-a-new-edition.html">edition</a> to the next. The general procedure is:</p>
+<ol>
+<li>Run <code>cargo fix --edition</code>. Consider also using the <code>--all-features</code> flag if
+your project has multiple features. You may also want to run <code>cargo fix --edition</code> multiple times with different <code>--target</code> flags if your project
+has platform-specific code gated by <code>cfg</code> attributes.</li>
+<li>Modify <code>Cargo.toml</code> to set the <a href="../reference/manifest.html#the-edition-field">edition field</a> to the new edition.</li>
+<li>Run your project tests to verify that everything still works. If new
+warnings are issued, you may want to consider running <code>cargo fix</code> again
+(without the <code>--edition</code> flag) to apply any suggestions given by the
+compiler.</li>
+</ol>
+<p>And hopefully that's it! Just keep in mind of the caveats mentioned above that
+<code>cargo fix</code> cannot update code for inactive features or <code>cfg</code> expressions.
+Also, in some rare cases the compiler is unable to automatically migrate all
+code to the new edition, and this may require manual changes after building
+with the new edition.</p>
+<h2><a class="header" href="#options" id="options">OPTIONS</a></h2>
+<h3><a class="header" href="#fix-options" id="fix-options">Fix options</a></h3>
+<dl>
+<dt class="option-term" id="option-cargo-fix---broken-code"><a class="option-anchor" href="#option-cargo-fix---broken-code"></a><code>--broken-code</code></dt>
+<dd class="option-desc">Fix code even if it already has compiler errors. This is useful if <code>cargo fix</code>
+fails to apply the changes. It will apply the changes and leave the broken
+code in the working directory for you to inspect and manually fix.</dd>
+<dt class="option-term" id="option-cargo-fix---edition"><a class="option-anchor" href="#option-cargo-fix---edition"></a><code>--edition</code></dt>
+<dd class="option-desc">Apply changes that will update the code to the next edition. This will not
+update the edition in the <code>Cargo.toml</code> manifest, which must be updated
+manually after <code>cargo fix --edition</code> has finished.</dd>
+<dt class="option-term" id="option-cargo-fix---edition-idioms"><a class="option-anchor" href="#option-cargo-fix---edition-idioms"></a><code>--edition-idioms</code></dt>
+<dd class="option-desc">Apply suggestions that will update code to the preferred style for the current
+edition.</dd>
+<dt class="option-term" id="option-cargo-fix---allow-no-vcs"><a class="option-anchor" href="#option-cargo-fix---allow-no-vcs"></a><code>--allow-no-vcs</code></dt>
+<dd class="option-desc">Fix code even if a VCS was not detected.</dd>
+<dt class="option-term" id="option-cargo-fix---allow-dirty"><a class="option-anchor" href="#option-cargo-fix---allow-dirty"></a><code>--allow-dirty</code></dt>
+<dd class="option-desc">Fix code even if the working directory has changes.</dd>
+<dt class="option-term" id="option-cargo-fix---allow-staged"><a class="option-anchor" href="#option-cargo-fix---allow-staged"></a><code>--allow-staged</code></dt>
+<dd class="option-desc">Fix code even if the working directory has staged changes.</dd>
+</dl>
+<h3><a class="header" href="#选择包" id="选择包">选择包</a></h3>
+<p>默认情况下，如果没有指定包，则根据清单文件来选择包(如果没有通过<code>--manifest-path</code>给出清单文件路径，
+则基于当前工作目录进行寻找)。如果是某个工作区的根清单，则选中该工作区的默认成员；否则仅选中清
+单所定义的那个包。</p>
+<p>工作区的默认成员可通过清单中<code>workspace.default-members</code>项来显式指定。如果未指定，则其虚拟
+工作区会包含全体工作区成员(等同于传递<code>--workspace</code>标志参数时)，而非虚拟工作区则仅包含根部箱自身。</p>
+<dl>
+<dt class="option-term" id="option-cargo-fix--p"><a class="option-anchor" href="#option-cargo-fix--p"></a><code>-p</code> <em>spec</em>...</dt>
+<dt class="option-term" id="option-cargo-fix---package"><a class="option-anchor" href="#option-cargo-fix---package"></a><code>--package</code> <em>spec</em>...</dt>
+<dd class="option-desc">Fix指定包. SPEC的格式参见 <a href="cargo-pkgid.html">cargo-pkgid(1)</a> 。
+此标志参数可多次使用且支持Unix通配符(<code>*</code>, <code>?</code> 和 <code>[]</code>)。不过，为避免shell可能错误地在Cargo获取到
+之前就将通配符展开，应在各个模式串两侧使用单引号或双引号。</dd>
+<dt class="option-term" id="option-cargo-fix---workspace"><a class="option-anchor" href="#option-cargo-fix---workspace"></a><code>--workspace</code></dt>
+<dd class="option-desc">Fix 工作区中的全体成员.</dd>
+<dt class="option-term" id="option-cargo-fix---all"><a class="option-anchor" href="#option-cargo-fix---all"></a><code>--all</code></dt>
+<dd class="option-desc"><code>--workspace</code>的已废弃的别名。</dd>
+<dt class="option-term" id="option-cargo-fix---exclude"><a class="option-anchor" href="#option-cargo-fix---exclude"></a><code>--exclude</code> <em>SPEC</em>...</dt>
+<dd class="option-desc">排除指定包。必须与<code>--workspace</code>标志参数共同使用。
+此标志参数可多次使用且支持Unix通配符(<code>*</code>, <code>?</code> 和 <code>[]</code>)。不过，为避免shell可能错误地在Cargo获取到
+之前就将通配符展开，应在各个模式串两侧使用单引号或双引号。</dd>
+</dl>
+<h3><a class="header" href="#target-selection" id="target-selection">Target Selection</a></h3>
+<p>When no target selection options are given, <code>cargo fix</code> will fix all targets
+(<code>--all-targets</code> implied). Binaries are skipped if they have
+<code>required-features</code> that are missing.</p>
+<p>Passing target selection flags will fix only the specified
+targets. </p>
+<p>Note that <code>--bin</code>, <code>--example</code>, <code>--test</code> and <code>--bench</code> flags also 
+support common Unix glob patterns like <code>*</code>, <code>?</code> and <code>[]</code>. However, to avoid your 
+shell accidentally expanding glob patterns before Cargo handles them, you must 
+use single quotes or double quotes around each glob pattern.</p>
+<dl>
+<dt class="option-term" id="option-cargo-fix---lib"><a class="option-anchor" href="#option-cargo-fix---lib"></a><code>--lib</code></dt>
+<dd class="option-desc">Fix the package's library.</dd>
+<dt class="option-term" id="option-cargo-fix---bin"><a class="option-anchor" href="#option-cargo-fix---bin"></a><code>--bin</code> <em>name</em>...</dt>
+<dd class="option-desc">Fix the specified binary. This flag may be specified multiple times
+and supports common Unix glob patterns.</dd>
+<dt class="option-term" id="option-cargo-fix---bins"><a class="option-anchor" href="#option-cargo-fix---bins"></a><code>--bins</code></dt>
+<dd class="option-desc">Fix all binary targets.</dd>
+<dt class="option-term" id="option-cargo-fix---example"><a class="option-anchor" href="#option-cargo-fix---example"></a><code>--example</code> <em>name</em>...</dt>
+<dd class="option-desc">Fix the specified example. This flag may be specified multiple times
+and supports common Unix glob patterns.</dd>
+<dt class="option-term" id="option-cargo-fix---examples"><a class="option-anchor" href="#option-cargo-fix---examples"></a><code>--examples</code></dt>
+<dd class="option-desc">Fix all example targets.</dd>
+<dt class="option-term" id="option-cargo-fix---test"><a class="option-anchor" href="#option-cargo-fix---test"></a><code>--test</code> <em>name</em>...</dt>
+<dd class="option-desc">Fix the specified integration test. This flag may be specified
+multiple times and supports common Unix glob patterns.</dd>
+<dt class="option-term" id="option-cargo-fix---tests"><a class="option-anchor" href="#option-cargo-fix---tests"></a><code>--tests</code></dt>
+<dd class="option-desc">Fix all targets in test mode that have the <code>test = true</code> manifest
+flag set. By default this includes the library and binaries built as
+unittests, and integration tests. Be aware that this will also build any
+required dependencies, so the lib target may be built twice (once as a
+unittest, and once as a dependency for binaries, integration tests, etc.).
+Targets may be enabled or disabled by setting the <code>test</code> flag in the
+manifest settings for the target.</dd>
+<dt class="option-term" id="option-cargo-fix---bench"><a class="option-anchor" href="#option-cargo-fix---bench"></a><code>--bench</code> <em>name</em>...</dt>
+<dd class="option-desc">Fix the specified benchmark. This flag may be specified multiple
+times and supports common Unix glob patterns.</dd>
+<dt class="option-term" id="option-cargo-fix---benches"><a class="option-anchor" href="#option-cargo-fix---benches"></a><code>--benches</code></dt>
+<dd class="option-desc">Fix all targets in benchmark mode that have the <code>bench = true</code>
+manifest flag set. By default this includes the library and binaries built
+as benchmarks, and bench targets. Be aware that this will also build any
+required dependencies, so the lib target may be built twice (once as a
+benchmark, and once as a dependency for binaries, benchmarks, etc.).
+Targets may be enabled or disabled by setting the <code>bench</code> flag in the
+manifest settings for the target.</dd>
+<dt class="option-term" id="option-cargo-fix---all-targets"><a class="option-anchor" href="#option-cargo-fix---all-targets"></a><code>--all-targets</code></dt>
+<dd class="option-desc">Fix all targets. This is equivalent to specifying <code>--lib --bins --tests --benches --examples</code>.</dd>
+</dl>
+<h3><a class="header" href="#特性选择" id="特性选择">特性选择</a></h3>
+<p>可通过传递特性参数来控制启用哪些特性。如果没有给定要使用的特性，
+则每个已选择的包都会自动使用<code>default</code>特性。</p>
+<p>详见<a href="../reference/features.html#command-line-feature-options">the features documentation</a>。</p>
+<dl>
+<dt class="option-term" id="option-cargo-fix---features"><a class="option-anchor" href="#option-cargo-fix---features"></a><code>--features</code> <em>features</em></dt>
+<dd class="option-desc">传递以空格或者逗号分隔的列表，其中给出要启用的特性。工作区成员的特性可通过<code>包名/特性名</code>的语法启用。
+此参数可多次给定，以分别启用给定的特性。</dd>
+<dt class="option-term" id="option-cargo-fix---all-features"><a class="option-anchor" href="#option-cargo-fix---all-features"></a><code>--all-features</code></dt>
+<dd class="option-desc">为给定的包启用全部可用特性</dd>
+<dt class="option-term" id="option-cargo-fix---no-default-features"><a class="option-anchor" href="#option-cargo-fix---no-default-features"></a><code>--no-default-features</code></dt>
+<dd class="option-desc">不启用给定包的<code>default</code>特性</dd>
+</dl>
+<h3><a class="header" href="#compilation-options" id="compilation-options">Compilation Options</a></h3>
+<dl>
+<dt class="option-term" id="option-cargo-fix---target"><a class="option-anchor" href="#option-cargo-fix---target"></a><code>--target</code> <em>triple</em></dt>
+<dd class="option-desc">为指定架构执行 Fix 。默认情况下为本机的架构。三元组的格式为
+<code>&lt;arch&gt;&lt;sub&gt;-&lt;vendor&gt;-&lt;sys&gt;-&lt;abi&gt;</code>。执行 <code>rustc --print target-list</code>
+可得到支持的构建目标列表。</p>
+<p>也可通过<code>build.target</code>指定(<a href="../reference/config.html">config value</a>)。</p>
+<p>注意，指定该标志参数会使Cargo产生的构建工件放在与平常不同的目录下。
+详情参见<a href="../guide/build-cache.html">build cache</a></dd>
+<dt class="option-term" id="option-cargo-fix--r"><a class="option-anchor" href="#option-cargo-fix--r"></a><code>-r</code></dt>
+<dt class="option-term" id="option-cargo-fix---release"><a class="option-anchor" href="#option-cargo-fix---release"></a><code>--release</code></dt>
+<dd class="option-desc">Fix optimized artifacts with the <code>release</code> profile.
+See also the <code>--profile</code> option for choosing a specific profile by name.</dd>
+<dt class="option-term" id="option-cargo-fix---profile"><a class="option-anchor" href="#option-cargo-fix---profile"></a><code>--profile</code> <em>name</em></dt>
+<dd class="option-desc">Fix with the given profile.</p>
+<p>As a special case, specifying the <code>test</code> profile will also enable checking in
+test mode which will enable checking tests and enable the <code>test</code> cfg option.
+See <a href="https://doc.rust-lang.org/rustc/tests/index.html">rustc tests</a> for more
+detail.</p>
+<p>See the <a href="../reference/profiles.html">the reference</a> for more details on profiles.</dd>
+<dt class="option-term" id="option-cargo-fix---ignore-rust-version"><a class="option-anchor" href="#option-cargo-fix---ignore-rust-version"></a><code>--ignore-rust-version</code></dt>
+<dd class="option-desc">Fix the target even if the selected Rust compiler is older than the
+required Rust version as configured in the project's <code>rust-version</code> field.</dd>
+</dl>
+<h3><a class="header" href="#output-options" id="output-options">Output Options</a></h3>
+<dl>
+<dt class="option-term" id="option-cargo-fix---target-dir"><a class="option-anchor" href="#option-cargo-fix---target-dir"></a><code>--target-dir</code> <em>directory</em></dt>
+<dd class="option-desc">用于存放生成的工件以及中间文件的目录。也可通过环境变量<code>CARGO_TARGET_DIR</code> 或 
+<code>build.target-dir</code> <a href="../reference/config.html">config value</a>指定。</p>
+<p>默认情况下为根工作区中的<code>target</code>目录。</dd>
+</dl>
+<h3><a class="header" href="#display-options" id="display-options">Display Options</a></h3>
+<dl>
+<dt class="option-term" id="option-cargo-fix--v"><a class="option-anchor" href="#option-cargo-fix--v"></a><code>-v</code></dt>
+<dt class="option-term" id="option-cargo-fix---verbose"><a class="option-anchor" href="#option-cargo-fix---verbose"></a><code>--verbose</code></dt>
+<dd class="option-desc">启用更加详细的输出。可两次使用来显示&quot;非常详细&quot;的输出，其中包含了诸如 依赖警告 以及 构建脚本输出 等额外的输出内容。
+也可通过<code>term.verbose</code>指定。
+<a href="../reference/config.html">config value</a>.</dd>
+<dt class="option-term" id="option-cargo-fix--q"><a class="option-anchor" href="#option-cargo-fix--q"></a><code>-q</code></dt>
+<dt class="option-term" id="option-cargo-fix---quiet"><a class="option-anchor" href="#option-cargo-fix---quiet"></a><code>--quiet</code></dt>
+<dd class="option-desc">不输出Cargo的日志信息。也可通过<code>term.quiet</code>指定。
+<a href="../reference/config.html">config value</a>.</dd>
+<dt class="option-term" id="option-cargo-fix---color"><a class="option-anchor" href="#option-cargo-fix---color"></a><code>--color</code> <em>when</em></dt>
+<dd class="option-desc">控制输出内容的颜色。有效取值如下：</p>
+<ul>
+<li><code>auto</code> (默认)：自动检测终端是否支持带颜色的输出。</li>
+<li><code>always</code>：总显示带颜色的输出。</li>
+<li><code>never</code>：从不显示带颜色的输出。</li>
+</ul>
+<p>也可通过<code>term.color</code>指定。
+<a href="../reference/config.html">config value</a>.</dd>
+<dt class="option-term" id="option-cargo-fix---message-format"><a class="option-anchor" href="#option-cargo-fix---message-format"></a><code>--message-format</code> <em>fmt</em></dt>
+<dd class="option-desc">The output format for diagnostic messages. Can be specified multiple times
+and consists of comma-separated values. Valid values:</p>
+<ul>
+<li><code>human</code> (default): Display in a human-readable text format. Conflicts with
+<code>short</code> and <code>json</code>.</li>
+<li><code>short</code>: Emit shorter, human-readable text messages. Conflicts with <code>human</code>
+and <code>json</code>.</li>
+<li><code>json</code>: Emit JSON messages to stdout. See
+<a href="../reference/external-tools.html#json-messages">the reference</a>
+for more details. Conflicts with <code>human</code> and <code>short</code>.</li>
+<li><code>json-diagnostic-short</code>: Ensure the <code>rendered</code> field of JSON messages contains
+the &quot;short&quot; rendering from rustc. Cannot be used with <code>human</code> or <code>short</code>.</li>
+<li><code>json-diagnostic-rendered-ansi</code>: Ensure the <code>rendered</code> field of JSON messages
+contains embedded ANSI color codes for respecting rustc's default color
+scheme. Cannot be used with <code>human</code> or <code>short</code>.</li>
+<li><code>json-render-diagnostics</code>: Instruct Cargo to not include rustc diagnostics in
+in JSON messages printed, but instead Cargo itself should render the
+JSON diagnostics coming from rustc. Cargo's own JSON diagnostics and others
+coming from rustc are still emitted. Cannot be used with <code>human</code> or <code>short</code>.</li>
+</ul></dd>
+</dl>
+<h3><a class="header" href="#manifest-options" id="manifest-options">Manifest Options</a></h3>
+<dl>
+<dt class="option-term" id="option-cargo-fix---manifest-path"><a class="option-anchor" href="#option-cargo-fix---manifest-path"></a><code>--manifest-path</code> <em>path</em></dt>
+<dd class="option-desc">用于指定<code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录或上级目录中寻找<code>Cargo.toml</code>文件。</dd>
+<dt class="option-term" id="option-cargo-fix---frozen"><a class="option-anchor" href="#option-cargo-fix---frozen"></a><code>--frozen</code></dt>
+<dt class="option-term" id="option-cargo-fix---locked"><a class="option-anchor" href="#option-cargo-fix---locked"></a><code>--locked</code></dt>
+<dd class="option-desc">这两个选项用于保证<code>Cargo.lock</code>文件是最新的。如果该锁文件不存在，或者不是最新的，Cargo
+会报错退出。其中<code>--frozen</code>选项会阻止Cargo访问网络以检查锁文件是否是最新的。</p>
+<p>这些选项，可用于保证<code>Cargo.lock</code>文件是最新的(比如持续集成的构建过程)，
+或用于避免联网。</dd>
+<dt class="option-term" id="option-cargo-fix---offline"><a class="option-anchor" href="#option-cargo-fix---offline"></a><code>--offline</code></dt>
+<dd class="option-desc">禁止Cargo访问网络。如果不添加此选项，Cargo在需要访问网络但网络不可用的情况下，会报错
+并停止工作。添加此选项后，Cargo会尽可能尝试不使用网络来工作。</p>
+<p>注意，在此情况下可能会产生与联网状态下不同的依赖解析(<strong>Dependency Resolution</strong>)结果。
+Cargo只会使用本地已下载的crate，即便本地的索引副本中表明可能有新版本crate。在离线前下载
+所需依赖的方法，参见 <a href="cargo-fetch.html">cargo-fetch(1)</a> 。</p>
+<p>也可以通过 <code>net.offline</code> <a href="../reference/config.html">config value</a>指定。</dd>
+</dl>
+<h3><a class="header" href="#common-options" id="common-options">Common Options</a></h3>
+<dl>
+<dt class="option-term" id="option-cargo-fix-+toolchain"><a class="option-anchor" href="#option-cargo-fix-+toolchain"></a><code>+</code><em>toolchain</em></dt>
+<dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
+begins with <code>+</code>, it will be interpreted as a rustup toolchain name (such
+as <code>+stable</code> or <code>+nightly</code>).
+See the <a href="https://rust-lang.github.io/rustup/overrides.html">rustup documentation</a>
+for more information about how toolchain overrides work.</dd>
+<dt class="option-term" id="option-cargo-fix--h"><a class="option-anchor" href="#option-cargo-fix--h"></a><code>-h</code></dt>
+<dt class="option-term" id="option-cargo-fix---help"><a class="option-anchor" href="#option-cargo-fix---help"></a><code>--help</code></dt>
+<dd class="option-desc">Prints help information.</dd>
+<dt class="option-term" id="option-cargo-fix--Z"><a class="option-anchor" href="#option-cargo-fix--Z"></a><code>-Z</code> <em>flag</em></dt>
+<dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
+</dl>
+<h3><a class="header" href="#miscellaneous-options" id="miscellaneous-options">Miscellaneous Options</a></h3>
+<dl>
+<dt class="option-term" id="option-cargo-fix--j"><a class="option-anchor" href="#option-cargo-fix--j"></a><code>-j</code> <em>N</em></dt>
+<dt class="option-term" id="option-cargo-fix---jobs"><a class="option-anchor" href="#option-cargo-fix---jobs"></a><code>--jobs</code> <em>N</em></dt>
+<dd class="option-desc">要并行运行的作业数量。也可通过<code>build.jobs</code> <a href="../reference/config.html">config value</a>指定。
+默认为CPU数量。</dd>
+</dl>
+<h2><a class="header" href="#环境" id="环境">环境</a></h2>
+<p>关于Cargo所读取的环境变量，可参见<a href="../reference/environment-variables.html">the reference</a></p>
+<h2><a class="header" href="#退出状态" id="退出状态">退出状态</a></h2>
+<ul>
+<li><code>0</code>: Cargo命令执行成功</li>
+<li><code>101</code>: Cargo命令未能完成.</li>
+</ul>
+<h2><a class="header" href="#examples" id="examples">EXAMPLES</a></h2>
+<ol>
+<li>
+<p>Apply compiler suggestions to the local package:</p>
+<pre><code>cargo fix
+</code></pre>
+</li>
+<li>
+<p>Update a package to prepare it for the next edition:</p>
+<pre><code>cargo fix --edition
+</code></pre>
+</li>
+<li>
+<p>Apply suggested idioms for the current edition:</p>
+<pre><code>cargo fix --edition-idioms
+</code></pre>
+</li>
+</ol>
+<h2><a class="header" href="#see-also" id="see-also">SEE ALSO</a></h2>
+<p><a href="cargo.html">cargo(1)</a>, <a href="cargo-check.html">cargo-check(1)</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../commands/cargo-fetch.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../commands/cargo-run.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../commands/cargo-fetch.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../commands/cargo-run.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../language.js"></script>
+        
+
+        
+
+    </body>
+</html>

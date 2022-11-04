@@ -1,0 +1,460 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>不稳定功能 - Cargo 手册 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <style>
+    dd {
+        margin-bottom: 1em;
+    }
+</style>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Cargo 手册是使用 Cargo 全面指南教程，Cargo 是 Rust 的包管理器，通过本手册全面了解如何构建 Rust 程序和大型项目。">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">简介</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">1.</strong> 入门</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">1.1.</strong> 安装</a></li><li class="chapter-item expanded "><a href="../getting-started/first-steps.html"><strong aria-hidden="true">1.2.</strong> 初次使用 Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="../guide/index.html"><strong aria-hidden="true">2.</strong> Cargo 指南</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../guide/why-cargo-exists.html"><strong aria-hidden="true">2.1.</strong> 为什么存在 Cargo</a></li><li class="chapter-item expanded "><a href="../guide/creating-a-new-project.html"><strong aria-hidden="true">2.2.</strong> 创建一个新的包</a></li><li class="chapter-item expanded "><a href="../guide/working-on-an-existing-project.html"><strong aria-hidden="true">2.3.</strong> 处理现有包</a></li><li class="chapter-item expanded "><a href="../guide/dependencies.html"><strong aria-hidden="true">2.4.</strong> 依赖</a></li><li class="chapter-item expanded "><a href="../guide/project-layout.html"><strong aria-hidden="true">2.5.</strong> 项目布局</a></li><li class="chapter-item expanded "><a href="../guide/cargo-toml-vs-cargo-lock.html"><strong aria-hidden="true">2.6.</strong> Cargo.toml 和 Cargo.lock</a></li><li class="chapter-item expanded "><a href="../guide/tests.html"><strong aria-hidden="true">2.7.</strong> 测试</a></li><li class="chapter-item expanded "><a href="../guide/continuous-integration.html"><strong aria-hidden="true">2.8.</strong> 持续集成</a></li><li class="chapter-item expanded "><a href="../guide/cargo-home.html"><strong aria-hidden="true">2.9.</strong> Cargo Home</a></li><li class="chapter-item expanded "><a href="../guide/build-cache.html"><strong aria-hidden="true">2.10.</strong> 构建缓存</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/index.html"><strong aria-hidden="true">3.</strong> Cargo 参考</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/specifying-dependencies.html"><strong aria-hidden="true">3.1.</strong> 指定依赖</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/overriding-dependencies.html"><strong aria-hidden="true">3.1.1.</strong> Overriding Dependencies</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/manifest.html"><strong aria-hidden="true">3.2.</strong> 清单格式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/cargo-targets.html"><strong aria-hidden="true">3.2.1.</strong> Cargo Targets</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/workspaces.html"><strong aria-hidden="true">3.3.</strong> Workspaces</a></li><li class="chapter-item expanded "><a href="../reference/features.html"><strong aria-hidden="true">3.4.</strong> Features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/features-examples.html"><strong aria-hidden="true">3.4.1.</strong> Features Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/profiles.html"><strong aria-hidden="true">3.5.</strong> Profiles</a></li><li class="chapter-item expanded "><a href="../reference/config.html"><strong aria-hidden="true">3.6.</strong> 设置</a></li><li class="chapter-item expanded "><a href="../reference/environment-variables.html"><strong aria-hidden="true">3.7.</strong> 环境变量</a></li><li class="chapter-item expanded "><a href="../reference/build-scripts.html"><strong aria-hidden="true">3.8.</strong> 构建脚本</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../reference/build-script-examples.html"><strong aria-hidden="true">3.8.1.</strong> Build Script Examples</a></li></ol></li><li class="chapter-item expanded "><a href="../reference/publishing.html"><strong aria-hidden="true">3.9.</strong> 将 crate 发布到 Crates.io</a></li><li class="chapter-item expanded "><a href="../reference/pkgid-spec.html"><strong aria-hidden="true">3.10.</strong> 包 ID 规格</a></li><li class="chapter-item expanded "><a href="../reference/source-replacement.html"><strong aria-hidden="true">3.11.</strong> 更换源</a></li><li class="chapter-item expanded "><a href="../reference/external-tools.html"><strong aria-hidden="true">3.12.</strong> 外部工具</a></li><li class="chapter-item expanded "><a href="../reference/registries.html"><strong aria-hidden="true">3.13.</strong> Registries</a></li><li class="chapter-item expanded "><a href="../reference/resolver.html"><strong aria-hidden="true">3.14.</strong> Dependency Resolution</a></li><li class="chapter-item expanded "><a href="../reference/semver.html"><strong aria-hidden="true">3.15.</strong> SemVer Compatibility</a></li><li class="chapter-item expanded "><a href="../reference/unstable.html" class="active"><strong aria-hidden="true">3.16.</strong> 不稳定功能</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/index.html"><strong aria-hidden="true">4.</strong> Cargo Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/general-commands.html"><strong aria-hidden="true">4.1.</strong> General Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo.html"><strong aria-hidden="true">4.1.1.</strong> cargo</a></li><li class="chapter-item expanded "><a href="../commands/cargo-help.html"><strong aria-hidden="true">4.1.2.</strong> cargo help</a></li><li class="chapter-item expanded "><a href="../commands/cargo-version.html"><strong aria-hidden="true">4.1.3.</strong> cargo version</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/build-commands.html"><strong aria-hidden="true">4.2.</strong> Build Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-bench.html"><strong aria-hidden="true">4.2.1.</strong> cargo bench</a></li><li class="chapter-item expanded "><a href="../commands/cargo-build.html"><strong aria-hidden="true">4.2.2.</strong> cargo build</a></li><li class="chapter-item expanded "><a href="../commands/cargo-check.html"><strong aria-hidden="true">4.2.3.</strong> cargo check</a></li><li class="chapter-item expanded "><a href="../commands/cargo-clean.html"><strong aria-hidden="true">4.2.4.</strong> cargo clean</a></li><li class="chapter-item expanded "><a href="../commands/cargo-doc.html"><strong aria-hidden="true">4.2.5.</strong> cargo doc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fetch.html"><strong aria-hidden="true">4.2.6.</strong> cargo fetch</a></li><li class="chapter-item expanded "><a href="../commands/cargo-fix.html"><strong aria-hidden="true">4.2.7.</strong> cargo fix</a></li><li class="chapter-item expanded "><a href="../commands/cargo-run.html"><strong aria-hidden="true">4.2.8.</strong> cargo run</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustc.html"><strong aria-hidden="true">4.2.9.</strong> cargo rustc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-rustdoc.html"><strong aria-hidden="true">4.2.10.</strong> cargo rustdoc</a></li><li class="chapter-item expanded "><a href="../commands/cargo-test.html"><strong aria-hidden="true">4.2.11.</strong> cargo test</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/manifest-commands.html"><strong aria-hidden="true">4.3.</strong> Manifest Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-generate-lockfile.html"><strong aria-hidden="true">4.3.1.</strong> cargo generate-lockfile</a></li><li class="chapter-item expanded "><a href="../commands/cargo-locate-project.html"><strong aria-hidden="true">4.3.2.</strong> cargo locate-project</a></li><li class="chapter-item expanded "><a href="../commands/cargo-metadata.html"><strong aria-hidden="true">4.3.3.</strong> cargo metadata</a></li><li class="chapter-item expanded "><a href="../commands/cargo-pkgid.html"><strong aria-hidden="true">4.3.4.</strong> cargo pkgid</a></li><li class="chapter-item expanded "><a href="../commands/cargo-tree.html"><strong aria-hidden="true">4.3.5.</strong> cargo tree</a></li><li class="chapter-item expanded "><a href="../commands/cargo-update.html"><strong aria-hidden="true">4.3.6.</strong> cargo update</a></li><li class="chapter-item expanded "><a href="../commands/cargo-vendor.html"><strong aria-hidden="true">4.3.7.</strong> cargo vendor</a></li><li class="chapter-item expanded "><a href="../commands/cargo-verify-project.html"><strong aria-hidden="true">4.3.8.</strong> cargo verify-project</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/package-commands.html"><strong aria-hidden="true">4.4.</strong> Package Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-init.html"><strong aria-hidden="true">4.4.1.</strong> cargo init</a></li><li class="chapter-item expanded "><a href="../commands/cargo-install.html"><strong aria-hidden="true">4.4.2.</strong> cargo install</a></li><li class="chapter-item expanded "><a href="../commands/cargo-new.html"><strong aria-hidden="true">4.4.3.</strong> cargo new</a></li><li class="chapter-item expanded "><a href="../commands/cargo-search.html"><strong aria-hidden="true">4.4.4.</strong> cargo search</a></li><li class="chapter-item expanded "><a href="../commands/cargo-uninstall.html"><strong aria-hidden="true">4.4.5.</strong> cargo uninstall</a></li></ol></li><li class="chapter-item expanded "><a href="../commands/publishing-commands.html"><strong aria-hidden="true">4.5.</strong> Publishing Commands</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../commands/cargo-login.html"><strong aria-hidden="true">4.5.1.</strong> cargo login</a></li><li class="chapter-item expanded "><a href="../commands/cargo-owner.html"><strong aria-hidden="true">4.5.2.</strong> cargo owner</a></li><li class="chapter-item expanded "><a href="../commands/cargo-package.html"><strong aria-hidden="true">4.5.3.</strong> cargo package</a></li><li class="chapter-item expanded "><a href="../commands/cargo-publish.html"><strong aria-hidden="true">4.5.4.</strong> cargo publish</a></li><li class="chapter-item expanded "><a href="../commands/cargo-yank.html"><strong aria-hidden="true">4.5.5.</strong> cargo yank</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../faq.html"><strong aria-hidden="true">5.</strong> 参见问题</a></li><li class="chapter-item expanded "><a href="../appendix/glossary.html"><strong aria-hidden="true">6.</strong> 附录：术语白</a></li><li class="chapter-item expanded "><a href="../appendix/git-authentication.html"><strong aria-hidden="true">7.</strong> Appendix: Git Authentication</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Cargo 手册 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/cargo-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#unstable-features" id="unstable-features">Unstable Features</a></h2>
+<blockquote>
+<p>不稳定的特性</p>
+</blockquote>
+<p>实验性 Cargo 特性仅适用于夜间通道(Rust 的 nightly 版本)。您通常使用<code>-Z</code>带其中一个特性，以启用它们。运行<code>cargo -Z help</code>查看可用的标志列表。</p>
+<p><code>-Z unstable-options</code>是用于启用其他不稳定命令行标志的通用标志。需要的此选项将在下面列出。</p>
+<p>某些不稳定的特性需要您，在<code>Cargo.toml</code>指定<code>cargo-features</code>字段。</p>
+<h3><a class="header" href="#alternate-registries" id="alternate-registries">Alternate Registries</a></h3>
+<blockquote>
+<p>替换(/备用)注册表</p>
+</blockquote>
+<ul>
+<li>RFC:<a href="https://github.com/rust-lang/rfcs/blob/master/text/2141-alternative-registries.md">#2141</a></li>
+<li>跟踪问题:<a href="https://github.com/rust-lang/rust/issues/44931">rust-lang/rust#44931</a></li>
+</ul>
+<p>备用注册表，允许您使用 crates.io 以外的注册表。</p>
+<p>注册表的名称定义在<code>.cargo/config</code>中，<code>registries</code>表格的下面:</p>
+<pre><code class="language-toml">[registries]
+my-registry = { index = &quot;https://my-intranet:8080/git/index&quot; }
+</code></pre>
+<p>可以在<code>.cargo/credentials</code>添加备用注册表的身份验证信息:</p>
+<pre><code class="language-toml">[registries.my-registry]
+token = &quot;api-token&quot;
+</code></pre>
+<p>在<code>Cargo.toml</code>里面，您可以使用指定<code>registry</code>字段，让某个依赖项来自哪个注册表。但首先，您需要在文件的顶部包含适当的<code>cargo-features</code>:</p>
+<pre><code class="language-toml">cargo-features = [&quot;alternative-registries&quot;]
+
+[package]
+...
+
+[dependencies]
+other-create = { version = &quot;1.0&quot;, registry = &quot;my-registry&quot;}
+</code></pre>
+<p>一个<code>--registry</code>标志 已添加到与注册表交互的<code>publish</code>，<code>login</code>等命令中。示例:</p>
+<pre><code>cargo +nightly publish -Z unstable-options --registry my-registry
+</code></pre>
+<p>在<code>Cargo.toml</code>的 <code>publish</code> 字段，已被扩展为接受限制为发布到这些注册表的注册表列表。</p>
+<pre><code class="language-toml">[package]
+...
+publish = [&quot;my-registry&quot;]
+</code></pre>
+<h3><a class="header" href="#publish-lockfile" id="publish-lockfile">publish-lockfile</a></h3>
+<blockquote>
+<p>发布-锁文件</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/2263">#2263</a></li>
+<li>PR:<a href="https://github.com/rust-lang/cargo/pull/5093">#5093</a></li>
+<li>跟踪问题:<a href="https://github.com/rust-lang/cargo/issues/5654">#5654</a></li>
+</ul>
+<p>创建<code>.crate</code>文件分发时，Cargo 历史上不包括<code>Cargo.lock</code>文件。这可能会导致<code>cargo install</code>用于二进制文件的问题。您可以在<code>cargo package</code>要么<code>cargo publish</code>使用时，指定您的包应包含<code>Cargo.lock</code>，方法是在<code>Cargo.toml</code>中指定<code>publish-lockfile</code>字段。这也需要适当的<code>cargo-features</code>要求:</p>
+<pre><code class="language-toml">cargo-features = [&quot;publish-lockfile&quot;]
+
+[package]
+...
+publish-lockfile = true
+</code></pre>
+<h3><a class="header" href="#offline-mode" id="offline-mode">Offline Mode</a></h3>
+<blockquote>
+<p>离线模式</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/4686">#4686</a></li>
+<li>跟踪问题:<a href="https://github.com/rust-lang/cargo/issues/5655">#5655</a></li>
+</ul>
+<p><code>-Z offline</code>标志 可防止 Cargo 因任何原因尝试访问网络。通常情况下，如果 Cargo 要访问网络但它不可用，则会因错误而停止。</p>
+<p>请注意，这可能会导致与在线模式不同的依赖项解析。即使可能有索引的较新版本的本地副本，Cargo 也会将自己限制在本地可用的箱(crate)中。</p>
+<h3><a class="header" href="#no-index-update" id="no-index-update">no-index-update</a></h3>
+<blockquote>
+<p>无索引更新</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/3479">#3479</a></li>
+</ul>
+<p><code>-Z no-index-update</code>标志 确保 Cargo 不会尝试更新注册表索引。这适用于测试(调制)许多 Cargo 命令的 Crater 等工具，并且您希望每次都避免更新索引的网络延迟。</p>
+<h3><a class="header" href="#avoid-dev-deps" id="avoid-dev-deps">avoid-dev-deps</a></h3>
+<blockquote>
+<p>阻止 开发依赖项</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/4988">#4988</a></li>
+<li>稳定问题:<a href="https://github.com/rust-lang/cargo/issues/5133">#5133</a></li>
+</ul>
+<p>运行命令如<code>cargo install</code>要么<code>cargo build</code>时，Cargo 当前会需要下载 dev 依赖项，即使它们未被使用。而该<code>-Z avoid-dev-deps</code>标志 则让 Cargo 避免在不需要时下载 dev 依赖项。该<code>Cargo.lock</code>如果跳过了 dev-dependencies，将不会生成相关信息。</p>
+<h3><a class="header" href="#minimal-versions" id="minimal-versions">minimal-versions</a></h3>
+<blockquote>
+<p>最小的版本</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/4100">#4100</a></li>
+<li>跟踪问题:<a href="https://github.com/rust-lang/cargo/issues/5657">#5657</a></li>
+</ul>
+<p>当一个<code>Cargo.lock</code>文件被生成，<code>-Z minimal-versions</code>标志的使用， 将解析依赖关系为满足要求的最小 semver 版本(而不是最高版本)。</p>
+<p>此标志的预期用例，是在持续集成期间，检查 Cargo.toml 中指定的版本是否是您实际使用的最低版本的正确反映。也就是说，如果 Cargo.toml 有<code>foo = &quot;1.0.0&quot;</code>说明，那您依赖该特性，不会意外地添加<code>foo 1.5.0</code>。</p>
+<h3><a class="header" href="#out-dir" id="out-dir">out-dir</a></h3>
+<blockquote>
+<p>输出目录</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/4875">#4875</a></li>
+</ul>
+<p>此功能允许您指定，构建工件后，将复制到的目录。通常，工件只写入<code>target/release</code>要么<code>target/debug</code>目录。但是，确定明确的文件名可能很棘手，因为您需要解析 JSON 输出。而该<code>--out-dir</code>标志 可以更容易地预测访问工件。但是请注意，工件只是被复制，因此原件仍在<code>target</code>目录.例:</p>
+<pre><code>cargo +nightly build --out-dir=out -Z unstable-options
+</code></pre>
+<h3><a class="header" href="#profile-overrides" id="profile-overrides">Profile Overrides</a></h3>
+<blockquote>
+<p>覆盖配置</p>
+</blockquote>
+<ul>
+<li>跟踪问题:<a href="https://github.com/rust-lang/rust/issues/48683">rust-lang/rust#48683</a></li>
+<li>RFC:<a href="https://github.com/rust-lang/rfcs/blob/master/text/2282-profile-dependencies.md">#2282</a></li>
+</ul>
+<p>可以为特定包和自定义生成脚本覆盖配置文件。一般格式如下:</p>
+<pre><code class="language-toml">cargo-features = [&quot;profile-overrides&quot;]
+
+[package]
+...
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+# 这个 `image` 箱 会编译的等级 -Copt-level=3
+[profile.dev.overrides.image]
+opt-level = 3
+
+# 所有 依赖项 (但 不是 箱本身 或 某些工作区成员)
+# 会编译的等级 -Copt-level=2 。 其中包括 构建依赖项.
+[profile.dev.overrides.&quot;*&quot;]
+opt-level = 2
+
+# 构建 脚本和他们的 依赖项， 会编译的等级 -Copt-level=3
+# 默认情况， 构建 脚本 对剩下的配置使用相同的选择
+[profile.dev.build-override]
+opt-level = 3
+</code></pre>
+<p>能只为 dev 和 release 配置文件指定覆盖。</p>
+<h3><a class="header" href="#config-profiles" id="config-profiles">Config Profiles</a></h3>
+<blockquote>
+<p>配置 配置文件 (第一个动词，第二个名词)</p>
+</blockquote>
+<ul>
+<li>跟踪问题:<a href="https://github.com/rust-lang/rust/issues/48683">rust-lang/rust#48683</a></li>
+<li>RFC:<a href="https://github.com/rust-lang/rfcs/blob/master/text/2282-profile-dependencies.md">#2282</a></li>
+</ul>
+<!-- HERE -->
+<p>可以在<code>.cargo/config</code>文件中指定配置文件。该<code>-Z config-profile</code>命令行标志是使用此功能所必需的。格式与一个 <code>Cargo.toml</code>清单格式相同。如果在多个文件中找到相同的配置，则通过使用常规设置<a href="./config.html#hierarchical-structure">配置层次结构</a>合并。配置设置优先于清单设置。</p>
+<pre><code class="language-toml">[profile.dev]
+opt-level = 3
+</code></pre>
+<pre><code>cargo +nightly build -Z config-profile
+</code></pre>
+<h3><a class="header" href="#namespaced-features" id="namespaced-features">Namespaced features</a></h3>
+<blockquote>
+<p>特性的命名区间化</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/1286">#1286</a></li>
+<li>跟踪问题:<a href="https://github.com/rust-lang/cargo/issues/5565">rust-lang/Cargo#5565</a></li>
+</ul>
+<p>目前，不可能在清单中具有相同名称的特性和依赖项。但如果你设置<code>namespaced-features</code>至<code>true</code>，功能和依赖项的命名空间就会是分开的。这样做的结果是，在特性请求中，依赖项必须以<code>crate:</code>为前缀。像这样:</p>
+<pre><code class="language-toml">[package]
+namespaced-features = true
+
+[features]
+bar = [&quot;crate:baz&quot;, &quot;foo&quot;]
+foo = []
+
+[dependencies]
+baz = { version = &quot;0.1&quot;, optional = true }
+</code></pre>
+<p>为了防止不必要的，必须为每个可选依赖项显式声明特性的模版，将为任何不是定义为相同名称的特性，的可选依赖项创建隐式特性。但是，如果定义了与依赖项同名的特性，则该特性必须将依赖项作为必需项，正如<code>foo = [&quot;crate:foo&quot;]</code>。</p>
+<h3><a class="header" href="#build-plan" id="build-plan">Build-plan</a></h3>
+<blockquote>
+<p>构建计划</p>
+</blockquote>
+<ul>
+<li>跟踪问题:<a href="https://github.com/rust-lang/cargo/issues/5579">rust-lang/Cargo#5579</a></li>
+</ul>
+<p><code>build</code>命令的<code>--build-plan</code>参数，将输出 JSON，其中包含有关将运行哪些命令，和不实际执行任何操作的信息。与其他构建工具集成时，这可能很有用。例:</p>
+<pre><code>cargo +nightly build --build-plan -Z unstable-options
+</code></pre>
+<h3><a class="header" href="#default-run" id="default-run">default-run</a></h3>
+<blockquote>
+<p>默认运行</p>
+</blockquote>
+<ul>
+<li>原始问题:<a href="https://github.com/rust-lang/cargo/issues/2200">#2200</a></li>
+</ul>
+<p>清单中<code>[package]</code>部分的该<code>default-run</code>选项，可用于指定<code>cargo run</code>选择的默认二进制文件。例如，当存在<code>src/bin/a.rs</code>和<code>src/bin/b.rs</code>两者时，选择前者:</p>
+<pre><code class="language-toml">[package]
+default-run = &quot;a&quot;
+</code></pre>
+<h3><a class="header" href="#metabuild" id="metabuild">Metabuild</a></h3>
+<blockquote>
+<p>元构建</p>
+</blockquote>
+<ul>
+<li>跟踪问题:<a href="https://github.com/rust-lang/rust/issues/49803">rust-lang/rust#49803</a></li>
+<li>RFC:<a href="https://github.com/rust-lang/rfcs/blob/master/text/2196-metabuild.md">#2196</a></li>
+</ul>
+<p>Metabuild 是一个具有声明性构建脚本的特性。作为不去写一个<code>build.rs</code>脚本，而是您在<code>Cargo.toml</code>中的<code>metabuild</code>字段，指定构建依赖项列表。其将自动生成一个构建脚本，该脚本按顺序运行每个构建依赖项。然后，Metabuild 包可以从<code>Cargo.toml</code>中读取元数据，执行他们的指定行为。</p>
+<p>需要包括<code>cargo-features</code>在<code>Cargo.toml</code>的顶部， 一个<code>metadata</code>字段在<code>package</code>下，列出<code>build-dependencies</code>依赖项，并添加 metabuild 包所需的任何元数据。例:</p>
+<pre><code class="language-toml">cargo-features = [&quot;metabuild&quot;]
+
+[package]
+name = &quot;mypackage&quot;
+version = &quot;0.0.1&quot;
+metabuild = [&quot;foo&quot;, &quot;bar&quot;]
+
+[build-dependencies]
+foo = &quot;1.0&quot;
+bar = &quot;1.0&quot;
+
+[package.metadata.foo]
+extra-info = &quot;qwerty&quot;
+</code></pre>
+<p>Metabuild 包应该有一个名<code>metabuild</code>为的公共函数，它会执行与常规<code>build.rs</code>脚本一样，执行相同操作。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../reference/semver.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../commands/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../reference/semver.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../commands/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="../language.js"></script>
+        
+
+        
+
+    </body>
+</html>
