@@ -12,7 +12,7 @@
 
 https://jaywcjlove.github.io/rust-cn-document-for-docker/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/book/  
-https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo-cn/  
+https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/  
