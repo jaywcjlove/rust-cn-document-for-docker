@@ -38,3 +38,7 @@ http://localhost:9613/rustdoc/
 http://localhost:9613/rust-cookbook/  
 http://localhost:9613/std/std/  
 http://localhost:9613/rust-by-example-cn/  
+
+## License
+
+MIT © [Kenny Wong](https://github.com/jaywcjlove)
