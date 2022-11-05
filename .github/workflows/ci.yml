@@ -49,7 +49,7 @@ jobs:
       - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/cargo-cn.git -b master cargo --depth 1
       - run: git clone https://github.com/rust-lang-cn/edition-guide-cn.git -b master edition-guide --depth 1
-      - run: git clone https://github.com/rust-lang-cn/nomicon-zh-Hans.git -b master nomicon --depth 1
+      - run: git clone https://github.com/rust-lang-cn/nomicon-zh-Hans.git -b main nomicon --depth 1
 
       - run: cp -rp std/doc dist/std
       - run: rm -rf dist/book/.git
