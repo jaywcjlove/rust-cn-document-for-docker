@@ -16,6 +16,7 @@ Repo | last commit | home
 [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-cookbook-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-cookbook-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/)
 [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/)
 [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/)
+[Rust 秘典](https://github.com/rust-lang-cn/nomicon-zh-Hans) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/nomicon-zh-Hans?style=flat&label=last)](https://github.com/rust-lang-cn/nomicon-zh-Hans/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/nomicon/)
 
 ## Docker
 
@@ -40,6 +41,7 @@ http://localhost:9613/rustdoc/
 http://localhost:9613/rust-cookbook/  
 http://localhost:9613/std/std/  
 http://localhost:9613/rust-by-example-cn/  
+http://localhost:9613/nomicon/  
 
 ## License
 
