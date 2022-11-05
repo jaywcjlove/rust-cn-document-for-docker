@@ -14,6 +14,7 @@ Repo | last commit | home
 [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/reference-cn?style=flat&label=last)](https://github.com/rust-lang-cn/reference-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/)
 [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rustdoc-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rustdoc-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/)
 [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-cookbook-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-cookbook-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/)
+[Rust 版本指南](https://github.com/rust-lang-cn/edition-guide) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/)
 [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/)
 
 ## Docker
