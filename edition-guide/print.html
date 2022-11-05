@@ -1,0 +1,2388 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust 版本指南 中文版</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 版本指南详细介绍了 Rust Edition 的有关信息，Rust 通过 Edition 机制保证稳定性版本前进，让程序在 2015、2018 以及未来的 2021 和 2024 版都能够顺利编译通过">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="editions/index.html"><strong aria-hidden="true">1.</strong> 什么是版本(Editions)？</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="editions/transitioning-your-code-to-a-new-edition.html"><strong aria-hidden="true">1.1.</strong> 将你的代码迁移到新版本</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2015/index.html"><strong aria-hidden="true">2.</strong> Rust 2015</a></li><li class="chapter-item expanded "><a href="rust-2018/index.html"><strong aria-hidden="true">3.</strong> Rust 2018</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/module-system/index.html"><strong aria-hidden="true">3.1.</strong> 模块系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/module-system/raw-identifiers.html"><strong aria-hidden="true">3.1.1.</strong> 原始标识符</a></li><li class="chapter-item expanded "><a href="rust-2018/module-system/path-clarity.html"><strong aria-hidden="true">3.1.2.</strong> 路径清晰化</a></li><li class="chapter-item expanded "><a href="rust-2018/module-system/more-visibility-modifiers.html"><strong aria-hidden="true">3.1.3.</strong> 更加可见的修饰符</a></li><li class="chapter-item expanded "><a href="rust-2018/module-system/nested-imports-with-use.html"><strong aria-hidden="true">3.1.4.</strong> 用 use 进行导入嵌套</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/index.html"><strong aria-hidden="true">3.2.</strong> 错误处理与崩溃</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html"><strong aria-hidden="true">3.2.1.</strong> ? 操作符对于早期错误的处理</a></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/question-mark-in-main-and-tests.html"><strong aria-hidden="true">3.2.2.</strong> ? 在 main 和 tests中</a></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/controlling-panics-with-std-panic.html"><strong aria-hidden="true">3.2.3.</strong> 用 std::panic 控制崩溃</a></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/aborting-on-panic.html"><strong aria-hidden="true">3.2.4.</strong> 中止崩溃</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/control-flow/index.html"><strong aria-hidden="true">3.3.</strong> 流程控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/control-flow/loops-can-break-with-a-value.html"><strong aria-hidden="true">3.3.1.</strong> 循环可以停止并带有返回值</a></li><li class="chapter-item expanded "><a href="rust-2018/control-flow/async-await-for-easier-concurrency.html"><strong aria-hidden="true">3.3.2.</strong> async/await 早期并发</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/index.html"><strong aria-hidden="true">3.4.</strong> Trait 系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html"><strong aria-hidden="true">3.4.1.</strong> impl Trait 轻松返回复杂的类型</a></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/dyn-trait-for-trait-objects.html"><strong aria-hidden="true">3.4.2.</strong> dyn Trait trait 对象</a></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/more-container-types-support-trait-objects.html"><strong aria-hidden="true">3.4.3.</strong> 支持 trait 对象的更多容器类型</a></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/associated-constants.html"><strong aria-hidden="true">3.4.4.</strong> 相关常数</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/slice-patterns.html"><strong aria-hidden="true">3.5.</strong> 切片模式</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/index.html"><strong aria-hidden="true">3.6.</strong> 所有权和生命周期</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/default-match-bindings.html"><strong aria-hidden="true">3.6.1.</strong> 默认 match 绑定</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/the-anonymous-lifetime.html"><strong aria-hidden="true">3.6.2.</strong> '_ 匿名生命周期</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/lifetime-elision-in-impl.html"><strong aria-hidden="true">3.6.3.</strong> 在impl中省略生命周期</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/inference-in-structs.html"><strong aria-hidden="true">3.6.4.</strong> T: 'a 结构体中的推导</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/simpler-lifetimes-in-static-and-const.html"><strong aria-hidden="true">3.6.5.</strong> 在static和const中更简单的生命周期</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/data-types/index.html"><strong aria-hidden="true">3.7.</strong> 数据类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/data-types/field-init-shorthand.html"><strong aria-hidden="true">3.7.1.</strong> 字段初始化简写</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/inclusive-ranges.html"><strong aria-hidden="true">3.7.2.</strong> ..= 包含取值范围</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/128-bit-integers.html"><strong aria-hidden="true">3.7.3.</strong> 128位整型</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/operator-equals-are-now-implementable.html"><strong aria-hidden="true">3.7.4.</strong> &quot;Operator-equals&quot; 的实现</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/union-for-an-unsafe-form-of-enum.html"><strong aria-hidden="true">3.7.5.</strong> union: 一个非安全的 enum</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/choosing-alignment-with-the-repr-attribute.html"><strong aria-hidden="true">3.7.6.</strong> repr 属性的对齐方式</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/simd-for-faster-computing.html"><strong aria-hidden="true">3.8.</strong> SIMD 更快的计算</a></li><li class="chapter-item expanded "><a href="rust-2018/macros/index.html"><strong aria-hidden="true">3.9.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/macros/custom-derive.html"><strong aria-hidden="true">3.9.1.</strong> 自定义 Derive</a></li><li class="chapter-item expanded "><a href="rust-2018/macros/macro-changes.html"><strong aria-hidden="true">3.9.2.</strong> 宏的变化</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/the-compiler/index.html"><strong aria-hidden="true">3.10.</strong> 编译器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/the-compiler/improved-error-messages.html"><strong aria-hidden="true">3.10.1.</strong> 改进错误信息</a></li><li class="chapter-item expanded "><a href="rust-2018/the-compiler/incremental-compilation-for-faster-compiles.html"><strong aria-hidden="true">3.10.2.</strong> 增量编译以加快编译速度</a></li><li class="chapter-item expanded "><a href="rust-2018/the-compiler/an-attribute-for-deprecation.html"><strong aria-hidden="true">3.10.3.</strong> 弃用属性</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/rustup-for-managing-rust-versions.html"><strong aria-hidden="true">3.11.</strong> Rustup：Rust 版本管理器</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/index.html"><strong aria-hidden="true">3.12.</strong> Cargo 和 crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-check-for-faster-checking.html"><strong aria-hidden="true">3.12.1.</strong> cargo check 用以快速检查</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-install-for-easy-installation-of-tools.html"><strong aria-hidden="true">3.12.2.</strong> cargo install 自动安装工具</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-new-defaults-to-a-binary-project.html"><strong aria-hidden="true">3.12.3.</strong> cargo new 创建可执行项目</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-rustc-for-passing-arbitrary-flags-to-rustc.html"><strong aria-hidden="true">3.12.4.</strong> cargo rustc 用于传递标记至 rustc</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-workspaces-for-multi-package-projects.html"><strong aria-hidden="true">3.12.5.</strong> Cargo workspaces 用于拥有多包的项目</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/multi-file-examples.html"><strong aria-hidden="true">3.12.6.</strong> 多文件的 examples</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/replacing-dependencies-with-patch.html"><strong aria-hidden="true">3.12.7.</strong> patch 替换依赖</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-can-use-a-local-registry-replacement.html"><strong aria-hidden="true">3.12.8.</strong> Cargo 更改源</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/crates-io-disallows-wildcard-dependencies.html"><strong aria-hidden="true">3.12.9.</strong> Crates.io 不允许使用通配符</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/documentation/index.html"><strong aria-hidden="true">3.13.</strong> 文档</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/documentation/new-editions-of-the-book.html"><strong aria-hidden="true">3.13.1.</strong> 新版&quot;the book&quot;</a></li><li class="chapter-item expanded "><a href="rust-2018/documentation/the-rust-bookshelf.html"><strong aria-hidden="true">3.13.2.</strong> The Rust Bookshelf</a></li><li class="chapter-item expanded "><a href="rust-2018/documentation/the-rustonomicon.html"><strong aria-hidden="true">3.13.3.</strong> The Rustonomicon</a></li><li class="chapter-item expanded "><a href="rust-2018/documentation/std-os-has-documentation-for-all-platforms.html"><strong aria-hidden="true">3.13.4.</strong> std::os的平台相关文档</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/rustdoc/index.html"><strong aria-hidden="true">3.14.</strong> rustdoc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/rustdoc/documentation-tests-can-now-compile-fail.html"><strong aria-hidden="true">3.14.1.</strong> 文档测试的 compile-fail</a></li><li class="chapter-item expanded "><a href="rust-2018/rustdoc/rustdoc-uses-commonmark.html"><strong aria-hidden="true">3.14.2.</strong> Rustdoc 使用 CommonMark</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/index.html"><strong aria-hidden="true">3.15.</strong> 平台支持和target</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/libcore-for-low-level-rust.html"><strong aria-hidden="true">3.15.1.</strong> libcore 低层 Rust 使用</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/webassembly-support.html"><strong aria-hidden="true">3.15.2.</strong> WebAssembly 支持</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/global-allocators.html"><strong aria-hidden="true">3.15.3.</strong> 全局分配符</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/msvc-toolchain-support.html"><strong aria-hidden="true">3.15.4.</strong> MSVC toolchain 支持</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.html"><strong aria-hidden="true">3.15.5.</strong> MUSL 支持完全静态二进制文件</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.html"><strong aria-hidden="true">3.15.6.</strong> cdylib 与 C 的互通性</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="unstable-feature-status.html"><strong aria-hidden="true">4.</strong> 不稳定的特性状态</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 版本指南 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/edition-guide-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#简介" id="简介">简介</a></h1>
+<blockquote>
+<p>中文翻译注（The Chinese translation of <a href="https://doc.rust-lang.org/nightly/edition-guide/">The Rust Edition Guide</a>）：</p>
+<ul>
+<li>👉 查看更多 <a href="https://rustwiki.org/" style="color:#97ca00;font-weight:bold;">Rust 官方文档中英文双语教程</a>，包括双语版<a href="https://rustwiki.org/zh-CN/book/">《Rust 程序设计语言》</a>（出版书名为《Rust 权威指南》），本站还提供了 <a href="https://rustwiki.org/zh-CN/std/">Rust 标准库中文版</a>。</li>
+<li>《Rust 版本指南》（The Rust Edition Guide 中文版）翻译自 <a href="https://doc.rust-lang.org/nightly/edition-guide/">The Rust Edition Guide</a>，内容已全部翻译完成，查看此书的 <a href="https://github.com/rust-lang-cn/edition-guide-cn">Github 翻译项目和源码</a>。本文版最后更新时间：2019-05-05。</li>
+<li>本文档已加入到 <a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a>，主要译者：<a href="https://github.com/sunhuachuang"><em>Sun</em></a>，<a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a>成员。</li>
+<li><a href="https://rustwiki.org/en/edition-guide/" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，<strong>英文版每天都会自动同步一次官方的最新版本</strong>。</li>
+<li>若发现当前页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开该页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！</li>
+<li>注意：<strong>此文档已较长时间没更新，内容可能比英文滞后较多</strong>。期待您加入 <a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a>，协助我们，一起更新完善中文版，感激不尽！</li>
+</ul>
+</blockquote>
+<p>欢迎来到 Rust 版本(Edition)使用指南！ &quot;Editions&quot; 是通过编写 Rust 代码来传达巨大改变的一种方式。</p>
+<p>在指南中，我们将讨论：</p>
+<ul>
+<li>什么是版本(editions)</li>
+<li>每个版本什么样</li>
+<li>如何将你的代码从一个版本迁移到另一个版本</li>
+</ul>
+<p>请注意，标准库随每个Rust版本的增长而增长; 标准库中有<strong>许多</strong>添加的内容，本指南未对其进行说明。
+只包含那些主要的变化，当然同时也有大量的中小型的改变也很棒。
+您可能还想查看<a href="https://rustwiki.org/zh-CN/std/">标准库文档</a>。</p>
+<h1><a class="header" href="#什么是版本editions" id="什么是版本editions">什么是版本(Editions)？</a></h1>
+<p>Rust 六周发布一次新版本。这意味着用户可以获得不断的新功能。
+这比其他语言的更新要快得多，但这也意味着每次更新都会更小。
+一段时间之后，所有这些微小的变化都加进来了。
+但是，从正式发布到正式发布，很难回头看看 <em>哇，在 Rust 1.10和 Rust 1.20之间，Rust已经发生了很大变化！</em></p>
+<p>每隔两三年，我们将制作一个新 <em>版本</em> 的 Rust。
+每个版本都将功能集成到一个清晰的包中，并提供全面更新的文档和工具。
+新版本通过正常的发布流程发布。</p>
+<p>这为不同的人提供不同的目的：</p>
+<ul>
+<li>
+<p>对于活跃的 Rust 用户，它将增量更改集成到易于理解的包中。</p>
+</li>
+<li>
+<p>对于非用户而言，它表明一些重大进步已经落地，这可能使 Rust 值得再看一眼。</p>
+</li>
+<li>
+<p>对于那些开发 Rust 本身的人来说，它为整个项目提供了一个集结点。</p>
+</li>
+</ul>
+<h2><a class="header" href="#兼容性" id="兼容性">兼容性</a></h2>
+<p>当编译器中出现新版本时，crates 必须明确选择使用它才能充分利用它。
+此选择允许版本包含不兼容的更改，例如添加可能与代码中的标识符冲突的新关键字，或将警告转换为错误。
+Rust 编译器将支持编译器发布之前存在的所有版本，并且可以将任何受支持版本的 crates 链接在一起。
+版本更改仅影响编译器最初解析代码的方式。 
+因此，如果您正在使用 Rust 2015，并且您的某个依赖项使用 Rust 2018，那么一切正常。相反的情况也适用。</p>
+<p>需要明确的是：大多数功能都适用于所有版本。随着新的稳定版本的发布，使用任何版本的 Rust 的人将继续看到改进。
+但是，在某些情况下，主要是在添加新关键字时，但有时由于其他原因，可能会有新功能仅在以后的版本中提供。如果要利用此类功能，则只需升级。</p>
+<h2><a class="header" href="#试一下2018版本" id="试一下2018版本">试一下2018版本</a></h2>
+<p>在撰写本文时，有两个版本：2015和2018。2015是现在的 Rust版本; Rust 2018将于今年晚些时候发布。
+要从2015版本过渡到2018版本，您需要开始使用<a href="editions/transitioning-your-code-to-a-new-edition.html">迁移说明</a>。</p>
+<h1><a class="header" href="#迁移你的代码到新版本" id="迁移你的代码到新版本">迁移你的代码到新版本</a></h1>
+<p>新版本可能会改变您编写 Rust 的方式 - 它们会添加新的语法，语言和库功能，但也会删除功能。
+例如，<code>try</code>，<code>async</code>和<code>await</code>是 Rust 2018 中的关键字，但不在 Rust 2015中。
+尽管如此，我们试图尽可能顺利地迁移到新版本。
+如果很难将您的 crates 升级到新版本，那么这可能是一个 bug 。如果您遇到困难，那么应该向 Rust 提交一个 bug。</p>
+<p>版本之间的迁移是围绕编译器标签(lints)构建的。从根本上说，这个过程是这样的：</p>
+<ul>
+<li>打开 lints 以指示代码与新版本不兼容的位置</li>
+<li>在没有警告的情况下编译代码。</li>
+<li>选择加入新版本，代码应该编译。
+*（可选）在新版本中启用有关 <em>idiomatic</em> 代码的 lints。</li>
+</ul>
+<p>幸运的是，我们一直致力于 Cargo 帮助完成这一过程，最终推出了一个新的内置子命令 <code>cargo fix</code>。
+它可以从编译器中获取建议并自动重新编写代码以符合新功能和习惯用法，从而大大减少手动修复所需的警告数量！</p>
+<blockquote>
+<p><code>cargo fix</code> 仍然很早期，而且非常重要。但它已经适用于基础部分！我们正在努力使其变得更好，更强大，但暂时不必使用。</p>
+</blockquote>
+<h2><a class="header" href="#预览期" id="预览期">预览期</a></h2>
+<p>在发布版本之前，它将有一个“预览”阶段，让您可以在发布之前在 nightly 的 Rust 中试用新版本。
+目前 Rust 2018 正处于预览阶段，因此，您需要采取额外的步骤来选择加入。
+将此功能标志添加到您的<code>lib.rs</code>或<code>main.rs</code>以及任何示例中。如果你有一个项目的<code>examples</code>目录：</p>
+<pre><code class="language-rust ignore">#![feature(rust_2018_preview)]
+</code></pre>
+<p>这将启用 <a href="editions/../unstable-feature-status.html">特性状态</a> 页面中列出的不稳定功能。请注意，某些功能需要最小的 Rust 2018，这些功能需要 Cargo.toml 拥有更改权限才能启用（在下面的部分中描述）。
+另请注意，在预览可用期间，我们可能会继续使用此标志来添加/启用新功能！</p>
+<p>对于 Rust 2018 预览版2中，我们还测试了<a href="editions/../rust-2018/module-system/path-clarity.html">新模块路径变体</a>，“统一路径”，我们想要获得进一步测试和反馈。
+请尝试将以下内容添加到<code>lib.rs</code>或<code>main.rs</code>中：</p>
+<pre><code class="language-rust ignore">#![feature(rust_2018_preview, uniform_paths)]
+</code></pre>
+<p>Rust 2018 的发布时候将会选择两个模块路径变体中的一个，并放弃另一个。
+The release of Rust 2018 will stabilize one of the two module path variants and drop the other.</p>
+<h2><a class="header" href="#修复版本兼容性警告" id="修复版本兼容性警告">修复版本兼容性警告</a></h2>
+<p>接下来是启用有关与新 2018 版本 不兼容的代码的编译器警告。 这是方便 <code>cargo fix</code> 这个工具进入图片的地方。 要为项目启用兼容性lints，请运行：</p>
+<pre><code class="language-shell">$ cargo fix --edition
+</code></pre>
+<p>如果 nightly 不是你的默认选择的话，你需要运行下面的这个命令：</p>
+<pre><code class="language-shell">$ cargo +nightly fix --edition
+</code></pre>
+<p>这将指示 Cargo 编译项目中的所有目标（库，二进制文件，测试等），同时启用所有 Cargo 功能并为2018版本做好准备。
+Cargo 可能会自动修复一些文件，并在其发生时通知您。 请注意，这不会启用任何新的 Rust 2018 功能; 它只能确保您的代码与 Rust 2018 兼容。</p>
+<p>如果Cargo无法自动修复所有内容，它将打印出剩余的警告。继续运行上述命令，直到所有警告都已解决。</p>
+<p>你可以获取更多 <code>cargo fix</code> 信息，运行：</p>
+<pre><code class="language-shell">$ cargo fix --help
+</code></pre>
+<h2><a class="header" href="#切换到下一个版本" id="切换到下一个版本">切换到下一个版本</a></h2>
+<p>一旦您对这些更改感到满意，就可以使用新版本了。 将其添加到您的 <code>Cargo.toml</code>：</p>
+<pre><code class="language-toml">cargo-features = [&quot;edition&quot;]
+
+[package]
+edition = '2018'
+</code></pre>
+<p>那个 <code>cargo-features</code> 行应该排在最前面; <code>edition</code> 进入 <code>[package]</code> 部分。
+如上所述，现在这是 Cargo 的 nightly 特征，因此您需要启用它才能使其工作。</p>
+<p>此时，您的项目应该使用常规的<code>cargo build</code>进行编译。 如果没有，这是一个错误！ 请<a href="https://github.com/rust-lang/rust/issues/new">提交问题</a>。</p>
+<h2><a class="header" href="#在新版本中编写惯用代码" id="在新版本中编写惯用代码">在新版本中编写惯用代码</a></h2>
+<p>你的 crate 现在已经进入了2018版的 Rust，恭喜！ 回想一下，Rust 中的 Editions 表示随着时间的推移，习惯用语的转变。
+虽然很多旧代码将继续编译，但今天可能会用不同的习惯用语编写。</p>
+<p>您可以采取的可选的后续步骤是将代码更新为新版本中的惯用语。
+这是通过一组不同的“习惯用语lints”完成的。 就像之前我们使用 <code>cargo fix</code> 来推动这个过程一样：</p>
+<pre><code class="language-shell">$ cargo fix --edition-idioms
+</code></pre>
+<p>与之前一样，这是一个 <em>简单</em> 的步骤。
+在这里 <code>cargo fix</code> 将自动修复任何可能的lint，所以你只会得到 <code>cargo fix</code> 无法修复的情况下的警告。
+如果您发现难以完成警告，那就是一个错误！</p>
+<p>一旦你用这个命令警告没有了，你就可以继续了。</p>
+<blockquote>
+<p><code>--edition-idioms</code> 标志仅适用于“当前 crate”，如果你想在工作空间运行它是必要的，使用 <code>RUSTFLAGS</code> 的解决方法，以便在所有工作区中执行它。</p>
+<pre><code class="language-shell">$ RUSTFLAGS='-Wrust_2018_idioms' cargo fix --all
+</code></pre>
+</blockquote>
+<p>享受新版本吧！</p>
+<h1><a class="header" href="#rust-2015" id="rust-2015">Rust 2015</a></h1>
+<p>Rust 2015 的主题是“稳定性”。 它从1.0版本开始，是“默认版”。 
+该版本系统于2017年底构思，但 Rust 1.0 于2015年5月发布。因此，2015年是您未指定任何特定版本时获得的版本，出于向后兼容性原因。</p>
+<p>“稳定性”是 Rust 2015 的主题，因为1.0标志着 Rust 开发的巨大变化。 在 Rust 1.0 之前，Rust 每天都在变化。 这使得在 Rust 中编写大型软件变得非常困难，并且难以学习。 
+随着 Rust 1.0 和 Rust 2015 的发布，我们致力于向后兼容，确保为人们构建项目奠定坚实的基础。</p>
+<p>由于它是默认版本，因此无法将代码移植到 Rust 2015; 它 <em>就是</em>。 你将从 2015 开始 <em>过渡</em>，但从未真正 <em>到</em> 2015版。因此，没有什么可说的了！</p>
+<h1><a class="header" href="#rust-2018" id="rust-2018">Rust 2018</a></h1>
+<p>该版本系统是为 Rust 2018 的发布而创建的. Rust 2018 的主题是<em>生产力</em>。 
+Rust 2018 通过新功能，在某些情况下更简单的语法，更智能的借用检查器以及许多其他东西来改进 Rust 2015。
+这些都是为了提高生产力目标。 Rust 2015 是一个基础; Rust 2018 使粗糙边缘平滑，使编写代码更简单，更容易，并消除了一些不一致性。</p>
+<h1><a class="header" href="#模块系统" id="模块系统">模块系统</a></h1>
+<p>在本指南的这一章中，我们将讨论模块系统的一些变化。 
+其中最值得注意的是 <a href="rust-2018/module-system/path-clarity.html">路径清晰度变化</a>。</p>
+<h1><a class="header" href="#原始标识符" id="原始标识符">原始标识符</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /></p>
+<p>与许多编程语言一样，Rust 具有“关键字”的概念。
+这些标识符对语言有意义，因此你不能在变量名，函数名和其他位置使用它们。
+原始标识符允许你使用通常不允许的关键字。</p>
+<p>举个例子，<code>match</code> 是一个关键字。如果你试图编译这个方法：</p>
+<pre><code class="language-rust ignore">fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
+    haystack.contains(needle)
+}
+</code></pre>
+<p>你将得到以下错误：</p>
+<pre><code class="language-text">error: expected identifier, found keyword `match`
+ --&gt; src/main.rs:4:4
+  |
+4 | fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
+  |    ^^^^^ expected identifier, found keyword
+</code></pre>
+<p>你可以使用原始标识符来实现:</p>
+<pre><code class="language-rust ignore">#![feature(rust_2018_preview)]
+#![feature(raw_identifiers)]
+
+fn r#match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
+    haystack.contains(needle)
+}
+
+fn main() {
+    assert!(r#match(&quot;foo&quot;, &quot;foobar&quot;));
+}
+</code></pre>
+<p>注意 <code>r#</code> 不仅在定义的时候有，在调用的时候也得有。</p>
+<h2><a class="header" href="#更多的细节" id="更多的细节">更多的细节</a></h2>
+<p>此功能还是有一些用处的，但主要动机是版本间的情况。
+例如，<code>try</code> 不是2015版的关键字，而是2018版的。
+因此，如果你有一个用 Rust 2015 编写并具有 <code>try</code> 函数的库，要在 Rust 2018 中调用它，你需要使用原始标识符。</p>
+<h2><a class="header" href="#新的关键字" id="新的关键字">新的关键字</a></h2>
+<p>2018 中新定义的关键字:</p>
+<h3><a class="header" href="#async-and-await" id="async-and-await"><code>async</code> and <code>await</code></a></h3>
+<p>这里, 保留 <code>async</code> 用来实现 <code>async fn</code> 或者 <code>async ||</code> 闭包 和 <code>async { .. }</code> 块。
+同时， 保留 <code>await</code> 用来保持 <code>await!(expr)</code> 这种语法是一个开放的选项。有关详细信息，请参阅 <a href="https://github.com/rust-lang/rfcs/blob/master/text/2394-async_await.md#final-syntax-for-the-await-expression">RFC 2394</a>。</p>
+<h3><a class="header" href="#try" id="try"><code>try</code></a></h3>
+<p><code>do catch { .. }</code> 块已经被重命名为 <code>try { .. }</code> 并已经得到支持, 关键字 <code>try</code> 在2018版中将被保留. 有关详细信息，请参阅 <a href="https://github.com/rust-lang/rfcs/pull/2388">RFC 2388</a>。</p>
+<h1><a class="header" href="#路径清晰化" id="路径清晰化">路径清晰化</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /></p>
+<p>对于刚接触 Rust 的人来说，模块系统通常是最困难的事情之一。 
+当然，每个人掌握东西的时间都不同，但是有一个根本原因，导致了为什么对许多人来说模块系统如此混乱：
+尽管模块系统有了简单而一致的定义规则，但它们给人的感觉可能不一致，甚至是违反直觉的，神秘的。</p>
+<p>因此，Rust 2018 引入了一些新的模块系统功能，它们将<em>简单化</em>模块系统，使其更加清晰。</p>
+<p>注意：在2018版预览期间，正在考虑的模块系统有两种变体，“统一路径(uniform paths)”变体和“锚定使用路径(anchored use paths)”变体。 
+这些变化大多数是适用于两种变体的; 两个变体部分也列出了两者之间的差异。
+我们鼓励使用预览2版本的用户，引入新的“统一路径”变体。Rust 2018 的稳定发布时，将只会选择其一。</p>
+<p>要使用新的“统一路径”变体测试 Rust 2018 ，请将 <code>#![feature(rust_2018_preview, uniform_paths)]</code> 放在 <code>lib.rs</code> 或 <code>main.rs</code> 的顶部。</p>
+<p>这是一个简短的总结：</p>
+<ul>
+<li><code>extern crate</code> 不再需要。</li>
+<li><code>crate</code> 关键字指的是当前的 crate。</li>
+<li>统一路径变体： 路径在 <code>use</code> 声明和其他代码中统一工作。路径在顶级模块和子模块中统一工作。任何路径都可以以crate开头，包括 <code>crate</code> ，<code>super</code> 或 <code>self</code> ，或者具有相对于当前模块的本地名称。</li>
+<li>锚定使用路径变量： <code>use</code> 声明中的路径始终以包名称开头，或者以 <code>crate</code> ， <code>super</code> 或 <code>self</code> 开头。 除了 <code>use</code> 声明之外的代码中的路径也可以从相对于当前模块的名称开始。</li>
+<li><code>foo.rs</code> 和 <code>foo /</code> 子目录可以共存; 将子模块放在子目录中时不再需要<code>mod.rs</code>。</li>
+</ul>
+<p>这样看起来就像是新的规则，但现在心理模型整体上大大简化了。 请阅读以获得更多详情！</p>
+<h2><a class="header" href="#更多的细节-1" id="更多的细节-1">更多的细节</a></h2>
+<p>让我们依次讨论每个新功能。</p>
+<h3><a class="header" href="#不再需要-extern-crate" id="不再需要-extern-crate">不再需要 <code>extern crate</code></a></h3>
+<p>这个非常简单：您不再需要编写 <code>extern crate</code> 来将crate导入到您的项目中。 之前：</p>
+<pre><code class="language-rust ignore">// Rust 2015
+
+extern crate futures;
+
+mod submodule {
+    use futures::Future;
+}
+</code></pre>
+<p>现在:</p>
+<pre><code class="language-rust ignore">// Rust 2018
+
+mod submodule {
+    use futures::Future;
+}
+</code></pre>
+<p>现在，要为项目添加一个新的包，你可以将它添加到你的 <code>Cargo.toml</code>，然后没有第二步。 
+如果你没有使用Cargo，你必须通过 <code>--extern</code> 标志给 <code>rustc</code> 提供外部crate的位置，然后继续做其他的事前吧。</p>
+<p><code>extern crate</code>的另一个用途是导入宏; 那也不再需要了。 查看<a href="rust-2018/module-system/../macros/macro-changes.html">宏章节</a>以获取更多信息。</p>
+<h3><a class="header" href="#crate-指当前crate" id="crate-指当前crate"><code>crate</code> 指当前crate.</a></h3>
+<p>在 <code>use</code> 声明和其他代码中，您可以使用 <code>crate::</code> 前缀来引用当前包的根。
+例如，<code>crate::foo::bar</code> 将始终引用模块 <code>foo</code> 中的名称 <code>bar</code>，来自同一个crate中的任何其他位置。</p>
+<p>前缀 <code>::</code> 以前称为crate root或外部crate; 它现在毫无疑问的是指外部crate。
+例如，<code>::foo::bar</code>总是指外部crate中 <code>foo</code> 中的 <code>bar</code>。</p>
+<h3><a class="header" href="#统一路径变体" id="统一路径变体">统一路径变体</a></h3>
+<p>与 Rust 2015 相比，Rust 2018 的统一路径变体简化并统一了路径处理。 
+在 Rust 2015 中，路径在 <code>use</code> 声明中的工作方式与在其他地方的工作方式不同。 
+特别地，<code>use</code> 声明中的路径总是从包根开始，而其他代码中的路径隐含地从当前模块开始。
+这些差异在顶级模块中没有任何影响，这意味着在处理足够大的子模块项目之前，所有内容都会显得简单明了。</p>
+<p>在 Rust 2018 的统一路径变体中，<code>use</code> 声明和其他代码中的路径始终以相同的方式工作，无论是在顶级模块还是在任何子模块中。 
+您始终可以使用当前模块的相对路径，从外部包名称开始的路径，或以 <code>crate</code> ， <code>super</code> 或 <code>self</code> 开头的路径。</p>
+<p>代码长这样：</p>
+<pre><code class="language-rust ignore">// Rust 2015
+
+extern crate futures;
+
+use futures::Future;
+
+mod foo {
+    pub struct Bar;
+}
+
+use foo::Bar;
+
+fn my_poll() -&gt; futures::Poll { ... }
+
+enum SomeEnum {
+    V1(usize),
+    V2(String),
+}
+
+fn func() {
+    let five = std::sync::Arc::new(5);
+    use SomeEnum::*;
+    match ... {
+        V1(i) =&gt; { ... }
+        V2(s) =&gt; { ... }
+    }
+}
+</code></pre>
+<p>在 Rust 2018 中看起来完全一样，除了删除 <code>extern crate</code> 行：</p>
+<pre><code class="language-rust ignore">// Rust 2018 (uniform paths variant)
+
+use futures::Future;
+
+mod foo {
+    pub struct Bar;
+}
+
+use foo::Bar;
+
+fn my_poll() -&gt; futures::Poll { ... }
+
+enum SomeEnum {
+    V1(usize),
+    V2(String),
+}
+
+fn func() {
+    let five = std::sync::Arc::new(5);
+    use SomeEnum::*;
+    match ... {
+        V1(i) =&gt; { ... }
+        V2(s) =&gt; { ... }
+    }
+}
+</code></pre>
+<p>但是，使用 Rust 2018，相同的代码也可以在子模块中完全不修改：</p>
+<pre><code class="language-rust ignore">// Rust 2018 (uniform paths variant)
+
+mod submodule {
+    use futures::Future;
+
+    mod foo {
+        pub struct Bar;
+    }
+
+    use foo::Bar;
+
+    fn my_poll() -&gt; futures::Poll { ... }
+
+    enum SomeEnum {
+        V1(usize),
+        V2(String),
+    }
+
+    fn func() {
+        let five = std::sync::Arc::new(5);
+        use SomeEnum::*;
+        match ... {
+            V1(i) =&gt; { ... }
+            V2(s) =&gt; { ... }
+        }
+    }
+}
+</code></pre>
+<p>这样可以轻松地在项目中移动代码，并避免为引入多模块项目增加额外的复杂性。</p>
+<p>如果路径不明确，例如，如果您有外部包和本地模块或具有相同名称的项目，您将收到错误，并且您需要重命名其中一个冲突名称或明确消除路径歧义。
+要明确消除路径歧义，请使用 <code>::name</code> 作为外部包名，或使用 <code>self::name</code> 作为本地模块或项目。</p>
+<h3><a class="header" href="#锚定使用路径" id="锚定使用路径">锚定使用路径</a></h3>
+<p>在 Rust 2018 的锚定使用路径变体中，<code>use</code> 声明 <em>必须</em> 必须以包名开头，开头包括 <code>crate</code>， <code>self</code> 或 <code>super</code>。</p>
+<p>以前代码长这样：</p>
+<pre><code class="language-rust ignore">// Rust 2015
+
+extern crate futures;
+
+use futures::Future;
+
+mod foo {
+    pub struct Bar;
+}
+
+use foo::Bar;
+</code></pre>
+<p>现在长这样:</p>
+<pre><code class="language-rust ignore">// Rust 2018 (anchored use paths variant)
+
+// 'futures' is the name of a crate
+use futures::Future;
+
+mod foo {
+    pub struct Bar;
+}
+
+// 'crate' means the current crate
+use crate::foo::Bar;
+</code></pre>
+<p>此外，所有这些路径形式也可以在 <code>use</code> 声明之外使用，这消除了许多混淆的来源。 在Rust 2015中考虑以下代码：</p>
+<pre><code class="language-rust ignore">// Rust 2015
+
+extern crate futures;
+
+mod submodule {
+    // this works!
+    use futures::Future;
+
+    // so why doesn't this work?
+    fn my_poll() -&gt; futures::Poll { ... }
+}
+
+fn main() {
+    // this works
+    let five = std::sync::Arc::new(5);
+}
+
+mod submodule {
+    fn function() {
+        // ... so why doesn't this work
+        let five = std::sync::Arc::new(5);
+    }
+}
+</code></pre>
+<p>在 <code>futures</code> 示例中，<code>my_poll</code> 函数签名不正确，因为 <code>submodule</code> 不包含名为 <code>futures</code> 的项目; 也就是说，这条路径被认为是相对的。 
+但是因为 <code>use</code> 是锚定的，<code>use futures::</code> 即使单独的 <code>futures::</code> 也不行！ 
+使用 <code>std</code> 它可能会更加令人困惑，因为你从来没有写过 <code>extern crate std;</code> 行。 
+那么为什么它在 <code>main</code> 中工作但不在子模块中工作？ 
+同样的事情：它是一个相对路径，因为它不在 <code>use</code> 声明中。 
+<code>extern crate std;</code>被插入到crate root中，所以它在 <code>main</code> 中很好，但它根本不存在于子模块中。</p>
+<p>让我们来看看这种变化如何影响：</p>
+<pre><code class="language-rust ignore">// Rust 2018 (anchored use paths variant)
+
+// no more `extern crate futures;`
+
+mod submodule {
+    // 'futures' is the name of a crate, so this is anchored and works
+    use futures::Future;
+
+    // 'futures' is the name of a crate, so this is anchored and works
+    fn my_poll() -&gt; futures::Poll { ... }
+}
+
+fn main() {
+    // 'std' is the name of a crate, so this is anchored and works
+    let five = std::sync::Arc::new(5);
+}
+
+mod submodule {
+    fn function() {
+        // 'std' is the name of a crate, so this is anchored and works
+        let five = std::sync::Arc::new(5);
+    }
+}
+</code></pre>
+<p>更加的直截了当。</p>
+<h3><a class="header" href="#不再需要-modrs" id="不再需要-modrs">不再需要 <code>mod.rs</code></a></h3>
+<p>在 Rust 2015 中，子模块如下：</p>
+<pre><code class="language-rust ignore">mod foo;
+</code></pre>
+<p>它可以是 <code>foo.rs</code> 或者 <code>foo/mod.rs</code>。如果是一个子模块，那么它 <em>必须</em> 有一个 <code>foo/mod.rs</code>。 这样的化， <code>bar</code> 存在于子模块 <code>foo</code> 中，将表现为 <code>foo/bar.rs</code>。</p>
+<p>在 Rust 2018 中，<code>mod.rs</code> 不再需要，<code>foo.rs</code>仅仅表示 <code>foo.rs</code>，子模块仍然是 <code>foo/bar.rs</code>。 
+这消除了特殊名称，如果你在编辑器中打开了一堆文件，你可以清楚地看到它们的名字，而不是有一堆名为 <code>mod.rs</code> 的标签。</p>
+<h1><a class="header" href="#更加可见的修饰符" id="更加可见的修饰符">更加可见的修饰符</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.18-brightgreen.svg" alt="Minimum Rust version: 1.18" /></p>
+<p>您可以使用 <code>pub</code> 关键字将某些内容作为模块公共接口的一部分。 但此外，还有一些新形式：</p>
+<pre><code class="language-rust ignore">pub(crate) struct Foo;
+
+pub(in a::b::c) struct Bar;
+</code></pre>
+<p>第一种形式使 <code>Foo</code> 结构公开在整个crate中，但不是外部的。 
+第二种形式是类似的，只在另一种模块 <code>a::b::c</code> 中，<code>Bar</code>是公开的。</p>
+<h1><a class="header" href="#用-use-进行导入嵌套" id="用-use-进行导入嵌套">用 <code>use</code> 进行导入嵌套</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.25-brightgreen.svg" alt="Minimum Rust version: 1.25" /></p>
+<p>在 Rust 中： 嵌套导入中添加了一种编写 <code>use</code> 语句的新方法。 
+如果您曾编写过这样的一组导入：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fs::File;
+use std::io::Read;
+use std::path::{Path, PathBuf};
+<span class="boring">}
+</span></code></pre></pre>
+<p>可以这样写了：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">mod foo {
+</span>// on one line
+use std::{fs::File, io::Read, path::{Path, PathBuf}};
+<span class="boring">}
+</span>
+<span class="boring">mod bar {
+</span>// with some more breathing room
+use std::{
+    fs::File,
+    io::Read,
+    path::{
+        Path,
+        PathBuf
+    }
+};
+<span class="boring">}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>这可以减少一些重复，并使事情更清晰。</p>
+<h1><a class="header" href="#错误处理与崩溃" id="错误处理与崩溃">错误处理与崩溃</a></h1>
+<p>在本章节中，我们将讨论 Rust 中一些关于错误处理的改进。 最值得注意的是 <a href="rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html"><code>?</code> 操作符介绍</a>.</p>
+<h1><a class="header" href="#-操作符对于早期错误的处理" id="-操作符对于早期错误的处理"><code>?</code> 操作符对于早期错误的处理</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.13-brightgreen.svg" alt="Minimum Rust version: 1.13" /> for <code>Result&lt;T, E&gt;</code></p>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.22-brightgreen.svg" alt="Minimum Rust version: 1.22" /> for <code>Option&lt;T&gt;</code></p>
+<p>Rust 已经有了一个新的操作符 <code>?</code>，它通过减少视觉干扰来使错误处理变得更加愉快。 
+它通过解决了一个简单问题来做到这一点。 为了说明，假设我们有段代码，从文件中读取一些数据：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::{io::{self, prelude::*}, fs::File};
+</span>fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    let f = File::open(&quot;username.txt&quot;);
+
+    let mut f = match f {
+        Ok(file) =&gt; file,
+        Err(e) =&gt; return Err(e),
+    };
+
+    let mut s = String::new();
+
+    match f.read_to_string(&amp;mut s) {
+        Ok(_) =&gt; Ok(s),
+        Err(e) =&gt; Err(e),
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p>注意: 此代码更简单，通过只需一次调用
+<a href="https://doc.rust-lang.org/stable/std/fs/fn.read_to_string.html"><code>std::fs::read_to_string</code></a>,
+但是我们在这里手动编写所有内容以获得多个错误的示例。</p>
+</blockquote>
+<p>此代码有两个可能失败的可能，打开文件和从中读取数据。 
+如果其中任何一个无法工作，我们想从 <code>read_username_from_file</code> 返回错误。 
+这样做涉及对匹配I/O操作的结果。 在这种简单的情况下，我们只是在调用堆栈中传播错误，
+匹配只是样板-它每次都是以相同的模式写出来，但是这并不会为读者提供更多有用的信息。</p>
+<p>利用 <code>?</code>，上面的代码可以写成这样：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::{io::{self, prelude::*}, fs::File};
+</span>fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    let mut f = File::open(&quot;username.txt&quot;)?;
+    let mut s = String::new();
+
+    f.read_to_string(&amp;mut s)?;
+
+    Ok(s)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>?</code> 是我们之前写的整个匹配语句的简写。 换句话说，<code>?</code> 适用于 <code>Result</code> 值，如果它是 <code>Ok</code>，它会解开它并给出内部值。 
+如果它是一个 <code>Err</code>，它将从您当前所处的函数返回。在视觉上，它更直接。 
+现在我们只使用单个 <code>?</code> 而不是整个匹配语句。 &quot;?&quot; 字符表示我们在这里以标准方式处理错误，将它们传递给调用堆栈。</p>
+<p>经验丰富的 Rustaceans 可能会认识到这与自 Rust <code>1.0</code> 以来一直可用的 <code>try！</code> 宏相同。 
+事实上，他们是一样的。以前，<code>read_username_from_file</code> 可能是这样实现的：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::{io::{self, prelude::*}, fs::File};
+</span>fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
+    let mut f = try!(File::open(&quot;username.txt&quot;));
+    let mut s = String::new();
+
+    try!(f.read_to_string(&amp;mut s));
+
+    Ok(s)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>那么为什么在我们已经拥有宏了，还要扩展语言呢？ 原因有很多。 首先，<code>try!</code> 已被证明非常有用，并且常用于惯用的 Rust中。
+因为经常被使用，所以我们认为这是值得拥有的语法糖。 这种演化是强大的宏系统的巨大优势之一： 语言语法的推测性扩展可以在不修改语言本身的情况下进行原型化和迭代，
+反过来，那些表现出特别有用的宏，可以用来指导制定缺少的语言特征。这种演变，从 <code>try!</code> 到 <code>?</code> 就是一个很好的例子。</p>
+<p>其中一个原因 <code>try!</code> 需要一个更甜的语法，当连续使用 <code>try!</code> 的多次调用时，这是非常没有吸引力的。 考虑：</p>
+<pre><code class="language-rust ignore">try!(try!(try!(foo()).bar()).baz())
+</code></pre>
+<p>作为对比：</p>
+<pre><code class="language-rust ignore">foo()?.bar()?.baz()?
+</code></pre>
+<p>第一个是非常难以直观阅读的，每个错误处理层都在表达式前加上一个额外的 <code>try!</code> 调用。
+这会引起过度关注琐碎的错误传播，模糊主代码执行流程，在本例中调用 <code>foo</code> ， <code>bar</code> 和 <code>baz</code>。 
+这种与错误处理链接的方法发生在构建器模式等情况下。</p>
+<p>最后，专用语法将使以后更容易生成专门针对 <code>?</code> 定制的更好的错误消息，而一般来说很难为宏扩展代码产生好的错误。</p>
+<p>您可以将 <code>?</code> 与 <code>Result &lt;T，E&gt;</code> 一起使用，也可以使用 <code>Option &lt;T&gt;</code>。 在这种情况下，<code>?</code> 将为 <code>Some(T)</code> 返回一个值，并为 <code>None</code> 返回 <code>None</code>。
+一个当前的限制是你不能在同一个函数中反复使用 <code>?</code>，因为返回类型需要匹配你使用的类型 <code>?</code>。 将来，这种限制将是有限的。</p>
+<h1><a class="header" href="#-在-main-和-tests-中" id="-在-main-和-tests-中"><code>?</code> 在 <code>main</code> 和 tests 中</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.26-brightgreen.svg" alt="Minimum Rust version: 1.26" /></p>
+<p>Rust的错误处理围绕返回 <code>Result &lt;T，E&gt;</code> 并使用 <code>?</code> 传播错误。
+对于那些编写许多小程序并且希望进行许多测试的人来说，更关注于那些复杂的入口，例如<code>main</code>和<code>#[test]</code>中的错误处理。</p>
+<p>举个例子，你将尝试这样写：</p>
+<pre><code class="language-rust ignore">use std::fs::File;
+
+fn main() {
+    let f = File::open(&quot;bar.txt&quot;)?;
+}
+</code></pre>
+<p>因为 <code>?</code> 通过处理 <code>Result</code> 并提前返回函数来工作，所以上面的代码不起作用，并且导致以下错误：</p>
+<pre><code class="language-rust ignore">error[E0277]: the `?` operator can only be used in a function that returns `Result`
+              or `Option` (or another type that implements `std::ops::Try`)
+ --&gt; src/main.rs:5:13
+  |
+5 |     let f = File::open(&quot;bar.txt&quot;)?;
+  |             ^^^^^^^^^^^^^^^^^^^^^^ cannot use the `?` operator in a function that returns `()`
+  |
+  = help: the trait `std::ops::Try` is not implemented for `()`
+  = note: required by `std::ops::Try::from_error`
+</code></pre>
+<p>在 Rust 2015 中，处理这种问题，需要这样：</p>
+<pre><pre class="playground"><code class="language-rust">// Rust 2015
+
+<span class="boring">use std::process;
+</span><span class="boring">use std::error::Error;
+</span>
+fn run() -&gt; Result&lt;(), Box&lt;Error&gt;&gt; {
+    // real logic..
+    Ok(())
+}
+
+fn main() {
+    if let Err(e) = run() {
+        println!(&quot;Application error: {}&quot;, e);
+        process::exit(1);
+    }
+}
+</code></pre></pre>
+<p>但是，在这种情况下，<code>run</code> 函数具有所有有趣的逻辑，而 <code>main</code> 只是样板。 问题更糟糕的是 <code>#[test]</code>，因为它们往往会有更多这种情况。</p>
+<p>在 Rust 2018 中，你可以使得你的 <code>#[test]</code> 和 <code>main</code> 函数返回一个 <code>Result</code>：</p>
+<pre><pre class="playground"><code class="language-rust no_run">// Rust 2018
+
+use std::fs::File;
+
+fn main() -&gt; Result&lt;(), std::io::Error&gt; {
+    let f = File::open(&quot;bar.txt&quot;)?;
+
+    Ok(())
+}
+</code></pre></pre>
+<p>在这种情况下，如果说文件不存在并且某处有一个 <code>Err(err)</code>，那么 <code>main</code> 将以错误代码（不是<code>0</code>）退出并打印出 <code>Debug</code> 表示 <code>err</code>。</p>
+<h2><a class="header" href="#更多的细节-2" id="更多的细节-2">更多的细节</a></h2>
+<p>使 <code> - &gt; Result &lt;..&gt;</code> 在 <code>main</code> 和 <code>#[test]</code> 的上下文中工作并不神奇。
+它全部由 <code>Termination</code> 特征支持，所有有效的返回类型的 <code>main</code> 和测试函数必须实现。 特征定义为：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Termination {
+    fn report(self) -&gt; i32;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在为应用程序设置入口点时，编译器将使用此特征并在您编写的 <code>main</code> 函数的 <code>Result</code> 上调用 <code>.report()</code>。</p>
+<p><code>Result</code> 和 <code>()</code> 的这个特性的两个简化示例实现是：</p>
+<pre><code class="language-rust ignore"><span class="boring">#![feature(process_exitcode_placeholder, termination_trait_lib)]
+</span><span class="boring">use std::process::ExitCode;
+</span><span class="boring">use std::fmt;
+</span><span class="boring">
+</span><span class="boring">pub trait Termination { fn report(self) -&gt; i32; }
+</span>
+impl Termination for () {
+    fn report(self) -&gt; i32 {
+<span class="boring">        use std::process::Termination;
+</span>        ExitCode::SUCCESS.report()
+    }
+}
+
+impl&lt;E: fmt::Debug&gt; Termination for Result&lt;(), E&gt; {
+    fn report(self) -&gt; i32 {
+        match self {
+            Ok(()) =&gt; ().report(),
+            Err(err) =&gt; {
+                eprintln!(&quot;Error: {:?}&quot;, err);
+<span class="boring">                use std::process::Termination;
+</span>                ExitCode::FAILURE.report()
+            }
+        }
+    }
+}
+</code></pre>
+<p>正如您在 <code>()</code> 中看到的那样，只返回成功代码。
+在 <code>Result</code> 的情况下，成功的话交给 <code>()</code> 来执行，错误的话，交给 <code>Err(..)</code>，打印出错误消息并退出代码。</p>
+<p>要了解有关更细节的信息，请参阅<a href="https://github.com/rust-lang/rust/issues/43301">跟踪问题</a> 或者 <a href="https://github.com/rust-lang/rfcs/blob/master/text/1937-ques-in-main.md">the RFC</a>.</p>
+<h1><a class="header" href="#通过-stdpanic-处理崩溃" id="通过-stdpanic-处理崩溃">通过 <code>std::panic</code> 处理崩溃</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.9-brightgreen.svg" alt="Minimum Rust version: 1.9" /></p>
+<p>有一个 <code>std::panic</code> 模块，其中包含崩溃，停止和启动的展开过程的方法：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::panic;
+
+let result = panic::catch_unwind(|| {
+    println!(&quot;hello!&quot;);
+});
+assert!(result.is_ok());
+
+let result = panic::catch_unwind(|| {
+    panic!(&quot;oh no!&quot;);
+});
+assert!(result.is_err());
+<span class="boring">}
+</span></code></pre></pre>
+<p>通常，Rust区分操作失败的两种方式：</p>
+<ul>
+<li>由于 <em>预期的问题</em>，就像找不到文件一样。</li>
+<li>由于 <em>意外问题</em>，就像索引超出数组范围一样。</li>
+</ul>
+<p>预期的问题通常来自您无法控制的情况; 应该为其环境可能抛出的任何内容准备健壮的代码。
+在Rust中，预期的问题通过 <a href="http://doc.rust-lang.org/std/result/index.html"><code>Result</code>类型</a> 来处理，它允许函数将有关问题的信息返回给调用者，然后调用者可以以细粒度的方式处理错误。</p>
+<p>意外问题是<em>错误</em>：它们是由于合同或断言被违反而产生的。由于它们是意料之外的，因此以细粒度的方式处理它们是没有意义的。
+相反，Rust通过<em>崩溃</em>采用“快速失败”方法，默认情况下解除发现错误的线程的堆栈（运行析构函数但没有其他代码）。
+其他线程继续运行，但每当他们尝试与崩溃线程（无论是通过通道还是共享内存）进行通信时，都会发现崩溃。
+因此，崩溃将执行中止到一些“隔离边界”，边界另一侧的代码仍然可以运行，并且可能以某种非常粗粒度的方式从崩溃中“恢复”。
+例如，服务器不一定因为其中一个线程中的断言失败而需要关闭。</p>
+<p>同样值得注意的是，程序可能会选择<em>中止</em>而不是放松，因此捕捉崩溃可能无效。如果你的代码依赖于 <code>catch_unwind</code>，你应该将它添加到你的Cargo.toml：</p>
+<pre><code class="language-toml">[profile.debug]
+panic = &quot;unwind&quot;
+
+[profile.release]
+panic = &quot;unwind&quot;
+</code></pre>
+<p>如果您的任何用户选择中止，他们将遇到编译时失败。</p>
+<p><code>catch_unwind</code> API提供了一种在线程中<em>引入新的隔离边界</em>的方法。 有几个关键的刺激例子：</p>
+<ul>
+<li>在其他语言中嵌入 Rust</li>
+<li>管理线程的抽象</li>
+<li>测试框架，因为测试可能会引起崩溃，你不希望它会杀死测试运行器</li>
+</ul>
+<p>对于第一种情况，跨语言边界展开是未定义的行为，并且经常导致实践中的段错误。
+允许捕获崩溃意味着您可以通过 C API 安全地公开 Rust 代码，并将展开转换为C侧的错误。</p>
+<p>对于第二种情况，请考虑一个线程池库。如果池中的线程发生混乱，您通常不希望杀死线程本身，而是抓住崩溃并将其传递给池的客户端。
+<code>catch_unwind</code> API 与 <code>resume_unwind</code> 配对，然后可以用它来重新启动它所属的池的客户端上的崩溃过程。</p>
+<p>在这两种情况下，您都在一个线程中引入了一个新的隔离边界，然后将崩溃转换为其他地方的其他形式的错误。</p>
+<h1><a class="header" href="#中止崩溃" id="中止崩溃">中止崩溃</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.10-brightgreen.svg" alt="Minimum Rust version: 1.10" /></p>
+<p>默认情况下，当发生 <code>panic!</code> 时，Rust 程序将展开堆栈。如果你更喜欢立即中止，你可以在<code>Cargo.toml</code>中配置它：</p>
+<pre><code class="language-toml">[profile.debug]
+panic = &quot;abort&quot;
+
+[profile.release]
+panic = &quot;abort&quot;
+</code></pre>
+<p>你为什么选择这样做？通过删除对展开的支持，你将获得更小的二进制文件。你将失去捕捉崩溃的能力。哪种选择取决于你正在做什么。</p>
+<h1><a class="header" href="#流程控制" id="流程控制">流程控制</a></h1>
+<p>在本章节中，我们将讨论流程控制的改进，更多的关注点在 <a href="rust-2018/control-flow/async-await-for-easier-concurrency.html"><code>async</code> 和 <code>await</code></a>。</p>
+<h1><a class="header" href="#loop-可以-break-并携带返回值" id="loop-可以-break-并携带返回值"><code>loop</code> 可以 break 并携带返回值</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.19-brightgreen.svg" alt="Minimum Rust version: 1.19" /></p>
+<p><code>loop</code> 可以 break 并携带返回值</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// old code
+let x;
+
+loop {
+    x = 7;
+    break;
+}
+
+// new code
+let x = loop { break 7; };
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rust 传统上将自己定位为“面向表达式的语言”，也就是说，大多数事物都是评估价值而不是陈述表达。 
+<code>loop</code> 以这种方式突然变得奇怪，因为它之前是一个声明。</p>
+<p>现在，这只适用于 <code>loop</code>，而不适用于 <code>while</code> 或 <code>for</code>。 目前尚不清楚，但我们可能会将此添加到未来。</p>
+<h1><a class="header" href="#asyncawait-早期的并发" id="asyncawait-早期的并发">async/await 早期的并发</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /></p>
+<p>Rust 2018 的初始版本不会附带 <code>async</code>/<code>await</code> 支持，但是我们保留了关键字，以便将来的版本包含它们。我们将在接近发布的时候更新此页面！</p>
+<h1><a class="header" href="#trait-系统" id="trait-系统">Trait 系统</a></h1>
+<p>在本章，我们将讨论关于 trait 系统的改进，需要特别关注 <a href="rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html"><code>impl Trait</code></a>。</p>
+<h1><a class="header" href="#impl-trait-轻松返回复杂的类型" id="impl-trait-轻松返回复杂的类型"><code>impl Trait</code> 轻松返回复杂的类型</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.26-brightgreen.svg" alt="Minimum Rust version: 1.26" /></p>
+<p><code>impl Trait</code> 是指定实现特定特征的未命名但有具体类型的新方法。 你可以把它放在两个地方：参数位置和返回位置。</p>
+<pre><code class="language-rust ignore">trait Trait {}
+
+// argument position
+fn foo(arg: impl Trait) {
+}
+
+// return position
+fn foo() -&gt; impl Trait {
+}
+</code></pre>
+<h2><a class="header" href="#参数位置" id="参数位置">参数位置</a></h2>
+<p>在参数位置上，这个特性是十分简单的，下面这两种写法几乎相同：</p>
+<pre><code class="language-rust ignore">trait Trait {}
+
+fn foo&lt;T: Trait&gt;(arg: T) {
+}
+
+fn foo(arg: impl Trait) {
+}
+</code></pre>
+<p>也就是说，它是泛型类型参数的简短的语法。这意味着，“ <code>arg</code> 是一个参数，它可以是实现了 <code>Trait</code> 特征的任何类型。”</p>
+<p>但是，在技术上，<code>T: Trait</code> 和 <code>impl Trait</code> 有着一个很重要的不同点。
+当你编写前者时，可以使用turbo-fish语法在调用的时候指定<code>T</code>的类型，如 <code>foo::&lt;usize&gt;(1)</code>。 
+在 <code>impl Trait</code> 的情况下，只要它在函数定义中使用了，不管什么地方，都不能再使用turbo-fish。 
+因此，您应该注意，更改两者和切换到 <code>impl Trait</code> 都会对代码的用户构成重大变化。</p>
+<h2><a class="header" href="#返回参数" id="返回参数">返回参数</a></h2>
+<p>在返回位置，此功能更有趣。这意味着“我正在返回一些实现了 <code>Trait</code> 特征的类型，但我不打算告诉你究竟是什么类型。” 
+在 <code>impl Trait</code> 之前，你可以用特征对象做到这一点：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Trait {}
+
+impl Trait for i32 {}
+
+fn returns_a_trait_object() -&gt; Box&lt;dyn Trait&gt; {
+    Box::new(5)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>但是，这会产生一些开销： <code>Box &lt;T&gt;</code> 表示这里有堆分配，这将使用动态分配。
+有关此语法的说明，请参阅 <code>dyn Trait</code> 部分。 但是我们在这里只返回一个可能的东西，即 <code>Box &lt;i32&gt;</code>。
+这意味着我们即使我们不使用动态分配，但是依旧为它而付出了代价！</p>
+<p>使用 <code>impl Trait</code>，上面的代码如下：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Trait {}
+
+impl Trait for i32 {}
+
+fn returns_a_trait_object() -&gt; impl Trait {
+    5
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在这里，我们没有 <code>Box &lt;T&gt;</code>，没有特征对象，也没有动态分配。但我们仍然可以实现 <code>i32</code> 的返回类型。</p>
+<p>使用 <code>i32</code>，这看起来并不是非常有用。但 Rust 中有一个主要运用的地方，它更有用： 闭包。</p>
+<h3><a class="header" href="#impl-trait-和闭包" id="impl-trait-和闭包"><code>impl Trait</code> 和闭包</a></h3>
+<blockquote>
+<p>如果你想要了解闭包，参阅 <a href="https://doc.rust-lang.org/book/second-edition/ch13-01-closures.html">their chapter in the book</a>.</p>
+</blockquote>
+<p>在 Rust 中，闭包具有独特的，不可写的类型。然而，他们确实实现了 <code>Fn</code> 系列的特征。
+这意味着，在以前，从函数处返回闭包的唯一方法是，使用trait对象：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
+    Box::new(|x| x + 1)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>你不能写明闭包的类型，仅仅是使用 <code>Fn</code> 特性。这意味着特征对象是必须的，但是，利用 <code>impl Trait</code> 呢：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
+    |x| x + 1
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>我们现在可以直接返回闭包类型，就像其他的返回值那样！</p>
+<h2><a class="header" href="#更多的细节-3" id="更多的细节-3">更多的细节</a></h2>
+<p>以上是你需要了解和使用 <code>impl Trait</code> 的所有内，但是还有一些更细微的细节： 类型参数和参数位置 <code>impl Trait</code> 的普遍性（普遍量化的类型）。
+同时，<code>impl Trait</code> 在返回位置是存在的（存在量化的类型）。 好吧，也许这有点太行话了。 我们退一步吧。</p>
+<p>考虑下面这个函数:</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: Trait&gt;(x: T) {
+</code></pre>
+<p>当你调用它时，你设置类型，<code>T</code>。 “你”是这里的调用者。 这个签名说“我接受任何实现Trait的类型”。（“任何类型” == 行话中的<em>通用</em>）</p>
+<p>这个版本:</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: Trait&gt;() -&gt; T {
+</code></pre>
+<p>相似但是有些不同，你这个调用者，提供一个你想要的返回类型 <code>T</code>, 你可以看一下现在 Rust 中的 parse 和 collect :</p>
+<pre><code class="language-rust ignore">let x: i32 = &quot;5&quot;.parse()?;
+let x: u64 = &quot;5&quot;.parse()?;
+</code></pre>
+<p>这里， <code>.parse</code> 有如下的签名：</p>
+<pre><code class="language-rust ignore">pub fn parse&lt;F&gt;(&amp;self) -&gt; Result&lt;F, &lt;F as FromStr&gt;::Err&gt; where
+    F: FromStr,
+</code></pre>
+<p>如你所想，虽然结果类型和 <code>FromStr</code> 有一个相关的类型... 无论如何，你可以看到 <code>F</code> 在这里的返回位置。所以你有能力去选择了。</p>
+<p>使用 <code>impl Trait</code>，你会说“嘿，有些类型存在实现这个特性，但我不会告诉你它是什么。” （术语中的“存在主义”，“某种类型存在”）。
+所以现在，调用者无法选择，函数本身可以选择。如果我们尝试使用 <code>Result &lt;impl F，...</code> 定义解析作为返回类型，它将无效。</p>
+<h3><a class="header" href="#使用-impl-trait-在更多的地方" id="使用-impl-trait-在更多的地方">使用 <code>impl Trait</code> 在更多的地方</a></h3>
+<p>如前所述，作为一个开始，您将只能使用 <code>impl Trait</code> 作为自由或固有函数的参数或返回类型。
+但是，现在 <code>impl Trait</code> 不能在traits的实现中使用，也不能用作let绑定的类型或类型别名。未来其中一些限制将被取消。
+获取更多的信息，查看<a href="https://github.com/rust-lang/rust/issues/34511">tracking issue on <code>impl Trait</code></a>.</p>
+<h1><a class="header" href="#dyn-trait-trait-对象" id="dyn-trait-trait-对象"><code>dyn Trait</code> trait 对象</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.27-brightgreen.svg" alt="Minimum Rust version: 1.27" /></p>
+<p><code>dyn Trait</code> 是使用 trait 对象的新语法，简而言之：</p>
+<ul>
+<li><code>Box&lt;Trait&gt;</code> becomes <code>Box&lt;dyn Trait&gt;</code></li>
+<li><code>&amp;Trait</code> and <code>&amp;mut Trait</code> become <code>&amp;dyn Trait</code> and <code>&amp;mut dyn Trait</code></li>
+</ul>
+<p>因此，代码中:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Trait {}
+
+impl Trait for i32 {}
+
+// old
+fn function1() -&gt; Box&lt;Trait&gt; {
+<span class="boring">unimplemented!()
+</span>}
+
+// new
+fn function2() -&gt; Box&lt;dyn Trait&gt; {
+<span class="boring">unimplemented!()
+</span>}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这就是了！</p>
+<h2><a class="header" href="#更多细节" id="更多细节">更多细节</a></h2>
+<p>仅仅使用特征对象的特征名其实是个糟糕的决定。目前的语法通常含糊不清，即使对于老一批人来来说也是如此，
+而且竟然没有它的替代品使用的更频繁，有时速度较慢，而且当其替代品可以使用时，它将根本不会被使用。</p>
+<p>此外，随着 <code>impl Trait</code> 的到来，<code>impl Trait</code> vs <code>dyn Trait</code> 比 <code>impl Trait</code> vs <code>Trait</code> 更好更对称。
+<code>impl Trait</code>将在下一节进一步解释。</p>
+<p>因此，在新版本中，选择使用 trait 对象时，你应该选 <code>dyn Trait</code> 而不是 <code>Trait</code>。</p>
+<h1><a class="header" href="#支持-trait-对象的更多容器类型" id="支持-trait-对象的更多容器类型">支持 trait 对象的更多容器类型</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.2-brightgreen.svg" alt="Minimum Rust version: 1.2" /></p>
+<p>在 Rust 1.0 中，只有某些特殊的类型可以创建成 <a href="https://doc.rust-lang.org/book/second-edition/ch17-02-trait-objects.html">trait objects</a>.</p>
+<p>在 Rust 1.2 中，这种限制被解除了，更多的类型可以做到这一点。 例如，
+<code>Rc&lt;T&gt;</code>，Rust 的引用计数类型之一：</p>
+<pre><pre class="playground"><code class="language-rust">use std::rc::Rc;
+
+trait Foo {}
+
+impl Foo for i32 {
+    
+}
+
+fn main() {
+    let obj: Rc&lt;dyn Foo&gt; = Rc::new(5);
+}
+</code></pre></pre>
+<p>这段代码在 Rust 1.0 中无法执行，但是现在可以了。</p>
+<blockquote>
+<p>如果您之前没有看过 <code>dyn</code> 语法，请参阅相关章节。对于不支持它的版本，将 <code>Rc &lt;dyn Foo&gt;</code> 替换为 <code>Rc &lt;Foo&gt;</code>。</p>
+</blockquote>
+<h1><a class="header" href="#相关常数" id="相关常数">相关常数</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.20-brightgreen.svg" alt="Minimum Rust version: 1.20" /></p>
+<p>你可以定义具有“关联函数”的 traits, structs, enums ：</p>
+<pre><pre class="playground"><code class="language-rust">struct Struct;
+
+impl Struct {
+    fn foo() {
+        println!(&quot;foo is an associated function of Struct&quot;);
+    }
+}
+
+fn main() {
+    Struct::foo();
+}
+</code></pre></pre>
+<p>这个叫做“关联函数”，因为它关联了相关的类型，也就是说，它们附加到类型本身，而不是任何特定的实例。</p>
+<p>Rust 1.20 中为关联函数增加了新的功能：</p>
+<pre><pre class="playground"><code class="language-rust">struct Struct;
+
+impl Struct {
+    const ID: u32 = 0;
+}
+
+fn main() {
+    println!(&quot;the ID of Struct is: {}&quot;, Struct::ID);
+}
+</code></pre></pre>
+<p>其中，常量 <code>ID</code> 关联到 <code>Struct</code> 上，如果函数一样，关联常量也可以工作在 trait 和 enum 上。</p>
+<p>Trait 具有额外的能力和相关的常数，为他们提供额外的力量。使用特征，您可以像使用关联类型一样
+使用关联常量： 通过声明它，但不给它一个值。然后，特征的实现者在实现时声明其值：</p>
+<pre><pre class="playground"><code class="language-rust">trait Trait {
+    const ID: u32;
+}
+
+struct Struct;
+
+impl Trait for Struct {
+    const ID: u32 = 5;
+}
+
+fn main() {
+    println!(&quot;{}&quot;, Struct::ID);
+}
+</code></pre></pre>
+<p>在此功能之前，如果要创建表示浮点数的特征，则必须如下：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Float {
+    fn nan() -&gt; Self;
+    fn infinity() -&gt; Self;
+    // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这有点笨拙，但更重要的是，因为它们是函数，所以它们不能用于常量表达式，即使它们只返回常量。
+因此，<code>Float</code> 的设计也必须包含常量：</p>
+<pre><code class="language-rust ignore">mod f32 {
+    const NAN: f32 = 0.0f32 / 0.0f32;
+    const INFINITY: f32 = 1.0f32 / 0.0f32;
+
+    impl Float for f32 {
+        fn nan() -&gt; Self {
+            f32::NAN
+        }
+        fn infinity() -&gt; Self {
+            f32::INFINITY
+        }
+    }
+}
+</code></pre>
+<p>关联常量让你可以更清晰的表达，如下：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Float {
+    const NAN: Self;
+    const INFINITY: Self;
+    // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>继续实现如下：</p>
+<pre><code class="language-rust ignore">mod f32 {
+    impl Float for f32 {
+        const NAN: f32 = 0.0f32 / 0.0f32;
+        const INFINITY: f32 = 1.0f32 / 0.0f32;
+    }
+}
+</code></pre>
+<p>更加清晰，更通用。</p>
+<h1><a class="header" href="#切片模式" id="切片模式">切片模式</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.26-brightgreen.svg" alt="Minimum Rust version: 1.26" /></p>
+<p>你有没有试过，用模式匹配去匹配切片的内容和结构？ Rust 2018 将让你做到这一点。</p>
+<p>例如，我们想要接受一个名单列表并回复问候语。使用切片模式，我们可以用以下方式轻松完成：</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    greet(&amp;[]);
+    // output: Bummer, there's no one here :(
+    greet(&amp;[&quot;Alan&quot;]);
+    // output: Hey, there Alan! You seem to be alone.
+    greet(&amp;[&quot;Joan&quot;, &quot;Hugh&quot;]);
+    // output: Hello, Joan and Hugh. Nice to see you are at least 2!
+    greet(&amp;[&quot;John&quot;, &quot;Peter&quot;, &quot;Stewart&quot;]);
+    // output: Hey everyone, we seem to be 3 here today.
+}
+
+fn greet(people: &amp;[&amp;str]) {
+    match people {
+        [] =&gt; println!(&quot;Bummer, there's no one here :(&quot;),
+        [only_one] =&gt; println!(&quot;Hey, there {}! You seem to be alone.&quot;, only_one),
+        [first, second] =&gt; println!(
+            &quot;Hello, {} and {}. Nice to see you are at least 2!&quot;,
+            first, second
+        ),
+        _ =&gt; println!(&quot;Hey everyone, we seem to be {} here today.&quot;, people.len()),
+    }
+}
+</code></pre></pre>
+<p>现在，你不必检查长度了。</p>
+<p>你也可以匹配 array 如下：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let arr = [1, 2, 3];
+
+assert_eq!(&quot;ends with 3&quot;, match arr {
+    [_, _, 3] =&gt; &quot;ends with 3&quot;,
+    [a, b, c] =&gt; &quot;ends with something else&quot;,
+});
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#更多的细节-4" id="更多的细节-4">更多的细节</a></h2>
+<h3><a class="header" href="#穷举模式" id="穷举模式">穷举模式</a></h3>
+<p>在第一个例子中，注意匹配的 <code>_ =&gt; ...</code>。 如果开始匹配，那么将会匹配一切情况，所以有“穷尽所有模式”的处理方式。
+如果我们忘记使用 <code>_ =&gt; ...</code> 或者 <code>identifier =&gt; ...</code> 模式，我们会得到如下的错误提醒：</p>
+<pre><code class="language-ignore">error[E0004]: non-exhaustive patterns: `&amp;[_, _, _]` not covered
+</code></pre>
+<p>如果我们再增加一项，我们将得到如下：</p>
+<pre><code class="language-ignore">error[E0004]: non-exhaustive patterns: `&amp;[_, _, _, _]` not covered
+</code></pre>
+<p>如此。</p>
+<h3><a class="header" href="#数组和精确的长度" id="数组和精确的长度">数组和精确的长度</a></h3>
+<p>在第二个例子中，数组是有固定长度的，我们需要匹配所有长度项，如果只匹配2，4项的话，会报错：</p>
+<pre><code class="language-ignore">error[E0527]: pattern requires 2 elements but array has 3
+</code></pre>
+<p>和</p>
+<pre><code class="language-ignore">error[E0527]: pattern requires 4 elements but array has 3
+</code></pre>
+<h3><a class="header" href="#管道中" id="管道中">管道中</a></h3>
+<p>在切片模式方面，计划采用更先进的形式，但尚未稳定。要了解更多信息，请跟踪 <a href="https://github.com/rust-lang/rust/issues/23121">the tracking issue</a>。</p>
+<h1><a class="header" href="#所有权和生命周期" id="所有权和生命周期">所有权和生命周期</a></h1>
+<p>在本章节，我们讨论所有权和生命周期的改进，最值得关注的是 <a href="rust-2018/ownership-and-lifetimes/default-match-bindings.html">默认 match 绑定模式</a>。</p>
+<h1><a class="header" href="#默认匹配绑定" id="默认匹配绑定">默认匹配绑定</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.26-brightgreen.svg" alt="Minimum Rust version: 1.26" /></p>
+<p>你有过借用 <code>Option&lt;T&gt;</code> 然后进行匹配的经历嘛？你可能写成下面这样：</p>
+<pre><code class="language-rust ignore">let s: &amp;Option&lt;String&gt; = &amp;Some(&quot;hello&quot;.to_string());
+
+match s {
+    Some(s) =&gt; println!(&quot;s is: {}&quot;, s),
+    _ =&gt; (),
+};
+</code></pre>
+<p>在 Rust 2015，这样写是错的，你必须这样写：</p>
+<pre><code class="language-rust ignore">// Rust 2015
+
+let s: &amp;Option&lt;String&gt; = &amp;Some(&quot;hello&quot;.to_string());
+
+match s {
+    &amp;Some(ref s) =&gt; println!(&quot;s is: {}&quot;, s),
+    _ =&gt; (),
+};
+</code></pre>
+<p>在 Rust 2018， 对比之下，会自动推断 <code>&amp;</code> 和 <code>ref</code>，然后你再这样写就没问题了。</p>
+<p>这个并不仅仅影响 <code>match</code>，也会影响到很多地方，比如 <code>let</code> 表达式，闭包以及 <code>for</code> 循环。</p>
+<h2><a class="header" href="#更多的细节-5" id="更多的细节-5">更多的细节</a></h2>
+<p>模式的心理预期模型随着这种变化而略有改变，使其与语言的其他方面保持一致。
+例如，在编写 <code>for</code> 循环时，您可以通过借用集合本身来迭代集合的借用内容：</p>
+<pre><code class="language-rust ignore">let my_vec: Vec&lt;i32&gt; = vec![0, 1, 2];
+
+for x in &amp;my_vec { ... }
+</code></pre>
+<p>这个想法是 <code>＆T</code> 可以被理解为 <em><code>T</code> 的借用视图</em>，所以当你迭代，匹配或以其他方式构造一个 <code>＆T</code> 时，你可以借用它的内部视图。</p>
+<p>更正式地说，模式具有“绑定模式”，它可以是值（ <code>x</code> ），引用（ <code>ref x</code> ），也可以是可变引用（ <code>ref mut x</code> ）。 
+在 Rust 2015 中，<code>match</code> 总是以by-value模式启动，并要求你在模式中显式写 <code>ref</code> 或 <code>ref mut</code> 以切换到借用模式。
+在 Rust 2018 中，匹配的值的类型通知绑定模式，因此如果您使用 <code>Some</code> 变量匹配 <code>＆Option &lt;String&gt;</code>，您将自动进入 <code>ref</code> 模式，
+为您提供借用查看内部数据。 类似地，<code>＆mut Option &lt;String&gt;</code> 会给你一个 <code>ref mut</code> 视图。</p>
+<h1><a class="header" href="#_--匿名生命周期" id="_--匿名生命周期"><code>'_</code> — 匿名生命周期</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /></p>
+<p>Rust 2018 允许你明确标记生命周期被省略的地方，对于此省略可能不清楚的类型。
+要做到这一点，你可以使用特殊的生命周期<code>'_</code>，就像你可以用语法 <code>let x：_ = ..;</code>明确标记一个类型一样。</p>
+<p>要我们说的话，无论出于什么原因，我们在 <code>&amp;'a str</code> 周围有一个简单的封装：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct StrWrap&lt;'a&gt;(&amp;'a str);
+<span class="boring">}
+</span></code></pre></pre>
+<p>在 Rust 2015，你可能写成这样：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Rust 2015
+
+use std::fmt;
+
+<span class="boring">struct StrWrap&lt;'a&gt;(&amp;'a str);
+</span>
+fn make_wrapper(string: &amp;str) -&gt; StrWrap {
+    StrWrap(string)
+}
+
+impl&lt;'a&gt; fmt::Debug for StrWrap&lt;'a&gt; {
+    fn fmt(&amp;self, fmt: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        fmt.write_str(self.0)
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在 Rust 2018，你可以替换成这样：</p>
+<pre><code class="language-rust ignore">#![feature(rust_2018_preview)]
+
+<span class="boring">use std::fmt;
+</span><span class="boring">struct StrWrap&lt;'a&gt;(&amp;'a str);
+</span>
+// Rust 2018
+
+fn make_wrapper(string: &amp;str) -&gt; StrWrap&lt;'_&gt; {
+    StrWrap(string)
+}
+
+impl fmt::Debug for StrWrap&lt;'_&gt; {
+    fn fmt(&amp;self, fmt: &amp;mut fmt::Formatter&lt;'_&gt;) -&gt; fmt::Result {
+        fmt.write_str(self.0)
+    }
+}
+</code></pre>
+<h2><a class="header" href="#更多的细节-6" id="更多的细节-6">更多的细节</a></h2>
+<p>在上面的 Rust 2015 片段中，我们使用了 <code>-&gt; StrWrap</code>。 但是，除非你看一下 <code>StrWrap</code> 的定义，
+否则返回的值实际上是借用了什么并不清楚。 因此，从 Rust 2018 开始，不推荐使用它来省去非引用类型
+的生命周期参数（除了 <code>＆</code> 和 <code>＆mut</code> 之外的类型）。 相反，你之前写过 <code>-&gt; StrWrap</code> 的地方，
+你现在应该写 <code>-&gt; StrWrap &lt;'_&gt;</code>，明确说明正在进行借用。</p>
+<p><code>'_</code>究竟是什么意思？这取决于具体情况！在输出上下文中，与 <code>make_wrapper</code> 的返回类型一样，
+它指的是所有“输出”位置的单个生命周期。在输入上下文中，为每个“输入位置”生成新的生命周期。
+更具体地说，要了解输入上下文，请考虑以下示例：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Rust 2015
+
+struct Foo&lt;'a, 'b: 'a&gt; {
+    field: &amp;'a &amp;'b str,
+}
+
+impl&lt;'a, 'b: 'a&gt; Foo&lt;'a, 'b&gt; {
+    // some methods...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>我们可以重写为：</p>
+<pre><code class="language-rust ignore">#![feature(rust_2018_preview)]
+
+<span class="boring">struct Foo&lt;'a, 'b: 'a&gt; {
+</span><span class="boring">    field: &amp;'a &amp;'b str,
+</span><span class="boring">}
+</span>
+// Rust 2018
+
+impl Foo&lt;'_, '_&gt; {
+    // some methods...
+}
+</code></pre>
+<p>这是相同的，因为对于每个<code>'_</code>，会产生一个新的生命周期。最后，必须坚持结构所需的关系 <code>'a： 'b</code>。</p>
+<p>更多的细节，参阅<a href="https://github.com/rust-lang/rust/issues/44524">tracking issue on In-band lifetime bindings</a>。</p>
+<h1><a class="header" href="#在-impl-中省略生命周期" id="在-impl-中省略生命周期">在 impl 中省略生命周期</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /></p>
+<p>在编写 <code>impl</code> 时，你可以提及生命周期而不将它们绑定在参数列表中。</p>
+<p>在 Rust 2015 中：</p>
+<pre><code class="language-rust ignore">impl&lt;'a&gt; Iterator for MyIter&lt;'a&gt; { ... }
+impl&lt;'a, 'b&gt; SomeTrait&lt;'a&gt; for SomeType&lt;'a, 'b&gt; { ... }
+</code></pre>
+<p>在 Rust 2018 中：</p>
+<pre><code class="language-rust ignore">impl Iterator for MyIter&lt;'iter&gt; { ... }
+impl SomeTrait&lt;'tcx&gt; for SomeType&lt;'tcx, 'gcx&gt; { ... }
+</code></pre>
+<h1><a class="header" href="#t-a-结构体中的推导" id="t-a-结构体中的推导"><code>T: 'a</code> 结构体中的推导</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /></p>
+<p>一个注释形式为 <code>T：'a</code>，其中 <code>T</code> 可以是一个类型或另一个生命周期，被称为 <em>“outlives”</em> 要求。
+注意 <em>“outlives”</em> 也意味着 <code>'a：'a</code>。</p>
+<p>2018版在编写程序时帮助您保持流程的一种方法是，不需要在 <code>struct</code> 定义中明确注释这些 <code>T：'a</code> 的要求。
+相反，这些要求将从定义中的字段推断出来。</p>
+<p>考虑下面这个 <code>struct</code> 定义，在 Rust 2015 中：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Rust 2015
+
+struct Ref&lt;'a, T: 'a&gt; {
+    field: &amp;'a T
+}
+
+// or written with a `where` clause:
+
+struct WhereRef&lt;'a, T&gt; where T: 'a {
+    data: &amp;'a T
+}
+
+// with nested references:
+
+struct RefRef&lt;'a, 'b: 'a, T: 'b&gt; {
+    field: &amp;'a &amp;'b T,
+}
+
+// using an associated type:
+
+struct ItemRef&lt;'a, T: Iterator&gt;
+where
+    T::Item: 'a
+{
+    field: &amp;'a T::Item
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在 Rust 2018 中， 这种需求是可以被推导的，你可以这样写：</p>
+<pre><code class="language-rust ignore">// Rust 2018
+
+struct Ref&lt;'a, T&gt; {
+    field: &amp;'a T
+}
+
+struct WhereRef&lt;'a, T&gt; {
+    data: &amp;'a T
+}
+
+struct RefRef&lt;'a, 'b, T&gt; {
+    field: &amp;'a &amp;'b T,
+}
+
+struct ItemRef&lt;'a, T: Iterator&gt; {
+    field: &amp;'a T::Item
+}
+</code></pre>
+<p>如果您希望在某些情况下更明确，那仍然是可能的。</p>
+<h2><a class="header" href="#更多的细节-7" id="更多的细节-7">更多的细节</a></h2>
+<p>更多信息，查阅 <a href="https://github.com/rust-lang/rust/issues/44493">the tracking issue</a> 
+和 <a href="https://github.com/rust-lang/rfcs/pull/2093">the RFC</a>.</p>
+<h1><a class="header" href="#在-static-和-const-中的更简单的生命周期" id="在-static-和-const-中的更简单的生命周期">在 <code>static</code> 和 <code>const</code> 中的更简单的生命周期</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.17-brightgreen.svg" alt="Minimum Rust version: 1.17" /></p>
+<p>在以往的 Rust 中，在需要的时候，你必须更加明确的在 <code>static</code> 或者 <code>const</code> 上写明 <code>'static</code> 生命周期。</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">mod foo {
+</span>const NAME: &amp;'static str = &quot;Ferris&quot;;
+<span class="boring">}
+</span><span class="boring">mod bar {
+</span>static NAME: &amp;'static str = &quot;Ferris&quot;;
+<span class="boring">}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>但是，在这里 <code>'static</code> 是唯一一种可能的生命周期，所以现在你可以不用再写 <code>'static</code> 了：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">mod foo {
+</span>const NAME: &amp;str = &quot;Ferris&quot;;
+<span class="boring">}
+</span><span class="boring">mod bar {
+</span>static NAME: &amp;str = &quot;Ferris&quot;;
+<span class="boring">}
+</span><span class="boring">}
+</span></code></pre></pre>
+<p>在某些场景下，这个可以消除很多累赘：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">mod foo {
+</span>// old
+const NAMES: &amp;'static [&amp;'static str; 2] = &amp;[&quot;Ferris&quot;, &quot;Bors&quot;];
+<span class="boring">}
+</span><span class="boring">mod bar {
+</span>
+// new
+const NAMES: &amp;[&amp;str; 2] = &amp;[&quot;Ferris&quot;, &quot;Bors&quot;];
+<span class="boring">}
+</span><span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#数据类型" id="数据类型">数据类型</a></h1>
+<p>在本章节中，我们讨论数据类型的改进，值得关注的是 <a href="rust-2018/data-types/field-init-shorthand.html">字段初始化简写</a>。</p>
+<h1><a class="header" href="#字段初始化简写" id="字段初始化简写">字段初始化简写</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.17-brightgreen.svg" alt="Minimum Rust version: 1.17" /></p>
+<p>在以往的 Rust 中，当初始化一个结构体的时候，总是需要完全按照 <code>key: value</code> 对的写法：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Point {
+    x: i32,
+    y: i32,
+}
+
+let a = 5;
+let b = 6;
+
+let p = Point {
+    x: a,
+    y: b,
+};
+<span class="boring">}
+</span></code></pre></pre>
+<p>但是，这些字段通常会是相同的名字，所以你可以把它写成这样：</p>
+<pre><code class="language-rust ignore">let p = Point {
+    x: x,
+    y: y,
+};
+</code></pre>
+<p>现在，如果变量名和结构体字段名相同，可以省略写成这样：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Point {
+    x: i32,
+    y: i32,
+}
+
+let x = 5;
+let y = 6;
+
+// new
+let p = Point {
+    x,
+    y,
+};
+<span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#-包含取值范围" id="-包含取值范围"><code>..=</code> 包含取值范围</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.26-brightgreen.svg" alt="Minimum Rust version: 1.26" /></p>
+<p>在以前的 Rust 1.0 中，我们像下面这样写一个取值范围：</p>
+<pre><code class="language-rust ignore">for i in 1..3 {
+    println!(&quot;i: {}&quot;, i);
+}
+</code></pre>
+<p>这将会打印 <code>i: 1</code> 然后是 <code>i: 2</code>，现在你可以这么写：</p>
+<pre><code class="language-rust ignore">for i in 1..=3 {
+    println!(&quot;i: {}&quot;, i);
+}
+</code></pre>
+<p>这也会打印 <code>i: 1</code> 然后是 <code>i: 2</code>，最后是 <code>i: 3</code>; 最后的也将会包含在范围取值中，
+当你需要包含取值范围的时候，这会十分有用。下面是一个令人惊奇的例子：</p>
+<pre><code class="language-rust ignore">fn takes_u8(x: u8) {
+    // ...
+}
+
+fn main() {
+    for i in 0..256 {
+        println!(&quot;i: {}&quot;, i);
+        takes_u8(i);
+    }
+}
+</code></pre>
+<p>这个程序做了什么？回答是：没有任何东西。编译器将会报出警告：</p>
+<pre><code class="language-text">warning: literal out of range for u8
+ --&gt; src/main.rs:6:17
+  |
+6 |     for i in 0..256 {
+  |                 ^^^
+  |
+  = note: #[warn(overflowing_literals)] on by default
+</code></pre>
+<p>这是正常的，因为 <code>i</code> 作为一个 <code>u8</code>，256超出了范围，这就导致效果和 <code>for i in 0..0</code> 一样, 这段代码将执行0次。</p>
+<p>但是，我们现在可以这么写：</p>
+<pre><pre class="playground"><code class="language-rust">fn takes_u8(x: u8) {
+    // ...
+}
+
+fn main() {
+    for i in 0..=255 {
+        println!(&quot;i: {}&quot;, i);
+        takes_u8(i);
+    }
+}
+</code></pre></pre>
+<p>这个将会执行256次你需要执行的内容。</p>
+<h1><a class="header" href="#128位整型" id="128位整型">128位整型</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.26-brightgreen.svg" alt="Minimum Rust version: 1.26" /></p>
+<p>这是一个简单的特性： Rust 现在支持128位的整型了！</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x: i128 = 0;
+let y: u128 = 0;
+<span class="boring">}
+</span></code></pre></pre>
+<p>这将是 u64的两倍大小，并且可以存放更多的值，十分方便。</p>
+<ul>
+<li><code>u128</code>: <code>0</code> - <code>340,282,366,920,938,463,463,374,607,431,768,211,455</code></li>
+<li><code>i128</code>: <code>−170,141,183,460,469,231,731,687,303,715,884,105,728</code> - <code>170,141,183,460,469,231,731,687,303,715,884,105,727</code></li>
+</ul>
+<p>哈!</p>
+<h1><a class="header" href="#operator-equals-现在实现了" id="operator-equals-现在实现了">&quot;Operator-equals&quot; 现在实现了</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.8-brightgreen.svg" alt="Minimum Rust version: 1.8" /></p>
+<p>各种各样的 “等价操作符” 已经被各种各样的trait实现了, 比如 <code>+=</code> 和 <code>-=</code>。
+举个例子：下面是一个 <code>+=</code> 操作符：</p>
+<pre><pre class="playground"><code class="language-rust">use std::ops::AddAssign;
+
+#[derive(Debug)]
+struct Count { 
+    value: i32,
+}
+
+impl AddAssign for Count {
+    fn add_assign(&amp;mut self, other: Count) {
+        self.value += other.value;
+    }
+}
+
+fn main() {
+    let mut c1 = Count { value: 1 };
+    let c2 = Count { value: 5 };
+
+    c1 += c2;
+
+    println!(&quot;{:?}&quot;, c1);
+}
+</code></pre></pre>
+<p>这将打印 <code>Count { value: 6 }</code>.</p>
+<h1><a class="header" href="#union一个非安全的-enum" id="union一个非安全的-enum"><code>union</code>：一个非安全的 <code>enum</code></a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.19-brightgreen.svg" alt="Minimum Rust version: 1.19" /></p>
+<p>Rust 现在支持 <code>unions</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>union MyUnion {
+    f1: u32,
+    f2: f32,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Unions 是一种如同 enums 的结构，但是，它<em>没有标签</em>。 Enums 是带有
+“标签” 的，用来存储哪个变种在运行时，正在被使用。unions并没有这个。</p>
+<p>由于我们可以使用错误的变体解释 union 中保存的数据，并且 Rust 无法为
+我们检查这一点，这意味着读取或写入 union 字段是不安全的：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">union MyUnion {
+</span><span class="boring">    f1: u32,
+</span><span class="boring">    f2: f32,
+</span><span class="boring">}
+</span>let mut u = MyUnion { f1: 1 };
+
+unsafe { u.f1 = 5 };
+
+let value = unsafe { u.f1 };
+<span class="boring">}
+</span></code></pre></pre>
+<p>模式匹配也一样工作：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">union MyUnion {
+</span><span class="boring">    f1: u32,
+</span><span class="boring">    f2: f32,
+</span><span class="boring">}
+</span>fn f(u: MyUnion) {
+    unsafe {
+        match u {
+            MyUnion { f1: 10 } =&gt; { println!(&quot;ten&quot;); }
+            MyUnion { f2 } =&gt; { println!(&quot;{}&quot;, f2); }
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>unions 什么时候有用？ 一个主要的用例是与 C 的互操作性。 C API 可以（并且取决于区域，经常这样做）公开 unions，
+因此这使得为这些库编写 API 包装器变得非常容易。 此外，unions 还简化了依赖于值表示的
+节省空间或高效缓存的结构的 Rust 实现，例如使用对齐指针的最低有效位来区分情况的机器字大小的 unions。</p>
+<p>还有更多改进。 目前，unions 只能包含 <code>Copy</code> 类型，可能不会实现 <code>Drop</code>。 我们希望将来能够解除这些限制。</p>
+<h1><a class="header" href="#repr-属性的对齐方式" id="repr-属性的对齐方式">repr 属性的对齐方式</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.25-brightgreen.svg" alt="Minimum Rust version: 1.25" /></p>
+<p><a href="https://en.wikipedia.org/wiki/Data_structure_alignment">Wikipedia</a>:</p>
+<blockquote>
+<p>现代计算机硬件中的 CPU 在数据自然对齐时，可以最有效地执行对存储器的读写，这通常意味着数据地址是数据大小的倍数。
+数据对齐是指根据元素的自然对齐来对齐元素。为了确保自然对齐，可能需要在结构元素之间或结构的最后一个元素之后插入一些填充值。</p>
+</blockquote>
+<p><code>#[repr]</code> 属性有一个新参数 <code>align</code>，用于设置结构体的对齐方式：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct Number(i32);
+
+assert_eq!(std::mem::align_of::&lt;Number&gt;(), 4);
+assert_eq!(std::mem::size_of::&lt;Number&gt;(), 4);
+
+#[repr(align(16))]
+struct Align16(i32);
+
+assert_eq!(std::mem::align_of::&lt;Align16&gt;(), 16);
+assert_eq!(std::mem::size_of::&lt;Align16&gt;(), 16);
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果您正在使用底层级别的东西，控制这些事情可能非常重要！</p>
+<p>一般来说，类型的对齐并不担心，因为编译器将为一般用例选择适当的对齐“做正确的事情”。
+但是，在使用外部系统操作时，可能需要非标准对齐。例如，通过自定义对齐，这些情况往往需要或更容易：</p>
+<ul>
+<li>当硬件实际上仅由4字节值组成时，硬件通常具有模糊的要求，例如“此结构对齐到32字节”。虽然这通常可以手动计算和管理，但将它表达为类型的属性通常也很有用，可以让编译器做一些额外的工作。</li>
+<li>像 <code>gcc</code> 和 <code>clang</code> 这样的C编译器提供了为结构指定自定义对齐的能力，如果 Rust 也可以镜像自定义对齐的请求（例如将结构传递给C），Rust 可以更容易地与这些类型进行互操作。正确的更容易）。</li>
+<li>自定义对齐通常可以在这里和那里用于各种技巧，并且通常很方便，因为“让我们使用实现”工具。例如，这可用于在内核中静态分配页表，或者为并发编程轻松创建至少缓存行大小的结构。</li>
+</ul>
+<p>此功能的目的是提供轻量级注释，以更改结构的编译器推断对齐，从而更轻松地启用这些情况。</p>
+<h1><a class="header" href="#simd-更快的计算" id="simd-更快的计算">SIMD 更快的计算</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.27-brightgreen.svg" alt="Minimum Rust version: 1.27" /></p>
+<p><a href="https://en.wikipedia.org/wiki/SIMD">SIMD</a> 的基础部分已经可用了！
+SIMD 代表“单指令，多数据”。考虑这样的函数：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn foo(a: &amp;[u8], b: &amp;[u8], c: &amp;mut [u8]) {
+    for ((a, b), c) in a.iter().zip(b).zip(c) {
+        *c = *a + *b;
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在这里，我们采用两个切片，并将数字加在一起，将结果放在第三个切片中。最简单的方法是完成代码所做的工作，循环遍历每组元素，将它们添加到一起，并将其存储在结果中。
+但是，编译器通常可以做得更好。 LLVM 通常会“自动向量化”这样的代码，这是“使用 SIMD ”的一个奇特术语。
+想象一下，<code>a</code> 和 <code>b</code> 都是16个元素长。每个元素都是一个“u8”，这意味着每个切片都是128位数据。
+使用SIMD，我们可以将 <code>a</code> 和 <code>b</code> 放入128位寄存器，将它们一起添加到<em>single</em>指令中，然后将得到的128位复制到 <code>c</code> 中。那要快得多！</p>
+<p>虽然稳定的Rust总是能够利用自动向量化，但有时候，编译器并不够聪明，不能意识到我们可以做这样的事情。
+此外，并非每个CPU都有这些功能，因此 LLVM 可能不会使用它们，因此您的程序可以在各种硬件上使用。 <code>std::arch</code> 模块允许我们直接使用这些指令，这意味着我们不需要依赖智能编译器。
+此外，它还包含一些功能，允许我们根据各种标准选择特定的实现。例如：</p>
+<pre><code class="language-rust ignore">#[cfg(all(any(target_arch = &quot;x86&quot;, target_arch = &quot;x86_64&quot;),
+      target_feature = &quot;avx2&quot;))]
+fn foo() {
+    #[cfg(target_arch = &quot;x86&quot;)]
+    use std::arch::x86::_mm256_add_epi64;
+    #[cfg(target_arch = &quot;x86_64&quot;)]
+    use std::arch::x86_64::_mm256_add_epi64;
+
+    unsafe {
+        _mm256_add_epi64(...);
+    }
+}
+</code></pre>
+<p>在这里，我们使用 cfg 标志根据我们定位的机器选择正确的版本; 在 x86 上我们使用该版本，在 x86_64 上我们使用它的版本。 我们也可以在运行时选择：</p>
+<pre><code class="language-rust ignore">fn foo() {
+    #[cfg(any(target_arch = &quot;x86&quot;, target_arch = &quot;x86_64&quot;))]
+    {
+        if is_x86_feature_detected!(&quot;avx2&quot;) {
+            return unsafe { foo_avx2() };
+        }
+    }
+
+    foo_fallback();
+}
+</code></pre>
+<p>在这里，我们有两个版本的功能：一个使用 AVX2，一种特定的 SIMD 功能，可以让你进行256位操作。
+<code>is_x86_feature_detected！</code> 宏将生成检测 CPU 是否支持 AVX2 的代码，如果是，则调用 foo_avx2 函数。如果没有，那么我们回到非 AVX 实现 foo_fallback。 
+这意味着我们的代码将在支持 AVX2 的CPU上运行得非常快，但仍然可以在不支持 AVX2 的CPU上运行，尽管速度较慢。</p>
+<p>如果所有这一切看起来都有点低级和狡猾，那就好了！ <code>std::arch</code> 特别适用于构建这类东西。
+我们希望最终能够在更高级别的东西中稳定一个 <code>std::simd</code> 模块。
+但从现在开始，这些基础点可以让生态系统开始尝试更高级别的库。</p>
+<p>举个例子： 查阅 <a href="https://github.com/AdamNiederer/faster">faster</a> 库. 这是一个没有 SIMD 的代码片段：</p>
+<pre><code class="language-rust ignore">let lots_of_3s = (&amp;[-123.456f32; 128][..]).iter()
+    .map(|v| {
+        9.0 * v.abs().sqrt().sqrt().recip().ceil().sqrt() - 4.0 - 2.0
+    })
+    .collect::&lt;Vec&lt;f32&gt;&gt;();
+</code></pre>
+<p>使用 SIMD 的代码将会更快，你需要改成这样：</p>
+<pre><code class="language-rust ignore">let lots_of_3s = (&amp;[-123.456f32; 128][..]).simd_iter()
+    .simd_map(f32s(0.0), |v| {
+        f32s(9.0) * v.abs().sqrt().rsqrt().ceil().sqrt() - f32s(4.0) - f32s(2.0)
+    })
+    .scalar_collect();
+</code></pre>
+<p>这看起来差不多： <code>simd_iter</code> 取代 <code>iter</code>, <code>simd_map</code> 取代 <code>map</code>, <code>f32s(2.0)</code> 取代 <code>2.0</code>。但是你需要一个 SIMD-ified 版本。</p>
+<p>除此之外，您可能永远不会自己编写任何内容，但与往常一样，您依赖的库可能。
+例如，正则表达式包含这些 SIMD 加速，而您根本不需要做任何事情！</p>
+<h1><a class="header" href="#宏" id="宏">宏</a></h1>
+<p>在本章节，主要讨论宏系统的改进，特别需要关注的是 <a href="rust-2018/macros/custom-derive.html">自定义 derive</a>。</p>
+<h1><a class="header" href="#自定义-derive" id="自定义-derive">自定义 Derive</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.15-brightgreen.svg" alt="Minimum Rust version: 1.15" /></p>
+<p>在 Rust 中，你始终可以能够通过derive属性来自动实现一些特性：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
+struct Pet {
+    name: String,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>Pet</code> 实现了 <code>Debug</code> 特性， 使用了相当少的代码，非常醒目。举个例子，如果没有 <code>derive</code>，你需要这样写：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fmt;
+
+struct Pet {
+    name: String,
+}
+
+impl fmt::Debug for Pet {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        match self {
+            Pet { name } =&gt; {
+                let mut debug_trait_builder = f.debug_struct(&quot;Pet&quot;);
+
+                let _ = debug_trait_builder.field(&quot;name&quot;, name);
+
+                debug_trait_builder.finish()
+            }
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>哈!</p>
+<p>但是，这仅适用于作为标准库的一部分提供的特征; 它不可定制。 但是现在，当有人想要推导出你的特质时，你可以告诉Rust要做什么。
+这在<a href="https://serde.rs/">serde</a>， <a href="http://diesel.rs/">Diesel</a>等流行的crate中大量使用。</p>
+<p>获取更多信息，包括如果构建你自己的derive，查阅 <a href="https://doc.rust-lang.org/book/second-edition/appendix-04-macros.html#procedural-macros-for-custom-derive">The Rust Programming Language</a>.</p>
+<h1><a class="header" href="#宏的变化" id="宏的变化">宏的变化</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /></p>
+<p>在 Rust 2018 中，您可以通过 <code>use</code> 语句从外部包中导入特定的宏，而不是旧的 <code>#[macro_use]</code> 属性。</p>
+<p>举个例子，考虑 <code>bar</code> 包中实现了一个 <code>!bar</code> 宏，在 <code>src/lib.rs</code> 中：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[macro_export]
+macro_rules! baz {
+    () =&gt; ()
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在你的包中，你可以这样写：</p>
+<pre><code class="language-rust ignore">// Rust 2015
+
+#[macro_use]
+extern crate bar;
+
+fn main() {
+    baz!();
+}
+</code></pre>
+<p>现在你可以这样：</p>
+<pre><code class="language-rust ignore">// Rust 2018
+#![feature(rust_2018_preview)]
+
+use bar::baz;
+
+fn main() {
+    baz!();
+}
+</code></pre>
+<p>这会使 <code>macro_rules</code> 宏更接近其他类型的项目。</p>
+<h2><a class="header" href="#程序宏" id="程序宏">程序宏</a></h2>
+<p>使用过程宏来派生特征时，您必须命名提供自定义派生的宏。
+这通常与特征的名称相匹配，但请查阅提供派生的包的文档以确认。</p>
+<p>举个例子，在 Serde 中，你可以这样写：</p>
+<pre><code class="language-rust ignore">// Rust 2015
+extern crate serde;
+#[macro_use] extern crate serde_derive;
+
+#[derive(Serialize, Deserialize)]
+struct Bar;
+</code></pre>
+<p>现在你可以这样：</p>
+<pre><code class="language-rust ignore">// Rust 2018
+#![feature(rust_2018_preview)]
+use serde_derive::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize)]
+struct Bar;
+</code></pre>
+<h2><a class="header" href="#更多细节-1" id="更多细节-1">更多细节：</a></h2>
+<p>这仅适用于外部包中定义的宏。 对于本地定义的宏，<code>#[macro_use] mod foo;</code> 还是需要的，如同 Rust 2015 一样。</p>
+<h1><a class="header" href="#编译器" id="编译器">编译器</a></h1>
+<p>在本章节中，主要讨论n编译器的改进，主要关注点是 <a href="rust-2018/the-compiler/improved-error-messages.html">改进报错信息</a>。</p>
+<h1><a class="header" href="#改进报错信息" id="改进报错信息">改进报错信息</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.12-brightgreen.svg" alt="Minimum Rust version: 1.12" /></p>
+<p>我们一直致力于改进错误，几乎每个 Rust 版本都没有什么改进，但在 Rust 1.12 中，创建了错误消息系统的重大改进。</p>
+<p>例如，这里有一些产生错误的代码：</p>
+<pre><code class="language-rust ignore">fn main() {
+    let mut x = 5;
+
+    let y = &amp;x;
+
+    x += 1;
+}
+</code></pre>
+<p>这是 Rust 1.11：</p>
+<pre><code class="language-text">foo.rs:6:5: 6:11 error: cannot assign to `x` because it is borrowed [E0506]
+foo.rs:6     x += 1;
+             ^~~~~~
+foo.rs:4:14: 4:15 note: borrow of `x` occurs here
+foo.rs:4     let y = &amp;x;
+                      ^
+foo.rs:6:5: 6:11 help: run `rustc --explain E0506` to see a detailed explanation
+</code></pre>
+<p>这是 Rust 1.28：</p>
+<pre><code class="language-text">error[E0506]: cannot assign to `x` because it is borrowed
+ --&gt; foo.rs:6:5
+  |
+4 |     let y = &amp;x;
+  |              - borrow of `x` occurs here
+5 |
+6 |     x += 1;
+  |     ^^^^^^ assignment to borrowed `x` occurs here
+
+error: aborting due to previous error
+</code></pre>
+<p>这个错误并没有太大的不同，但展示了格式的变化。它在上下文中显示您的代码，而不是仅显示行本身的文本。</p>
+<h1><a class="header" href="#增量编译" id="增量编译">增量编译</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.24-brightgreen.svg" alt="Minimum Rust version: 1.24" /></p>
+<p>早在2016年9月，<a href="https://blog.rust-lang.org/2016/09/08/incremental.html">关于增量编译的博客</a>。
+虽然这篇文章详细介绍了，但这个想法基本上是这样的：当你在一个项目上工作时，你经常编译它，然后改变一些小的东西，然后重新编译。
+从历史上看，无论您更改代码的程度如何，编译器都会编译整个项目。渐进式编译的想法是，您只需要编译实际更改的代码，这意味着第二次构建更快。</p>
+<p>现在默认情况下已启用此功能。这意味着您的构建应该更快！在尝试获得尽可能低的构建时间时，不要忘记 crates 检查。</p>
+<p>这通常不是编译器性能的最终故事，也不是具体的增量编译。我们计划在未来做更多的工作。</p>
+<p>关于这种变化的一个小注意事项：它使构建更快，但使最终的二进制文件慢一点。出于这个原因，它在发布版本中没有打开。</p>
+<h1><a class="header" href="#弃用属性" id="弃用属性">弃用属性</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.9-brightgreen.svg" alt="Minimum Rust version: 1.9" /></p>
+<p>如果您正在编写库，并且想要弃用某些内容，则可以使用 <code>deprecated</code> 属性：</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[deprecated(
+    since = &quot;0.2.1&quot;,
+    note = &quot;Please use the bar function instead&quot;
+)]
+pub fn foo() {
+    // ...
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>如果用户使用已弃用的功能，则会向您的用户发出警告：</p>
+<pre><code class="language-text">   Compiling playground v0.0.1 (file:///playground)
+warning: use of deprecated item 'foo': Please use the bar function instead
+  --&gt; src/main.rs:10:5
+   |
+10 |     foo();
+   |     ^^^
+   |
+   = note: #[warn(deprecated)] on by default
+
+</code></pre>
+<p><code>since</code> 和 <code>note</code> 都是可选的。</p>
+<p><code>since</code> 可以是将来的; 你可以在那放任何东西，因为那儿并没有检查。</p>
+<h1><a class="header" href="#rustup--rust-的版本管理器" id="rustup--rust-的版本管理器">Rustup — Rust 的版本管理器</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-various-brightgreen.svg" alt="Minimum Rust version: various" /> (this tool has its own versioning scheme and works with all Rust versions)</p>
+<p><a href="https://rustup.rs/">Rustup</a> 工具已成为推荐的安装 Rust 的方式，并在我们的网站上有。它的功能远不止于此，允许您管理各种版本，组件和平台。</p>
+<h2><a class="header" href="#安装-rustup" id="安装-rustup">安装 Rustup</a></h2>
+<p>要通过 Rustup 安装 Rust，您可以访问 <a href="https://www.rust-lang.org/install.html">https://www.rust-lang.org/install.html</a>，它将告诉您如何在您的平台上执行此操作。
+这将安装 <code>rustup</code> 本身和 <code>rustc</code> 和 <code>cargo</code> 的 <code>stable</code> 版本。</p>
+<p>安装 Rust 的其他版本，执行 <code>rustup install</code>：</p>
+<pre><code class="language-console">$ rustup install 1.30.0
+</code></pre>
+<p>对每夜版也是有效的：</p>
+<pre><code class="language-console">$ rustup install nightly-2018-08-01
+</code></pre>
+<p>三种最新的版本:</p>
+<pre><code class="language-console">$ rustup install stable
+$ rustup install beta
+$ rustup install nightly
+</code></pre>
+<h2><a class="header" href="#升级" id="升级">升级</a></h2>
+<p>升级所有安装的版本，你可以执行：</p>
+<pre><code class="language-console">$ rustup update
+</code></pre>
+<p>这将查看您已安装的所有内容，如果有新版本，将会更新。</p>
+<h2><a class="header" href="#版本管理" id="版本管理">版本管理</a></h2>
+<p>设置非 <code>stable</code> 的为默认版本：</p>
+<pre><code class="language-console">$ rustup toolchain default nightly
+</code></pre>
+<p>使用一个 toolchain 而不是默认的，<code>rustup run</code>：</p>
+<pre><code class="language-console">$ rustup run nightly cargo build
+</code></pre>
+<p>还有一个别名，这个更短一些：</p>
+<pre><code class="language-console">$ cargo +nightly build
+</code></pre>
+<p>如果您希望每个目录具有不同的默认值，那也很容易！
+如果你在项目中运行它：</p>
+<pre><code class="language-console">$ rustup override set nightly
+</code></pre>
+<p>然后当你在那个目录中时，<code>rustc</code> 或 <code>cargo</code> 的任何调用都将使用该工具链。
+要与其他人共享，可以使用工具链的内容创建一个 <code>rust-toolchain</code> 文件，并将其检入源代码管理中。
+现在，当有人克隆您的项目时，他们将获得正确的版本，而无需自己“覆盖集合”。</p>
+<h2><a class="header" href="#安装其他目标-target" id="安装其他目标-target">安装其他目标 (target)</a></h2>
+<p>Rust 支持交叉编译到其他平台，Rustup 可以帮助您管理它们。 例如，要使用 MUSL：</p>
+<pre><code class="language-console">$ rustup target add x86_64-unknown-linux-musl
+</code></pre>
+<p>然后，你可以：</p>
+<pre><code class="language-console">$ cargo build --target=x86_64-unknown-linux-musl
+</code></pre>
+<p>查看所有安装的目标：</p>
+<pre><code class="language-console">$ rustup target list
+</code></pre>
+<h2><a class="header" href="#安装组件" id="安装组件">安装组件</a></h2>
+<p>组件用于安装某些类型的工具。虽然大多数工具都提供了“cargo-install”，但有些工具需要深入集成到编译器中。
+Rustup 确切地知道您正在使用的编译器版本，因此它只具有这些工具所需的信息。</p>
+<p>组件是每个工具链，因此如果您希望它们可用于多个工具链，则需要多次安装它们。
+在下面的示例中，添加一个 <code>--toolchain</code> 标志，设置为您要安装的工具链，例如 <code>nightly</code>。 如果没有此标志，它将安装默认工具链的组件。</p>
+<p>要查看可以安装的完整组件列表：</p>
+<pre><code class="language-console">$ rustup component list
+</code></pre>
+<p>接下来，让我们谈谈一些流行的组件以及何时需要安装它们。</p>
+<h3><a class="header" href="#rust-docs-本地文档" id="rust-docs-本地文档"><code>rust-docs</code>, 本地文档</a></h3>
+<p>安装工具链时，默认情况下会安装此第一个组件。 它包含 Rust 的文档副本，以便您可以脱机阅读。</p>
+<p>此组件暂时无法删除; 如果感兴趣，请对 <a href="https://github.com/rust-lang-nursery/rustup.rs/issues/998">this issue</a> 发表评论。</p>
+<h3><a class="header" href="#rust-src-标准库代码的拷贝" id="rust-src-标准库代码的拷贝"><code>rust-src</code> 标准库代码的拷贝</a></h3>
+<p><code>rust-src</code> 组件可以为您提供 Rust 的源代码的本地副本。你为什么需要这个？好吧，像 Racer 这样的自动完成工具使用这些信息来了解你要调用的函数的更多信息。</p>
+<pre><code class="language-console">$ rustup component add rust-src
+</code></pre>
+<h3><a class="header" href="#预览组件" id="预览组件">“预览”组件</a></h3>
+<p>“预览”阶段有几个组件。 这些组件的名称目前都有 <code>-preview</code>，这表明它们还没有100％准备好进行一般使用。
+请尝试一下并给我们反馈，但要知道他们不遵循 Rust 的稳定性保证，并且仍然在积极地改变，可能是以向后不兼容的方式。</p>
+<h4><a class="header" href="#rustfmt-preview-自动代码格式化" id="rustfmt-preview-自动代码格式化"><code>rustfmt-preview</code> 自动代码格式化</a></h4>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.24-brightgreen.svg" alt="Minimum Rust version: 1.24" /></p>
+<p>如果您希望自动格式化代码，可以安装此组件：</p>
+<pre><code class="language-console">$ rustup component add rustfmt-preview
+</code></pre>
+<p>这将安装两个工具，<code>rustfmt</code> 和 <code>cargo-fmt</code>，它们将为您自动格式化代码！ 例如：</p>
+<pre><code class="language-console">$ cargo fmt
+</code></pre>
+<p>将重新格式化您的整个 cargo 项目。</p>
+<h4><a class="header" href="#rls-preview-为了-ide-集成" id="rls-preview-为了-ide-集成"><code>rls-preview</code> 为了 IDE 集成</a></h4>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.21-brightgreen.svg" alt="Minimum Rust version: 1.21" /></p>
+<p>许多 IDE 功能都是基于 <a href="http://langserver.org/"><code>langserver</code>协议</a> 构建的。要使用这些 IDE 获得对 Rust 的支持，您需要安装 Rust 语言服务器，即“RLS”：</p>
+<pre><code class="language-console">$ rustup component add rls-preview
+</code></pre>
+<p>你的 IDE 应该从那拿到它。</p>
+<h4><a class="header" href="#clippy-preview-更多的-lints" id="clippy-preview-更多的-lints"><code>clippy-preview</code> 更多的 lints</a></h4>
+<p>要获得更多的 lints 来帮助你编写 Rust 代码，你可以安装 <code>clippy</code>：</p>
+<pre><code class="language-console">$ rustup component add clippy-preview
+</code></pre>
+<p>This will install <code>cargo-clippy</code> for you:</p>
+<pre><code class="language-console">$ cargo clippy
+</code></pre>
+<p>更多信息，查阅 <a href="https://github.com/rust-lang-nursery/rust-clippy">clippy's documentation</a>.</p>
+<h4><a class="header" href="#llvm-tools-preview-使用额外的llvm工具" id="llvm-tools-preview-使用额外的llvm工具"><code>llvm-tools-preview</code> 使用额外的LLVM工具</a></h4>
+<p>如果您想使用 <code>lld</code> 链接器或其他工具，如 <code>llvm-objdump</code> 或 <code>llvm-objcopy</code>，您可以安装此组件：</p>
+<pre><code class="language-console">$ rustup component add llvm-tools-preview
+</code></pre>
+<p>这是最新的组件，因此目前没有良好的文档。</p>
+<h1><a class="header" href="#cargo-和-cratesio" id="cargo-和-cratesio">Cargo 和 crates.io</a></h1>
+<p>在本章中，我们将讨论关于 <code>cargo</code> 和 crates.io 的改进。更多的关注在 <a href="rust-2018/cargo-and-crates-io/cargo-check-for-faster-checking.html"><code>cargo check</code></a>。</p>
+<h1><a class="header" href="#cargo-check-用于快速检查" id="cargo-check-用于快速检查"><code>cargo check</code> 用于快速检查</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.16-brightgreen.svg" alt="Minimum Rust version: 1.16" /></p>
+<p><code>cargo check</code> 是一个新的子命令，可以在很多情况下加快开发工作流程。</p>
+<p>它有什么作用？让我们退一步说，讨论 <code>rustc</code> 如何编译代码。编译有许多“过程”，也就是说，编译器在从源代码到生成最终二进制文件的过程中有许多不同的步骤。
+但是，您可以通过两个重要步骤来考虑这个过程：首先，<code>rustc</code> 执行所有安全检查，确保您的语法正确，所有这些。其次，一旦满足一切顺序，就会生成最终执行的实际二进制代码。</p>
+<p>事实证明，第二步需要花费很多时间。而且大多数时候，这不是必要的。也就是说，当您处理一些 Rust 代码时，许多开发人员将进入这样的工作流程：</p>
+<ol>
+<li>写一些代码。</li>
+<li>运行 <code>cargo build</code> 以确保它编译。</li>
+<li>根据需要重复1-2。</li>
+<li>运行 <code>cargo test</code> 以确保测试通过。</li>
+<li>亲自尝试二进制文件</li>
+<li>GOTO 1。</li>
+</ol>
+<p>在第二步中，您实际上从未运行过您的代码。您正在寻找编译器的反馈，而不是实际运行二进制文件。 <code>cargo check</code> 正好支持这个用例：它运行所有编译器的检查，但不生成最终的二进制文件。要使用它：</p>
+<pre><code class="language-console">$ cargo check
+</code></pre>
+<p>在那里你通常可以 <code>cargo build</code>。 工作流现在看起来像：</p>
+<ol>
+<li>写一些代码。</li>
+<li>运行<code>cargo check</code>以确保它编译。</li>
+<li>根据需要重复1-2。</li>
+<li>运行<code>cargo test</code>以确保测试通过。</li>
+<li>运行<code>cargo build</code>来构建二进制文件并自己尝试</li>
+<li>GOTO 1。</li>
+</ol>
+<p>那么你实际获得了多少加速？与大多数相关的问题一样，答案是“它取决于”。在撰写本文时，这里有一些非科学的基准。</p>
+<table><thead><tr><th>build</th><th>performance</th><th>check performance</th><th>speedup</th></tr></thead><tbody>
+<tr><td>initial compile</td><td>11s</td><td>5.6s</td><td>1.96x</td></tr>
+<tr><td>second compile (no changes)</td><td>3s</td><td>1.9s</td><td>1.57x</td></tr>
+<tr><td>third compile with small change</td><td>5.8s</td><td>3s</td><td>1.93x</td></tr>
+</tbody></table>
+<h1><a class="header" href="#cargo-install-用于自动安装" id="cargo-install-用于自动安装"><code>cargo install</code> 用于自动安装</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.5-brightgreen.svg" alt="Minimum Rust version: 1.5" /></p>
+<p>Cargo 已经发展了一种新的 <code>install</code> 命令。 这旨在用于为 Cargo 安装新的子命令，或者为 Rust 开发人员安装工具。
+这并不能取代为您支持的平台上的最终用户构建真实的本机程序包的需要。</p>
+<p>例如，本指南是使用 <a href="https://crates.io/crates/mdbook"><code>mdbook</code></a>。 你可以将它安装在你的系统上:</p>
+<pre><code class="language-console">$ cargo install mdbook
+</code></pre>
+<p>然后使用：</p>
+<pre><code class="language-console">$ mdbook --help
+</code></pre>
+<p>作为扩展 Cargo 的示例，你可以使用<a href="https://crates.io/crates/cargo-update"><code>cargo-update</code></a>包。 要安装它：</p>
+<pre><code class="language-console">$ cargo install cargo-update
+</code></pre>
+<p>这将允许你使用此命令，该命令检查你 <code>cargo install</code> 的所有内容并将其更新为最新版本：</p>
+<pre><code class="language-console">$ cargo install-update -a
+</code></pre>
+<h1><a class="header" href="#cargo-new-创建一个默认可执行项目" id="cargo-new-创建一个默认可执行项目"><code>cargo new</code> 创建一个默认可执行项目</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.25-brightgreen.svg" alt="Minimum Rust version: 1.25" /></p>
+<p><code>cargo new</code> 现在默认生成二进制文件，而不是库。我们试图保持 Cargo 的 CLI 非常稳定，但这种变化很重要，不太可能导致破损。</p>
+<p>对于某些背景，cargo new 接受两个标志： <code>--lib</code> 用于创建库，<code>--bin</code> 用于创建二进制文件或可执行文件。 如果你没有传递其中一个标志，它曾经默认为 <code>--lib</code>。
+当时，我们做出了这个决定，因为每个二进制文件（通常）都依赖于许多库，因此我们认为库案例会更常见。但是，这是不正确的; 每个包都依赖于许多二进制文件。
+此外，在开始使用时，你经常需要的是一个可以运行和使用的程序。而且，不仅仅是新 Rustaceans们， 甚至是很长时间的社区成员都说他们发现这个默认值令人惊讶。
+因此，我们已经改变它，它现在默认为 <code>--bin</code>。</p>
+<h1><a class="header" href="#cargo-rustc-用于传递标记至-rustc" id="cargo-rustc-用于传递标记至-rustc"><code>cargo rustc</code> 用于传递标记至 rustc</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.1-brightgreen.svg" alt="Minimum Rust version: 1.1" /></p>
+<p><code>cargo rustc</code> 是Cargo的一个新的子命令，它允许你通过 cargo 传递任意标记到 <code>rustc</code>。</p>
+<p>例如，Cargo 没有办法传递内置的不稳定标志。但是如果我们想使用 <code>print-type-sizes</code> 来查看我们的类型有哪些布局信息。我们可以运行这个：</p>
+<pre><code class="language-console">$ cargo rustc -- -Z print-type-sizes
+</code></pre>
+<p>我们将得到一堆描述我们类型大小的输出。</p>
+<h2><a class="header" href="#注意" id="注意">注意</a></h2>
+<p><code>cargo rustc</code> 只会将这些标记传递给你的 crate 的调用，而不是用于构建依赖项的任何 <code>rustc</code> 调用。
+如果你想这样做，请参阅 <code>$RUSTFLAGS</code>。</p>
+<h1><a class="header" href="#cargo-workspaces-用于有多个子包的项目" id="cargo-workspaces-用于有多个子包的项目">Cargo workspaces 用于有多个子包的项目</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.12-brightgreen.svg" alt="Minimum Rust version: 1.12" /></p>
+<p>Cargo 曾经有两个组织层次：</p>
+<ul>
+<li>一个 <em>package</em> 有一个或多个 crates</li>
+<li>一个 <em>crate</em> 有一个或多个 modules</li>
+</ul>
+<p>Cargo 现在有一个额外的层次：</p>
+<ul>
+<li>一个 <em>workspace</em> 包含一个或多个 packages</li>
+</ul>
+<p>这对于大型项目非常有用。例如，<a href="https://github.com/rust-lang-nursery/futures-rs">the <code>futures</code> package</a> 是一个 <em>workspace</em>，包含许多相关的包：</p>
+<ul>
+<li>futures</li>
+<li>futures-util</li>
+<li>futures-io</li>
+<li>futures-channel</li>
+</ul>
+<p>还有其他。</p>
+<p>Workspaces 允许单独开发这些包，但它们共享一组依赖项，因此只有单个 target 目录和单个 <code>Cargo.lock</code>。</p>
+<p>更多有关 workspaces, 请查阅 <a href="https://doc.rust-lang.org/stable/cargo/reference/manifest.html#the-workspace-section">the Cargo documentation</a>.</p>
+<h1><a class="header" href="#多个演示用例" id="多个演示用例">多个演示用例</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.22-brightgreen.svg" alt="Minimum Rust version: 1.22" /></p>
+<p>Cargo有一个 <code>examples</code> 功能，用于向人们展示如何使用您的包裹。通过将单个文件放在顶级 <code>examples</code> 目录中，您可以创建多个示例。</p>
+<p>但是如果你的例子对于单个文件来说太大了怎么办？Cargo支持在 <code>examples</code> 中添加子目录，并在其中查找 <code>main.rs</code> 来构建示例。它看起来像这样：</p>
+<pre><code class="language-text">my-package
+ └──src
+     └── lib.rs // code here
+ └──examples 
+     └── simple-example.rs // a single-file example
+     └── complex-example
+        └── helper.rs
+        └── main.rs // a more complex example that also uses `helper` as a submodule
+</code></pre>
+<h1><a class="header" href="#patch-替换依赖" id="patch-替换依赖">patch 替换依赖</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.21-brightgreen.svg" alt="Minimum Rust version: 1.21" /></p>
+<p>当你想要覆盖依赖图的某些部分时，可以使用你的 <code>Cargo.toml</code> 的 <code>[patch]</code> 部分。</p>
+<blockquote>
+<p>cargo 有一个类似的 <code>[replace]</code> 功能; 虽然我们不打算弃用或删除 <code>[replace]</code>，但在任何情况下都应该更喜欢 <code>[patch]</code>。</p>
+</blockquote>
+<p>那么它看起来像什么？ 假设我们有一个看起来像这样的 Cargo.toml：</p>
+<pre><code class="language-toml">[dependencies]
+foo = &quot;1.2.3&quot;
+</code></pre>
+<p>另外，我们的 <code>foo</code> 包依赖于 <code>bar</code> 包，我们在 <code>bar</code> 中发现了一个错误。为了测试这个，我们下载了 <code>bar</code> 的源代码，然后更新我们的 <code>Cargo.toml</code>：</p>
+<pre><code class="language-toml">[dependencies]
+foo = &quot;1.2.3&quot;
+
+[patch.crates-io]
+bar = { path = '/path/to/bar' }
+</code></pre>
+<p>现在，当你 <code>cargo build</code> 时，它将使用本地版本的 <code>bar</code>，而不是来自 crates.io 的 <code>foo</code> 所依赖的版本。然后，您可以尝试更改，并修复该错误！</p>
+<p>更多细节，查阅 <a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-patch-section">the documentation for <code>patch</code></a>.</p>
+<h1><a class="header" href="#cargo-更改源" id="cargo-更改源">Cargo 更改源</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.12-brightgreen.svg" alt="Minimum Rust version: 1.12" /></p>
+<p>Cargo 在“源”中找到它的包。默认源是 <a href="https://crates.io">crates.io</a>。但是，您可以在 <code>.cargo/config</code> 中选择其他源：</p>
+<pre><code class="language-toml">[source.crates-io]
+replace-with = 'my-awesome-registry'
+
+[source.my-awesome-registry]
+registry = 'https://github.com/my-awesome/registry-index'
+</code></pre>
+<p>这种配置意味着不是使用 crates.io，而是 Cargo 将查询 <code>my-awesome-registry</code> 源（在此处配置为不同的索引）。此备用源 <em>必须与 crates.io 索引完全相同</em>。
+Cargo 假设替换源在这方面是精确的 1：1 镜像，并且围绕该假设设计了以下支持。</p>
+<p>使用替换源为 crate 生成锁定文件时，原始源将编码到锁定文件中。例如，在上面的配置中，所有锁定文件仍然会提到 crates.io 作为包源的信息。
+这在语义上代表了 crates.io 如何成为所有 crates 的真实来源，并且由于所有替换都具有 1：1 的对应性，因此这是坚持的。</p>
+<p>总的来说，这意味着无论你使用何种替换源，您都可以将锁文件发送给其他任何人，并且你仍然可以获得可验证的可重现的构建！</p>
+<p>这个工具有 <a href="https://github.com/alexcrichton/cargo-vendor"><code>cargo-vendor</code></a> 和 <a href="https://github.com/alexcrichton/cargo-local-registry"><code>cargo-local-registry</code></a>,
+这对于“离线构建”通常很有用。他们提前准备所有 Rust 依赖项的列表，这使您可以轻松地将它们发送到构建计算机。</p>
+<h1><a class="header" href="#cratesio-不允许使用通配符" id="cratesio-不允许使用通配符">Crates.io 不允许使用通配符</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.6-brightgreen.svg" alt="Minimum Rust version: 1.6" /></p>
+<p>Crates.io 不允许您上传具有通配符依赖关系的包。 换句话说，这些：</p>
+<pre><code class="language-toml">[dependencies]
+regex = &quot;*&quot;
+</code></pre>
+<p>通配符依赖性意味着您可以使用任何可能的依赖项版本。 这极不可能是真实的，并且会在生态系统中造成不必要的破坏。</p>
+<p>相反，取决于版本范围。例如，<code>^</code>是默认值，因此您可以使用：</p>
+<pre><code class="language-toml">[dependencies]
+regex = &quot;1.0.0&quot;
+</code></pre>
+<p>相应的， <code>&gt;</code>, <code>&lt;=</code>, 和所有其他的非<code>*</code>范围都是可以的。</p>
+<h1><a class="header" href="#文档" id="文档">文档</a></h1>
+<p>在这章节中，我们将要讨论文档的改进，关注点在 <a href="rust-2018/documentation/new-editions-of-the-book.html">second edition of &quot;the book&quot;</a>。</p>
+<h1><a class="header" href="#新版本的-the-book" id="新版本的-the-book">新版本的 &quot;the book&quot;</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.18-red.svg" alt="Minimum Rust version: 1.18" /> 第二版的草稿</p>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.26-brightgreen.svg" alt="Minimum Rust version: 1.26" /> 第二版的最后一版</p>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.28-red.svg" alt="Minimum Rust version: 1.28" /> 2018版的草稿</p>
+<p>我们分发了一份 “Rust编程语言”，亲切地昵称为 “书”，以及 Rust 自 Rust 1.0 以来的每个版本。</p>
+<p>但是，因为它是在 Rust 1.0 之前编写的，所以它开始显示它的年龄。本书的许多部分都含糊不清，因为它是在真正的细节被确定为1.0版本之前编写的。它在教学生涯中没有做出出色的工作。</p>
+<p>从 Rust 1.18 开始，我们发布了本书第二版的草稿。 最终版本随 Rust 1.26 一起提供。新版本是从头开始的完整重写，使用我们从 Rust 中获得的最近两年的知识。
+你会发现很多 Rust 的核心概念，要构建的新项目以及各种其他好东西的全新解释。请[查看]<a href="https://doc.rust-lang.org/book/second-edition/index.html">check it out</a> 并告诉我们你的想法！</p>
+<p>您也可以从<a href="https://nostarch.com/Rust">Starch Press</a>购买。现在印刷版已发货，第二版已冻结。</p>
+<p>这些名字有点令人困惑，因为这本书的“第二版”是该书的第一版。因此，我们认为本书的新版本将与 Rust 本身的新版本相对应，因此从 1.28 开始，我们一直在发送下一版本的草案，<a href="https://doc.rust-lang.org/book/2018-edition/index.html">2018年版</a>。它仍然非常接近第二版，但包含有关新书功能的信息，因为该书的内容已被冻结。我们将继续更新此版本，直到我们决定在纸上打印第二版。</p>
+<h1><a class="header" href="#the-rust-bookshelf" id="the-rust-bookshelf">The Rust Bookshelf</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-various-brightgreen.svg" alt="Minimum Rust version: various" />, each book is different.
+随着Rust的文档不断发展，我们获得的远远超过了“The book”和参考资料。 我们现在收集了各种长篇文档，绰号“Rust书架”。 在不同的时间添加不同的资源，并且随着更多的写入，我们将添加新的资源。</p>
+<h2><a class="header" href="#the-cargo-book" id="the-cargo-book">The Cargo book</a></h2>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.21-brightgreen.svg" alt="Minimum Rust version: 1.21" />
+从历史上看，Cargo 的文档是在 <a href="http://doc.crates.io">http://doc.crates.io</a> 上托管的，它不遵循发布模型，即使 Cargo 本身也是如此。 这导致了一个功能会在cargo nightly中出现，文档会更新，然后长达12周，用户会认为它应该可以工作，但它还没有。 <a href="https://doc.rust-lang.org/cargo">https://doc.rust-lang.org/cargo</a> 是 Cargo 文档的新家，<a href="http://doc.crates.io">http://doc.crates.io</a> 现在重定向到那里。</p>
+<h2><a class="header" href="#the-rustdoc-book" id="the-rustdoc-book">The <code>rustdoc</code> book</a></h2>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.21-brightgreen.svg" alt="Minimum Rust version: 1.21" /></p>
+<p>Rustdoc, 我们文档工具, 现在位于 <a href="https://doc.rust-lang.org/rustdoc">https://doc.rust-lang.org/rustdoc</a>.</p>
+<h2><a class="header" href="#rust-by-example" id="rust-by-example">Rust By Example</a></h2>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.25-brightgreen.svg" alt="Minimum Rust version: 1.25" /></p>
+<p>Rust by Example 过去住在 <a href="https://rustbyexample.com">https://rustbyexample.com</a>，但现在是 Bookshelf 的一部分！ 它可以在 <a href="https://doc.rust-lang.org/rust-by-example/">https://doc.rust-lang.org/rust-by-example/</a> 找到。 RBE 允许您通过简短的代码示例和练习来学习 Rust，而不是本书的冗长散文。</p>
+<h1><a class="header" href="#the-rustonomicon" id="the-rustonomicon">The Rustonomicon</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.3-brightgreen.svg" alt="Minimum Rust version: 1.3" /></p>
+<p>我们现在有了一个草稿书, <a href="https://doc.rust-lang.org/stable/nomicon/">The Rustonomicon: the Dark Arts of Advanced and Unsafe Rust Programming</a>.</p>
+<p>从标题来看，我相信你可以猜到：这本书讨论了一些高级主题，包括“不安全”。 对于那些在 Rust 最低级别工作的人来说，这是必读的。</p>
+<h1><a class="header" href="#stdos-所有平台的文档" id="stdos-所有平台的文档"><code>std::os</code> 所有平台的文档</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.21-brightgreen.svg" alt="Minimum Rust version: 1.21" /></p>
+<p><code>std::os</code> 模块包含特定于操作系统的功能。您现在将看到的不仅仅是 linux，而是所有我们构建文档的平台。</p>
+<p>我们很遗憾该文档的版本目前暂定在 Linux; 这是第一步。这是标准库特有的，不适用于一般用途; 我们希望将来能够进一步改进这一点。</p>
+<h1><a class="header" href="#rustdoc" id="rustdoc"><code>rustdoc</code></a></h1>
+<p>在本章节中，我们将讨论 <code>rustdoc</code> 的改进，特别关注 <a href="rust-2018/rustdoc/documentation-tests-can-now-compile-fail.html">文档测试现在可以编译失败</a>。</p>
+<h1><a class="header" href="#文档测试现在可以编译失败" id="文档测试现在可以编译失败">文档测试现在可以编译失败</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.22-brightgreen.svg" alt="Minimum Rust version: 1.22" /></p>
+<p>现在可以创建 <code>compile-fail</code> 测试在 Rustdoc 中，如下:</p>
+<pre><code>/// ```compile_fail
+/// let x = 5;
+/// x += 2; // shouldn't compile!
+/// ```
+# fn foo() {}
+</code></pre>
+<p>请注意，这些类型的测试可能比其他测试更脆弱，因为 Rust 的添加可能导致代码在以前不会在编译时编译。
+考虑使用 <code>?</code> 的第一个版本，例如：使用 <code>?</code> 的代码将无法在 Rust 1.21 上编译，但在 Rust 1.22 上成功编译，导致您的测试套件开始失败。</p>
+<h1><a class="header" href="#rustdoc-uses-commonmark" id="rustdoc-uses-commonmark">Rustdoc uses CommonMark</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.25-brightgreen.svg" alt="Minimum Rust version: 1.25" /> for support by default</p>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.23-red.svg" alt="Minimum Rust version: 1.23" /> for support via a flag</p>
+<p>Rustdoc 允许您在文档注释中，使用 Markdown 编写。 在 Rust 1.0 中，我们使用了 <code>hoedown</code> markdown实现，用 C 编写。
+Markdown 更像是一个想法的实现系列，因此 <code>hoedown</code> 有自己的方言，就像许多解析器一样。
+<a href="https://commonmark.org/">CommonMark project</a> 试图定义更严格的Markdown版本，现在，Rustdoc默认使用它。</p>
+<p>从 Rust 1.23 开始，我们仍然默认为 <code>hoedown</code>，但你可以通过标志 <code>--enable-commonmark</code> 启用 Commonmark。 今天，我们只支持 CommonMark。</p>
+<h1><a class="header" href="#平台支持和目标target支持" id="平台支持和目标target支持">平台支持和目标（target）支持</a></h1>
+<p>在本章中，我们讨论平台和目标的改进，主要关注点是 <a href="rust-2018/platform-and-target-support/libcore-for-low-level-rust.html">that the <code>libcore</code> library now works on stable Rust</a>。</p>
+<h1><a class="header" href="#libcore-给低层-rust-使用" id="libcore-给低层-rust-使用">libcore 给低层 Rust 使用</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.6-brightgreen.svg" alt="Minimum Rust version: 1.6" /></p>
+<p>Rust 的标准库是双层的： 有一个小的核心库，<code>libcore</code>，以及构建在它之上的完整标准库 <code>libstd</code>。 
+<code>libcore</code> 完全与平台无关，只需要定义少量外部符号。Rust 的 <code>libstd</code> 建立在 <code>libcore</code> 之上，增加了对内存分配和I/O等内容的支持。
+在嵌入式空间中使用 Rust 的应用程序以及编写操作系统的应用程序通常只使用 <code>libcore</code> 来避免 <code>libstd</code>。</p>
+<p>另外需要注意的是，虽然今天支持使用 <code>libcore</code> 构建 <em>库</em>，但构建完整的应用程序还不稳定。</p>
+<p>要使用 <code>libcore</code>，请将此标志添加到你的 crate 根目录：</p>
+<pre><code class="language-rust ignore">#![no_std]
+</code></pre>
+<p>这将删除标准库，并将 <code>core</code> crate 带入您的命名空间以供使用：</p>
+<pre><code class="language-rust ignore">#![no_std]
+
+use core::cell::Cell;
+</code></pre>
+<p>你可以找到 <code>libcore</code> 的文档 <a href="https://doc.rust-lang.org/core/">here</a>。</p>
+<h1><a class="header" href="#webassembly-support" id="webassembly-support">WebAssembly support</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.14-brightgreen.svg" alt="Minimum Rust version: 1.14" /> for <code>emscripten</code></p>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-nightly-red.svg" alt="Minimum Rust version: nightly" /> for <code>wasm32-unknown-unknown</code></p>
+<p>Rust 已经有了对 <a href="https://webassembly.org/">WebAssembly</a> 的支持，这意味着你可以在浏览器客户端中运行 Rust 代码。</p>
+<p>在 Rust 1.14 中，我们通过 <a href="http://kripken.github.io/emscripten-site/index.html">emscripten</a> 获得了支持。
+安装它后，您可以编写 Rust 代码并生成 <a href="http://asmjs.org/">asm.js</a>（the precusor to wasm）或 WebAssembly。</p>
+<p>以下是使用此支持的示例：</p>
+<pre><code class="language-console">$ rustup target add wasm32-unknown-emscripten
+$ echo 'fn main() { println!(&quot;Hello, Emscripten!&quot;); }' &gt; hello.rs
+$ rustc --target=wasm32-unknown-emscripten hello.rs
+$ node hello.js
+</code></pre>
+<p>然而，与此同时，Rust 也增加了自己的支持，独立于 Emscripten。 这被称为 “未知目标”，因为它不是 <code>wasm32-unknown-emscripten</code>，而是 <code>wasm32-unknown-unknown</code>。
+这将是它准备好后首选使用的目标，但就目前而言，它实际上只能在 nightly版 中得到很好的支持。</p>
+<h1><a class="header" href="#全局分配符" id="全局分配符">全局分配符</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.28-brightgreen.svg" alt="Minimum Rust version: 1.28" /></p>
+<p>分配器是 Rust 中的程序在运行时从系统获取内存的方式。以前，Rust 不允许改变获取内存的方式，这阻止了一些用例。
+在某些平台上，这意味着在其他平台上使用 jemalloc，系统分配器，但用户无法控制此关键组件。 
+在1.28中，<code>#[global_allocator]</code> 属性现在是稳定的，它允许 Rust 程序将它们的分配器设置为系统分配器，并通过实现 <code>GlobalAlloc</code> 特性来定义新的分配器。</p>
+<p>某些平台上 Rust 程序的默认分配器是 jemalloc。标准库现在提供了系统分配器的句柄，可以在需要时通过声明静态并使用 <code>#[global_allocator]</code> 属性标记它来切换到系统分配器。</p>
+<pre><pre class="playground"><code class="language-rust">use std::alloc::System;
+
+#[global_allocator]
+static GLOBAL: System = System;
+
+fn main() {
+    let mut v = Vec::new();
+    // This will allocate memory using the system allocator.
+    v.push(1);
+}
+</code></pre></pre>
+<p>但是，有时您希望为给定的应用程序域定义自定义分配器。通过实现 <code>GlobalAlloc</code> 特性，这也相对容易。
+您可以在 <a href="https://doc.rust-lang.org/std/alloc/trait.GlobalAlloc.html">the documentation</a>。</p>
+<h1><a class="header" href="#msvc-toolchain-支持" id="msvc-toolchain-支持">MSVC toolchain 支持</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.2-brightgreen.svg" alt="Minimum Rust version: 1.2" /></p>
+<p>在 Rust 1.0 的发布中，我们只支持 Windows 上的 GNU 工具链。 随着 Rust 1.2 的发布，我们引入了对 MSVC 工具链的初始支持。
+之后，随着支持的成熟，我们最终将其作为 Windows 用户的默认选择。</p>
+<p>与 C 交互的两个问题之间的区别。如果您使用的是使用一个工具链或另一个工具链构建的库，则需要将其与相应的 Rust 工具链相匹配。 
+如果您不确定，请使用 MSVC; 这是有充分理由的默认值。</p>
+<p>要使用此功能，只需在 Windows 上使用 Rust，安装程序将默认使用它。 如果您更愿意切换到 GNU 工具链，可以使用 Rustup 进行安装：</p>
+<pre><code class="language-console">$ rustup toolchain install stable-x86_64-pc-windows-gnu
+</code></pre>
+<h1><a class="header" href="#musl-支持完全静态二进制文件" id="musl-支持完全静态二进制文件">MUSL 支持完全静态二进制文件</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.1-brightgreen.svg" alt="Minimum Rust version: 1.1" /></p>
+<p>默认情况下，Rust 将静态链接所有 Rust 代码。但是，如果使用标准库，它将动态链接到系统的 <code>libc</code> 实现。</p>
+<p>如果您想要100％静态二进制文件，可以在 Linux 上使用 <a href="https://www.musl-libc.org/"><code>MUSL libc</code></a>。</p>
+<h2><a class="header" href="#安装musl支持" id="安装musl支持">安装MUSL支持</a></h2>
+<p>要添加对MUSL的支持，您需要选择正确的目标。 <a href="https://forge.rust-lang.org/platform-support.html">这个页面</a> 有完整目标支持列表，其中一些是<code>musl</code>。</p>
+<p>如果你不确定你想要什么，对于64位 Linux，它可能是 <code>x86_64-unknown-linux-musl</code>。 我们将在本指南中使用此目标，但其他目标的说明保持不变，只需在我们提及目标的位置更改名称。</p>
+<p>要获得对此目标的支持，请使用 <code>rustup</code>：</p>
+<pre><code class="language-console">$ rustup target add x86_64-unknown-linux-musl
+</code></pre>
+<p>这将安装对默认工具链的支持; 要安装其他工具链，请添加 <code>--toolchain</code> 标志。例如：</p>
+<pre><code class="language-console">$ rustup target add x86_64-unknown-linux-musl --toolchain=nightly
+</code></pre>
+<h2><a class="header" href="#使用musl构建" id="使用musl构建">使用MUSL构建</a></h2>
+<p>要使用这个新目标，请将 <code>--target</code> 标志传递给 Cargo：</p>
+<pre><code class="language-console">$ cargo build --target x86_64-unknown-linux-musl
+</code></pre>
+<p>生成的二进制文件现在将使用 MUSL 构建！</p>
+<h1><a class="header" href="#cdylib-与-c-交互" id="cdylib-与-c-交互">cdylib 与 C 交互</a></h1>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.10-brightgreen.svg" alt="Minimum Rust version: 1.10" /> for <code>rustc</code></p>
+<p><img src="https://img.shields.io/badge/Minimum%20Rust%20Version-1.11-brightgreen.svg" alt="Minimum Rust version: 1.11" /> for <code>cargo</code></p>
+<p>如果你正在生成一个打算从 C（或其他语言通过 C FFI）使用的库，则 Rust 不需要在最终目标代码中包含特定于 Rust 的内容。
+对于像这样的库，你需要在你的 <code>Cargo.toml</code> 中使用 <code>cdylib</code> crate 类型：</p>
+<pre><code class="language-toml">[lib]
+crate-type = [&quot;cdylib&quot;]
+</code></pre>
+<p>这将生成一个较小的二进制文件，其中没有特定于 Rust 的信息。</p>
+<h1><a class="header" href="#不稳定的特性状态" id="不稳定的特性状态">不稳定的特性状态</a></h1>
+<h2><a class="header" href="#language" id="language">Language</a></h2>
+<table><thead><tr><th><strong>Feature</strong></th><th><strong>Status</strong></th><th><strong>Minimum Edition</strong></th></tr></thead><tbody>
+<tr><td><a href="rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html"><code>impl Trait</code></a></td><td><a href="https://blog.rust-lang.org/2018/05/10/Rust-1.26.html">Shipped, 1.26</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/slice-patterns.html">Basic slice patterns</a></td><td><a href="https://blog.rust-lang.org/2018/05/10/Rust-1.26.html">Shipped, 1.26</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/ownership-and-lifetimes/default-match-bindings.html">Default match bindings</a></td><td><a href="https://blog.rust-lang.org/2018/05/10/Rust-1.26.html">Shipped, 1.26</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/ownership-and-lifetimes/the-anonymous-lifetime.html">Anonymous lifetimes</a></td><td><a href="https://github.com/rust-lang/rust/blob/master/RELEASES.md#version-1260-2018-05-10">Shipped, 1.26</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/trait-system/dyn-trait-for-trait-objects.html"><code>dyn Trait</code></a></td><td><a href="https://blog.rust-lang.org/2018/06/21/Rust-1.27.html">Shipped, 1.27</a></td><td>2015</td></tr>
+<tr><td>SIMD support</td><td><a href="https://blog.rust-lang.org/2018/06/21/Rust-1.27.html">Shipped, 1.27</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/error-handling-and-panics/question-mark-in-main-and-tests.html"><code>?</code> in <code>main</code>/tests</a></td><td><a href="https://blog.rust-lang.org/2018/05/10/Rust-1.26.html">Shipping, 1.26</a> and 1.28</td><td>2015</td></tr>
+<tr><td>In-band lifetimes</td><td>Unstable; <a href="https://github.com/rust-lang/rust/issues/44524">tracking issue</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/ownership-and-lifetimes/lifetime-elision-in-impl.html">Lifetime elision in <code>impl</code>s</a></td><td>Unstable; <a href="https://github.com/rust-lang/rust/issues/44524">tracking issue</a></td><td>2015</td></tr>
+<tr><td>Non-lexical lifetimes</td><td><a href="http://smallcultfollowing.com/babysteps/blog/2018/06/15/mir-based-borrow-check-nll-status-update/">Implemented but not ready for preview</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/ownership-and-lifetimes/inference-in-structs.html"><code>T: 'a</code> inference in <code>struct</code>s</a></td><td>Unstable; <a href="https://github.com/rust-lang/rust/issues/44493">tracking issue</a></td><td>2015</td></tr>
+<tr><td><a href="rust-2018/module-system/raw-identifiers.html">Raw identifiers</a></td><td>Unstable; <a href="https://github.com/rust-lang/rust/issues/48589">tracking issue</a></td><td>?</td></tr>
+<tr><td><a href="rust-2018/macros/macro-changes.html">Import macros via <code>use</code></a></td><td>Unstable; <a href="https://github.com/rust-lang/rust/issues/35896">tracking issue</a></td><td>?</td></tr>
+<tr><td><a href="rust-2018/module-system/path-clarity.html">Module system path changes</a></td><td>Unstable; <a href="https://github.com/rust-lang/rust/issues/44660">tracking issue</a></td><td>2018</td></tr>
+</tbody></table>
+<p>虽然 Rust 2015 中已经提供了其中一些功能，但是它们在这里被跟踪，因为它们是作为 Rust 2018 版本的一部分进行推广的。
+因此，它们将在本指南的后续章节中讨论。标记为 “Shipped” 的功能现在都可以在稳定的 Rust 中使用，因此您可以立即开始使用它们！</p>
+<h2><a class="header" href="#standard-library" id="standard-library">Standard library</a></h2>
+<table><thead><tr><th><strong>Feature</strong></th><th><strong>Status</strong></th></tr></thead><tbody>
+<tr><td><a href="https://github.com/rust-lang/rust/issues/49668">Custom global allocators</a></td><td>Will ship in 1.28</td></tr>
+</tbody></table>
+<h2><a class="header" href="#tooling" id="tooling">Tooling</a></h2>
+<table><thead><tr><th><strong>Tool</strong></th><th><strong>Status</strong></th></tr></thead><tbody>
+<tr><td><a href="https://github.com/rust-lang-nursery/rls">RLS</a> 1.0</td><td>Feature-complete; see <a href="https://github.com/rust-lang-nursery/rls/milestone/7">1.0 milestone</a></td></tr>
+<tr><td><a href="https://github.com/rust-lang-nursery/rustfmt">rustfmt</a> 1.0</td><td>Finalizing spec; <a href="https://github.com/rust-lang-nursery/rustfmt/milestone/2">1.0 milestone</a>, <a href="https://github.com/rust-lang/rfcs/pull/2436">style guide RFC</a>, <a href="https://github.com/rust-lang/rfcs/pull/2437">stability RFC</a></td></tr>
+<tr><td><a href="https://github.com/rust-lang-nursery/rust-clippy">Clippy</a> 1.0</td><td><a href="https://github.com/rust-lang/rfcs/pull/2476">RFC</a></td></tr>
+</tbody></table>
+<h2><a class="header" href="#documentation" id="documentation">Documentation</a></h2>
+<table><thead><tr><th><strong>Tool</strong></th><th><strong>Status</strong></th></tr></thead><tbody>
+<tr><td><a href="https://rust-lang-nursery.github.io/edition-guide/">Edition Guide</a></td><td>Initial draft complete</td></tr>
+<tr><td><a href="https://github.com/rust-lang/book/">TRPL</a></td><td>Updated as features stabilize</td></tr>
+</tbody></table>
+<h2><a class="header" href="#web-site" id="web-site">Web site</a></h2>
+<p>视觉设计正在最终确定，早期的内容头脑风暴已经完成。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

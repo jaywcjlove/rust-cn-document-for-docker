@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>简介 - Rust 版本指南 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Rust 版本指南详细介绍了 Rust Edition 的有关信息，Rust 通过 Edition 机制保证稳定性版本前进，让程序在 2015、2018 以及未来的 2021 和 2024 版都能够顺利编译通过">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="introduction.html">简介</a></li><li class="chapter-item expanded "><a href="editions/index.html"><strong aria-hidden="true">1.</strong> 什么是版本(Editions)？</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="editions/transitioning-your-code-to-a-new-edition.html"><strong aria-hidden="true">1.1.</strong> 将你的代码迁移到新版本</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2015/index.html"><strong aria-hidden="true">2.</strong> Rust 2015</a></li><li class="chapter-item expanded "><a href="rust-2018/index.html"><strong aria-hidden="true">3.</strong> Rust 2018</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/module-system/index.html"><strong aria-hidden="true">3.1.</strong> 模块系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/module-system/raw-identifiers.html"><strong aria-hidden="true">3.1.1.</strong> 原始标识符</a></li><li class="chapter-item expanded "><a href="rust-2018/module-system/path-clarity.html"><strong aria-hidden="true">3.1.2.</strong> 路径清晰化</a></li><li class="chapter-item expanded "><a href="rust-2018/module-system/more-visibility-modifiers.html"><strong aria-hidden="true">3.1.3.</strong> 更加可见的修饰符</a></li><li class="chapter-item expanded "><a href="rust-2018/module-system/nested-imports-with-use.html"><strong aria-hidden="true">3.1.4.</strong> 用 use 进行导入嵌套</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/index.html"><strong aria-hidden="true">3.2.</strong> 错误处理与崩溃</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/the-question-mark-operator-for-easier-error-handling.html"><strong aria-hidden="true">3.2.1.</strong> ? 操作符对于早期错误的处理</a></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/question-mark-in-main-and-tests.html"><strong aria-hidden="true">3.2.2.</strong> ? 在 main 和 tests中</a></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/controlling-panics-with-std-panic.html"><strong aria-hidden="true">3.2.3.</strong> 用 std::panic 控制崩溃</a></li><li class="chapter-item expanded "><a href="rust-2018/error-handling-and-panics/aborting-on-panic.html"><strong aria-hidden="true">3.2.4.</strong> 中止崩溃</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/control-flow/index.html"><strong aria-hidden="true">3.3.</strong> 流程控制</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/control-flow/loops-can-break-with-a-value.html"><strong aria-hidden="true">3.3.1.</strong> 循环可以停止并带有返回值</a></li><li class="chapter-item expanded "><a href="rust-2018/control-flow/async-await-for-easier-concurrency.html"><strong aria-hidden="true">3.3.2.</strong> async/await 早期并发</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/index.html"><strong aria-hidden="true">3.4.</strong> Trait 系统</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/trait-system/impl-trait-for-returning-complex-types-with-ease.html"><strong aria-hidden="true">3.4.1.</strong> impl Trait 轻松返回复杂的类型</a></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/dyn-trait-for-trait-objects.html"><strong aria-hidden="true">3.4.2.</strong> dyn Trait trait 对象</a></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/more-container-types-support-trait-objects.html"><strong aria-hidden="true">3.4.3.</strong> 支持 trait 对象的更多容器类型</a></li><li class="chapter-item expanded "><a href="rust-2018/trait-system/associated-constants.html"><strong aria-hidden="true">3.4.4.</strong> 相关常数</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/slice-patterns.html"><strong aria-hidden="true">3.5.</strong> 切片模式</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/index.html"><strong aria-hidden="true">3.6.</strong> 所有权和生命周期</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/default-match-bindings.html"><strong aria-hidden="true">3.6.1.</strong> 默认 match 绑定</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/the-anonymous-lifetime.html"><strong aria-hidden="true">3.6.2.</strong> '_ 匿名生命周期</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/lifetime-elision-in-impl.html"><strong aria-hidden="true">3.6.3.</strong> 在impl中省略生命周期</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/inference-in-structs.html"><strong aria-hidden="true">3.6.4.</strong> T: 'a 结构体中的推导</a></li><li class="chapter-item expanded "><a href="rust-2018/ownership-and-lifetimes/simpler-lifetimes-in-static-and-const.html"><strong aria-hidden="true">3.6.5.</strong> 在static和const中更简单的生命周期</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/data-types/index.html"><strong aria-hidden="true">3.7.</strong> 数据类型</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/data-types/field-init-shorthand.html"><strong aria-hidden="true">3.7.1.</strong> 字段初始化简写</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/inclusive-ranges.html"><strong aria-hidden="true">3.7.2.</strong> ..= 包含取值范围</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/128-bit-integers.html"><strong aria-hidden="true">3.7.3.</strong> 128位整型</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/operator-equals-are-now-implementable.html"><strong aria-hidden="true">3.7.4.</strong> &quot;Operator-equals&quot; 的实现</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/union-for-an-unsafe-form-of-enum.html"><strong aria-hidden="true">3.7.5.</strong> union: 一个非安全的 enum</a></li><li class="chapter-item expanded "><a href="rust-2018/data-types/choosing-alignment-with-the-repr-attribute.html"><strong aria-hidden="true">3.7.6.</strong> repr 属性的对齐方式</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/simd-for-faster-computing.html"><strong aria-hidden="true">3.8.</strong> SIMD 更快的计算</a></li><li class="chapter-item expanded "><a href="rust-2018/macros/index.html"><strong aria-hidden="true">3.9.</strong> 宏</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/macros/custom-derive.html"><strong aria-hidden="true">3.9.1.</strong> 自定义 Derive</a></li><li class="chapter-item expanded "><a href="rust-2018/macros/macro-changes.html"><strong aria-hidden="true">3.9.2.</strong> 宏的变化</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/the-compiler/index.html"><strong aria-hidden="true">3.10.</strong> 编译器</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/the-compiler/improved-error-messages.html"><strong aria-hidden="true">3.10.1.</strong> 改进错误信息</a></li><li class="chapter-item expanded "><a href="rust-2018/the-compiler/incremental-compilation-for-faster-compiles.html"><strong aria-hidden="true">3.10.2.</strong> 增量编译以加快编译速度</a></li><li class="chapter-item expanded "><a href="rust-2018/the-compiler/an-attribute-for-deprecation.html"><strong aria-hidden="true">3.10.3.</strong> 弃用属性</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/rustup-for-managing-rust-versions.html"><strong aria-hidden="true">3.11.</strong> Rustup：Rust 版本管理器</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/index.html"><strong aria-hidden="true">3.12.</strong> Cargo 和 crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-check-for-faster-checking.html"><strong aria-hidden="true">3.12.1.</strong> cargo check 用以快速检查</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-install-for-easy-installation-of-tools.html"><strong aria-hidden="true">3.12.2.</strong> cargo install 自动安装工具</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-new-defaults-to-a-binary-project.html"><strong aria-hidden="true">3.12.3.</strong> cargo new 创建可执行项目</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-rustc-for-passing-arbitrary-flags-to-rustc.html"><strong aria-hidden="true">3.12.4.</strong> cargo rustc 用于传递标记至 rustc</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-workspaces-for-multi-package-projects.html"><strong aria-hidden="true">3.12.5.</strong> Cargo workspaces 用于拥有多包的项目</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/multi-file-examples.html"><strong aria-hidden="true">3.12.6.</strong> 多文件的 examples</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/replacing-dependencies-with-patch.html"><strong aria-hidden="true">3.12.7.</strong> patch 替换依赖</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/cargo-can-use-a-local-registry-replacement.html"><strong aria-hidden="true">3.12.8.</strong> Cargo 更改源</a></li><li class="chapter-item expanded "><a href="rust-2018/cargo-and-crates-io/crates-io-disallows-wildcard-dependencies.html"><strong aria-hidden="true">3.12.9.</strong> Crates.io 不允许使用通配符</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/documentation/index.html"><strong aria-hidden="true">3.13.</strong> 文档</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/documentation/new-editions-of-the-book.html"><strong aria-hidden="true">3.13.1.</strong> 新版&quot;the book&quot;</a></li><li class="chapter-item expanded "><a href="rust-2018/documentation/the-rust-bookshelf.html"><strong aria-hidden="true">3.13.2.</strong> The Rust Bookshelf</a></li><li class="chapter-item expanded "><a href="rust-2018/documentation/the-rustonomicon.html"><strong aria-hidden="true">3.13.3.</strong> The Rustonomicon</a></li><li class="chapter-item expanded "><a href="rust-2018/documentation/std-os-has-documentation-for-all-platforms.html"><strong aria-hidden="true">3.13.4.</strong> std::os的平台相关文档</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/rustdoc/index.html"><strong aria-hidden="true">3.14.</strong> rustdoc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/rustdoc/documentation-tests-can-now-compile-fail.html"><strong aria-hidden="true">3.14.1.</strong> 文档测试的 compile-fail</a></li><li class="chapter-item expanded "><a href="rust-2018/rustdoc/rustdoc-uses-commonmark.html"><strong aria-hidden="true">3.14.2.</strong> Rustdoc 使用 CommonMark</a></li></ol></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/index.html"><strong aria-hidden="true">3.15.</strong> 平台支持和target</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/libcore-for-low-level-rust.html"><strong aria-hidden="true">3.15.1.</strong> libcore 低层 Rust 使用</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/webassembly-support.html"><strong aria-hidden="true">3.15.2.</strong> WebAssembly 支持</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/global-allocators.html"><strong aria-hidden="true">3.15.3.</strong> 全局分配符</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/msvc-toolchain-support.html"><strong aria-hidden="true">3.15.4.</strong> MSVC toolchain 支持</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/musl-support-for-fully-static-binaries.html"><strong aria-hidden="true">3.15.5.</strong> MUSL 支持完全静态二进制文件</a></li><li class="chapter-item expanded "><a href="rust-2018/platform-and-target-support/cdylib-crates-for-c-interoperability.html"><strong aria-hidden="true">3.15.6.</strong> cdylib 与 C 的互通性</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="unstable-feature-status.html"><strong aria-hidden="true">4.</strong> 不稳定的特性状态</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 版本指南 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/edition-guide-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#简介" id="简介">简介</a></h1>
+<blockquote>
+<p>中文翻译注（The Chinese translation of <a href="https://doc.rust-lang.org/nightly/edition-guide/">The Rust Edition Guide</a>）：</p>
+<ul>
+<li>👉 查看更多 <a href="https://rustwiki.org/" style="color:#97ca00;font-weight:bold;">Rust 官方文档中英文双语教程</a>，包括双语版<a href="https://rustwiki.org/zh-CN/book/">《Rust 程序设计语言》</a>（出版书名为《Rust 权威指南》），本站还提供了 <a href="https://rustwiki.org/zh-CN/std/">Rust 标准库中文版</a>。</li>
+<li>《Rust 版本指南》（The Rust Edition Guide 中文版）翻译自 <a href="https://doc.rust-lang.org/nightly/edition-guide/">The Rust Edition Guide</a>，内容已全部翻译完成，查看此书的 <a href="https://github.com/rust-lang-cn/edition-guide-cn">Github 翻译项目和源码</a>。本文版最后更新时间：2019-05-05。</li>
+<li>本文档已加入到 <a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a>，主要译者：<a href="https://github.com/sunhuachuang"><em>Sun</em></a>，<a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a>成员。</li>
+<li><a href="https://rustwiki.org/en/edition-guide/" style="color:red;">本站支持文档中英文切换</a>，点击页面右上角语言图标可切换到相同章节的英文页面，<strong>英文版每天都会自动同步一次官方的最新版本</strong>。</li>
+<li>若发现当前页表达错误或帮助我们改进翻译，可点击右上角的编辑按钮打开该页对应源码文件进行编辑和修改，Rust 中文资源的开源组织发展离不开大家，感谢您的支持和帮助！</li>
+<li>注意：<strong>此文档已较长时间没更新，内容可能比英文滞后较多</strong>。期待您加入 <a href="https://github.com/rust-lang-cn">Rust 中文翻译项目组</a>，协助我们，一起更新完善中文版，感激不尽！</li>
+</ul>
+</blockquote>
+<p>欢迎来到 Rust 版本(Edition)使用指南！ &quot;Editions&quot; 是通过编写 Rust 代码来传达巨大改变的一种方式。</p>
+<p>在指南中，我们将讨论：</p>
+<ul>
+<li>什么是版本(editions)</li>
+<li>每个版本什么样</li>
+<li>如何将你的代码从一个版本迁移到另一个版本</li>
+</ul>
+<p>请注意，标准库随每个Rust版本的增长而增长; 标准库中有<strong>许多</strong>添加的内容，本指南未对其进行说明。
+只包含那些主要的变化，当然同时也有大量的中小型的改变也很棒。
+您可能还想查看<a href="https://rustwiki.org/zh-CN/std/">标准库文档</a>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="editions/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="editions/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

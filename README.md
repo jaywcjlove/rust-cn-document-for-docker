@@ -6,13 +6,15 @@
 - [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn)
 - [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn)
 - [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn)
-- [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn)
+- [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide)
+- [Cargo 手册](https://github.com/rust-lang-cn/cargo)
 
 在浏览器中访问以下 URL
 
 https://jaywcjlove.github.io/rust-cn-document-for-docker/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/book/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/  
+https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/  
