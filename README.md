@@ -6,7 +6,7 @@ Rust 中文文档示例文档
 
 本仓库，将来自 [**@rust-lang-cn**](https://github.com/rust-lang-cn) 中 Rust 相关的中文文档仓库打包到 Docker 中，用于本地部署预览：
 
-Repo | last commit | home
+Github Repo | last commit | home
 ---- | ---- | ----
 [Rust 标准库文档中文版](https://github.com/rust-lang-cn/std-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/std-cn?style=flat&label=last)](https://github.com/rust-lang-cn/std-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/std/std/)
 [Rust 程序设计语言 中文版](https://github.com/rust-lang-cn/book-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/book-cn?style=flat&label=last)](https://github.com/rust-lang-cn/book-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/book/)
