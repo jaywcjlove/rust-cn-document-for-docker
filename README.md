@@ -34,7 +34,7 @@ docker run --name rust-document --restart always -itd -p 9613:3000 ghcr.io/jaywc
 http://localhost:9613/  
 http://localhost:9613/book/  
 http://localhost:9613/cargo/  
-http://localhost:9613/cargo-cn/  
+http://localhost:9613/edition-guide/  
 http://localhost:9613/reference/  
 http://localhost:9613/rustdoc/  
 http://localhost:9613/rust-cookbook/  
