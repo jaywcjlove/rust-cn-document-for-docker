@@ -181,6 +181,35 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
 
+      - name: Generate Changelog
+        id: changelog
+        uses: jaywcjlove/changelog-generator@main
+        with:
+          filter-author: (小弟调调™)
+          filter: (^[\s]+?[R|r]elease)|(^[R|r]elease)
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            文档: ${{ needs.changelog.outputs.tag }}: https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/index.html  
+            比较变化: ${{ steps.changelog.outputs.compareurl }}  
+            
+            ${{ steps.changelog.outputs.changelog }}
+
+            Github Repo | last commit | home
+            ---- | ---- | ----
+            [Rust 标准库文档中文版](https://github.com/rust-lang-cn/std-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/std-cn?style=flat&label=last)](https://github.com/rust-lang-cn/std-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/std/std/)
+            [Rust 程序设计语言 中文版](https://github.com/rust-lang-cn/book-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/book-cn?style=flat&label=last)](https://github.com/rust-lang-cn/book-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/book/)
+            [Rust By Example 中文版](https://github.com/rust-lang-cn/rust-by-example-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-by-example-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-by-example-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-by-example-cn/)
+            [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/reference-cn?style=flat&label=last)](https://github.com/rust-lang-cn/reference-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/)
+            [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rustdoc-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rustdoc-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/)
+            [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-cookbook-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-cookbook-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/)
+            [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/edition-guide?style=flat&label=last)](https://github.com/rust-lang-cn/edition-guide/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/)
+            [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/)
+            [Rust 秘典](https://github.com/rust-lang-cn/nomicon-zh-Hans) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/nomicon-zh-Hans?style=flat&label=last)](https://github.com/rust-lang-cn/nomicon-zh-Hans/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/nomicon/)
+
       # Create Docker Image
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
