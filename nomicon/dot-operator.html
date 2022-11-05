@@ -1,0 +1,336 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>点运算符 - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html" class="active"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#点运算符" id="点运算符">点运算符</a></h1>
+<p>点运算符将执行很多类型转换的魔法：它将执行自动引用、自动去引用和强制转换，直到类型匹配。方法查找的详细机制定义在<a href="https://rustc-dev-guide.rust-lang.org/method-lookup.html">这里</a>，简要的概述如下：</p>
+<p>假设我们有一个函数<code>foo</code>，它有一个接收器（一个<code>self</code>、<code>&amp;self</code>或<code>&amp;mut self</code>参数）。如果我们调用<code>value.foo()</code>，编译器需要确定<code>Self</code>是什么类型，然后才能调用该函数的正确实现。在这个例子中，我们将说<code>value</code>具有<code>T</code>类型。</p>
+<p>我们将使用<a href="https://doc.rust-lang.org/book/ch19-03-advanced-traits.html#fully-qualified-syntax-for-disambiguation-calling-methods-with-the-same-name">full-qualified syntax</a>来更清楚地说明我们到底是在哪个类型上调用一个函数。</p>
+<ul>
+<li>首先，编译器会检查是否可以直接调用<code>T::foo(value)</code>。这被称为“按值”方法调用。</li>
+<li>如果它不能调用这个函数（例如，如果这个函数的类型不对，或者一个 trait 没有为<code>Self</code>实现），那么编译器就会尝试添加一个自动引用。这意味着编译器会尝试<code>&lt;&amp;T&gt;::foo(value)</code>和<code>&lt;&amp;mut T&gt;::foo(value)</code>。这被称为“autoref”方法调用。</li>
+<li>如果这些候选方法都不奏效，它就对<code>T</code>解引用并再次尝试。这使用了<code>Deref</code>特性——如果<code>T: Deref&lt;Target = U&gt;</code>，那么它就用<code>U</code>而不是<code>T</code>类型再试。如果它不能解除对<code>T</code>的引用，它也可以尝试 <em>unsizing</em><code>T</code>。这只是意味着，如果<code>T</code>在编译时有一个已知的大小参数，那么在解析方法时它就会“忘记”它。例如，这个 unsizing 步骤可以通过“忘记”数组的大小将<code>[i32; 2]</code>转换成<code>[i32]</code>。</li>
+</ul>
+<p>下面是一个方法查找算法的例子：</p>
+<pre><code class="language-rust ignore">let array: Rc&lt;Box&lt;[T; 3]&gt;&gt; = ...;
+let first_entry = array[0];
+</code></pre>
+<p>当数组在这么多的间接点后面时，编译器是如何实际计算<code>array[0]</code>的呢？首先，<code>array[0]</code>实际上只是<a href="https://doc.rust-lang.org/std/ops/trait.Index.html"><code>Index</code></a>特性的语法糖——编译器会将<code>array[0]</code>转换成<code>array.index(0)</code>。现在，编译器检查<code>array</code>是否实现了<code>Index</code>，这样它就可以调用这个函数。</p>
+<p>然后，编译器检查<code>Rc&lt;Box&lt;[T; 3]&gt;&gt;</code>是否实现了<code>Index</code>，但它没有，<code>&amp;Rc&lt;Box&lt;[T; 3]&gt;&gt;</code>和<code>&amp;mut Rc&lt;Box&lt;[T; 3]&gt;&gt;</code>也没有。由于这些方法都不起作用，编译器将<code>Rc&lt;Box&lt;[T; 3]&gt;</code>解引用到<code>Box&lt;[T; 3]&gt;</code>中，并再次尝试。<code>Box&lt;[T; 3]&gt;</code>、<code>&amp;Box&lt;[T; 3]&gt;</code>和<code>&amp;mut Box&lt;[T; 3]&gt;</code>没有实现<code>Index</code>，所以它再次解引用。<code>[T; 3]</code>和它的自动引用也没有实现<code>Index</code>。它不能再继续解引用<code>[T; 3]</code>，所以编译器取消了它的大小，得到了<code>[T]</code>。最后，<code>[T]</code>实现了<code>Index</code>，所以它现在可以调用实际的<code>index</code>函数。</p>
+<p>考虑一下下面这个更复杂的点运算符工作的例子：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn do_stuff&lt;T: Clone&gt;(value: &amp;T) {
+    let cloned = value.clone();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>实现了<code>Clone</code>的是什么类型？首先，编译器检查是否可以按值调用。<code>value</code>的类型是<code>&amp;T</code>，所以<code>clone</code>函数的签名是<code>fn clone(&amp;T) -&gt; T</code>。它知道<code>T: Clone</code>，所以编译器发现<code>cloned: T</code>。</p>
+<p>如果取消<code>T: Clone</code>的限制，会发生什么？它将不能按值调用，因为<code>T</code>没有实现<code>Clone</code>。所以编译器会尝试通过自动搜索来调用。在这种情况下，该函数的签名是<code>fn clone(&amp;&amp;T) -&gt; &amp;T</code>，因为<code>Self = &amp;T</code>。编译器看到<code>&amp;T: Clone</code>，然后推断出<code>cloned: &amp;T</code>。</p>
+<p>下面是另一个例子，自动搜索行为被用来创造一些微妙的效果：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::sync::Arc;
+</span><span class="boring">
+</span>#[derive(Clone)]
+struct Container&lt;T&gt;(Arc&lt;T&gt;);
+
+fn clone_containers&lt;T&gt;(foo: &amp;Container&lt;i32&gt;, bar: &amp;Container&lt;T&gt;) {
+    let foo_cloned = foo.clone();
+    let bar_cloned = bar.clone();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><code>foo_cloned</code>和<code>bar_cloned</code>是什么类型？我们知道，<code>Container&lt;i32&gt;: Clone</code>，所以编译器按值调用<code>clone</code>，得到<code>foo_cloned: Container&lt;i32&gt;</code>。然而，<code>bar_cloned</code>实际上有<code>&amp;Container&lt;T&gt;</code>类型。这肯定是不合理的——我们给<code>Container</code>添加了<code>#[derive(Clone)]</code>，所以它必须实现<code>Clone</code>! 仔细看看，由<code>derive</code>宏产生的代码是（大致）：</p>
+<pre><code class="language-rust ignore">impl&lt;T&gt; Clone for Container&lt;T&gt; where T: Clone {
+    fn clone(&amp;self) -&gt; Self {
+        Self(Arc::clone(&amp;self.0))
+    }
+}
+</code></pre>
+<p>派生的<code>Clone</code>实现是<a href="https://doc.rust-lang.org/std/clone/trait.Clone.html#derivable">只在<code>T: Clone</code>的地方定义</a>，所以没有<code>Container&lt;T&gt;</code>的实现。<code>Clone</code>在一般的<code>T</code>上没有实现。编译器接着查看<code>&amp;Container&lt;T&gt;</code>是否实现了<code>Clone</code>，最终发现它实现了。因此，它推断出<code>clone</code>是由 autoref 调用的，所以<code>bar_cloned</code>的类型是<code>&amp;Container&lt;T&gt;</code>。</p>
+<p>我们可以通过手动实现<code>Clone</code>而不需要<code>T: Clone</code>来解决这个问题：</p>
+<pre><code class="language-rust ignore">impl&lt;T&gt; Clone for Container&lt;T&gt; {
+    fn clone(&amp;self) -&gt; Self {
+        Self(Arc::clone(&amp;self.0))
+    }
+}
+</code></pre>
+<p>现在，类型检查器推断出，<code>bar_cloned: Container&lt;T&gt;</code>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="coercions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="casts.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="coercions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="casts.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

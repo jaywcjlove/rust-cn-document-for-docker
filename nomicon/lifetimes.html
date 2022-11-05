@@ -1,0 +1,479 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>生命周期 - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html" class="active"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#生命周期" id="生命周期">生命周期</a></h1>
+<p>Rust 通过<em>生命周期</em>来执行相关的规则。生命周期是指一个引用必须有效的代码区域，这些区域可能相当复杂，因为它们对应着程序中的执行路径。这些执行路径中甚至可能存在空洞(译者注: 空洞是指一个引用的生命周期可能不是一个连续的代码区域，中间可能有跳跃)，因为我们可能会先使一个引用失效，之后再重新初始化并使用它。包含引用（或假装包含）的类型也可以用生命周期来标记，这样 Rust 就可以防止它们也被失效。</p>
+<p>在我们大多数例子中，生命周期将与作用域重合，这是因为我们的例子很简单。下面将介绍它们不重合的更复杂的情况。</p>
+<p>在一个函数体中，Rust 通常不需要你明确地命名所涉及的生命周期。这是因为一般来说，在本地环境中谈论生命周期是没有必要的；Rust 拥有所有的信息，并且可以尽可能地以最佳方式解决所有问题。Rust 还会引入许多匿名作用域和临时变量, 你不必显式写出它们, 代码也可以跑通。</p>
+<p>然而，一旦你跨越了函数的边界，你就需要开始考虑生命周期了。生命周期是用撇号表示的：<code>'a</code>、<code>'static</code>。为了尝试使用生命周期，我们将假装我们被允许用生命周期来标记作用域，并尝试手动解一下本章开头例子的语法糖。</p>
+<p>我们之前的例子使用了一种<em>激进</em>的语法糖——甚至是高果糖玉米糖浆——因为明确地写出所有东西是<em>非常繁琐</em>的。所有的 Rust 代码都依赖于积极的推理和对“显而易见”的东西的删除。</p>
+<p>一个特别有趣的语法糖是，每个<code>let</code>语句都隐含地引入了一个作用域。在大多数情况下，这其实并不重要。然而，这对那些相互引用的变量来说确实很重要。作为一个简单的例子，让我们对这段简单的 Rust 代码进行完全解糖：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 0;
+let y = &amp;x;
+let z = &amp;y;
+<span class="boring">}
+</span></code></pre></pre>
+<p>借用检查器总是试图最小化生命周期的范围，所以它很可能会脱糖为以下内容：</p>
+<!-- ignore: desugared code -->
+<pre><code class="language-rust ignore">// NOTE: `'a: {` 和 `&amp;'b x` 不是有效的语法，这里只是为了说明 lifetime 的概念
+'a: {
+    let x: i32 = 0;
+    'b: {
+        // y 的生命周期为 'b，因为这已经足够好
+        let y: &amp;'b i32 = &amp;'b x;
+        'c: {
+            // 'c 同上所示
+            let z: &amp;'c &amp;'b i32 = &amp;'c y; // &quot;a reference to a reference to an i32&quot; (with lifetimes annotated)
+        }
+    }
+}
+</code></pre>
+<p>哇，这真是……太可怕了！让我们花点时间感谢 Rust 让这一切变得简单。</p>
+<p>实际上，传递一个引用到外部作用域将导致 Rust 推断出一个更大的生命周期。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 0;
+let z;
+let y = &amp;x;
+z = y;
+<span class="boring">}
+</span></code></pre></pre>
+<!-- ignore: desugared code -->
+<pre><code class="language-rust ignore">'a: {
+    let x: i32 = 0;
+    'b: {
+        let z: &amp;'b i32;
+        'c: {
+            // y 的生命周期一定为 'b，因为对 x 的引用被传递到了 'b 这个作用域
+            let y: &amp;'b i32 = &amp;'b x;
+            z = y;
+        }
+    }
+}
+</code></pre>
+<h2><a class="header" href="#例子超出所有者生命周期的引用" id="例子超出所有者生命周期的引用">例子：超出所有者生命周期的引用</a></h2>
+<p>让我们看看之前的那些例子：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn as_str(data: &amp;u32) -&gt; &amp;str {
+    let s = format!(&quot;{}&quot;, data);
+    &amp;s
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>解语法糖后：</p>
+<!-- ignore: desugared code -->
+<pre><code class="language-rust ignore">fn as_str&lt;'a&gt;(data: &amp;'a u32) -&gt; &amp;'a str {
+    'b: {
+        let s = format!(&quot;{}&quot;, data);
+        return &amp;'a s;
+    }
+}
+</code></pre>
+<p><code>as_str</code>的这个签名接收了一个具有<em>某个</em>生命周期的 u32 的引用，并返回一个可以<em>存活同样长</em>的 str 的引用。我们已经大致能猜到为什么这个函数签名可能是个麻烦了，这意味着我们要找的那个 str 要在 u32 的引用所处的作用域上，或者<em>甚至在更大的作用域上</em>。这要求有点高。</p>
+<p>然后我们继续计算字符串<code>s</code>，并返回它的一个引用。由于我们的函数的契约规定这个引用必须超过<code>'a</code>，这就是我们推断出的引用的生命周期。不幸的是，<code>s</code>被定义在作用域<code>'b</code>中，所以唯一合理的方法是<code>'b</code>包含<code>'a</code>，这显然是错误的，因为<code>'a</code>必须包含函数调用本身。因此，我们创建了一个引用，它的生命周期超过了它的引用者，这正是我们所说的引用不能做的第一件事。编译器理所当然地直接报错。</p>
+<p>为了更清楚地说明这一点，我们可以扩展这个例子：</p>
+<!-- ignore: desugared code -->
+<pre><code class="language-rust ignore">fn as_str&lt;'a&gt;(data: &amp;'a u32) -&gt; &amp;'a str {
+    'b: {
+        let s = format!(&quot;{}&quot;, data);
+        return &amp;'a s
+    }
+}
+
+fn main() {
+    'c: {
+        let x: u32 = 0;
+        'd: {
+            // 这里引入了一个匿名作用域，因为借用不需要在整个 x 的作用域内生效，
+            // 这个函数必须返回一个在函数调用之前就存在的某个字符串的引用，事实显然不是这样
+            println!(&quot;{}&quot;, as_str::&lt;'d&gt;(&amp;'d x));
+        }
+    }
+}
+</code></pre>
+<p>当然，这个函数的正确写法是这样的：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn to_string(data: &amp;u32) -&gt; String {
+    format!(&quot;{}&quot;, data)
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>我们必须在函数里面产生一个拥有所有权的值才能返回! 我们唯一可以返回一个<code>&amp;'a str</code>的方法是，它在<code>&amp;'a u32</code>的一个字段中，但显然不是这样的。</p>
+<p>（实际上我们也可以直接返回一个字符串字面量，作为一个全局的字面量可以被认为是在堆栈的底部；尽管这对我们的实现<em>有一点</em>限制）。</p>
+<h2><a class="header" href="#示例别名一个可变引用" id="示例别名一个可变引用">示例：别名一个可变引用</a></h2>
+<p>来看另一个例子：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut data = vec![1, 2, 3];
+let x = &amp;data[0];
+data.push(4);
+println!(&quot;{}&quot;, x);
+<span class="boring">}
+</span></code></pre></pre>
+<!-- ignore: desugared code -->
+<pre><code class="language-rust ignore">'a: {
+    let mut data: Vec&lt;i32&gt; = vec![1, 2, 3];
+    'b: {
+        // 'b 这个生命周期范围如我们所愿地小（刚好够 println!）
+        let x: &amp;'b i32 = Index::index::&lt;'b&gt;(&amp;'b data, 0);
+        'c: {
+            // 这里有一个临时作用域，我们不需要更长时间的 &amp;mut 借用
+            Vec::push(&amp;'c mut data, 4);
+        }
+        println!(&quot;{}&quot;, x);
+    }
+}
+</code></pre>
+<p>这里的问题更微妙、更有趣。我们希望 Rust 拒绝这个程序，理由如下：我们有一个存活的共享引用<code>x</code>到<code>data</code>的一个子集，当我们试图把<code>data</code>的可变引用传给<code>push</code>时。这将创建一个可变引用的别名，而这将违反引用的<em>第二条</em>规则。</p>
+<p>然而，这根本不是 Rust 认为这个程序有问题的原因。Rust 不理解<code>x</code>是对<code>data</code>的一个子集的引用。它根本就不理解<code>Vec</code>。它看到的是，<code>x</code>必须在<code>'b</code>范围内保持存活才能被打印；接下来，<code>Index::index</code>的签名要求我们对<code>data</code>的引用必须在<code>'b</code>范围内存活。当我们试图调用<code>push</code>时，它看到我们试图构造一个<code>&amp;'c mut data</code>。Rust 知道<code>'c</code>包含在<code>'b</code>中，并拒绝了我们的程序，因为<code>&amp;'b data</code>必然还存活着！</p>
+<p>在这里我们看到，和我们真正想要保证的引用规则语义相比，生命周期系统要粗略得多。在大多数情况下，<em>这完全没问题</em>，因为它使我们不用花整天的时间向编译器解释我们的程序。然而，这确实意味着有部分程序对于 Rust 的<em>真正的</em>语义来说是完全正确的，但却被拒绝了，因为 lifetime 太傻了。</p>
+<h2><a class="header" href="#生命周期所覆盖的区域" id="生命周期所覆盖的区域">生命周期所覆盖的区域</a></h2>
+<p>一个引用（有时称为<em>borrow</em>）从它被创建到最后一次使用都是<em>存活</em>的。被 borrow 的值的生命周期只需要超过引用的生命周期就行。这看起来很简单，但有一些微妙之处。</p>
+<p>下面的代码可以成功编译，因为在打印完<code>x</code>之后，它就不再需要了，所以它是悬空的还是别名的都无所谓（尽管变量<code>x</code><em>技术上</em>一直存活到作用域的最后）：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut data = vec![1, 2, 3];
+let x = &amp;data[0];
+println!(&quot;{}&quot;, x);
+// 这是可行的，因为不再使用 x，编译器也就缩短了 x 的生命周期
+data.push(4);
+<span class="boring">}
+</span></code></pre></pre>
+<p>然而，如果该值有一个析构器，析构器就会在作用域的末端运行。而运行析构器被认为是一种使用——显然是最后一次使用。所以，这将会编译报错：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[derive(Debug)]
+struct X&lt;'a&gt;(&amp;'a i32);
+
+impl Drop for X&lt;'_&gt; {
+    fn drop(&amp;mut self) {}
+}
+
+let mut data = vec![1, 2, 3];
+let x = X(&amp;data[0]);
+println!(&quot;{:?}&quot;, x);
+data.push(4);
+// 编译器会在这里自动插入 drop 函数，也就意味着我们会访问 x 中引用的变量，因此编译失败
+<span class="boring">}
+</span></code></pre></pre>
+<p>让编译器相信<code>x</code>不再有效的一个方法是在<code>data.push(4)</code>之前使用<code>drop(x)</code>。</p>
+<p>此外，可能会有多种最后一次的引用使用，例如在一个条件的每个分支中：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">fn some_condition() -&gt; bool { true }
+</span>let mut data = vec![1, 2, 3];
+let x = &amp;data[0];
+
+if some_condition() {
+    println!(&quot;{}&quot;, x); // 这是该分支中最后一次使用 x 这个引用
+    data.push(4);      // 因此在这里 push 操作是可行的
+} else {
+    // 这里不存在对 x 的使用，对于这个分支来说，
+    // x 创建即销毁
+    data.push(5);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>生命周期中可以有暂停，或者你可以把它看成是两个不同的借用，只是被绑在同一个局部变量上。这种情况经常发生在循环周围（在循环结束时写入一个变量的新值，并在下一次迭代的顶部最后一次使用它）。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut data = vec![1, 2, 3];
+// x 是可变的（通过 mut 声明），因此我们可以修改 x 指向的内容
+let mut x = &amp;data[0];
+
+println!(&quot;{}&quot;, x); // 最后一次使用这个引用
+data.push(4);
+x = &amp;data[3]; // x 在这里借用了新的变量
+println!(&quot;{}&quot;, x);
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rust 曾经一直保持着借用的生命，直到作用域结束，所以这些例子在旧的编译器中可能无法编译。此外，还有一些边界条件，Rust 不能正确地缩短借用的有效部分，即使看起来应该这样做，也不能编译。这些问题将随着时间的推移得到解决。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="aliasing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="lifetime-mismatch.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="aliasing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="lifetime-mismatch.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

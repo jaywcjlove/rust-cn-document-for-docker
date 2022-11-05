@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>异常安全 - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html" class="active"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#异常安全" id="异常安全">异常安全</a></h1>
+<p>尽管程序应该很少使用 unwind，但是有很多代码是<em>可以</em> panic 的。如果你 unwrap 一个 None，索引出界，或者除以 0，你的程序就会 panic。在 debug build 中，每一个算术运算如果溢出，都会引起 panic。除非你非常小心并严格控制代码的运行，否则几乎所有的东西都可能 unwind，你需要做好准备。</p>
+<p>在更广泛的编程世界中，为 unwind 做好准备通常被称为<em>异常安全</em>。在 Rust 中，有两个级别的异常安全需要关注：</p>
+<ul>
+<li>在不安全的代码中，我们<em>必须</em>保证异常安全到不违反内存安全的程度。我们把这称为<em>最小</em>的异常安全。</li>
+<li>在安全代码中，保证异常安全到你的程序能做正确的事情的程度（也就是说，啥都不影响，都恢复了）。我们称其为<em>最大限度的</em>异常安全。</li>
+</ul>
+<p>正如 Rust 中许多地方的情况一样，不安全的代码必须准备好处理有问题的安全代码，当它涉及到 unwind 时。有可能在某一时刻创建不健壮状态的代码必须注意，panic 不会导致该状态被使用。也就是说，这意味着当这些状态存在时，只有非 panicking 的代码才会被运行；或者你需要做一个防护，在 panic 的情况下清理该状态。这并不一定意味着 panic 所见证的状态是一个完全一致的状态。我们只需要保证它是一个<em>安全</em>的状态。</p>
+<p>大多数不安全代码都是属于叶子代码（也就是不会再调用其它函数/逻辑），因此相当容易使异常安全化。它控制着所有运行的代码，而且大多数代码都不会发生 panic。然而，不安全代码在重复调用调用者提供的代码时，与未初始化的数组打交道是很常见的。这样的代码需要小心谨慎，并考虑异常安全。</p>
+<h2><a class="header" href="#vecpush_all" id="vecpush_all">Vec::push_all</a></h2>
+<p><code>Vec::push_all</code>是一个临时性的 hack，可以在没有特例化的情况下，通过一个 slice 来高效地扩展一个 Vec。下面是一个简单的实现：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">impl&lt;T: Clone&gt; Vec&lt;T&gt; {
+    fn push_all(&amp;mut self, to_push: &amp;[T]) {
+        self.reserve(to_push.len());
+        unsafe {
+            // 因为我们刚刚预留了空间，所以这里不会溢出
+            self.set_len(self.len() + to_push.len());
+
+            for (i, x) in to_push.iter().enumerate() {
+                self.ptr().add(i).write(x.clone());
+            }
+        }
+    }
+}
+</code></pre>
+<p>我们绕过了<code>push</code>，以避免对我们明确知道有容量的 Vec 进行多余的容量和<code>len</code>检查。这个逻辑是完全正确的，只是我们的代码有一个微妙的问题：它不是异常安全的！<code>set_len</code>、<code>add</code>和<code>write</code>都没问题；但<code>clone</code>是我们忽略的 panic 炸弹。</p>
+<p>Clone 完全不受我们的控制，而且完全可以自由地 panic。如果它这样做，我们的函数将提前退出；而因为 Vec 的长度被设置得太大了，如果 Vec 被读取或丢弃，未初始化的内存将被读取！</p>
+<p>这种情况下的修复方法相当简单，如果我们想保证我们<em>已经</em>复制的值被丢弃，我们可以在每个循环迭代中设置<code>len</code>。如果我们只是想保证未初始化的内存不能被观察到，我们可以在循环之后设置<code>len</code>。</p>
+<h2><a class="header" href="#binaryheapsift_up" id="binaryheapsift_up">BinaryHeap::sift_up</a></h2>
+<p>把一个元素扔到堆中，比扩展一个 Vec 要复杂一些。伪代码如下：</p>
+<pre><code class="language-text">bubble_up(heap, index):
+    while index != 0 &amp;&amp; heap[index] &lt; heap[parent(index)]:
+        heap.swap(index, parent(index))
+        index = parent(index)
+</code></pre>
+<p>将这段代码按字面意思翻译成 Rust 是完全没有问题的，但是有一个坑爹的性能问题：<code>self</code>元素被无用地反复交换。因此，我们可以这么做：</p>
+<pre><code class="language-text">bubble_up(heap, index):
+    let elem = heap[index]
+    while index != 0 &amp;&amp; elem &lt; heap[parent(index)]:
+        heap[index] = heap[parent(index)]
+        index = parent(index)
+    heap[index] = elem
+</code></pre>
+<p>这段代码确保每个元素尽可能少地被复制（事实上，在一般情况下，elem 有必要被复制两次）。但是它现在暴露了一些异常安全问题! 在任何时候，一个值都存在两个副本。如果我们在这个函数中 panic，就会有东西被重复 drop。不幸的是，我们对执行的代码并没有完全的掌控力——因为比较方法是用户定义的！</p>
+<p>与 Vec 不同，这里的修复并不容易。一个可选的方案是将用户定义的代码和不安全的代码分成两个独立的阶段：</p>
+<pre><code class="language-text">bubble_up(heap, index):
+    let end_index = index;
+    while end_index != 0 &amp;&amp; heap[end_index] &lt; heap[parent(end_index)]:
+        end_index = parent(end_index)
+
+    let elem = heap[index]
+    while index != end_index:
+        heap[index] = heap[parent(index)]
+        index = parent(index)
+    heap[index] = elem
+</code></pre>
+<p>如果用户定义的代码炸了，那就没有问题了，因为我们还没有真正接触到堆的状态。一旦我们开始接触堆，我们就只与我们信任的数据和函数打交道，所以不存在 panic 的问题。</p>
+<p>也许你对这种设计并不满意，不过我不得不说，这确实是在作弊! 而且我们还得做复杂的堆遍历<em>两次</em>! 好吧，让我们咬咬牙，把不可信任的和不安全的代码混在一起。</p>
+<p>如果 Rust 像 Java 一样有<code>try</code>和<code>finally</code>，我们就可以做以下事情：</p>
+<pre><code class="language-text">bubble_up(heap, index):
+    let elem = heap[index]
+    try:
+        while index != 0 &amp;&amp; elem &lt; heap[parent(index)]:
+            heap[index] = heap[parent(index)]
+            index = parent(index)
+    finally:
+        heap[index] = elem
+</code></pre>
+<p>基本的想法很简单：如果比较出现问题，我们就把松散的元素扔到逻辑上未初始化的索引中，然后就直接返回。任何观察堆的人都会看到一个潜在的<em>不一致</em>的堆，但至少它不会导致任何双重释放问题。而如果算法正常终止，那么这个操作恰好与我们的结束方式不谋而合。</p>
+<p>遗憾的是，Rust 没有这样的结构，所以我们需要推出我们自己的结构。这样做的方法是将算法的状态存储在一个单独的结构中，并为“最终”逻辑设置一个析构函数。无论我们是否 panic，这个析构函数都会在我们之后运行和清理：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">struct Hole&lt;'a, T: 'a&gt; {
+    data: &amp;'a mut [T],
+    /// `elt` 从始至终都是 Some
+    elt: Option&lt;T&gt;,
+    pos: usize,
+}
+
+impl&lt;'a, T&gt; Hole&lt;'a, T&gt; {
+    fn new(data: &amp;'a mut [T], pos: usize) -&gt; Self {
+        unsafe {
+            let elt = ptr::read(&amp;data[pos]);
+            Hole {
+                data: data,
+                elt: Some(elt),
+                pos: pos,
+            }
+        }
+    }
+
+    fn pos(&amp;self) -&gt; usize { self.pos }
+
+    fn removed(&amp;self) -&gt; &amp;T { self.elt.as_ref().unwrap() }
+
+    unsafe fn get(&amp;self, index: usize) -&gt; &amp;T { &amp;self.data[index] }
+
+    unsafe fn move_to(&amp;mut self, index: usize) {
+        let index_ptr: *const _ = &amp;self.data[index];
+        let hole_ptr = &amp;mut self.data[self.pos];
+        ptr::copy_nonoverlapping(index_ptr, hole_ptr, 1);
+        self.pos = index;
+    }
+}
+
+impl&lt;'a, T&gt; Drop for Hole&lt;'a, T&gt; {
+    fn drop(&amp;mut self) {
+        // fill the hole again
+        unsafe {
+            let pos = self.pos;
+            ptr::write(&amp;mut self.data[pos], self.elt.take().unwrap());
+        }
+    }
+}
+
+impl&lt;T: Ord&gt; BinaryHeap&lt;T&gt; {
+    fn sift_up(&amp;mut self, pos: usize) {
+        unsafe {
+            // 取出 `pos` 的值，然后创建一个 hole
+            let mut hole = Hole::new(&amp;mut self.data, pos);
+
+            while hole.pos() != 0 {
+                let parent = parent(hole.pos());
+                if hole.removed() &lt;= hole.get(parent) { break }
+                hole.move_to(parent);
+            }
+            // 无论是否 panic，这里的 hole 都会被无条件填充
+        }
+    }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="unwinding.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="poisoning.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="unwinding.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="poisoning.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

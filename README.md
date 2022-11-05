@@ -8,6 +8,7 @@
 - [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn)
 - [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide)
 - [Cargo 手册](https://github.com/rust-lang-cn/cargo)
+- [Rust 秘典](https://github.com/rust-lang-cn/nomicon)
 
 在浏览器中访问以下 URL
 
@@ -20,3 +21,4 @@ https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/
 https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/std/std/  
 https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-by-example-cn/  
+https://jaywcjlove.github.io/rust-cn-document-for-docker/nomicon/  

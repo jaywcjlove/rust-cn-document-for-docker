@@ -1,0 +1,457 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Send 和 Sync - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html" class="active"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#send-和-sync" id="send-和-sync">Send 和 Sync</a></h1>
+<p>并不是所有的东西都服从于继承的可变性。有些类型允许你在内存中对一个位置有多个别名，并且同时修改它。除非这些类型使用同步手段来管理这种访问，否则它们绝对不是线程安全的。Rust 通过 <code>Send</code>和<code>Sync</code> Trait 来解决这个问题：</p>
+<ul>
+<li>如果将一个类型发送到另一个线程是安全的，那么它就是<code>Send</code></li>
+<li>如果一个类型可以安全地在线程间共享，那么它就是<code>Sync</code>的（当且仅当<code>&amp;T</code>是<code>Send</code>时，<code>T</code>是<code>Sync</code>的）</li>
+</ul>
+<p>Send 和 Sync 是 Rust 的并发故事的基础。因此，存在大量的特殊工具来使它们正常工作。首先，它们是<a href="safe-unsafe-meaning.html">不安全的 Trait</a>,这意味着它们的实现是不安全的，而其他不安全的代码可以认为它们是正确实现的。由于它们是<em>标记特性</em>（它们没有像方法那样的相关项目），正确实现仅仅意味着它们具有实现者应该具有的内在属性。不正确地实现 Send 或 Sync 会导致未定义行为。</p>
+<p>Send 和 Sync 也是自动派生的 Trait。这意味着，与其它 Trait 不同，如果一个类型完全由 Send 或 Sync 类型组成，那么它就是 Send 或 Sync。几乎所有的基本数据类型都是<code>Send</code>和<code>Sync</code>，因此，几乎所有你将与之交互的类型都是<code>Send</code>和<code>Sync</code>。</p>
+<p>主要的例外情况包括：</p>
+<ul>
+<li>原始指针既不是 Send 也不是 Sync（因为它们没有安全防护）</li>
+<li><code>UnsafeCell</code>不是 Sync 的（因此<code>Cell</code>和<code>RefCell</code>也不是）</li>
+<li><code>Rc</code>不是 Send 或 Sync 的（因为 Refcount 是共享的、不同步的）</li>
+</ul>
+<p><code>Rc</code>和<code>UnsafeCell</code>从根本上说不是线程安全的：它们共享了非同步的可变状态。然而，严格来说，原始指针被标记为线程不安全，更像是一个<em>提示</em>。用原始指针做任何有用的事情都需要对其进行解引用，这已经是不安全的了；当然，从这个角度上说，人们也可以认为将它们标记为线程安全的做法也没啥问题。</p>
+<p>然而，更重要的是，它们不是线程安全的，是为了防止包含它们的类型被自动标记为线程安全的。这些类型的所有权并不明确，它们的作者也不太可能认真考虑线程安全问题。在<code>Rc</code>的例子中，我们有一个很好的例子，它包含一个绝对不是线程安全的<code>*mut</code>类型。</p>
+<p>如果需要的话，那些没有自动派生的类型可以很简单地实现它们：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct MyBox(*mut u8);
+
+unsafe impl Send for MyBox {}
+unsafe impl Sync for MyBox {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>在<em>难以置信</em>的罕见情况下，一个类型被不恰当地自动派生为 Send 或 Sync，那么我们也可以不实现 Send 和 Sync：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span>#![feature(negative_impls)]
+
+<span class="boring">fn main() {
+</span>// 假设我这里存在一些魔法，对于同步原语有着非常神奇的语义
+struct SpecialThreadToken(u8);
+
+impl !Send for SpecialThreadToken {}
+impl !Sync for SpecialThreadToken {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>请注意，<em>正常情况下</em>是不可能错误地派生出 Send 和 Sync 的。只有那些被其他不安全代码赋予特殊意义的类型才有可能因为不正确的 Send 或 Sync 而造成麻烦。</p>
+<p>大多数对原始指针的使用应该被封装在一个足够的抽象后面，以便 Send 和 Sync 可以被派生。例如，所有 Rust 的标准集合都是 Send 和 Sync（当它们包含 Send 和 Sync 类型时），尽管它们普遍使用原始指针来管理内存分配和复杂的所有权。同样的，大多数这些集合的迭代器都是 Send 和 Sync 的，因为它们在很大程度上表现得像集合的<code>&amp;</code>或<code>&amp;mut</code>。</p>
+<h2><a class="header" href="#示例" id="示例">示例</a></h2>
+<p><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>由于<a href="https://manishearth.github.io/blog/2017/01/10/rust-tidbits-box-is-special/">各种原因</a>，编译器将其作为自己的特殊内建类型来实现，但是我们可以自己实现一些具有类似行为的东西，来看看什么时候实现 Send 和 Sync 是合理的。让我们把它叫做<code>Carton</code>。</p>
+<p>我们先写代码，把分配在栈上的一个值，转移到堆上：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub mod libc {
+</span><span class="boring">   pub use ::std::os::raw::{c_int, c_void};
+</span><span class="boring">   #[allow(non_camel_case_types)]
+</span><span class="boring">   pub type size_t = usize;
+</span><span class="boring">   extern &quot;C&quot; { pub fn posix_memalign(memptr: *mut *mut c_void, align: size_t, size: size_t) -&gt; c_int; }
+</span><span class="boring">}
+</span>use std::{
+    mem::{align_of, size_of},
+    ptr,
+};
+
+struct Carton&lt;T&gt;(ptr::NonNull&lt;T&gt;);
+
+impl&lt;T&gt; Carton&lt;T&gt; {
+    pub fn new(value: T) -&gt; Self {
+        // 在堆上分配足够的可以存储一个类型 T 大小的空间
+        assert_ne!(size_of::&lt;T&gt;(), 0, &quot;Zero-sized types are out of the scope of this example&quot;);
+        let mut memptr: *mut T = ptr::null_mut();
+        unsafe {
+            let ret = libc::posix_memalign(
+                (&amp;mut memptr).cast(),
+                align_of::&lt;T&gt;(),
+                size_of::&lt;T&gt;()
+            );
+            assert_eq!(ret, 0, &quot;Failed to allocate or invalid alignment&quot;);
+        };
+
+        // NonNull 仅仅是对于指针的一层封装，强制要求指针是非空的
+        let ptr = {
+            // 安全保证：因为我们从一个引用创建了 memptr，并且独占了所有权，所以可以解引用
+            ptr::NonNull::new(memptr.cast::&lt;T&gt;())
+                .expect(&quot;Guaranteed non-null if posix_memalign returns 0&quot;)
+        };
+
+        // 将数据从栈上复制到堆上
+        unsafe {
+            // 安全保证：如果 ptr 是非空的，posix_memalign 会返回一个已经内存对齐的有效的可写指针
+            ptr.as_ptr().write(value);
+        }
+
+        Self(ptr)
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>这不是很有用，因为一旦我们的用户给了我们一个值，他们就没有办法访问它。<a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>实现了<a href="https://doc.rust-lang.org/core/ops/trait.Deref.html"><code>Deref</code></a>和<a href="https://doc.rust-lang.org/core/ops/trait.DerefMut.html"><code>DerefMut</code></a>，这样你就可以访问内部的值。让我们来做这件事：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::ops::{Deref, DerefMut};
+
+<span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
+</span><span class="boring">
+</span>impl&lt;T&gt; Deref for Carton&lt;T&gt; {
+    type Target = T;
+
+    fn deref(&amp;self) -&gt; &amp;Self::Target {
+        unsafe {
+            // 安全保证：self 指针已经内存对齐，并且初始化了, 在 `Self::new` 方法中已经解引用，
+            // 我们要求 readers 引用 Carton，而这里返回值的生命周期和输入的 self 的生命周期对齐，
+            // 因此 borrow checker 会强制保证这一点：
+            // 直到这个引用被 drop，不能修改 Carton 中的内容
+            self.0.as_ref()
+        }
+    }
+}
+
+impl&lt;T&gt; DerefMut for Carton&lt;T&gt; {
+    fn deref_mut(&amp;mut self) -&gt; &amp;mut Self::Target {
+        unsafe {
+            // 安全保证：self 指针已经内存对齐，并且初始化了, 在 `Self::new` 方法中已经解引用，
+            // 我们要求 writer 可写引用 Carton，而这里返回值的生命周期和输入的 self 的生命周期对齐，
+            // 因此 borrow checker 会强制保证这一点:
+            // 直到这个引用被 drop，不能访问 Carton 中的内容
+            self.0.as_mut()
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>最后，让我们考虑一下我们的<code>Carton</code>是否是 Send 和 Sync。一些东西可以安全地成为 Send，除非它与其他东西共享可变的状态，而不对其实施排他性访问。每个<code>Carton</code>都有一个唯一的指针，所以我们可以标记为 Send：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
+</span>// 安全保证：除了我们没有人拥有Carton中的裸指针，因此，只需要T可以Send，Carton就可以Send
+unsafe impl&lt;T&gt; Send for Carton&lt;T&gt; where T: Send {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>那么 Sync 呢？为了使<code>Carton</code>能够 Sync，我们必须强制规定，你不能对存储在一个<code>Carton</code>中的东西进行写入，而这个东西可以从另一个<code>Carton</code>中读出或写入。因为你需要一个<code>&amp;mut Carton</code>来写指针，并且借用检查器强制要求可变引用必须是排他的，所以把<code>Carton</code>标记为<code>Sync</code>也没啥问题：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
+</span>// 安全保证：存在将 `&amp;Carton&lt;T&gt;` 转变为 `&amp;T` 的公开 API，
+// 而这些 API 是 unsynchronized 的（比如 `Deref`），
+// 因此只有在T是 `Sync` 的情况下，`Carton&lt;T&gt;` 才可以是 `Sync` 的，
+// 反过来说，`Carton` 本身没有使用到任何 `内部可变性`，
+// 所有可变引用都只能通过独占的方式获取 (`&amp;mut`)，
+// 这也就意味着 `T` 的 `Sync` 特性可以传递给 `Carton&lt;T&gt;`
+unsafe impl&lt;T&gt; Sync for Carton&lt;T&gt; where T: Sync  {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>当我们断言我们的类型是 Send 和 Sync 时，我们通常需要强制要求每个包含的类型都是 Send 和 Sync。当编写行为像标准库类型的自定义类型时，我们可以断言我们有相同的要求。例如，下面的代码断言，如果同类的 Box 是 Send，那么 Carton 就是 Send —— 在这种情况下，这就等于说 T 是 Send：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
+</span>unsafe impl&lt;T&gt; Send for Carton&lt;T&gt; where Box&lt;T&gt;: Send {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>现在<code>Carton&lt;T&gt;</code>有一个内存泄漏，因为它从未释放它分配的内存。一旦我们解决了这个问题，我们就必须确保满足 Send 的新要求：我们需要确认<code>free</code>释放由另一个线程的分配产生的指针。我们可以在[<code>libc::free</code>][libc-freedocs]的文档中来确认这么做是可行的。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
+</span><span class="boring">mod libc {
+</span><span class="boring">    pub use ::std::os::raw::c_void;
+</span><span class="boring">    extern &quot;C&quot; { pub fn free(p: *mut c_void); }
+</span><span class="boring">}
+</span>impl&lt;T&gt; Drop for Carton&lt;T&gt; {
+    fn drop(&amp;mut self) {
+        unsafe {
+            libc::free(self.0.as_ptr().cast());
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>一个不会发生这种情况的好例子是 MutexGuard：注意<a href="https://doc.rust-lang.org/std/sync/struct.MutexGuard.html#impl-Send">它不是 Send</a>。MutexGuard 的实现<a href="https://github.com/rust-lang/rust/issues/23465#issuecomment-82730326">使用的库</a>要求你确保不会释放你在不同线程中获得的锁。如果你能够将 MutexGuard 发送到另一个线程，那么析构器就会在新的线程中运行，这就违反了该要求。但 MutexGuard 仍然可以是 Sync，因为你能发送给另一个线程的只是一个<code>&amp;MutexGuard</code>，丢弃一个引用并没有什么作用。</p>
+<p>TODO: 更好地解释什么可以或不可以是 Send 或 Sync。仅仅针对数据竞争就足够了？</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="races.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="atomics.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="races.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="atomics.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

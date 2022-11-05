@@ -1,0 +1,804 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>外部函数接口（FFI） - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html" class="active"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#外部函数接口ffi" id="外部函数接口ffi">外部函数接口（FFI）</a></h1>
+<h2><a class="header" href="#简介" id="简介">简介</a></h2>
+<p>本指南将使用<a href="https://github.com/google/snappy">snappy</a>压缩/解压缩库作为为外部代码编写绑定的示例。Rust 目前无法直接调用 C++ 库，但 snappy 包括一个 C 接口（在<a href="https://github.com/google/snappy/blob/master/snappy-c.h"><code>snappy-c.h</code></a>）。</p>
+<h2><a class="header" href="#关于-libc-的说明" id="关于-libc-的说明">关于 libc 的说明</a></h2>
+<p>这些例子中有许多使用了<a href="https://crates.io/crates/libc">the <code>libc</code> crate</a>，它为 C 类型提供了各种类型定义，以及其他东西。如果你要自己尝试这些例子, 你需要在你的<code>Cargo.toml</code>中加入<code>libc</code>：</p>
+<pre><code class="language-toml">[dependencies]
+libc = &quot;0.2.0&quot;
+</code></pre>
+<h2><a class="header" href="#调用外部函数" id="调用外部函数">调用外部函数</a></h2>
+<p>下面是一个调用外部函数的最小例子，如果你安装了 snappy，它就可以被编译：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore">use libc::size_t;
+
+#[link(name = &quot;snappy&quot;)]
+extern {
+    fn snappy_max_compressed_length(source_length: size_t) -&gt; size_t;
+}
+
+fn main() {
+    let x = unsafe { snappy_max_compressed_length(100) };
+    println!(&quot;max compressed length of a 100 byte buffer: {}&quot;, x);
+}
+</code></pre>
+<p><code>extern</code>块是一个外部库中的函数签名列表，在本例中是平台的 C ABI。<code>#[link(...)]</code>属性用来指示链接器与 snappy 库进行链接，以便解析这些符号。</p>
+<p>外部函数被认为是不安全的，所以对它们的调用需要用<code>unsafe {}</code>来包装，作为对编译器的承诺，其中包含的所有内容都是安全的。C 库经常暴露出不是线程安全的接口，而且几乎所有接受指针参数的函数都对一些输入是无效的，因为指针可能是悬空的，而原始指针不在 Rust 的安全内存模型之内。</p>
+<p>当声明一个外部函数的参数类型时，Rust 编译器不能检查声明是否正确，所以正确指定它是在运行时保持绑定正确的一部分。</p>
+<p><code>extern</code>块可以被扩展到覆盖整个 snappy API：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore">use libc::{c_int, size_t};
+
+#[link(name = &quot;snappy&quot;)]
+extern {
+    fn snappy_compress(input: *const u8,
+                       input_length: size_t,
+                       compressed: *mut u8,
+                       compressed_length: *mut size_t) -&gt; c_int;
+    fn snappy_uncompress(compressed: *const u8,
+                         compressed_length: size_t,
+                         uncompressed: *mut u8,
+                         uncompressed_length: *mut size_t) -&gt; c_int;
+    fn snappy_max_compressed_length(source_length: size_t) -&gt; size_t;
+    fn snappy_uncompressed_length(compressed: *const u8,
+                                  compressed_length: size_t,
+                                  result: *mut size_t) -&gt; c_int;
+    fn snappy_validate_compressed_buffer(compressed: *const u8,
+                                         compressed_length: size_t) -&gt; c_int;
+}
+<span class="boring">fn main() {}
+</span></code></pre>
+<h2><a class="header" href="#创建一个安全的接口" id="创建一个安全的接口">创建一个安全的接口</a></h2>
+<p>原始的 C 语言 API 需要被包装起来，以提供内存安全，并使用更高级别的概念，如向量。一个库可以选择只公开安全的高级接口而隐藏不安全的内部细节。</p>
+<p>封装一个需要内存 buffer 参数的函数需要使用<code>slice::raw</code>模块来操作 Rust Vec 作为内存的指针。Rust 的 Vec 被保证为一个连续的内存块，长度是当前包含的元素数，容量是分配的内存的总大小（元素），其中长度必定小于或等于容量：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore"><span class="boring">use libc::{c_int, size_t};
+</span><span class="boring">unsafe fn snappy_validate_compressed_buffer(_: *const u8, _: size_t) -&gt; c_int { 0 }
+</span><span class="boring">fn main() {}
+</span>pub fn validate_compressed_buffer(src: &amp;[u8]) -&gt; bool {
+    unsafe {
+        snappy_validate_compressed_buffer(src.as_ptr(), src.len() as size_t) == 0
+    }
+}
+</code></pre>
+<p>上面的“validate_compressed_buffer”包装器使用了一个“unsafe”块，但它通过在函数签名中去掉“unsafe”来保证调用它对所有输入都是安全的。</p>
+<p><code>snappy_compress</code>和<code>snappy_uncompress</code>函数更复杂，因为还需要分配一个缓冲区来容纳输出。</p>
+<p><code>snappy_max_compressed_length</code>函数可以用来分配一个最大容量的 Vec，以容纳压缩后的输出，然后该向量可以作为输出参数传递给<code>snappy_compress</code>函数。还会传递一个输出参数来检索压缩后的真实长度，以便设置长度：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore"><span class="boring">use libc::{size_t, c_int};
+</span><span class="boring">unsafe fn snappy_compress(a: *const u8, b: size_t, c: *mut u8,
+</span><span class="boring">                          d: *mut size_t) -&gt; c_int { 0 }
+</span><span class="boring">unsafe fn snappy_max_compressed_length(a: size_t) -&gt; size_t { a }
+</span><span class="boring">fn main() {}
+</span>pub fn compress(src: &amp;[u8]) -&gt; Vec&lt;u8&gt; {
+    unsafe {
+        let srclen = src.len() as size_t;
+        let psrc = src.as_ptr();
+
+        let mut dstlen = snappy_max_compressed_length(srclen);
+        let mut dst = Vec::with_capacity(dstlen as usize);
+        let pdst = dst.as_mut_ptr();
+
+        snappy_compress(psrc, srclen, pdst, &amp;mut dstlen);
+        dst.set_len(dstlen as usize);
+        dst
+    }
+}
+</code></pre>
+<p>解压缩也是类似的，因为 snappy 将未压缩的大小作为压缩格式的一部分来存储，<code>snappy_uncompressed_length</code>将检索出所需的确切缓冲区大小：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore"><span class="boring">use libc::{size_t, c_int};
+</span><span class="boring">unsafe fn snappy_uncompress(compressed: *const u8,
+</span><span class="boring">                            compressed_length: size_t,
+</span><span class="boring">                            uncompressed: *mut u8,
+</span><span class="boring">                            uncompressed_length: *mut size_t) -&gt; c_int { 0 }
+</span><span class="boring">unsafe fn snappy_uncompressed_length(compressed: *const u8,
+</span><span class="boring">                                     compressed_length: size_t,
+</span><span class="boring">                                     result: *mut size_t) -&gt; c_int { 0 }
+</span><span class="boring">fn main() {}
+</span>pub fn uncompress(src: &amp;[u8]) -&gt; Option&lt;Vec&lt;u8&gt;&gt; {
+    unsafe {
+        let srclen = src.len() as size_t;
+        let psrc = src.as_ptr();
+
+        let mut dstlen: size_t = 0;
+        snappy_uncompressed_length(psrc, srclen, &amp;mut dstlen);
+
+        let mut dst = Vec::with_capacity(dstlen as usize);
+        let pdst = dst.as_mut_ptr();
+
+        if snappy_uncompress(psrc, srclen, pdst, &amp;mut dstlen) == 0 {
+            dst.set_len(dstlen as usize);
+            Some(dst)
+        } else {
+            None // SNAPPY_INVALID_INPUT
+        }
+    }
+}
+</code></pre>
+<p>然后，我们可以添加一些测试来展示如何使用它们：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore"><span class="boring">use libc::{c_int, size_t};
+</span><span class="boring">unsafe fn snappy_compress(input: *const u8,
+</span><span class="boring">                          input_length: size_t,
+</span><span class="boring">                          compressed: *mut u8,
+</span><span class="boring">                          compressed_length: *mut size_t)
+</span><span class="boring">                          -&gt; c_int { 0 }
+</span><span class="boring">unsafe fn snappy_uncompress(compressed: *const u8,
+</span><span class="boring">                            compressed_length: size_t,
+</span><span class="boring">                            uncompressed: *mut u8,
+</span><span class="boring">                            uncompressed_length: *mut size_t)
+</span><span class="boring">                            -&gt; c_int { 0 }
+</span><span class="boring">unsafe fn snappy_max_compressed_length(source_length: size_t) -&gt; size_t { 0 }
+</span><span class="boring">unsafe fn snappy_uncompressed_length(compressed: *const u8,
+</span><span class="boring">                                     compressed_length: size_t,
+</span><span class="boring">                                     result: *mut size_t)
+</span><span class="boring">                                     -&gt; c_int { 0 }
+</span><span class="boring">unsafe fn snappy_validate_compressed_buffer(compressed: *const u8,
+</span><span class="boring">                                            compressed_length: size_t)
+</span><span class="boring">                                            -&gt; c_int { 0 }
+</span><span class="boring">fn main() { }
+</span><span class="boring">
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn valid() {
+        let d = vec![0xde, 0xad, 0xd0, 0x0d];
+        let c: &amp;[u8] = &amp;compress(&amp;d);
+        assert!(validate_compressed_buffer(c));
+        assert!(uncompress(c) == Some(d));
+    }
+
+    #[test]
+    fn invalid() {
+        let d = vec![0, 0, 0, 0];
+        assert!(!validate_compressed_buffer(&amp;d));
+        assert!(uncompress(&amp;d).is_none());
+    }
+
+    #[test]
+    fn empty() {
+        let d = vec![];
+        assert!(!validate_compressed_buffer(&amp;d));
+        assert!(uncompress(&amp;d).is_none());
+        let c = compress(&amp;d);
+        assert!(validate_compressed_buffer(&amp;c));
+        assert!(uncompress(&amp;c) == Some(d));
+    }
+}
+</code></pre>
+<h2><a class="header" href="#析构器" id="析构器">析构器</a></h2>
+<p>外部的库经常把资源的所有权交给调用代码，当这种情况发生时，我们必须使用 Rust 的析构器来提供安全并保证这些资源的释放（尤其是在 panic 的情况下）。</p>
+<p>关于析构器的更多信息，请参见 <a href="https://doc.rust-lang.org/stable/std/ops/trait.Drop.html">Drop trait</a>。</p>
+<h2><a class="header" href="#从-c-调用-rust-代码" id="从-c-调用-rust-代码">从 C 调用 Rust 代码</a></h2>
+<p>你可能想要把 Rust 代码编译成某种形式，以便在 C 中调用。这个并不难，不过需要一些额外的步骤。</p>
+<h3><a class="header" href="#rust-代码侧" id="rust-代码侧">Rust 代码侧</a></h3>
+<p>首先，我们假设你有一个 lib 库名字叫<code>rust_from_c</code>，其中的<code>lib.rs</code>应该包含类似这样的代码：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">#[no_mangle]
+pub extern &quot;C&quot; fn hello_from_rust() {
+    println!(&quot;Hello from Rust!&quot;);
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p><code>extern &quot;C&quot;</code>使得这个函数使用 C 的调用规约，正如下文<a href="ffi.html#%E5%A4%96%E9%83%A8%E8%B0%83%E7%94%A8%E8%A7%84%E7%BA%A6">外部调用规约</a>一章所述。
+<code>no_mangle</code>属性关闭了 Rust 的 name mangling 特性，这使得我们在链接时有个明确定义的符号名。</p>
+<p>接下来，为了把我们的 Rust 代码编译成一个可以直接从 C 调用的共享库，我们需要加这些到<code>Cargo.toml</code>中：</p>
+<pre><code class="language-toml">[lib]
+crate-type = [&quot;cdylib&quot;]
+</code></pre>
+<p>（注意：我们也可以用<code>staticlib</code>类型，不过这会需要我们修改一些链接的参数。）</p>
+<p>接下来，执行<code>cargo build</code>，Rust 侧就搞定啦！</p>
+<h3><a class="header" href="#c-代码侧" id="c-代码侧">C 代码侧</a></h3>
+<p>我们将写一段 C 代码来调用<code>hello_from_rust</code>并用<code>gcc</code>来编译。</p>
+<p>C 代码大致是这样：</p>
+<pre><code class="language-c">extern void hello_from_rust();
+
+int main(void) {
+    hello_from_rust();
+    return 0;
+}
+</code></pre>
+<p>我们把这个文件命名为<code>call_rust.c</code>，并且把它放到我们 crate 的根目录下，然后编译：</p>
+<pre><code class="language-sh">gcc call_rust.c -o call_rust -lrust_from_c -L./target/debug
+</code></pre>
+<p><code>-l</code>和<code>-L</code>告诉 gcc 去找我们的 Rust 库。</p>
+<p>最后，我们可以通过指定<code>LD_LIBRARY_PATH</code>来从 C 调用 Rust：</p>
+<pre><code class="language-sh">$ LD_LIBRARY_PATH=./target/debug ./call_rust
+Hello from Rust!
+</code></pre>
+<p>搞定！
+如果需要更多实际的例子，可以参考<a href="https://github.com/eqrion/cbindgen"><code>cbindgen</code></a>。</p>
+<h2><a class="header" href="#从-c-代码到-rust-函数的回调" id="从-c-代码到-rust-函数的回调">从 C 代码到 Rust 函数的回调</a></h2>
+<p>一些外部库需要使用回调来向调用者报告其当前状态或中间数据，我们可以将 Rust 中定义的函数传递给外部库。这方面的要求是，回调函数被标记为“extern”，并有正确的调用约定，使其可以从 C 代码中调用。</p>
+<p>然后，回调函数可以通过注册调用发送到 C 库中，之后再从那里调用。</p>
+<p>一个基本的例子是：</p>
+<p>Rust 代码：</p>
+<pre><pre class="playground"><code class="language-rust no_run edition2018">extern fn callback(a: i32) {
+    println!(&quot;I'm called from C with value {0}&quot;, a);
+}
+
+#[link(name = &quot;extlib&quot;)]
+extern {
+   fn register_callback(cb: extern fn(i32)) -&gt; i32;
+   fn trigger_callback();
+}
+
+fn main() {
+    unsafe {
+        register_callback(callback);
+        trigger_callback(); // 触发回调
+    }
+}
+</code></pre></pre>
+<p>C 代码：</p>
+<pre><code class="language-c">typedef void (*rust_callback)(int32_t);
+rust_callback cb;
+
+int32_t register_callback(rust_callback callback) {
+    cb = callback;
+    return 1;
+}
+
+void trigger_callback() {
+  cb(7); // 在 Rust 中会调用回调函数 callback(7)
+}
+</code></pre>
+<p>在这个例子中，Rust 的<code>main()</code>将调用 C 语言中的<code>trigger_callback()</code>，而这又会回调 Rust 中的<code>callback()</code>。</p>
+<h2><a class="header" href="#针对-rust-对象的回调" id="针对-rust-对象的回调">针对 Rust 对象的回调</a></h2>
+<p>前面的例子展示了如何从 C 代码中调用一个全局函数，然而，人们通常希望回调是针对一个特殊的 Rust 对象，这可能是代表相应的 C 对象的封装器的对象。</p>
+<p>这可以通过向 C 库传递一个指向该对象的原始指针来实现，然后，C 库可以在通知中包含指向 Rust 对象的指针，这将使回调能够不安全地访问引用的 Rust 对象。</p>
+<p>Rust 代码：</p>
+<pre><pre class="playground"><code class="language-rust no_run edition2018">struct RustObject {
+    a: i32,
+    // 其余的成员...
+}
+
+extern &quot;C&quot; fn callback(target: *mut RustObject, a: i32) {
+    println!(&quot;I'm called from C with value {0}&quot;, a);
+    unsafe {
+        // 在回调函数中更新 RustObject 的内容
+        (*target).a = a;
+    }
+}
+
+#[link(name = &quot;extlib&quot;)]
+extern {
+   fn register_callback(target: *mut RustObject,
+                        cb: extern fn(*mut RustObject, i32)) -&gt; i32;
+   fn trigger_callback();
+}
+
+fn main() {
+    // 创建一个会被在回调函数中引用的 RustObject
+    let mut rust_object = Box::new(RustObject { a: 5 });
+
+    unsafe {
+        register_callback(&amp;mut *rust_object, callback);
+        trigger_callback();
+    }
+}
+</code></pre></pre>
+<p>C 代码：</p>
+<pre><code class="language-c">typedef void (*rust_callback)(void*, int32_t);
+void* cb_target;
+rust_callback cb;
+
+int32_t register_callback(void* callback_target, rust_callback callback) {
+    cb_target = callback_target;
+    cb = callback;
+    return 1;
+}
+
+void trigger_callback() {
+  cb(cb_target, 7); // 这会调用 Rust 代码中的 callback(&amp;rustObject, 7)
+}
+</code></pre>
+<h2><a class="header" href="#异步回调" id="异步回调">异步回调</a></h2>
+<p>在之前给出的例子中，回调是作为对外部 C 库的函数调用的同步调用的。为了执行回调，对当前线程的控制从 Rust 切换到 C，再切换到 Rust，但最终回调是在调用触发回调的函数的同一线程上执行。</p>
+<p>当外部库生成自己的线程并从那里调用回调时，事情会变得更加复杂。在这种情况下，对回调中的 Rust 数据结构的访问特别不安全，必须使用适当的同步机制。除了像 mutex 这样的经典同步机制，Rust 中的一种可能性是使用通道（在<code>std::sync::mpsc</code>中），将数据从调用回调的 C 线程转发到 Rust 线程。</p>
+<p>如果一个异步回调的目标是 Rust 地址空间中的一个特殊对象，那么在相应的 Rust 对象被销毁后，C 库也绝对不能再进行回调。这可以通过在对象的析构器中取消对回调的注册来实现，并以保证在取消注册后不执行回调的方式设计库。</p>
+<h2><a class="header" href="#链接" id="链接">链接</a></h2>
+<p><code>extern</code>块上的<code>link</code>属性提供了基本的构建模块，用于指示 rustc 如何链接到本地库。现在有两种可接受的 link 属性的形式：</p>
+<ul>
+<li><code>#[link(name = &quot;foo&quot;)]</code></li>
+<li><code>#[link(name = &quot;foo&quot;, kind = &quot;bar&quot;)]</code></li>
+</ul>
+<p>在这两种情况下，<code>foo</code>是我们要链接的本地库的名称，在第二种情况下，<code>bar</code>是编译器要链接的本地库的类型。目前已知有三种类型的本地库：</p>
+<ul>
+<li>动态 - <code>#[link(name = &quot;readline&quot;)]</code></li>
+<li>静态 - <code>#[link(name = &quot;my_build_dependency&quot;, kind = &quot;static&quot;)]</code></li>
+<li>框架 - <code>#[link(name = &quot;CoreFoundation&quot;, kind = &quot;framework&quot;)]</code></li>
+</ul>
+<p>注意，框架只在 macOS 上可用。</p>
+<p>不同的<code>kind</code>值是为了区分本地库如何参与链接。从链接的角度来看，Rust 编译器创建了两种类型的工件：部分（rlib/staticlib）和最终（dylib/binary）。原生的动态库和框架依赖被传播到最终的可执行文件中，而静态库的依赖则完全不被传播，因为静态库被直接集成到后续的可执行文件中的。</p>
+<p>来看几个这个模型如何使用的例子：</p>
+<ul>
+<li>
+<p>一个本地构建依赖。有时在编写一些 Rust 代码时需要一些 C/C++ 胶水，但以库的形式分发 C/C++ 代码是一种负担。在这种情况下，代码将被归档到<code>libfoo.a</code>，然后 Rust crate 将通过<code>#[link(name = &quot;foo&quot;, kind = &quot;static&quot;)]</code>声明一个依赖关系。</p>
+<p>无论 crate 的输出是什么，本地静态库都会被包含在输出中，这意味着本地静态库的分发是没有必要的。</p>
+</li>
+<li>
+<p>一个正常的动态依赖。常见的系统库（如<code>readline</code>）在大量的系统上可用，而这些库的静态副本往往找不到。当这种依赖被包含在 Rust crate 中时，部分目标（如 rlibs）将不会链接到该库，但当 rlib 被包含在最终目标（如二进制）中时，本地库将被链接进来。</p>
+</li>
+</ul>
+<p>在 macOS 上，框架的行为与动态库的语义相同。</p>
+<h2><a class="header" href="#不安全块" id="不安全块">不安全块</a></h2>
+<p>一些操作，如取消引用原始指针或调用被标记为不安全的函数，只允许在不安全块中进行。不安全块隔离了不安全因素，并向编译器承诺不安全因素不会从块中泄露出去。</p>
+<p>另一方面，不安全的函数则向世界公布了它。一个不安全的函数是这样写的：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>unsafe fn kaboom(ptr: *const i32) -&gt; i32 { *ptr }
+<span class="boring">}
+</span></code></pre></pre>
+<p>这个函数只能从一个“不安全”块或另一个“不安全”函数中调用。</p>
+<h2><a class="header" href="#访问外部的全局变量" id="访问外部的全局变量">访问外部的全局变量</a></h2>
+<p>外部的 API 经常输出一个全局变量，它可以做一些类似于跟踪全局状态的事情。为了访问这些变量，你可以在<code>extern</code>块中用<code>static</code>关键字来声明它们：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore">#[link(name = &quot;readline&quot;)]
+extern {
+    static rl_readline_version: libc::c_int;
+}
+
+fn main() {
+    println!(&quot;You have readline version {} installed.&quot;,
+             unsafe { rl_readline_version as i32 });
+}
+</code></pre>
+<p>另外，你可能需要改变由外部接口提供的全局状态。要做到这一点，可以用<code>mut</code>声明全局变量，这样我们就可以改变它们：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore">use std::ffi::CString;
+use std::ptr;
+
+#[link(name = &quot;readline&quot;)]
+extern {
+    static mut rl_prompt: *const libc::c_char;
+}
+
+fn main() {
+    let prompt = CString::new(&quot;[my-awesome-shell] $&quot;).unwrap();
+    unsafe {
+        rl_prompt = prompt.as_ptr();
+
+        println!(&quot;{:?}&quot;, rl_prompt);
+
+        rl_prompt = ptr::null();
+    }
+}
+</code></pre>
+<p>注意，所有“可变全局变量”的交互都是不安全的，包括读和写。处理全局可变状态需要非常小心。</p>
+<h2><a class="header" href="#外部调用规约" id="外部调用规约">外部调用规约</a></h2>
+<p>大多数外部代码都暴露了一个 C ABI，Rust 在调用外部函数时默认使用平台的 C 调用约定。一些外部函数，最明显的是 Windows API，使用了其他的调用约定。Rust 提供了一种方法来告诉编译器应该使用哪种约定：</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore">#[cfg(all(target_os = &quot;win32&quot;, target_arch = &quot;x86&quot;))]
+#[link(name = &quot;kernel32&quot;)]
+#[allow(non_snake_case)]
+extern &quot;stdcall&quot; {
+    fn SetEnvironmentVariableA(n: *const u8, v: *const u8) -&gt; libc::c_int;
+}
+<span class="boring">fn main() { }
+</span></code></pre>
+<p>这适用于整个<code>extern</code>块。支持的 ABI 约束列表如下：</p>
+<ul>
+<li><code>stdcall</code></li>
+<li><code>aapcs</code></li>
+<li><code>cdecl</code></li>
+<li><code>fastcall</code></li>
+<li><code>vectorcall</code> 这是目前隐藏在<code>abi_vectorcall</code>特性开关后面的，可能会有变化</li>
+<li><code>Rust</code></li>
+<li><code>rust-intrinsic</code></li>
+<li><code>system</code></li>
+<li><code>C</code></li>
+<li><code>win64</code></li>
+<li><code>sysv64</code></li>
+</ul>
+<p>这个列表中的大多数 ABI 是不言自明的，但是<code>system</code> ABI 可能看起来有点奇怪。这个约束条件选择了任何合适的 ABI 来与目标库进行交互操作。例如，在 x86 架构的 win32 上，这意味着使用的 ABI 是<code>stdcall</code>。然而，在 x86_64 上，windows 使用<code>C</code>调用惯例，所以将使用<code>C</code>。这意味着在我们之前的例子中，我们可以使用<code>extern &quot;system&quot; { ... }</code>来为所有的 windows 系统定义一个块，而不仅仅是 x86 系统。</p>
+<h2><a class="header" href="#与外部代码的互操作性" id="与外部代码的互操作性">与外部代码的互操作性</a></h2>
+<p>只有当<code>#[repr(C)]</code>属性应用于一个<code>struct</code>时，Rust 才能保证该结构的布局与平台的 C 语言表示兼容。<code>#[repr(C, packed)]</code>可以用来布局结构成员而不需要填充。<code>#[repr(C)]</code>也可以应用于枚举。</p>
+<p>Rust 的 Box 类型（<code>Box&lt;T&gt;</code>）使用不可为空的指针作为句柄，指向所包含的对象。然而，它们不应该被手动创建，因为它们是由内部分配器管理的。引用可以安全地被认为是直接指向该类型的不可归零的指针。然而，打破借用检查或可变性规则是不安全的，所以如果需要的话，最好使用原始指针（<code>*</code>），因为编译器不能对它们做出那么多假设。</p>
+<p>向量和字符串共享相同的基本内存布局，并且在<code>vec</code>和<code>str</code>模块中提供了与 C API 工作的实用程序。然而，字符串不是以<code>\0</code>结束的。如果你需要一个以 NUL 结尾的字符串与 C 语言互通，你应该使用<code>std::ffi</code>模块中的<code>CString</code>类型。</p>
+<p>crates.io 上的<a href="https://crates.io/crates/libc"><code>libc</code> crate</a>包括<code>libc</code>模块中的 C 标准库的类型别名和函数定义，Rust 默认与<code>libc</code>和<code>libm</code>链接。</p>
+<h2><a class="header" href="#variadic-函数" id="variadic-函数">Variadic 函数</a></h2>
+<p>在 C 语言中，函数可以是“variadic”，这意味着它们接受可变数量的参数。这在 Rust 中可以通过在外部函数声明的参数列表中指定“...”来实现：</p>
+<pre><code class="language-no_run">extern {
+    fn foo(x: i32, ...);
+}
+
+fn main() {
+    unsafe {
+        foo(10, 20, 30, 40, 50);
+    }
+}
+</code></pre>
+<p>正常的 Rust 函数<em>不能</em>是可变参数的：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// 这不会编译通过
+
+fn foo(x: i32, ...) {}
+<span class="boring">}
+</span></code></pre></pre>
+<h2><a class="header" href="#空指针优化" id="空指针优化">&quot;空指针优化&quot;</a></h2>
+<p>某些 Rust 类型被定义为永不为“空”。这包括引用（<code>&amp;T</code>, <code>&amp;mut T</code>）, Box（<code>Box&lt;T&gt;</code>）, 和函数指针（<code>extern &quot;abi&quot; fn()</code>）。当与 C 语言对接时，经常使用可能为“空”的指针，这似乎需要一些混乱的<code>transmute</code>和/或不安全的代码来处理与 Rust 类型的转换。然而，该语言提供了一个变通办法。</p>
+<p>作为一种特殊情况，如果一个“enum”正好包含两个变体，其中一个不包含数据，另一个包含上面列出的非空类型的字段，那么它就有资格获得“空指针优化”。这意味着不需要额外的空间来进行判别；相反，空的变体是通过将一个<code>null</code>的值放入不可空的字段来表示。这被称为“优化”，但与其他优化不同，它保证适用于符合条件的类型。</p>
+<p>最常见的利用空指针优化的类型是<code>Option&lt;T&gt;</code>，其中<code>None</code>对应于<code>null</code>。所以<code>Option&lt;extern &quot;C&quot; fn(c_int) -&gt; c_int&gt;</code>是使用 C ABI（对应于 C 类型<code>int (*)(int)</code>）来表示可空函数指针的一种正确方式。</p>
+<p>这里有一个臆造的例子：假设某个 C 库有一个用于注册回调的工具，在某些情况下会被调用。回调被传递给一个函数指针和一个整数，它应该以整数为参数运行该函数。所以我们有函数指针在 FFI 边界上双向飞行。</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore">use libc::c_int;
+
+<span class="boring">#[cfg(hidden)]
+</span>extern &quot;C&quot; {
+    /// 注册回调函数
+    fn register(cb: Option&lt;extern &quot;C&quot; fn(Option&lt;extern &quot;C&quot; fn(c_int) -&gt; c_int&gt;, c_int) -&gt; c_int&gt;);
+}
+<span class="boring">unsafe fn register(_: Option&lt;extern &quot;C&quot; fn(Option&lt;extern &quot;C&quot; fn(c_int) -&gt; c_int&gt;,
+</span><span class="boring">                                           c_int) -&gt; c_int&gt;)
+</span><span class="boring">{}
+</span>
+// 这个函数其实没什么实际的用处，
+// 它从C代码接受一个函数指针和一个整数，
+// 用整数做参数，调用指针指向的函数，并返回函数的返回值，
+// 如果没有指定函数，那默认就返回整数的平方
+extern &quot;C&quot; fn apply(process: Option&lt;extern &quot;C&quot; fn(c_int) -&gt; c_int&gt;, int: c_int) -&gt; c_int {
+    match process {
+        Some(f) =&gt; f(int),
+        None    =&gt; int * int
+    }
+}
+
+fn main() {
+    unsafe {
+        register(Some(apply));
+    }
+}
+</code></pre>
+<p>而 C 语言方面的代码看起来是这样的：</p>
+<pre><code class="language-c">void register(int (*f)(int (*)(int), int)) {
+    ...
+}
+</code></pre>
+<p>实际上，不需要<code>transmute</code>!</p>
+<h2><a class="header" href="#ffi-和-panic" id="ffi-和-panic">FFI 和 panic</a></h2>
+<p>在使用 FFI 时，必须注意<code>panic!</code>。一个跨越 FFI 边界的“panic!”是未定义的行为。如果你写的代码可能会出现恐慌，你应该用<a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a>在闭包中运行它。</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::panic::catch_unwind;
+
+#[no_mangle]
+pub extern fn oh_no() -&gt; i32 {
+    let result = catch_unwind(|| {
+        panic!(&quot;Oops!&quot;);
+    });
+    match result {
+        Ok(_) =&gt; 0,
+        Err(_) =&gt; 1,
+    }
+}
+
+fn main() {}
+</code></pre></pre>
+<p>请注意，<a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a>只捕捉 unwind 的 panic，而不是那些中止进程的恐慌。更多信息请参见<a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html"><code>catch_unwind</code></a>的文档。</p>
+<h2><a class="header" href="#表示不透明opaque的结构" id="表示不透明opaque的结构">表示不透明（opaque）的结构</a></h2>
+<p>有时，一个 C 语言库想提供一个指向某东西的指针，但又不想让你知道它想要的东西的内部细节。一个稳定而简单的方法是使用一个<code>void *</code>参数。</p>
+<pre><code class="language-c">void foo(void *arg);
+void bar(void *arg);
+</code></pre>
+<p>我们可以在 Rust 中用<code>c_void</code>类型来表示。</p>
+<!-- ignore: requires libc crate -->
+<pre><code class="language-rust ignore">extern &quot;C&quot; {
+    pub fn foo(arg: *mut libc::c_void);
+    pub fn bar(arg: *mut libc::c_void);
+}
+<span class="boring">fn main() {}
+</span></code></pre>
+<p>这是一种完全有效的处理方式。然而，我们可以做得更好一点。为了解决这个问题，一些 C 库会创建一个<code>struct</code>，其中结构的细节和内存布局是私有的，这提供了某种程度的类型安全。这些结构被称为“不透明的”。下面是一个例子，在 C 语言中：</p>
+<pre><code class="language-c">struct Foo; /* Foo 是一个接口，但它的内容不属于公共接口 */
+struct Bar;
+void foo(struct Foo *arg);
+void bar(struct Bar *arg);
+</code></pre>
+<p>为了在 Rust 中做到这一点，让我们创建我们自己的不透明类型：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">#[repr(C)]
+pub struct Foo {
+    _data: [u8; 0],
+    _marker:
+        core::marker::PhantomData&lt;(*mut u8, core::marker::PhantomPinned)&gt;,
+}
+#[repr(C)]
+pub struct Bar {
+    _data: [u8; 0],
+    _marker:
+        core::marker::PhantomData&lt;(*mut u8, core::marker::PhantomPinned)&gt;,
+}
+
+extern &quot;C&quot; {
+    pub fn foo(arg: *mut Foo);
+    pub fn bar(arg: *mut Bar);
+}
+<span class="boring">fn main() {}
+</span></code></pre></pre>
+<p>通过包括至少一个私有字段和没有构造函数，我们创建了一个不透明的类型，我们不能在这个模块之外实例化（否则，一个没有字段的结构可以被任何人实例化）。我们也想在 FFI 中使用这个类型，所以我们必须添加<code>#[repr(C)]</code>。该标记确保编译器不会将该结构标记为<code>Send</code>、<code>Sync</code>，并且<code>Unpin</code>也不会应用于该结构（<code>*mut u8</code>不是<code>Send</code>或者<code>Sync</code>，<code>PhantomPinned</code>也不是<code>Unpin</code>）。</p>
+<p>但是因为我们的<code>Foo</code>和<code>Bar</code>类型不同，我们将在它们两个之间获得类型安全，所以我们不能意外地将<code>Foo</code>的指针传递给<code>bar()</code>。</p>
+<p>注意，使用空枚举作为 FFI 类型是一个非常糟糕的主意。编译器假设空枚举是无法使用的，所以处理<code>&amp;Empty</code>类型的值会是意料之外的，并可能导致错误的程序行为（通过触发未定义行为）。</p>
+<blockquote>
+<p><strong>注意：</strong> 最简单的方法还是使用“extern 类型”。但它目前（截至 2021 年 10 月）还不稳定，而且还有一些未解决的问题，更多细节请参见<a href="https://rust-lang.github.io/rfcs/1861-extern-types.html">RFC 页面</a>和<a href="https://github.com/rust-lang/rust/issues/43467">跟踪 Issue</a>。</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="arc-mutex/arc-final.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="beneath-std.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="arc-mutex/arc-final.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="beneath-std.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

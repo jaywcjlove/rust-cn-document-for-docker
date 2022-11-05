@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Atomics - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html" class="active"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#atomics" id="atomics">Atomics</a></h1>
+<p>Rust 非常明目张胆地从 C++20 继承了原子的内存模型。这并不是因为这个模型特别优秀或容易理解。事实上，这个模型相当复杂，而且已知有<a href="http://plv.mpi-sws.org/c11comp/popl15.pdf">几个缺陷</a>。但不论怎么说，这是一个务实的让步，因为<em>每个人</em>在原子建模方面都相当糟糕。至少，我们可以从现有的工具和围绕 C/C++ 内存模型的研究中获益（你会经常看到这个模型被称为“C/C++11”或只是“C11”。C 只是复制了 C++ 的内存模型；而 C++11 是该模型的第一个版本，但从那时起它已经得到了一些错误的修正）。</p>
+<p>试图在这本书中完全解释这个模型是相当无望的。它被定义为疯狂的因果关系图，需要一整本书来正确理解。如果你想了解所有琐碎的细节，你应该看看<a href="https://en.cppreference.com/w/cpp/atomic/memory_order"> C++ 规范</a>。不过，我们还是会试着介绍一下基础知识和 Rust 开发者面临的一些问题。</p>
+<p>C++ 内存模型从根本上说是为了弥补我们想要的语义、编译器想要的优化和我们的硬件想要的之间不一致的混乱之间的差距。<em>我们</em>想只写程序，让它们完全按照我们说的做，但是，你知道，一定要快。那不是很好吗？</p>
+<h2><a class="header" href="#编译器重排序" id="编译器重排序">编译器重排序</a></h2>
+<p>编译器从根本上希望能够进行各种复杂的转换，以减少数据的依赖性，消除死代码。特别是，他们可能会从根本上改变事件的实际顺序，或者使事件永远不会发生！比如这样的代码：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">x = 1;
+y = 3;
+x = 2;
+</code></pre>
+<p>编译器可能会得出结论，如果你的程序这样做，那会更好：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">x = 2;
+y = 3;
+</code></pre>
+<p>这颠倒了事件的顺序，并且完全删除了一个事件。从单线程的角度来看，这是完全无法观察到的：在所有语句执行完毕后，我们处于完全相同的状态。但是如果我们的程序是多线程的，我们可能一直依赖<code>x</code>在<code>y</code>被分配之前实际被分配为 1。我们希望编译器能够进行这类优化，因为它们可以大量地提高性能；而另一方面，我们也希望能够相信我们的程序<em>做我们所说的事情</em>。</p>
+<h2><a class="header" href="#硬件重排序" id="硬件重排序">硬件重排序</a></h2>
+<p>另一方面，即使编译器完全理解我们的意图并尊重我们的意愿，我们的硬件可能反而会给我们带来麻烦。麻烦来自于 CPU 的内存层次结构。在你的硬件中确实有一个全局共享的内存空间，但从每个 CPU 核心的角度来看，它是<em>非常遥远的</em>，而且<em>非常慢</em>。每个 CPU 宁可使用其本地的数据缓存，而只在其缓存中没有该内存的时候才去和共享内存对话，这是很痛苦的。</p>
+<p>毕竟，这就是缓存的全部意义所在，对吗？如果每次从缓存中读出的数据都要跑回共享内存中去仔细检查是否有变化，那还有什么意义呢？最终的结果是，硬件并不能保证在<em>一个</em>线程上以某种顺序发生的事件，在<em>另一个</em>线程上以同样的顺序发生。为了保证这一点，我们必须向 CPU 发出特殊指令，让它变得不那么聪明。</p>
+<p>例如，假设我们说服编译器发出这样的逻辑：</p>
+<pre><code class="language-text">initial state: x = 0, y = 1
+
+线程 1           线程 2
+y = 3;          if x == 1 {
+x = 1;              y *= 2;
+                }
+</code></pre>
+<p>理想情况下，这个程序有两种可能的最终状态：</p>
+<ul>
+<li><code>y = 3</code>：线程 2 在线程 1 完成之前做了检查</li>
+<li><code>y = 6</code>：线程 2 在线程 1 完成后做了检查</li>
+</ul>
+<p>然而，还有第三种潜在的状态是硬件可以实现的：</p>
+<ul>
+<li><code>y = 2</code>：线程 2 看到了<code>x = 1</code>，但没有看到<code>y = 3</code>，然后改写了<code>y = 3</code></li>
+</ul>
+<p>值得注意的是，不同种类的 CPU 提供不同的保证。通常将硬件分为两类：强有序和弱有序。最值得注意的是 x86/64 提供强有序保证，而 ARM 提供弱有序保证。这对并发编程有两个后果：</p>
+<ul>
+<li>在强有序的硬件上要求更强的保证可能很便宜，甚至是无开销的，因为它们已经无条件地提供了强保证；较弱的保证可能只在弱有序的硬件上产生性能优势</li>
+<li>在强有序硬件上要求太弱的保证，更有可能<em>恰巧</em>发生作用，即使你的程序严格来说是不正确的；如果可能的话，并发算法应该在弱有序的硬件上进行测试</li>
+</ul>
+<h2><a class="header" href="#数据访问" id="数据访问">数据访问</a></h2>
+<p>C++ 内存模型试图通过允许我们谈论我们程序的<em>因果性</em>来弥补这一差距。一般来说，这是通过在程序的各个部分和运行它们的线程之间建立一种<em>happen-before</em>的关系。这给了硬件和编译器一定的自由度，在没有建立严格的 happen-before 关系的地方更积极地优化程序，但也迫使他们在建立了关系的地方更加小心。我们沟通这些关系的方式是通过<em>数据访问（data accesses）<em>和</em>原子访问（atomic accesses）</em>。</p>
+<p>数据访问是编程世界的主体，它们从根本上说是不同步的，编译器可以自由地对它们进行积极的优化。特别是，数据访问可以自由地被编译器重新排序，前提是程序是单线程的。硬件也可以自由地将数据访问中的变化传播给其他线程，只要它想，就可以懒散地、不一致地传播。最关键的是，数据访问是数据竞争发生的方式。数据访问对硬件和编译器非常友好，但正如我们所看到的，如果试图用它来编写同步代码，它提供的语义太弱了。</p>
+<p><strong>仅仅使用数据访问是不可能写出正确的同步代码的</strong>。</p>
+<p>原子访问是我们告诉硬件和编译器我们的程序是多线程的方式。每个原子访问都可以用一个<em>顺序</em>来标记，指定它与其他访问的关系。在实践中，这可以归结为告诉编译器和硬件它们<em>不能</em>做的某些事情。对于编译器来说，这主要是围绕着指令的重新排序展开的。对于硬件来说，这主要是围绕着如何将写操作传播给其他线程。Rust 所提供的顺序集合是：</p>
+<ul>
+<li>顺序一致（Squentially Consistent，SeqCst）</li>
+<li>Release</li>
+<li>Acquire</li>
+<li>Relaxed</li>
+</ul>
+<p>（注意：我们明确地不暴露 C++ 的 <em>consume</em> 排序）</p>
+<p>TODO：消极推理与积极推理？TODO：“不能忘记同步”</p>
+<h2><a class="header" href="#顺序一致性" id="顺序一致性">顺序一致性</a></h2>
+<p>顺序一致是所有顺序中最强大的，它意味着包含所有其他顺序的限制。直观地说，一个顺序一致的操作不能被重新排序：一个线程上所有发生在 SeqCst 访问之前和之后的访问都保持在它之前和之后。一个只使用顺序一致的原子和数据访问的无数据竞争程序有一个非常好的特性，即有一个所有线程都同意的程序指令的单一全局执行的顺序。这种执行方式也特别好推理：它只是每个线程的单独执行的交错。如果你开始使用较弱的原子顺序，这就不成立了（译者注：也就是说，同一时刻，针对同一个别名/内存位置，仅能有一条指令在执行，不能出现并发）。</p>
+<p>顺序一致性对开发者的相对友好并不是免费的。即使在强排序的平台上，顺序一致性也会涉及到内存屏障。</p>
+<p>在实践中，顺序一致性对于程序的正确性很少有必要。然而，如果你对其他的内存顺序没有信心的话，顺序一致性绝对是正确的选择。让你的程序运行得比它需要的慢一点，肯定比它运行得不正确要好！从机制上来说，降低原子操作的等级，以便在以后拥有较弱的一致性也是很容易的。只要把<code>SeqCst</code>改成<code>Relaxed</code>就可以了! 当然，证明这种转换是<em>正确的</em>是一个完全不同的问题。</p>
+<h2><a class="header" href="#acquire-release" id="acquire-release">Acquire-Release</a></h2>
+<p>Acquire 和 Release 在很大程度上是用来配对使用的。它们的名字暗示了它们的使用情况：它们非常适合于获取和释放锁，并确保关键部分不会重叠。</p>
+<p>直观地说，一个 Acquire 的访问可以确保它之后的每一个访问都保持在它之后。然而，在 Acquire 之前发生的操作可以自由地被重新排序到它之后发生。同样地，一个 Release 访问确保它之前的每一个访问都保持在它之前。然而，在 Release 之后发生的操作可以自由地被重新排序到它之前发生。</p>
+<p>当线程 A Release 了内存中的一个位置，然后线程 B 随后 Acquire 了内存中<em>相同</em>的位置，因果关系就建立了。在 A Release 之前发生的每一个写（包括非原子写和 Relaxed 的原子写）都会在 B Acquire 之后被观察到。然而，与任何其他线程的因果关系都没有建立。同样地，如果 A 和 B 访问内存中<em>不同</em>的位置，也不会建立因果关系。</p>
+<p>因此，Release-Acquire 的基本用法很简单：你 Acquire 一个内存位置来开始关键部分，然后 Release 这个位置来结束它。例如，一个简单的自旋锁可能看起来像这样：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">use std::sync::Arc;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::thread;
+
+fn main() {
+    let lock = Arc::new(AtomicBool::new(false)); // 我上锁了吗
+
+    // ... 用某种方式将锁分发到各个线程(thread::spawn) ...
+
+    // 尝试将原子变量设置为 true，以此来获得锁
+    while lock.compare_and_swap(false, true, Ordering::Acquire) { }
+    // 从循环中跳出，说明此时已经获取了锁
+
+    // ... 恐怖的数据访问 ...
+
+    // 工作完成了，释放锁
+    lock.store(false, Ordering::Release);
+}
+</code></pre></pre>
+<p>在强有序平台上，大多数访问都有 Release 或 Acquire 语义，使得 Release 和 Acquire 往往是完全免费的。而在弱有序平台上则不是这样。</p>
+<h2><a class="header" href="#relaxed" id="relaxed">Relaxed</a></h2>
+<p>Relaxed 的访问是绝对最弱的。它们可以被自由地重新排序，并且不提供任何 happen-before 的关系。不过，Relaxed 的操作仍然是原子性的。也就是说，它们不算是数据访问，对它们进行的任何读-改-写操作都是原子性的。Relaxed 操作适用于那些你肯定希望发生，但并不特别在意的事情。例如，如果你不使用计数器来同步任何其他访问，那么多个线程可以安全地使用 Relaxed 的<code>fetch_add</code>来增加一个计数器。</p>
+<p>在强有序平台上，Relaxed 操作很少有好处，因为它们通常提供 Release-Acquire 的语义。然而，在弱有序平台上，Relaxed 的操作会更便宜。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="send-and-sync.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="vec/vec.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="send-and-sync.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="vec/vec.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

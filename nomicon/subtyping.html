@@ -1,0 +1,521 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>子类型化和变异性 - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html" class="active"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#子类型化和型变" id="子类型化和型变">子类型化和型变</a></h1>
+<p>子类型是一种类型之间的关系，它允许静态类型语言更加灵活和宽松一些。</p>
+<p>Rust 中的子类型与其他语言的子类型有些不同，这使得它很难给出简单的例子，这是一个问题，因为子类型，尤其是型变，已经很难正确理解了。即使是编译器编写者也经常把它搞混。</p>
+<p>为了保持简单，本节将考虑对 Rust 语言进行一个小的扩展，增加一个新的、更简单的子类型关系。在这个更简单的系统下建立概念和问题后，我们将把它与 Rust 中子类型的实际发生情况联系起来。</p>
+<p>这就是我们的简单扩展，<em>Objective Rust</em>，具有三个新的类型：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Animal {
+    fn snuggle(&amp;self);
+    fn eat(&amp;mut self);
+}
+
+trait Cat: Animal {
+    fn meow(&amp;self);
+}
+
+trait Dog: Animal {
+    fn bark(&amp;self);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>但与普通 trait 不同的是，我们可以像结构体一样，将它们作为具体的、有确定大小的类型使用。</p>
+<p>现在，假设我们有一个非常简单的函数，它接收一个 Animal，像这样：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">fn love(pet: Animal) {
+    pet.snuggle();
+}
+</code></pre>
+<p>默认情况下，静态类型必须<em>完全</em>匹配，程序才能被编译。因此，这段代码不会被编译：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">let mr_snuggles: Cat = ...;
+love(mr_snuggles);         // 错误：期待是一个动物，实际上却是猫
+</code></pre>
+<p>Snuggles 先生是一只猫，而猫并不能够<em>精确地</em>认为和动物相等，所以我们不能爱他！。😿</p>
+<p>这很烦人，因为猫<em>是</em>动物，它们支持动物所支持的所有操作，所以从直觉上讲，“爱”不应该关心我们是否把“猫”传递给它。我们应该能够<strong>忘记</strong>我们的“猫”的非动物部分，因为它们不是爱它的必要条件。</p>
+<p>这正是<em>subtyping</em>所要解决的问题。因为猫是动物，并且猫有<strong>更多</strong>特征，所以我们说猫是动物的<em>子类型</em>（因为猫是所有动物的<em>子集</em>）。等价地，我们说动物是猫的<em>超类型</em>。有了子类型，我们可以用一个简单的规则来调整我们过于严格的静态类型系统：在任何期望有<code>T</code>类型的值的地方，我们也将接受<code>T</code>的子类型的值。</p>
+<p>或者更具体地说：在任何期望有动物的地方，猫或狗也可以适用。</p>
+<p>正如我们将在本节的其余部分看到的，子类型比这要复杂和微妙得多，但这个简单的规则是一个非常好的 99% 的直觉。除非你写的是不安全的代码，否则编译器会自动为你处理所有的边界情况。</p>
+<p>但这是死灵书，我们在写不安全的代码，所以我们需要了解这东西到底是怎么运作的，以及我们会如何把它给搞炸咯。</p>
+<p>最核心的问题是，这个规则如果我们不假思索地应用后，会导致<em>喵喵狗</em>。也就是说，我们可以说服别人，狗实际上是猫。这完全破坏了我们的静态类型系统的结构，使其比不可用还要糟糕（并导致未定义行为）：</p>
+<p>下面是一个简单的例子，当我们以完全纯粹的“查找和替换”方式应用子类型时，这种情况就会发生：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">fn evil_feeder(pet: &amp;mut Animal) {
+    let spike: Dog = ...;
+
+    // `pet` 是一个动物，而狗是动物的子类型，
+    // 所以这里应该是正确的，对吗...?
+    *pet = spike;
+}
+
+fn main() {
+    let mut mr_snuggles: Cat = ...;
+    evil_feeder(&amp;mut mr_snuggles);  // 将 mr_snuggles 替换为狗
+    mr_snuggles.meow();             // 哇，这里发出了狗叫：&quot;MEOWING DOG!&quot;！
+}
+</code></pre>
+<p>显然，我们需要一个比“查找和替换”更强大的系统。这个系统就是<em>型变（variance）</em>，它是一套管理子类型应该如何组成的规则。最重要的是，型变定义了应该禁用子类型的情况。</p>
+<p>但在我们讨论型变之前，让我们先来看看 Rust 中子类型实际上发生了什么：<em>lifetimes</em>!</p>
+<blockquote>
+<p>注意：生命周期的类型化是一个相当随意的构造，有些人也许不同意这种设计。然而，它将生命周期和类型统一在一起，简化了我们的分析。</p>
+</blockquote>
+<p>生命周期只是代码的区域，而区域可以通过<em>包含</em>（比谁活得长）的关系来部分排序。生命周期的子类型是指这种关系：如果<code>'big: 'small</code>（“big 包含 small”或“big 比 small 活得长”），那么<code>'big</code>就是<code>'small</code>的一个子类型。这是一个很大的混乱来源，因为对许多人来说，它似乎是倒过来的：大区域是小区域的<em>子类型</em>。但是如果你考虑我们的动物例子，这就说得通了：猫是一种动物<em>并且拥有更多特征</em>，就像<code>'big</code>是<code>'small</code>的更多一样。</p>
+<p>换句话说，如果有人想要一个能在<code>'small</code>中活着的引用，通常他们的意思是，他们想要一个至少能在<code>'small</code>中活着的引用。他们实际上并不关心生命周期是否完全匹配。所以，我们应该可以<strong>忘记</strong>某个东西的生命周期是<code>'big</code>，而只记得它的生命周期是<code>'small</code>。</p>
+<p>生命周期的喵喵狗问题将导致我们能够将一个短生命周期的引用存储在一个期望长生命周期的地方，创造一个悬空的引用，并让我们产生释放后使用（use-after-free）。</p>
+<p>值得注意的是，<code>'static</code>，即永远的生命周期，是每个生命周期的子类型，因为根据定义，它比所有的东西都要长。我们将在后面的例子中使用这种关系，以使它们尽可能的简单。</p>
+<p>说了这么多，我们仍然不知道如何实际<em>使用</em>生命周期的子类型，因为没有任何东西具有<code>'a</code>的类型。生命周期只作为一些更大的类型的一部分出现，如<code>&amp;'a u32</code>或<code>IterMut&lt;'a, u32&gt;</code>。为了应用生命周期子类型，我们需要知道如何组成子类型。因此，我们需要<em>型变</em>。</p>
+<h2><a class="header" href="#型变" id="型变">型变</a></h2>
+<p>Variance 是事情变得有点复杂的地方。</p>
+<p>型变是<em>类型构造器</em>相对于其参数的一种属性。Rust 中的类型构造器是任何具有非绑定参数的泛型。例如，<code>Vec</code>是一个类型构造器，它接受一个类型<code>T</code>并返回<code>Vec&lt;T&gt;</code>。<code>&amp;</code>和<code>&amp;mut</code>是类型构造器，接受两个输入：一个生命周期，和一个指向的类型。</p>
+<blockquote>
+<p>注意：为方便起见，我们把类型构造器称为<code>F&lt;T&gt;</code>，只是为了方便我们讨论<code>T</code>。希望这在上下文中是清楚的。</p>
+</blockquote>
+<p>类型构造器 F 的<em>型变</em>是指其输入的子类型如何影响其输出的子类型。在 Rust 中，有三种型变，假设给定两个类型<code>Sub</code>和<code>Super</code>，其中<code>Sub</code>是<code>Super</code>的一个子类型：</p>
+<ul>
+<li>如果<code>F&lt;Sub&gt;</code>是<code>F&lt;Super&gt;</code>的一个子类型，则<code>F</code>是<em>协变的</em>（子类型关系&quot;传递&quot;）</li>
+<li>如果<code>F&lt;Super&gt;</code>是<code>F&lt;Sub&gt;</code>的一个子类型，则<code>F</code>是<em>逆变的</em>（子类型关系&quot;翻转&quot;）</li>
+<li>针对其他情况，<code>F</code>都认为是<em>不变的</em>（不存在子类型关系）</li>
+</ul>
+<p>如果<code>F</code>有多个类型参数，我们可以分别讨论各个型变，例如：<code>F&lt;T, U&gt;</code>对<code>T</code>是协变的，对<code>U</code>是不变的。</p>
+<p>要记住，针对型变来说，我们大部分情况下讨论的都是协变。几乎所有对型变的讨论都是在某物是否应该是协变或不变。实际上，在 Rust 中逆变是相当困难的，尽管它确实存在。</p>
+<p>下面是一个重要的型变表，本节的其余部分将专门用来解释：</p>
+<table><thead><tr><th></th><th></th><th align="center">'a</th><th align="center">T</th><th align="center">U</th></tr></thead><tbody>
+<tr><td>*</td><td><code>&amp;'a T </code></td><td align="center">covariant</td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>&amp;'a mut T</code></td><td align="center">covariant</td><td align="center">invariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>Box&lt;T&gt;</code></td><td align="center"></td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td></td><td><code>Vec&lt;T&gt;</code></td><td align="center"></td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>UnsafeCell&lt;T&gt;</code></td><td align="center"></td><td align="center">invariant</td><td align="center"></td></tr>
+<tr><td></td><td><code>Cell&lt;T&gt;</code></td><td align="center"></td><td align="center">invariant</td><td align="center"></td></tr>
+<tr><td>*</td><td><code>fn(T) -&gt; U</code></td><td align="center"></td><td align="center"><strong>contra</strong>variant</td><td align="center">covariant</td></tr>
+<tr><td></td><td><code>*const T</code></td><td align="center"></td><td align="center">covariant</td><td align="center"></td></tr>
+<tr><td></td><td><code>*mut T</code></td><td align="center"></td><td align="center">invariant</td><td align="center"></td></tr>
+</tbody></table>
+<p>带有 * 的类型是我们要关注的，因为它们在某种意义上是“基础”的，所有其他的类型可以通过与其他类型的类比来理解：</p>
+<ul>
+<li><code>Vec&lt;T&gt;</code>和所有其他拥有指针和集合的类型遵循与<code>Box&lt;T&gt;</code>相同的逻辑</li>
+<li><code>Cell&lt;T&gt;</code>和所有其他内部可变的类型遵循与<code>UnsafeCell&lt;T&gt;</code>相同的逻辑</li>
+<li><code>*const T</code>遵循<code>&amp;T</code>的逻辑</li>
+<li><code>*mut T</code>遵循<code>&amp;mut T</code>（或<code>UnsafeCell&lt;T&gt;</code>）的逻辑</li>
+</ul>
+<p>关于更多的类型，请参见参考资料上的<a href="https://doc.rust-lang.org/reference/subtyping.html#variance">“型变”部分</a>。</p>
+<blockquote>
+<p>注意：语言中<em>唯一</em>的逆变是函数的参数，这就是为什么它在实践中真的不怎么出现。使用逆变涉及到使用函数指针的高阶编程，这些指针采用具有特定生命周期的引用（与通常的“任何生命周期”相反，这涉及到高阶生命周期，它独立于子类型的工作）。</p>
+</blockquote>
+<p>好了，类型理论已经足够了！让我们试着将型变的概念应用于 Rust，并看看一些例子：</p>
+<p>首先，让我们重温一下喵喵叫的狗的例子：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">fn evil_feeder(pet: &amp;mut Animal) {
+    let spike: Dog = ...;
+
+    // `pet` 是一个 Animal，而 Dog 是 Animal 的子类型
+    // 所以这里应该是正确的，对吗...?
+    *pet = spike;
+}
+
+fn main() {
+    let mut mr_snuggles: Cat = ...;
+    evil_feeder(&amp;mut mr_snuggles);  // 将 mr_snuggles 替换为 Dog
+    mr_snuggles.meow();             // 哇，这里发出了狗叫：&quot;MEOWING DOG!&quot;！
+}
+</code></pre>
+<p>如果我们看一下我们的型变表，我们会发现<code>&amp;mut T</code>在<code>T</code>上是<em>不变</em>的。事实证明，这完全解决了问题! 有了不变性，猫是动物的一个子类型这一事实并不重要；<code>&amp;mut Cat</code>仍然不是<code>&amp;mut Animal</code>的一个子类型。然后，静态类型检查器将正确地阻止我们将猫传入<code>evil_feeder</code>。</p>
+<p>子类型的合理性是基于这样的想法：忘记不必要的细节是可以的。但是对于引用来说，被引用的值总是记得这些细节。这个值希望这些细节一直是真实的，如果它的期望被违反，可能会有不正确的行为。</p>
+<p>使<code>&amp;mut T</code>对<code>T</code>具有协变性的问题是，它给了我们修改原始值的权力，<em>而我们却不记得它的所有约束</em>。因此，我们可以让一个人在确定自己仍然有一只猫的时候拥有一只狗。</p>
+<p>有了这一点，我们可以很容易地看到为什么<code>&amp;T</code>在<code>T</code>上的协变是安全的：它不让你修改值，只让你读取它。如果没有任何可以修改的方法，我们就没有办法去把事情搞砸。我们也可以看到为什么<code>UnsafeCell</code>和所有其他内部可变的类型必须是不变的：它们使<code>&amp;T</code>像<code>&amp;mut T</code>一样工作！</p>
+<p>那么，引用的生命周期到底是什么？为什么两种引用在其生命周期内都是协变是安全的？嗯，这里有一个双管齐下的论点：</p>
+<p>首先，最重要的是，<em>在 Rust 中设计子类型的全部目的</em>，就是为了基于生命周期来确定引用之间的子类型关系。我们搞子类型的唯一原因，就是让我们可以在接受活得短的东西的地方，传入活得长的东西。所以它最好是有效的。</p>
+<p>第二，更严肃一点儿讲，生命周期只是引用本身的一部分。各引用方都知道被引用的值的类型，这就是为什么只在一个地方（引用）修改该类型会导致问题。但是如果你在把一个引用交给别人的时候缩小了它的生命周期，这个生命周期信息不会以任何方式共享出去。现在有两个独立的引用并且都具有独立的生命周期，没有办法用另一个引用的生命周期来干扰原始引用的生命周期。</p>
+<p>或者说，搞乱某人的生命周期的唯一方法是建立一只喵喵叫的狗。但是如果你想造一只喵喵狗，生命周期就应该被包裹在一个不变的类型中，防止生命周期被缩减。为了更好地理解这一点，让我们把喵喵狗的问题移植到真正的 Rust 上。</p>
+<p>在喵喵狗的问题中，我们把一个子类型（Cat），转换成一个超类型（Animal），然后借此用一个满足超类型但不满足子类型（Dog）的约束的值来覆盖这个子类型。</p>
+<p>所以，对于生命周期，我们想把一个长生命周期的东西，转换成一个短生命周期的东西，然后利用这个事实把一个生命周期不够长的东西写到期望长生命周期的地方。</p>
+<p>比如：</p>
+<pre><pre class="playground"><code class="language-rust compile_fail edition2018">fn evil_feeder&lt;T&gt;(input: &amp;mut T, val: T) {
+    *input = val;
+}
+
+fn main() {
+    let mut mr_snuggles: &amp;'static str = &quot;meow! :3&quot;;  // mr. snuggles forever!!
+    {
+        let spike = String::from(&quot;bark! &gt;:V&quot;);
+        let spike_str: &amp;str = &amp;spike;                // 仅仅在这个代码块存在
+        evil_feeder(&amp;mut mr_snuggles, spike_str);    // 恶魔降临！
+    }
+    println!(&quot;{}&quot;, mr_snuggles);                     // 内存释放后使用？
+}
+</code></pre></pre>
+<p>当我们运行这个时，我们会得到什么？</p>
+<pre><code class="language-text">error[E0597]: `spike` does not live long enough
+  --&gt; src/main.rs:9:31
+   |
+6  |     let mut mr_snuggles: &amp;'static str = &quot;meow! :3&quot;;  // mr. snuggles forever!!
+   |                          ------------ type annotation requires that `spike` is borrowed for `'static`
+...
+9  |         let spike_str: &amp;str = &amp;spike;                // 仅在这个代码块存活
+   |                               ^^^^^^ borrowed value does not live long enough
+10 |         evil_feeder(&amp;mut mr_snuggles, spike_str);    // 恶魔降临！
+11 |     }
+   |     - `spike` dropped here while still borrowed
+</code></pre>
+<p>意料之中，编译肯定挂了! 让我们详细分析一下这里发生了什么：</p>
+<p>首先让我们看一下新的<code>evil_feeder</code>函数：</p>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn evil_feeder&lt;T&gt;(input: &amp;mut T, val: T) {
+    *input = val;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>它所做的就是接受一个可变的引用和一个值，并用这个值来覆盖被引用的变量。这个函数的重要之处在于，它创建了一个类型平等的约束。它在其签名中明确指出，被引用者和值必须是<em>完全相同的</em>类型。</p>
+<p>同时，在调用者中，我们传入了<code>&amp;mut &amp;'static str</code>和<code>&amp;'spike_str str</code>。</p>
+<p>因为<code>&amp;mut T</code>在<code>T</code>上是不变的，编译器认为它不能对第一个参数应用任何子类型，所以<code>T</code>必须正好是<code>&amp;'static str</code>。</p>
+<p>另一个参数只是一个<code>&amp;'a str</code>，它<em>是</em>对<code>'a</code>的协变。所以编译器采用了一个约束条件：<code>&amp;'spike_str str</code>必须是<code>&amp;'static str</code>的子类型(包括<code>&amp;'static str</code>)，这就意味着<code>'spike_str</code>必须是<code>'static</code>的子类型（包括<code>'static</code>）。也就是说，<code>'spike_str</code>必须包含<code>'static</code>。但是只有一种东西包含<code>'static</code>——<code>'static</code>本身。</p>
+<p>这就是为什么当我们试图将<code>&amp;spike</code>赋值给<code>spike_str</code>时得到一个错误。编译器倒推了一下，认为<code>spike_str</code>必须永远存在，而<code>&amp;spike</code>根本不可能存在那么久。</p>
+<p>因此，尽管引用在它们的生命周期上是协变的，但只要它们被放到一个可能会坏事儿的地方，它们就“继承”了不变。在上例中，当我们把引用放在<code>&amp;mut T</code>中时，我们就继承了不变。</p>
+<p>事实证明，为什么 Box（以及 Vec、Hashmap 等）可以是协变的，道理与生命周期可以是协变的道理非常相似：只要你试图把它们塞进像可变引用这样的东西里，它们就会继承不变，你就不会做任何坏事。</p>
+<p>我们前面没有涉及引用的&quot;按值引用&quot;的方面, 现在我们通过 Box 来关注一下这个方面：</p>
+<p>不像很多语言允许值在任何时候都可以自由别名，Rust 有一个非常严格的规则：如果你能修改或者移动一个值，那么你也一定是唯一可以访问它的人。</p>
+<p>例如以下的代码：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">let mr_snuggles: Box&lt;Cat&gt; = ..;
+let spike: Box&lt;Dog&gt; = ..;
+
+let mut pet: Box&lt;Animal&gt;;
+pet = mr_snuggles;
+pet = spike;
+</code></pre>
+<p>如果我们忘记了<code>mr_snuggles</code>是一只猫，或者我们用一只狗覆盖了他，这一点儿都没有问题，因为一旦我们把<code>mr_snuggles</code>移到一个只知道他是动物的变量上，<strong>我们就破坏了宇宙中唯一记得他是一只猫的东西</strong>了！</p>
+<p>不可变引用是协变的, 是因为它们不会让你修改任何东西; 与此相反, 拥有所有权的值是协变的, 是因为它们<em>会</em>让你修改任何东西。旧位置和新位置之间没有任何联系。实施&quot;按值子类型化&quot; (by-value subtyping) 是一种不可逆的信息破坏行为，如果没有任何关于事物过去如何的记忆，就没有人可以被误导着根据那些旧的信息行事。</p>
+<p>好了，接下来我们只剩下一件事要解释了：函数指针。</p>
+<p>为了理解为什么<code>fn(T) -&gt; U</code>应该是对<code>U</code>的协变，让我们看以下函数签名：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">fn get_animal() -&gt; Animal;
+</code></pre>
+<p>这个函数声称要产生一个动物。因此，提供一个具有以下签名的函数是完全有效的：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">fn get_animal() -&gt; Cat;
+</code></pre>
+<p>毕竟，猫是动物，所以总是产生一只猫是产生动物的一个完全有效的方法。或者把它与真正的 Rust 联系起来：如果我们需要一个函数来产生<code>'short</code>生命周期的东西，那么它产生<code>'long</code>生命周期的东西是完全可以的。</p>
+<p>然而，同样的逻辑并不适用于<em>函数参数</em>。假设我们想要用</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">fn handle_animal(Cat);
+</code></pre>
+<p>满足以下约束：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">fn handle_animal(Animal);
+</code></pre>
+<p>第二个函数可以接受 Dogs，但第一个函数绝对不行。协变在这里不起作用。但如果我们把它反过来，它实际上就<em>成立了</em>! 如果我们需要一个可以处理猫的函数，那么一个可以处理<em>任何</em>动物的函数肯定也可以工作。或者把它与真正的 Rust 联系起来：如果我们需要一个可以处理任何至少<code>'long</code>生命周期的东西的函数，那么它完全可以处理任何至少<code>'short</code>生命周期的东西。</p>
+<p>这就是为什么函数类型，与语言中的其他东西不同，在它们的参数上是<strong>逆变</strong>的。</p>
+<p>现在，对于标准库提供的类型来说，这一切都很好，但对于<em>你</em>定义的类型来说，如何确定型变呢？非正式地来看，一个结构继承了其字段的型变。如果一个结构<code>MyType</code>有一个泛型参数<code>A</code>，用于字段<code>a</code>，那么 MyType 对<code>A</code>的型变正好是<code>a</code>对<code>A</code>的型变。</p>
+<p>然而，如果<code>A</code>被用于多个字段：</p>
+<ul>
+<li>如果所有对<code>A</code>的使用都是协变的，那么 MyType 对<code>A</code>也是协变的</li>
+<li>如果所有对<code>A</code>的使用都是逆变的，那么 MyType 对<code>A</code>也是逆变的</li>
+<li>否则，MyType 在<code>A</code>上是不变的</li>
+</ul>
+<pre><pre class="playground"><code class="language-rust edition2018">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::cell::Cell;
+
+struct MyType&lt;'a, 'b, A: 'a, B: 'b, C, D, E, F, G, H, In, Out, Mixed&gt; {
+    a: &amp;'a A,     // covariant over 'a and A
+    b: &amp;'b mut B, // covariant over 'b and invariant over B
+
+    c: *const C,  // covariant over C
+    d: *mut D,    // invariant over D
+
+    e: E,         // covariant over E
+    f: Vec&lt;F&gt;,    // covariant over F
+    g: Cell&lt;G&gt;,   // invariant over G
+
+    h1: H,        // would also be covariant over H except...
+    h2: Cell&lt;H&gt;,  // invariant over H, because invariance wins all conflicts
+
+    i: fn(In) -&gt; Out,       // contravariant over In, covariant over Out
+
+    k1: fn(Mixed) -&gt; usize, // would be contravariant over Mixed except..
+    k2: Mixed,              // invariant over Mixed, because invariance wins all conflicts
+}
+<span class="boring">}
+</span></code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="hrtb.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="dropck.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="hrtb.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="dropck.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

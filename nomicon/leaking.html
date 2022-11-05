@@ -1,0 +1,417 @@
+<!DOCTYPE HTML>
+<html lang="zh-hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>泄漏 - Rust 秘典（死灵书）</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        <meta name="keywords" content="Rust, 秘典, nomicon, 死灵书, 中文, 翻译, Rustonomicon, unsafe">
+<meta name="author" content="Pure White">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FFJKFQ4JX4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FFJKFQ4JX4');
+</script>
+<!-- 百度统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6342f4a7e260f8ada187c3b7bf87e56f";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- Clarity tracking code for https://nomicon.purewhite.io/ -->
+<script>
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "8mgxa5h4sc");
+</script>
+<!-- 头条搜索 -->
+<script>
+(function(){
+var el = document.createElement("script");
+el.src = "https://lf1-cdn-tos.bytegoofy.com/goofy/ttzz/push.js?89c3e1b9546c0b1fe304a3bd37debc6720dd0166be5ad303fb3f12e317cfad8b45f9b46c8c41e6235de98982cdddb9785e566c8c06b0b36aec55fccc04fff972a6c09517809143b97aad1198018b8352";
+el.id = "ttzz";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(el, s);
+})(window)
+</script>
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/nomicon.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html" class="active"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 秘典（死灵书）</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#泄漏" id="泄漏">泄漏</a></h1>
+<p>基于所有权的资源管理是为了简化组合：你在创建对象时获得资源，在对象被销毁时释放资源。由于销毁是自动为你处理的，这意味着你不能忘记释放资源，而且会尽快地释放！当然这很完美，我们所有的问题都解决了…………么？</p>
+<p>一切都很糟糕，我们有新的、奇特的问题需要去解决。</p>
+<p>很多人相信 Rust 能防止资源泄漏。在实践中，这基本上是对的。如果你看到一个安全的 Rust 程序以不受控制的方式泄漏资源，你会感到惊讶。</p>
+<p>然而从理论的角度来看，无论你怎么看，都绝对不是这样的。在最严格的意义上，“泄漏”是如此抽象，以至于无法预防。在程序开始时初始化一个集合，用大量带有析构器的对象填充它，然后进入一个从未引用过它的无限事件循环，这是非常容易的。这个集合将毫无用处地坐着，守着它宝贵的资源，直到程序终止（无论如何，这时所有这些资源都会被操作系统回收）。</p>
+<p>我们可以考虑一种更有限的泄漏形式：未能丢弃一个无法到达的值。Rust 也没有防止这种情况。事实上，Rust <em>有一个函数可以做到这一点</em>。<code>mem::forget</code>。这个函数消耗它所传递的值，<em>然后不运行它的析构器</em>。</p>
+<p>在过去，<code>mem::forget</code>被标记为不安全，作为对使用它的一种提示，因为不调用一个析构器通常不是一件好的事情（尽管对一些特殊的不安全代码很有用）。然而，这通常被认为是一种站不住脚的立场：在安全代码中，有很多方法可以不调用析构函数。最著名的例子是使用内部可变性创建一个引用计数指针的循环引用。</p>
+<p>对于安全代码来说，假设析构器的泄漏不会发生是合理的，因为任何泄漏析构器的程序都可能是错误的。然而，<em>不安全的</em>代码不能依赖析构器的运行来保证安全。对于大多数类型来说，这并不重要：如果你泄露了析构函数，那么根据定义，该类型是不可访问的，所以这并不重要，对吗？例如，如果你泄露了一个<code>Box&lt;u8&gt;</code>，那么你会浪费一些内存，但这几乎不会违反内存安全。</p>
+<p>然而，我们必须注意的是<em>代理</em>类型的解构器泄露。这些类型管理对一个独立对象的访问，但实际上并不拥有它。代理对象是相当罕见的，你需要关注的代理对象就更少了。我们将专注于标准库中三个有趣的例子：</p>
+<ul>
+<li><code>vec::Drain</code></li>
+<li><code>Rc</code></li>
+<li><code>thread::scoped::JoinGuard</code></li>
+</ul>
+<h2><a class="header" href="#drain" id="drain">Drain</a></h2>
+<p><code>drain</code>是一个 collections API，它将数据从容器中移出而不消耗容器。这使我们能够在对一个<code>Vec</code>的所有内容都获得所有权后重新使用其底层的内存分配。它产生了一个迭代器（Drain），并按值返回 Vec 的内容。</p>
+<p>现在，考虑一下迭代中的 Drain：一些值已经被移出，而另一些还没有。这意味着 Vec 的一部分现在充满了逻辑上未初始化的数据! 我们可以在每次移出一个值的时候对 Vec 中的所有元素进行后移，但这将会产生非常灾难性的性能后果。</p>
+<p>相反，我们希望 Drain 能在 Vec 被删除时修复它底层需要的内存分配（译者注：也就是 Vec 的内存分配）。它应该自己运行直到完成，并回移任何没有被移除的元素（drain 支持子范围），然后修复 Vec 的<code>len</code>。它甚至是 unwind 安全的。很简单!</p>
+<p>现在考虑下面的情况：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">let mut vec = vec![Box::new(0); 4];
+
+{
+    // 开始 drain，vec 无法被再次访问
+    let mut drainer = vec.drain(..);
+
+    // 从 drain 中取出两个元素，然后立刻销毁它们
+    drainer.next();
+    drainer.next();
+
+    // 销毁 drainer，但是不调用它的 drop 函数
+    mem::forget(drainer);
+}
+
+// Oops，vec[0] 已经被 drop 了，我们正在读一块已经释放的内存
+println!(&quot;{}&quot;, vec[0]);
+</code></pre>
+<p>这很明显不是好事。不幸的是，我们正处于两难境地：在每一步保持一致的状态有巨大的成本（并且会抵消 API 带来的任何好处）。如果不能保持一致的状态，我们就会在安全代码中出现未定义的行为（使 API 不健全）。</p>
+<p>那么我们能做什么呢？好吧，我们可以选择一个微弱的一致性状态：当我们开始迭代时，将 Vec 的 len 设置为 0，并在必要时在析构器中修复它。这样一来，如果一切执行正常，我们就能以最小的开销获得所需的行为。但是如果有人<em>胆敢</em>在迭代过程中 forget 了我们，那打不了就是<em>泄露更多</em>（并且可能让 Vec 处于一个虽然意外的但其他方面保持一致的状态）。既然我们已经接受了 mem::forget 是安全的，那么这就必须绝对是安全的。我们把一个泄漏导致更多的泄漏称为<em>泄漏放大</em>。</p>
+<h2><a class="header" href="#rc" id="rc">Rc</a></h2>
+<p>Rc 是一个有趣的例子，因为乍一看，它似乎根本就不是一个代理值。毕竟，它管理着它所指向的数据，丢掉一个值的所有 Rcs 就会丢掉这个值。泄露一个 Rc 似乎并不特别危险。它将使 refcount 永久增加，并阻止数据被释放或丢弃，但这似乎就像 Box，对吗？</p>
+<p>并不是这样。</p>
+<p>让我们考虑一下 Rc 的一个简化实现：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">struct Rc&lt;T&gt; {
+    ptr: *mut RcBox&lt;T&gt;,
+}
+
+struct RcBox&lt;T&gt; {
+    data: T,
+    ref_count: usize,
+}
+
+impl&lt;T&gt; Rc&lt;T&gt; {
+    fn new(data: T) -&gt; Self {
+        unsafe {
+            // 如果 heap::allocate 像这样不是很好吗？
+            let ptr = heap::allocate::&lt;RcBox&lt;T&gt;&gt;();
+            ptr::write(ptr, RcBox {
+                data: data,
+                ref_count: 1,
+            });
+            Rc { ptr: ptr }
+        }
+    }
+
+    fn clone(&amp;self) -&gt; Self {
+        unsafe {
+            (*self.ptr).ref_count += 1;
+        }
+        Rc { ptr: self.ptr }
+    }
+}
+
+impl&lt;T&gt; Drop for Rc&lt;T&gt; {
+    fn drop(&amp;mut self) {
+        unsafe {
+            (*self.ptr).ref_count -= 1;
+            if (*self.ptr).ref_count == 0 {
+                // drop 数据并且释放所占据的内存
+                ptr::read(self.ptr);
+                heap::deallocate(self.ptr);
+            }
+        }
+    }
+}
+</code></pre>
+<p>这段代码包含了一个隐含的、微妙的假设：<code>ref_count</code>可以装入<code>usize</code>，因为内存中的 Rcs 不能超过<code>usize::MAX</code>。然而这本身就假设<code>ref_count</code>准确反映了内存中的 Rcs 数量，我们知道用<code>mem::forget</code>是错误的。使用<code>mem::forget</code>我们可以溢出<code>ref_count</code>，然后用大量的 Rcs 将其降至 0。然后我们就可以愉快地对内部数据进行 use-after-free 了。负负得正？</p>
+<p>这个问题可以通过检查<code>ref_count</code>并做一些防御来解决。标准库的立场是直接 abort，因为你的程序肯定是摊上事儿了，摊上大事儿了。卧槽，这真是一个可笑的边界情况。</p>
+<h2><a class="header" href="#threadscopedjoinguard" id="threadscopedjoinguard">thread::scoped::JoinGuard</a></h2>
+<blockquote>
+<p>实际上这个 API 很早就从标准库中删除了，具体原因可以参考 https://github.com/rust-lang/rust/issues/24292。</p>
+<p>原文也有人提过 issue 询问是否可以删除，得到了答复说，这个例子仍然是非常重要的，所以保留了下来：https://github.com/rust-lang/nomicon/issues/57。</p>
+</blockquote>
+<p>thread::scoped API 旨在允许引用其父线程栈上的数据的线程被创建出来，而不需要对这些数据进行任何同步。它确保父线程在任何共享数据失效之前 join 子线程。</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">pub fn scoped&lt;'a, F&gt;(f: F) -&gt; JoinGuard&lt;'a&gt;
+    where F: FnOnce() + Send + 'a
+</code></pre>
+<p>这里<code>f</code>是一些闭包，供其他线程执行。这里我们定义<code>F: Send +'a</code>意思是它捕获了生命周期为<code>'a</code>的数据，而且它要么拥有该数据，要么该数据是<code>Sync</code>的（暗示<code>&amp;data</code>是<code>Send</code>）。</p>
+<p>因为 JoinGuard 有一个生命周期，它通过借用捕获了所有它需要的父线程中的数据。这意味着 JoinGuard 不能超过其他线程正在处理的数据的生命周期。当<em>JoinGuard</em>被丢弃时，它会 block 父线程，确保子线程中捕获的数据在父线程中 drop 之前失效。</p>
+<p>使用方法看起来像这样：</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">let mut data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+{
+    let mut guards = vec![];
+    for x in &amp;mut data {
+        // 将可变引用移入闭包，并且在另外一个线程执行闭包，
+        // 闭包有一个生命周期，由其保存的引用的生命周期决定，
+        // 返回的句柄和闭包也有相同的生命周期，
+        // 所以它也和闭包一样可变引用了 x，
+        // 也就意味着在句柄（线程）销毁之前，我们不能访问 x
+        let guard = thread::scoped(move || {
+            *x *= 2;
+        });
+        // 将线程句柄保存起来之后使用
+        guards.push(guard);
+    }
+    // 所有的句柄在这里被 drop, 强制线程 Join（主线程在此阻塞），
+    // 等到所有的线程 join 之后，其借用的数据就过期了，
+    // 因此又可以在主线程中访问了
+}
+// 在这里数据绝对已经改变了
+</code></pre>
+<p>原则上，这完全是可行的！Rust 的所有权系统完美地保证了这一点！……只是它必须依赖于一个保证被调用到的析构器才是安全的。</p>
+<!-- ignore: simplified code -->
+<pre><code class="language-rust ignore">let mut data = Box::new(0);
+{
+    let guard = thread::scoped(|| {
+        // 好一点的情况是存在数据竞争，更坏的是释放内存后使用的问题
+        *data += 1;
+    });
+    //  因为 guard 被主动 forget 了，不会调用 drop 方法，主线程不会阻塞等待 guard 结束
+    mem::forget(guard);
+}
+// Box在这里被销毁，而不确定子线程是否会在这里尝试访问它
+</code></pre>
+<p>在这里，一个会运行的析构器对 API 来说是非常基本的。因此它不得不被废弃，而采用完全不同的设计。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="destructors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="unwinding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="destructors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="unwinding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
