@@ -27,7 +27,10 @@ docker pull wcjiang/rust-cn-document-for-docker
 ```bash
 docker run --name rust-document --restart always -itd -p 9613:3000 wcjiang/rust-cn-document-for-docker:latest
 # Or
-docker run --name rust-document --restart always -itd -p 9613:3000 ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest
+docker run --name rust-document \
+  --restart always -itd \
+  -p 9613:3000 \
+  ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest
 ```
 
 在浏览器中访问以下 URL
