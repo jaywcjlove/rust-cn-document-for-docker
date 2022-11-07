@@ -57,6 +57,7 @@ http://localhost:9613/quick-reference/index.html
 http://localhost:9613/quick-reference/docs/rust.html  
 http://localhost:9613/quick-reference/docs/cargo.html  
 http://localhost:9613/rust-course/index.html  
+http://localhost:9613/rusty-book/index.html
 
 ## License
 
