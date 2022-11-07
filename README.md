@@ -1,4 +1,4 @@
-Rust 中文文档示例文档
+Rust 相关中文文档
 ===
 
 [![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/wcjiang/rust-cn-document-for-docker?logo=docker)](https://hub.docker.com/r/wcjiang/rust-cn-document-for-docker)
