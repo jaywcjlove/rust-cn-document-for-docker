@@ -17,6 +17,9 @@ Github Repo | last commit | home
 [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/edition-guide?style=flat&label=last)](https://github.com/rust-lang-cn/edition-guide/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/)
 [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/)
 [Rust 秘典](https://github.com/rust-lang-cn/nomicon-zh-Hans) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/nomicon-zh-Hans?style=flat&label=last)](https://github.com/rust-lang-cn/nomicon-zh-Hans/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/nomicon/)
+[Cargo 备忘清单(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/quick-reference/docs/cargo.html)
+[Rust 备忘清单(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/quick-reference/docs/rust.html)
+[Quick Reference(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/quick-reference/index.html)
 
 ## Docker
 
@@ -48,6 +51,9 @@ http://localhost:9613/rust-cookbook/
 http://localhost:9613/std/std/  
 http://localhost:9613/rust-by-example-cn/  
 http://localhost:9613/nomicon/  
+http://localhost:9613/quick-reference/index.html  
+http://localhost:9613/quick-reference/docs/rust.html 
+http://localhost:9613/quick-reference/docs/cargo.html 
 
 ## License
 
