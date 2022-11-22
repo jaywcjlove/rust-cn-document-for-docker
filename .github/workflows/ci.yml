@@ -234,43 +234,96 @@ jobs:
             
             ${{ steps.changelog.outputs.changelog }}
 
+
       # Create Docker Image
-      - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build rust-cn-document-for-docker image
-        run: docker image build -t rust-cn-document-for-docker .
+      - name: Build and push image:latest
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          context: .
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:latest
 
-      - name: Tags & Push image
-        run: |
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          echo "outputs.tag - $VERSION"
-          docker tag rust-cn-document-for-docker ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:$VERSION
-          docker tag rust-cn-document-for-docker ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:latest
-          docker push ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:$VERSION
-          docker push ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:latest
+      - name: Build and push image:tags
+        uses: docker/build-push-action@v3
+        if: steps.create_tag.outputs.successful
+        with:
+          push: true
+          context: .
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{steps.changelog.outputs.version}}
 
       # Create Docker Image in Github
-      - name: Login to GitHub registry
-        run: echo ${{ github.token }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Login to the GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build docker image
-        run: docker build -t ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest .
+      - name: Build and push image:latest
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          context: .
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest
 
-      - name: Publish to GitHub registry
-        run: docker push ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest
+      - name: Build and push image:tags
+        uses: docker/build-push-action@v3
+        if: steps.create_tag.outputs.successful
+        with:
+          push: true
+          context: .
+          platforms: linux/amd64,linux/arm64
+          tags: ghcr.io/jaywcjlove/rust-cn-document-for-docker:${{steps.changelog.outputs.version}}
 
-      - name: Tag docker image (beta) and publish to GitHub registry
-        run: |
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+      # # Create Docker Image
+      # - name: Docker login
+      #   run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      # - name: Build rust-cn-document-for-docker image
+      #   run: docker image build -t rust-cn-document-for-docker .
+
+      # - name: Tags & Push image
+      #   run: |
+      #     # Strip git ref prefix from version
+      #     VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+      #     # Strip "v" prefix from tag name
+      #     [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+      #     echo "outputs.tag - $VERSION"
+      #     docker tag rust-cn-document-for-docker ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:$VERSION
+      #     docker tag rust-cn-document-for-docker ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:latest
+      #     docker push ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:$VERSION
+      #     docker push ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:latest
+
+      # # Create Docker Image in Github
+      # - name: Login to GitHub registry
+      #   run: echo ${{ github.token }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      # - name: Build docker image
+      #   run: docker build -t ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest .
+
+      # - name: Publish to GitHub registry
+      #   run: docker push ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest
+
+      # - name: Tag docker image (beta) and publish to GitHub registry
+      #   run: |
+      #     # Strip git ref prefix from version
+      #     VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+      #     # Strip "v" prefix from tag name
+      #     [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           
-          echo "version: v$VERSION"
-          docker tag ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest ghcr.io/jaywcjlove/rust-cn-document-for-docker:$VERSION
-          docker push ghcr.io/jaywcjlove/rust-cn-document-for-docker:$VERSION
+      #     echo "version: v$VERSION"
+      #     docker tag ghcr.io/jaywcjlove/rust-cn-document-for-docker:latest ghcr.io/jaywcjlove/rust-cn-document-for-docker:$VERSION
+      #     docker push ghcr.io/jaywcjlove/rust-cn-document-for-docker:$VERSION
