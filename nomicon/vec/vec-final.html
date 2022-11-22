@@ -218,7 +218,6 @@ use std::ptr::{self, NonNull};
 struct RawVec&lt;T&gt; {
     ptr: NonNull&lt;T&gt;,
     cap: usize,
-    _marker: PhantomData&lt;T&gt;,
 }
 
 unsafe impl&lt;T: Send&gt; Send for RawVec&lt;T&gt; {}
@@ -234,7 +233,6 @@ impl&lt;T&gt; RawVec&lt;T&gt; {
         RawVec {
             ptr: NonNull::dangling(),
             cap: cap,
-            _marker: PhantomData,
         }
     }
 

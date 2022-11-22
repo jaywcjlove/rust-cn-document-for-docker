@@ -221,9 +221,11 @@ s.parentNode.insertBefore(el, s);
 
     unsafe {
         // ptr::copy(src, dest, len) 的含义： &quot;从 dst 复制连续的 len 个元素到 src &quot;
-        ptr::copy(self.ptr.as_ptr().add(index),
-                  self.ptr.as_ptr().add(index + 1),
-                  self.len - index);
+        ptr::copy(
+            self.ptr.as_ptr().add(index),
+            self.ptr.as_ptr().add(index + 1),
+            self.len - index,
+        );
         ptr::write(self.ptr.as_ptr().add(index), elem);
         self.len += 1;
     }
@@ -237,9 +239,11 @@ s.parentNode.insertBefore(el, s);
     unsafe {
         self.len -= 1;
         let result = ptr::read(self.ptr.as_ptr().add(index));
-        ptr::copy(self.ptr.as_ptr().add(index + 1),
-                  self.ptr.as_ptr().add(index),
-                  self.len - index);
+        ptr::copy(
+            self.ptr.as_ptr().add(index + 1),
+            self.ptr.as_ptr().add(index),
+            self.len - index,
+        );
         result
     }
 }

@@ -218,16 +218,16 @@ s.parentNode.insertBefore(el, s);
     len: usize,
 }
 </code></pre>
-<p>这确实可以编译成功。但是不幸的是，这是错误的。首先，编译器会给我们太严格的可变性（variance）。比如一个<code>&amp;Vec&lt;&amp;'static str&gt;</code>不能用在预期<code>&amp;Vec&lt;&amp;'a str&gt;</code>的地方。更重要的是，它将给 drop checker 提供不正确的所有权信息，因为它将保守地假设我们不拥有任何<code>T</code>类型的值。参见<a href="../ownership.html">所有权和生命周期一章</a>中关于可变和 drop checker 的所有细节。</p>
+<p>这确实可以编译成功。但是不幸的是，这有些过于严格了。编译器会给我们太严格的可变性（variance）。比如一个<code>&amp;Vec&lt;&amp;'static str&gt;</code>不能用在预期<code>&amp;Vec&lt;&amp;'a str&gt;</code>的地方。参见<a href="../ownership.html">所有权和生命周期一章</a>中关于可变和 drop checker 的所有细节。</p>
 <p>正如我们在所有权一章中看到的，当标准库拥有一个分配对象的原始指针时，它使用<code>Unique&lt;T&gt;</code>来代替<code>*mut T</code>。Unique 是不稳定的，所以如果可能的话，我们希望不要使用它。</p>
 <p>简而言之，Unique 是一个原始指针的包装，并声明以下内容：</p>
 <ul>
 <li>我们对<code>T</code>是协变的</li>
-<li>我们可以拥有一个<code>T</code>类型的值（用于 drop checker）</li>
+<li>我们可以拥有一个<code>T</code>类型的值（这和我们在这的例子无关，但是可以参考<a href="../phantom-data.html"><code>PhantonData</code></a>那章来看看为什么真正的<code>std::vec::Vec&lt;T&gt;</code>需要这个）</li>
 <li>如果<code>T</code>是<code>Send/Sync</code>，我们就是<code>Send/Sync</code>。</li>
 <li>我们的指针从不为空（所以<code>Option&lt;Vec&lt;T&gt;&gt;</code>是空指针优化的）</li>
 </ul>
-<p>我们可以在稳定的 Rust 中实现上述所有的要求。为此，我们不使用<code>Unique&lt;T&gt;</code>，而是使用<a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull&lt;T&gt;</code></a>，这是对原始指针的另一种包装，它为我们提供了上述的两个属性，即它在<code>T</code>上是协变的，并且被声明为永不为空。通过添加一个<code>PhantomData&lt;T&gt;</code>（用于丢弃检查），并在<code>T</code>是<code>Send/Sync</code>的情况下实现<code>Send/Sync</code>，我们得到与使用<code>Unique&lt;T&gt;</code>相同的结果：</p>
+<p>我们可以在稳定的 Rust 中实现上述所有的要求。为此，我们不使用<code>Unique&lt;T&gt;</code>，而是使用<a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull&lt;T&gt;</code></a>，这是对原始指针的另一种包装，它为我们提供了上述的两个属性，即它在<code>T</code>上是协变的，并且被声明为永不为空。通过在<code>T</code>是<code>Send/Sync</code>的情况下实现<code>Send/Sync</code>，我们得到与使用<code>Unique&lt;T&gt;</code>相同的结果：</p>
 <pre><pre class="playground"><code class="language-rust edition2018">use std::ptr::NonNull;
 use std::marker::PhantomData;
 
@@ -235,7 +235,6 @@ pub struct Vec&lt;T&gt; {
     ptr: NonNull&lt;T&gt;,
     cap: usize,
     len: usize,
-    _marker: PhantomData&lt;T&gt;,
 }
 
 unsafe impl&lt;T: Send&gt; Send for Vec&lt;T&gt; {}

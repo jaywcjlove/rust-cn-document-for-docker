@@ -222,7 +222,7 @@ s.parentNode.insertBefore(el, s);
 <!-- ignore: simplified code -->
 <pre><code class="language-rust ignore">impl&lt;T&gt; RawVec&lt;T&gt; {
     fn new() -&gt; Self {
-        // !0 等价于 usize::MAX，这一段分支代码在编译期间就可以计算出结果返回的结果，返回给 cap
+        // 这一段分支代码在编译期间就可以计算出结果返回的结果，返回给 cap
         let cap = if mem::size_of::&lt;T&gt;() == 0 { !0 } else { 0 };
 
         // `NonNull::dangling()` 有双重含义:
@@ -230,7 +230,6 @@ s.parentNode.insertBefore(el, s);
         RawVec {
             ptr: NonNull::dangling(),
             cap: cap,
-            _marker: PhantomData,
         }
     }
 
