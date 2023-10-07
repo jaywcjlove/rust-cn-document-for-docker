@@ -112,6 +112,10 @@ jobs:
         env: 
           MDBOOK_BOOK__LANGUAGE: zh-CN
         run: |
+          cargo install mdbook-svgbob
+          cargo install mdbook-i18n-helpers
+          cargo install --path mdbook-exerciser
+          cargo install --path mdbook-course
           mdbook build -d book/zh-CN
 
       - run: |
