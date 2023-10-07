@@ -254,7 +254,10 @@ jobs:
 
       - name: Print tag version
         run: |
-          echo "Tag version: ${GITHUB_REF#refs/tags/}"
+          echo "Tag version: ${GITHUB_REF#refs/tags/v}"
+
+      - name: Set version variable
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
       - name: Build and push image:tags
         uses: docker/build-push-action@v3
@@ -262,7 +265,7 @@ jobs:
           push: true
           context: .
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{steps.changelog.outputs.version}}
+          tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{ env.VERSION }}
 
       - name: Modify README.md
         uses: jaywcjlove/github-action-modify-file-content@main
