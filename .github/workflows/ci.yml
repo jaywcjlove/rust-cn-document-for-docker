@@ -125,7 +125,7 @@ jobs:
           cp -rp cargo/book dist/cargo
           cp -rp edition-guide/book dist/edition-guide
           cp -rp nomicon/book dist/nomicon
-          cp -rp comprehensive-rust/book/zh-CN dist/comprehensive-rust
+          cp -rp comprehensive-rust/book/zh-CN/html dist/comprehensive-rust
       
       - name: Create index.html
         working-directory: ./dist
