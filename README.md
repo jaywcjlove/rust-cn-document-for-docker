@@ -22,6 +22,7 @@ Github Repo | last commit | home
 [Quick Reference(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/quick-reference/index.html)
 [Rust 语言圣经](https://github.com/sunface/rust-course) | [![GitHub last commit](https://img.shields.io/github/last-commit/sunface/rust-course?style=flat&label=last)](https://github.com/sunface/rust-course/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-course/index.html)
 [Rusty Book(锈书)](https://github.com/rustlang-cn/rusty-book) | [![GitHub last commit](https://img.shields.io/github/last-commit/rustlang-cn/rusty-book?style=flat&label=last)](https://github.com/rustlang-cn/rusty-book/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rusty-book/index.html)
+[Comprehensive Rust 🦀](https://github.com/google/comprehensive-rust) | [![GitHub last commit](https://img.shields.io/github/last-commit/google/comprehensive-rust?style=flat&label=last)](https://github.com/google/comprehensive-rust/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/comprehensive-rust/index.html)
 
 ## Docker
 
