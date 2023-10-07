@@ -64,12 +64,7 @@ jobs:
       - run: cp -rp std/doc dist/std
       - run: rm -rf dist/book/.git
       - run: rm -rf dist/rust-by-example-cn/.git
-      - run: rm -rf rustdoc-cn/.git
-      - run: rm -rf reference-cn/.git
       - run: rm -rf comprehensive-rust/.git
-      - run: rm -rf rust-cookbook-cn/.git
-      - run: rm -rf cargo/.git
-      - run: rm -rf edition-guide/.git
       - run: rm -rf quick-reference/.git
       - run: cp -rp quick-reference dist/quick-reference
       - run: rm -rf rust-course/.git
@@ -81,31 +76,43 @@ jobs:
         working-directory: reference-cn
         run: |
           mdbook build
+          rm -rf .git
+          cp -rp reference-cn/book dist/reference
 
       - name: rustdoc-cn
         working-directory: rustdoc-cn
         run: |
           mdbook build
+          rm -rf .git
+          cp -rp rustdoc-cn/book dist/rustdoc
 
       - name: rust-cookbook-cn
         working-directory: rust-cookbook-cn
         run: |
           mdbook build
+          rm -rf .git
+          cp -rp rust-cookbook-cn/book dist/rust-cookbook
 
       - name: cargo
         working-directory: cargo
         run: |
           mdbook build
+          rm -rf .git
+          cp -rp cargo/book dist/cargo
 
       - name: edition-guide
         working-directory: edition-guide
         run: |
           mdbook build
+          rm -rf .git
+          cp -rp edition-guide/book dist/edition-guide
 
       - name: nomicon
         working-directory: nomicon
         run: |
           mdbook build
+          rm -rf .git
+          cp -rp nomicon/book dist/nomicon
 
       - name: comprehensive-rust
         working-directory: comprehensive-rust
@@ -117,14 +124,7 @@ jobs:
           cargo install --path mdbook-exerciser
           cargo install --path mdbook-course
           mdbook build -d book/zh-CN
-
-      - run: |
-          cp -rp reference-cn/book dist/reference
-          cp -rp rustdoc-cn/book dist/rustdoc
-          cp -rp rust-cookbook-cn/book dist/rust-cookbook
-          cp -rp cargo/book dist/cargo
-          cp -rp edition-guide/book dist/edition-guide
-          cp -rp nomicon/book dist/nomicon
+          rm -rf .git
           cp -rp comprehensive-rust/book/zh-CN/html dist/comprehensive-rust
       
       - name: Create index.html
