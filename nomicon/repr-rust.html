@@ -220,9 +220,9 @@ s.parentNode.insertBefore(el, s);
 <li>enums （命名总和类型 —— 有标签的联合体 named sum types -- tagged unions）</li>
 <li>unions （无标签的联合体 untagged unions）</li>
 </ul>
-<p>如果一个枚举的变体都没有相关联的数据，那么它就被称为<em>无域</em>。</p>
+<p>如果一个枚举的所有变体都没有相关联的数据，那么它就被称为<em>无字段(field-less)</em>。</p>
 <p>默认情况下，复合结构的对齐方式等于其字段对齐方式的最大值。因此，Rust 会在必要时插入填充，以确保所有字段都正确对齐，并且整个类型的大小是其对齐的倍数。比如说：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A {
@@ -233,7 +233,7 @@ s.parentNode.insertBefore(el, s);
 <span class="boring">}
 </span></code></pre></pre>
 <p>将在目标上以 32 位对齐，将这些基本类型对齐到它们各自的大小。因此，整个结构的大小将是 32 位的倍数。它可能变成：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A {
@@ -245,8 +245,8 @@ s.parentNode.insertBefore(el, s);
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>或者，也许：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p>或者：</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A {
@@ -257,8 +257,8 @@ s.parentNode.insertBefore(el, s);
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>所有数据都存储在结构中，正如你在 C 语言中所期望的那样。然而，除了数组（密集包装且无序）之外，数据的布局在默认情况下没有指定。给出以下两个结构的定义：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p>所有数据都如同C语言中的一样，直接存储在结构里。然而，除了数组（密集排列且有序）之外，数据的布局在默认情况下都不是确定的。给出以下两个结构的定义：</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct A {
@@ -273,9 +273,9 @@ struct B {
 <span class="boring">}
 </span></code></pre></pre>
 <p>Rust <em>确实</em>保证 A 的两个实例的数据布局完全相同。然而，Rust 目前<em>并不</em>保证 A 的实例与 B 的实例具有相同的字段排序或填充。</p>
-<p>对于我们编写的 A 和 B 来说，这一点似乎是迂腐的，但是 Rust 的其他几个特性使得该语言有必要以复杂的方式来处理数据布局。</p>
+<p>对于我们编写的 A 和 B 来说，这一点似乎是没有必要的，但是 Rust 的其他几个特性使得该语言有必要以复杂的方式来处理数据布局。</p>
 <p>例如，考虑这个结构：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Foo&lt;T, U&gt; {
@@ -285,7 +285,7 @@ struct B {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>现在考虑一下<code>Foo&lt;u32, u16&gt;</code>和<code>Foo&lt;u16, u32&gt;</code>的单态。如果 Rust 按照指定的顺序排列字段，我们希望它能对结构中的值进行填充以满足其对齐要求。因此，如果 Rust 不对字段重新排序，我们希望它能产生以下结果：</p>
+<p>现在考虑一下<code>Foo&lt;u32, u16&gt;</code>和<code>Foo&lt;u16, u32&gt;</code>的单态化的结果。如果 Rust 按照指定的顺序排列字段，我们希望它能对结构中的值进行填充以满足其对齐要求。因此，如果 Rust 不对字段重新排序，我们希望它能产生以下结果：</p>
 <!-- ignore: explanation code -->
 <pre><code class="language-rust ignore">struct Foo&lt;u16, u32&gt; {
     count: u16,
@@ -301,9 +301,9 @@ struct Foo&lt;u32, u16&gt; {
     _pad2: u16,
 }
 </code></pre>
-<p>后一种情况很显然浪费了空间，对空间的最佳利用要求不同的单体有<em>不同的字段排序</em>。</p>
-<p>枚举使这种考虑变得更加复杂，直观地说，一个枚举如下：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p>后一种情况很显然浪费了空间，更高效地利用空间要求不同的单体有<em>不同的字段排序</em>。</p>
+<p>枚举使情况变得更加复杂，直观地说，一个枚举如下：</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Foo {
@@ -314,7 +314,7 @@ struct Foo&lt;u32, u16&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>可能会被布局成：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct FooRepr {
@@ -323,9 +323,9 @@ struct Foo&lt;u32, u16&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>事实上，这大约正是它的布局方式（根据<code>tag</code>的大小和位置来调整）。</p>
-<p>然而，在一些情况下，这样的表述是低效的。这方面的典型案例是 Rust 的“空指针优化”：一个由单个外部单元变量（例如<code>None</code>）和一个（可能嵌套的）非空指针变量（例如<code>Some(&amp;T)</code>）组成的枚举，使得标签没有必要。空指针可以安全地被解释为单位（<code>None</code>）的变体。这导致的结果是，例如，<code>size_of::&lt;Option&lt;&amp;T&gt;&gt;() == size_of::&lt;&amp;T&gt;()</code>。</p>
-<p>在 Rust 中，有许多类型会包含不可为空的指针，如<code>Box&lt;T&gt;</code>、<code>Vec&lt;T&gt;</code>、<code>String</code>、<code>&amp;T</code>和<code>&amp;mut T</code>。同样地，我们可以想象嵌套的枚举将它们的标记集中到一个单一的字段中，因为根据定义，它们的有效值范围有限。原则上，枚举可以使用相当复杂的算法，在整个嵌套类型中用禁止使用的值来存储枚举类型。因此，我们今天不指定枚举布局是<em>特别</em>符合预期的。</p>
+<p>事实上，这正是它的布局方式（根据<code>tag</code>的大小和位置来调整）。</p>
+<p>然而，在一些情况下，这样的表述是低效的。这方面的典型案例是 Rust 的“空指针优化”：一个由单个外部单元变量（例如<code>None</code>）和一个（可能嵌套的）非空指针变量（例如<code>Some(&amp;T)</code>）组成的枚举，使得标签没有必要。空指针可以安全地被解释为单位（<code>None</code>）的变体。这导致的结果是，<code>size_of::&lt;Option&lt;&amp;T&gt;&gt;() == size_of::&lt;&amp;T&gt;()</code>。</p>
+<p>在 Rust 中，有许多类型会包含不可为空的指针，如<code>Box&lt;T&gt;</code>、<code>Vec&lt;T&gt;</code>、<code>String</code>、<code>&amp;T</code>和<code>&amp;mut T</code>。同理，我们可以想象嵌套的枚举将它们的标记集中到一个单一的字段中，因为根据定义，它们的有效值范围有限。原则上，枚举可以使用相当复杂的算法，在整个嵌套类型中用禁止使用的值来存储枚举类型。因此，我们不指定枚举布局是<em>特别</em>值得的。</p>
 
                     </main>
 

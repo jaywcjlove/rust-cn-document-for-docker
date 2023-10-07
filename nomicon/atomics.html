@@ -272,7 +272,7 @@ x = 1;              y *= 2;
 <p>直观地说，一个 Acquire 的访问可以确保它之后的每一个访问都保持在它之后。然而，在 Acquire 之前发生的操作可以自由地被重新排序到它之后发生。同样地，一个 Release 访问确保它之前的每一个访问都保持在它之前。然而，在 Release 之后发生的操作可以自由地被重新排序到它之前发生。</p>
 <p>当线程 A Release 了内存中的一个位置，然后线程 B 随后 Acquire 了内存中<em>相同</em>的位置，因果关系就建立了。在 A Release 之前发生的每一个写（包括非原子写和 Relaxed 的原子写）都会在 B Acquire 之后被观察到。然而，与任何其他线程的因果关系都没有建立。同样地，如果 A 和 B 访问内存中<em>不同</em>的位置，也不会建立因果关系。</p>
 <p>因此，Release-Acquire 的基本用法很简单：你 Acquire 一个内存位置来开始关键部分，然后 Release 这个位置来结束它。例如，一个简单的自旋锁可能看起来像这样：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">use std::sync::Arc;
+<pre><pre class="playground"><code class="language-rust">use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::thread;
 

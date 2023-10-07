@@ -222,7 +222,7 @@ s.parentNode.insertBefore(el, s);
 <h2><a class="header" href="#为什么别名很重要" id="为什么别名很重要">为什么别名很重要</a></h2>
 <p>为什么我们需要关注别名呢？</p>
 <p>让我们看下这个例子：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn compute(input: &amp;u32, output: &amp;mut u32) {
@@ -237,7 +237,7 @@ s.parentNode.insertBefore(el, s);
 <span class="boring">}
 </span></code></pre></pre>
 <p>我们<em>希望</em>能够把它优化成下面这样的函数：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn compute(input: &amp;u32, output: &amp;mut u32) {
@@ -281,7 +281,7 @@ if *input &gt; 5 {     // false (*input == 1)
 <p>通过缓存这个读，我们知道在<code>&gt; 10</code>分支中的写不能影响我们是否采取<code>&gt; 5</code>分支，使我们在<code>*input &gt; 10</code>时也能消除一个读-修改-写（加倍<code>*output</code>）。</p>
 <p>关于别名分析，需要记住的关键一点是，写是优化的主要危险。也就是说，阻止我们将读移到程序的任何其他部分的唯一原因是我们有可能将其与写到同一位置重新排序。</p>
 <p>例如，在下面这个修改后的函数中，我们不需要担心别名问题，因为我们已经将唯一一个写到<code>*output</code>的地方移到了函数的最后。这使得我们可以自由地重新排序在它之前发生的对<code>*input</code>的读取：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn compute(input: &amp;u32, output: &amp;mut u32) {

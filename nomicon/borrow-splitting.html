@@ -210,7 +210,7 @@ s.parentNode.insertBefore(el, s);
                     <main>
                         <h1><a class="header" href="#拆分-borrows" id="拆分-borrows">拆分 Borrows</a></h1>
 <p>在处理复合结构时，可变引用的互斥属性会有很大的限制。借用检查器理解一些基本的东西，但是很容易就会出现问题。它对结构有足够的了解，知道有可能同时借用一个结构中不相干的字段。所以现在这个方法是可行的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Foo {
@@ -230,7 +230,7 @@ println!(&quot;{} {} {} {}&quot;, a, b, c, c2);
 <span class="boring">}
 </span></code></pre></pre>
 <p>然而 borrowck 完全不理解数组或 slice，所以这会挂：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = [1, 2, 3];
@@ -254,7 +254,7 @@ error: aborting due to previous error
 </code></pre>
 <p>虽然 borrowck 能理解这个简单的案例是合理的，但对于 borrowck 来说，要理解像树这样的一般容器类型的不连通性显然是没有希望的，尤其是当不同的键<em>确实</em>映射到相同的值时。</p>
 <p>为了“教导” borrowck 我们正在做的事情是正确的，我们需要使用到不安全的代码。例如，可变 slice 暴露了一个<code>split_at_mut</code>函数，它消耗这个 slice 并返回两个可变 slice。一个用于索引左边的所有内容，一个用于右边的所有内容。直观地讲，我们知道这是安全的，因为这些分片不会重叠，因此可以进行别名操作。然而，这个实现需要一些不安全代码：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::slice::from_raw_parts_mut;
@@ -278,7 +278,7 @@ error: aborting due to previous error
 </span></code></pre></pre>
 <p>这实际上是有点微妙的。为了避免对同一个值进行两次<code>&amp;mut</code>，我们明确地通过原始指针构造全新的切片。</p>
 <p>然而，更微妙的是产生可变引用的迭代器如何工作。迭代器 trait 定义如下：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Iterator {
@@ -293,7 +293,7 @@ error: aborting due to previous error
 <p>然而它实际上<em>是</em>有效的，正是因为迭代器是一次性的对象。IterMut 产生的所有东西最多只能产生一次，所以我们实际上不会产生对同一块数据的多个可变引用。</p>
 <p>也许令人惊讶的是，对于许多类型，可变迭代器不需要实现不安全的代码。</p>
 <p>例如，这里有一个单向链表：</p>
-<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">fn main() {}
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {}
 </span>type Link&lt;T&gt; = Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;;
 
 struct Node&lt;T&gt; {
@@ -325,7 +325,7 @@ impl&lt;'a, T&gt; Iterator for IterMut&lt;'a, T&gt; {
 }
 </code></pre></pre>
 <p>下面是一个可变的 slice：</p>
-<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">fn main() {}
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {}
 </span>use std::mem;
 
 pub struct IterMut&lt;'a, T: 'a&gt;(&amp;'a mut[T]);
@@ -334,7 +334,7 @@ impl&lt;'a, T&gt; Iterator for IterMut&lt;'a, T&gt; {
     type Item = &amp;'a mut T;
 
     fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
-        let slice = mem::replace(&amp;mut self.0, &amp;mut []);
+        let slice = mem::take(&amp;mut self.0);
         if slice.is_empty() { return None; }
 
         let (l, r) = slice.split_at_mut(1);
@@ -345,7 +345,7 @@ impl&lt;'a, T&gt; Iterator for IterMut&lt;'a, T&gt; {
 
 impl&lt;'a, T&gt; DoubleEndedIterator for IterMut&lt;'a, T&gt; {
     fn next_back(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
-        let slice = mem::replace(&amp;mut self.0, &amp;mut []);
+        let slice = mem::take(&amp;mut self.0);
         if slice.is_empty() { return None; }
 
         let new_len = slice.len() - 1;
@@ -356,7 +356,7 @@ impl&lt;'a, T&gt; DoubleEndedIterator for IterMut&lt;'a, T&gt; {
 }
 </code></pre></pre>
 <p>接着是一个二叉树：</p>
-<pre><pre class="playground"><code class="language-rust edition2018"><span class="boring">fn main() {}
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {}
 </span>use std::collections::VecDeque;
 
 type Link&lt;T&gt; = Option&lt;Box&lt;Node&lt;T&gt;&gt;&gt;;

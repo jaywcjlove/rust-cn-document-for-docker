@@ -212,7 +212,7 @@ s.parentNode.insertBefore(el, s);
 <p>所有权是 Rust 的突破性功能。它使 Rust 能够做到完全的内存安全和高效，同时避免了垃圾回收。在详细介绍所有权系统之前，我们将考虑这一设计的动机。</p>
 <p>我们将假设你同意垃圾收集（GC）并不总是一个最佳解决方案，而且在某些情况下手动管理内存更为适合。如果你不接受这一点，我是否可以让你对另一种语言感兴趣？</p>
 <p>不管你对 GC 的看法如何，它显然是一个使代码更安全的<em>好办法</em>，你永远不必担心你的对象会在引用失效前就被释放。这是一个 C 和 C++ 程序需要处理的普遍存在的问题。比如下面这个简单的错误，我们所有使用过非 GC 语言的人都曾经犯过：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn as_str(data: &amp;u32) -&gt; &amp;str {
@@ -229,7 +229,7 @@ s.parentNode.insertBefore(el, s);
 <p>这正是 Rust 的所有权系统所要解决的问题。Rust 知道<code>&amp;s</code>所在的范围，因此可以防止它逃逸。然而，这是一个简单的案例，即使是 C 语言的编译器也能合理地抓住。随着代码越来越大，指针被送入各种函数，事情变得越来越复杂。最终，C 语言编译器会倒下，无法进行足够的转义分析来证明你的代码不健全。因此，它将被迫接受你的程序，假设它是正确的。</p>
 <p>这种情况永远不会发生在 Rust 上，Rust 要求程序员来向编译器证明一切是正确的。</p>
 <p>当然，Rust 围绕所有权的故事要比仅仅验证引用不脱离其所有者的范围要复杂得多，这是因为确保指针始终有效要比这复杂得多。例如，在这段代码中：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut data = vec![1, 2, 3];

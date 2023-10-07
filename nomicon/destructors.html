@@ -216,10 +216,10 @@ s.parentNode.insertBefore(el, s);
 <p>这个方法给了类型一些时间来完成它正在做的事情。</p>
 <p><strong>在<code>drop</code>运行后，Rust 将递归地尝试删除<code>self</code>的所有字段。</strong></p>
 <p>这是一个方便的功能，这样你就不必写“析构器模板”来丢弃子字段。如果一个结构除了丢弃其子字段之外没有特殊的丢弃逻辑，那么就意味着根本不需要实现<code>Drop</code>!</p>
-<p><strong>在 Rust 1.0</strong>中没有稳定的方法来阻止这种行为。</p>
+<p><strong>在 Rust 1.0 中没有稳定的方法来阻止这种行为。</strong></p>
 <p>请注意，这里使用的是<code>&amp;mut self</code>，意味着即使你想要阻止递归的 Drop（例如将字段移出 self），Rust 也会阻止你。对于大多数类型来说，这完全没有问题。</p>
 <p>一个自定义的<code>Box</code>的实现可以这样写<code>Drop</code>：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">#![feature(ptr_internals, allocator_api)]
+<pre><pre class="playground"><code class="language-rust">#![feature(ptr_internals, allocator_api)]
 
 use std::alloc::{Allocator, Global, GlobalAlloc, Layout};
 use std::mem;
@@ -240,7 +240,7 @@ impl&lt;T&gt; Drop for Box&lt;T&gt; {
 </span></code></pre></pre>
 <p>这样做是可行的，因为当 Rust 去丢弃<code>ptr</code>字段时，它只是看到一个<a href="phantom-data.html">Unique</a>，没有实际的<code>Drop</code>实现。同样的，没有任何东西可以在释放后使用<code>ptr</code>，因为当 drop 退出时，它就变得不可访问了。</p>
 <p>然而下面这段代码就不可行了：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">#![feature(allocator_api, ptr_internals)]
+<pre><pre class="playground"><code class="language-rust">#![feature(allocator_api, ptr_internals)]
 
 use std::alloc::{Allocator, Global, GlobalAlloc, Layout};
 use std::ptr::{drop_in_place, Unique, NonNull};
@@ -273,7 +273,7 @@ impl&lt;T&gt; Drop for SuperBox&lt;T&gt; {
 </span></code></pre></pre>
 <p>当我们在 SuperBox 的析构器中释放完<code>box</code>的 ptr 后，Rust 会很高兴地告诉 box 去 Drop 自己，然后，你就能开开心心去 debug use-after-free 和 double-free 的问题了。</p>
 <p>请注意，递归 drop 行为适用于所有结构和枚举，无论它们是否实现了 Drop。因此，像这样的代码：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Boxy&lt;T&gt; {
@@ -285,7 +285,7 @@ impl&lt;T&gt; Drop for SuperBox&lt;T&gt; {
 </span></code></pre></pre>
 <p>在它将被丢弃时，它的 data1 和 data2 的字段就会被析构，尽管它本身并没有实现 Drop。我们说这样的类型<em>需要 Drop</em>，尽管它本身不是 Drop。</p>
 <p>类似地：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Link {
@@ -297,7 +297,7 @@ impl&lt;T&gt; Drop for SuperBox&lt;T&gt; {
 <p>当且仅当一个实例存储了 Next 变量时，它的内部 Box 字段将被丢弃。</p>
 <p>一般来说，这种设计非常好，因为当你重构数据布局时，你不需要担心添加/删除<code>Drop</code>的问题。当然，也有很多需要用析构器做更棘手的事情的例子。</p>
 <p>经典的覆盖递归 drop 行为并允许在<code>drop</code>过程中移出 Self 的安全的解决方案是，使用一个 Option：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">#![feature(allocator_api, ptr_internals)]
+<pre><pre class="playground"><code class="language-rust">#![feature(allocator_api, ptr_internals)]
 
 use std::alloc::{Allocator, GlobalAlloc, Global, Layout};
 use std::ptr::{drop_in_place, Unique, NonNull};

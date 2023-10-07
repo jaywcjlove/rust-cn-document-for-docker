@@ -360,7 +360,7 @@ Hello, world!
 </code></pre>
 <p><code>cargo build --release</code>将结果二进制文件放入<code>target/release</code>，而不再是<code>target/debug</code>目录.</p>
 <p>调试模式的编译是开发的默认设置 - 编译时间较短，因为编译器不进行优化，但代码运行速度较慢。发布(release)模式编译需要更长时间，但代码运行速度更快。</p>
-<h2><a class="header" href="#在现有的-carog-项目上工作" id="在现有的-carog-项目上工作">在现有的 Carog 项目上工作</a></h2>
+<h2><a class="header" href="#在现有的-cargo-项目上工作" id="在现有的-cargo-项目上工作">在现有的 Cargo 项目上工作</a></h2>
 <p>如果您下载使用 Cargo 的现有项目，那么它很容易上手.</p>
 <p>首先，从某个地方获取项目.在这个例子中，我们将使用<code>rand</code>项目，其从 GitHub 上的存储库克隆而来:</p>
 <pre><code class="language-shell">$ git clone https://github.com/rust-lang-nursery/rand.git
@@ -640,7 +640,7 @@ That can unnecessarily slow down the build as downloading, extracting, recompres
 <p>Alternatively, the <a href="https://crates.io/crates/cargo-cache">cargo-cache</a> crate provides a simple CLI tool to only clear selected parts of the cache or show sizes of its components in your command-line.</p>
 <h2><a class="header" href="#构建-缓存" id="构建-缓存">构建 缓存</a></h2>
 <p>Cargo 在单个工作区，共享其中所有包的构建工件。今天，Cargo 不会在不同的工作区共享构建结果，但使用第三方工具可以实现类似的结果，<a href="https://github.com/mozilla/sccache">sccache</a>。</p>
-<p>装置<code>sccache</code>，用<code>cargo install sccache</code>安装它，并在调用 Cargo 之前，设置<code>RUSTC_WRAPPER</code>环境变量成<code>sccache</code>。如果你使用 bash，更好是田间<code>export RUSTC_WRAPPER=sccache</code>到<code>.bashrc</code>文件。有关更多详细信息，请参阅 sccache 文档.</p>
+<p>装置<code>sccache</code>，用<code>cargo install sccache</code>安装它，并在调用 Cargo 之前，设置<code>RUSTC_WRAPPER</code>环境变量成<code>sccache</code>。如果你使用 bash，更好是添加<code>export RUSTC_WRAPPER=sccache</code>到<code>.bashrc</code>文件。有关更多详细信息，请参阅 sccache 文档.</p>
 <h2><a class="header" href="#cargo-参考" id="cargo-参考">Cargo 参考</a></h2>
 <p>该参考文献涵盖了 Cargo 各个领域的细节.</p>
 <ul>

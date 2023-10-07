@@ -209,27 +209,27 @@ s.parentNode.insertBefore(el, s);
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#unsafe-rust-能做什么" id="unsafe-rust-能做什么">Unsafe Rust 能做什么</a></h1>
-<p>在不安全的 Rust 中唯一不同的是，你可以：</p>
+<p>在 Unsafe Rust 中唯一不同的是，你可以：</p>
 <ul>
 <li>对原始指针进行解引用</li>
-<li>调用“不安全”的函数（包括 C 函数、编译器的内建指令和原始分配器。</li>
-<li>实现“不安全”的特性</li>
+<li>调用 “Unsafe” 的函数（包括 C 函数、编译器的内建指令和原始分配器。</li>
+<li>实现 “Unsafe” trait</li>
 <li>改变静态数据</li>
-<li>访问“union”的字段</li>
+<li>访问 “union” 的字段</li>
 </ul>
-<p>这就是所有了。这些操作被归入不安全操作的原因是，误用其中的任何一项都会引起可怕的未定义行为。调用“未定义行为”使编译器有充分的权利对你的程序做任意的坏事。你绝对_不应该_调用“未定义行为”。</p>
-<p>与 C 语言不同，Rust 中的“未定义行为”的范围相当有限。核心语言所关心的只是防止以下事情：</p>
+<p>这就是全部了。这些操作被归入 unsafe 的原因是，误用其中的任何一项都会引起可怕的未定义行为。调用“未定义行为”使编译器有充分的权利对你的程序做任何坏事。你绝对_不能_调用“未定义行为”。</p>
+<p>与 C 语言不同，Rust 中的“未定义行为”的范围相当有限。核心语言中，你只需要关心防止以下事情：</p>
 <ul>
 <li>解除引用（使用<code>*</code>运算符）悬空或不对齐的指针（见下文）</li>
-<li>破坏<a href="references.html">指针别名规则</a></li>
+<li>破坏<a href="references.html">指名针别规则</a></li>
 <li>调用一个 ABI 错误的函数，或者从一个 unwind ABI 错误的函数中 unwinding</li>
 <li>引起<a href="races.html">数据竞争</a></li>
 <li>执行用当前执行线程不支持的<a href="https://doc.rust-lang.org/reference/attributes/codegen.html#the-target_feature-attribute">目标特性</a>编译的代码</li>
 <li>产生无效的值（无论是单独的还是作为一个复合类型的字段，如<code>enum</code>/<code>struct</code>/<code>array</code>/<code>tuple</code>）
 <ul>
 <li>一个不是 0 或 1 的<code>bool</code></li>
-<li>一个具有无效判别符的“enum”</li>
-<li>一个空的“fn”指针</li>
+<li>一个具有无效判别符的<code>enum</code></li>
+<li>一个空的<code>fn</code>指针</li>
 <li>一个超出[0x0, 0xD7FF]和[0xE000, 0x10FFFF]范围的<code>char</code></li>
 <li>一个<code>!</code>（所有的值对这个类型都是无效的）</li>
 <li>一个从<a href="uninitialized.html">未初始化的内存</a>读出的整数(<code>i*</code>/<code>u*</code>)、浮点值(<code>f*</code>)或原始指针，或<code>str</code>中的未初始化的内存</li>
@@ -240,25 +240,24 @@ s.parentNode.insertBefore(el, s);
 <li>如果 Slice 的长度不是有效的 usize（比如，从未初始化的内存中读取的 usize），那么 Slice 的元数据是无效的</li>
 </ul>
 </li>
-<li>对于一个具有自定义的无效值的类型来说是无效的值（看着有点绕），比如在标准库中的<a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull</code></a>和<code>NonZero*</code>(自定义无效值是一个不稳定的特性，但一些稳定的 libstd 类型，如<code>NonNull</code>使用了这个特性)。</li>
+<li>一个由类型自定义的无效值，比如在标准库中的<a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull</code></a>和<code>NonZero*</code>(自定义无效值是一个不稳定的特性，但一些稳定的 libstd 类型，如<code>NonNull</code>使用了这个特性)。</li>
 </ul>
 </li>
 </ul>
-<p>“产生”一个值发生在当一个值被分配、传递给一个函数/原始操作或从一个函数/原始操作返回的时候。</p>
-<p>如果一个引用/指针是空的，或者它所指向的所有地址并非合法的地址（比如 malloc 分配出的内存），那么它就是<code>悬垂</code>的。它所指向的范围是由指针值和被指向类型的大小决定的（使用<code>size_of_val</code>）。因此，如果指向的范围是空的，<code>悬垂</code>与<code>空</code>是一样的。要注意，切片和字符串指向它们的整个范围，所以它们的长度不可能很大。内存分配的长度、切片和字符串的长度不能大于<code>isize::MAX</code>字节。如果因为某些原因，这太麻烦了，可以考虑使用原始指针。</p>
-<p>这就是所有 Rust 中可能会导致未定义行为的原因。当然，不安全的函数和 trait 可以自由地声明任意的其他约束，程序必须保持这些约束以避免未定义行为。例如，分配器 API 声明，释放未分配的内存是未定义行为。</p>
-<p>然而，对这些约束的违反通常只会导致上述问题中的一个，一些额外的约束也可能来自于编译器的内在因素，这些因素对代码如何被优化做出了特殊的假设。例如，Vec 和 Box 使用了内建指令，要求他们的指针在任何时候都是非空的。</p>
+<p>赋值、传递给一个函数/原始操作、从一个函数/原始操作返回的时候，都会“产生”一个值。</p>
+<p>如果一个引用/指针是空的，或者它所指向的地址并非都是合法的地址（合法地址都应该是已分配内存的），那么它就是<code>悬垂</code>的。它所指向的范围是由指针值和被指向类型的大小决定的（使用<code>size_of_val</code>）。因此，如果指向的范围是空的，<code>悬垂</code>与<code>空</code>是一样的。要注意，切片和字符串指向它们的整个范围，所以它们元数据中的长度不能太大。内存分配的长度、切片和字符串的长度不能大于<code>isize::MAX</code>字节。如果因为某些原因，这太麻烦了，可以考虑使用原始指针。</p>
+<p>这就是所有 Rust 中可能会导致未定义行为的原因。当然，unsafe 的函数和 trait 可以自由地声明任意的其他约束，程序必须保持这些约束以避免未定义行为。例如，分配器 API 声明，释放未分配的内存是未定义行为。</p>
+<p>然而，对这些约束的违反通常只会导致上述问题中的一个，一些额外的约束也可能来自于编译器，编译器为优化代码做出了特殊的假设。例如，Vec 和 Box 使用了内建指令，要求他们的指针在任何时候都是非空的。</p>
 <p>Rust 在其他方面对其他可疑的操作是相当宽容的。Rust 认为以下情况是“安全的”：</p>
 <ul>
 <li>死锁</li>
 <li>有一个<a href="races.html">数据竞争</a></li>
 <li>内存泄漏</li>
-<li>未能调用解构器</li>
-<li>整数溢出</li>
+<li>整数溢出（使用内置的运算符，比如“+”）</li>
 <li>中止程序</li>
 <li>删除生产数据库</li>
 </ul>
-<p>然而任何真正可能做这种事情的程序都是_可能_不正确的，Rust 提供了很多工具来尽可能检查出这些问题，但要这些问题完全被预防是不现实的。</p>
+<p>然而任何真正可能做这种事情的程序都是<em>可能</em>不正确的，Rust 提供了很多工具来尽可能检查出这些问题，但要这些问题完全被预防是不现实的。</p>
 
                     </main>
 

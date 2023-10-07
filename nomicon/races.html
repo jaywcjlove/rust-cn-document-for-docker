@@ -219,7 +219,7 @@ s.parentNode.insertBefore(el, s);
 <p><strong>然而，Rust 并没有（也无法）阻止更广泛的竞态条件。</strong></p>
 <p>这从根本上说是不可能的，而且说实话也是不可取的。你的硬件很糟糕，你的操作系统很糟糕，你电脑上的其他程序也很糟糕，而这一切运行的世界也很糟糕。任何能够真正声称防止<em>所有</em>竞态条件的系统，如果不是不正确的话，使用起来也是非常糟糕的。</p>
 <p>因此，对于一个安全的 Rust 程序来说，在不正确的同步下出现死锁或做一些无意义的事情是完全“正常”的。很明显，这样的程序有问题，但 Rust 只能帮你到这里。不过，Rust 程序中的竞态条件本身并不能违反内存安全；只有与其他不安全的代码结合在一起，竞态条件才能真正违反内存安全。比如说：</p>
-<pre><pre class="playground"><code class="language-rust no_run edition2018">
+<pre><pre class="playground"><code class="language-rust no_run">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::thread;
@@ -247,7 +247,7 @@ thread::spawn(move || {
 println!(&quot;{}&quot;, data[idx.load(Ordering::SeqCst)]);
 <span class="boring">}
 </span></code></pre></pre>
-<pre><pre class="playground"><code class="language-rust no_run edition2018">
+<pre><pre class="playground"><code class="language-rust no_run">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::thread;

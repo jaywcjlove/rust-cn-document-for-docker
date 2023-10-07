@@ -210,7 +210,7 @@ s.parentNode.insertBefore(el, s);
                     <main>
                         <h1><a class="header" href="#higher-rank-trait-bounds-hrtbs" id="higher-rank-trait-bounds-hrtbs">Higher-Rank Trait Bounds (HRTBs)</a></h1>
 <p>Rust 的<code>Fn</code> trait 有一些黑魔法，例如，我们可以写出下面的代码：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">struct Closure&lt;F&gt; {
+<pre><pre class="playground"><code class="language-rust">struct Closure&lt;F&gt; {
     data: (u8, u16),
     func: F,
 }
@@ -267,7 +267,7 @@ fn main() {
 <p>（其中<code>Fn(a, b, c) -&gt; d</code>本身只是不稳定的<em>真正的</em><code>*Fn</code>特性的语法糖）</p>
 <p><code>for&lt;'a&gt;</code>可以理解为“对于所有<code>'a</code>的可能”，并且基本上产生一个<em>无限的</em> F 必须满足的 trait 约束的列表。不过不用紧张，在<code>Fn</code> trait 之外，我们遇到 HRTB 的地方不多，即使是那些地方，我们也有一个很好的魔法糖来处理普通的情况。</p>
 <p>最终，我们可以把原本的代码重写成更加显式的样子：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">struct Closure&lt;F&gt; {
+<pre><pre class="playground"><code class="language-rust">struct Closure&lt;F&gt; {
     data: (u8, u16),
     func: F,
 }

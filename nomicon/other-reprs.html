@@ -228,8 +228,8 @@ s.parentNode.insertBefore(el, s);
 <blockquote>
 <p>注意：有一个叫做<code>transparent_unions</code>的 nightly 的特性，可以让你对 union 指定<code>repr(transparent)</code>。不过由于设计上的一些顾虑，这个特性目前还未稳定，参考<a href="issue-60405">issue-60405</a>。</p>
 </blockquote>
-<p>我们的目标是使单一字段和结构/ enum 之间的转换成为可能。一个例子是<a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell</code></a>，它可以被转换为它所包装的类型。（<a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell</code></a>也用了一个不稳定的特性<a href="https://github.com/rust-lang/rust/pull/68491">no_niche</a>，所以当它嵌套其它类型的时候，它的 ABI 也并没有一个稳定的保证。）</p>
-<p>另外，当我们通过 FFI 传递结构 / enum，并且其中内部字段类型是另一端所需的类型时，我们能保证这是正确的。特别是，这对于<code>struct Foo(f32)</code>或者<code>enum Foo { Bar(f32) }</code>总是具有与<code>f32</code>相同的 ABI 是必要的。</p>
+<p>我们的目标是使单一字段和结构/枚举之间的转换成为可能。一个例子是<a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell</code></a>，它可以被转换为它所包装的类型。（<a href="https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html"><code>UnsafeCell</code></a>也用了一个不稳定的特性<a href="https://github.com/rust-lang/rust/pull/68491">no_niche</a>，所以当它嵌套其它类型的时候，它的 ABI 也并没有一个稳定的保证。）</p>
+<p>另外，当我们通过 FFI 传递结构/枚举，并且其中内部字段类型是另一端所需的类型时，我们能保证这是正确的。特别是，这对于<code>struct Foo(f32)</code>或者<code>enum Foo { Bar(f32) }</code>总是具有与<code>f32</code>相同的 ABI 是必要的。</p>
 <p>只有在唯一的字段为<code>pub</code>或其内存布局在文档中所承诺的情况下，该 repr 才被视为一个类型的公共 ABI 的一部分。否则，该内存布局不应被其他 crate 所依赖。</p>
 <p>更多细节可以参考<a href="https://github.com/rust-lang/rfcs/blob/master/text/1758-repr-transparent.md">RFC 1758</a>和<a href="https://rust-lang.github.io/rfcs/2645-transparent-unions.html">RFC 2645</a>。</p>
 <h2><a class="header" href="#repru-repri" id="repru-repri">repr(u*), repr(i*)</a></h2>
@@ -238,7 +238,7 @@ s.parentNode.insertBefore(el, s);
 <p>如果枚举有字段，其效果类似于<code>repr(C)</code>的效果，因为该类型有一个定义的布局。这使得将枚举传递给 C 代码或者访问该类型的原始表示并直接操作其标记和字段成为可能，详见<a href="https://github.com/rust-lang/rfcs/blob/master/text/2195-really-tagged-unions.md">RFC</a>。</p>
 <p>这些“repr”对结构（struct）没有作用。</p>
 <p>在含有字段的枚举中加入明确的<code>repr(u*)</code>、<code>repr(i*)</code>或<code>repr(C)</code>可以抑制空指针优化，比如：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::mem::size_of;

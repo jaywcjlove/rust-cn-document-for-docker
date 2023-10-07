@@ -229,7 +229,7 @@ s.parentNode.insertBefore(el, s);
 <pre><code class="language-rust ignore">let old_rc = inner.rc.fetch_add(1, Ordering::Relaxed);
 </code></pre>
 <p>我们需要增加一个导入来使用<code>Ordering</code>。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::sync::atomic::Ordering;

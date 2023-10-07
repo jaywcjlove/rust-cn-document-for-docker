@@ -223,7 +223,7 @@ s.parentNode.insertBefore(el, s);
 <pre><code class="language-rust ignore">impl&lt;T&gt; RawVec&lt;T&gt; {
     fn new() -&gt; Self {
         // 这一段分支代码在编译期间就可以计算出结果返回的结果，返回给 cap
-        let cap = if mem::size_of::&lt;T&gt;() == 0 { !0 } else { 0 };
+        let cap = if mem::size_of::&lt;T&gt;() == 0 { usize::MAX } else { 0 };
 
         // `NonNull::dangling()` 有双重含义:
         // `未分配内存 (unallocated)`, `零尺寸 (zero-sized allocation)`
@@ -323,8 +323,8 @@ impl&lt;T&gt; Drop for RawVec&lt;T&gt; {
     }
 }
 </code></pre>
-<p>你找到 bug 了嘛？没人看到！连最初的作者也是几年之后闲逛这个页面的时候，觉得这段代码比较可疑，因为这里直接滥用了迭代器的指针当作了 <em>计数器</em>，而这就使得了指针 <em>不对齐</em>！在使用 ZST 的时候，我们的工作之一就是必须保证指针对齐！<em>啊这</em>！</p>
-<p>原始指针在任何时候都不需要对齐，所以使用指针作为计数器的基本技巧是 <em>没问题的</em>，但是当它们被传递给<code>ptr::read</code>时，它们 <em>应该</em> 是对齐的! 这 <em>可能</em> 是不必要的迂腐操作，因为<code>ptr::read</code>在处理 ZST 时其实是个 noop，但让我们稍微负责一点，当遇到 ZST 时从<code>NonNull::dangling</code>读取。</p>
+<p>你找到 bug 了嘛？没人看到！连最初的作者也是几年之后闲逛这个页面的时候，觉得这段代码比较可疑，因为这里直接滥用了迭代器的指针当作了<em>计数器</em>，而这就使得了指针不对齐！在使用 ZST 的时候，我们<em>唯一的工作</em>就是必须保证指针对齐！<em>啊这</em>！</p>
+<p>原始指针在任何时候都不需要对齐，所以使用指针作为计数器的基本技巧是<em>没问题的</em>，但是当它们被传递给<code>ptr::read</code>时，它们<em>应该</em>是对齐的! 这<em>可能</em>是不必要的迂腐操作，因为<code>ptr::read</code>在处理 ZST 时其实是个 noop，但让我们<em>稍微</em>负责一点，当遇到 ZST 时从<code>NonNull::dangling</code>读取。</p>
 <p>（或者你也可以在 ZST 路径上调用<code>read_unaligned</code>。两者都可以。因为无论哪种方式，我们都是在无中生有，而且都最终编译成 noop。）</p>
 <!-- ignore: simplified code -->
 <pre><code class="language-rust ignore">impl&lt;T&gt; Iterator for RawValIter&lt;T&gt; {

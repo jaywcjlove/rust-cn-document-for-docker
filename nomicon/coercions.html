@@ -212,7 +212,7 @@ s.parentNode.insertBefore(el, s);
 <p>在某些情况下，类型可以隐式地被强转。这些变化通常只是<em>削弱</em>类型，主要集中在指针和生命周期方面。它们的存在主要是为了让 Rust 在更多的情况下“正常工作”，而且基本上是无害的。</p>
 <p>关于所有强转类型的详尽列表，请参见《The Reference》中的<a href="https://doc.rust-lang.org/reference/type-coercions.html#coercion-types">Coercion types</a>部分。</p>
 <p>请注意，在匹配 Trait 时，我们不进行强制转换（除了接收者，见<a href="./dot-operator.html">下一页</a>）。如果某个类型<code>U</code>有一个<code>impl</code>，而<code>T</code>可以强转到<code>U</code>，这并不构成<code>T</code>的实现。例如，下面的内容不会通过类型检查，尽管将<code>t</code>强转到<code>&amp;T</code>是可以的，并且有针对<code>&amp;T</code>的<code>impl</code>。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">trait Trait {}
+<pre><pre class="playground"><code class="language-rust compile_fail">trait Trait {}
 
 fn foo&lt;X: Trait&gt;(t: X) {}
 

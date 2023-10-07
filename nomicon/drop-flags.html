@@ -211,7 +211,7 @@ s.parentNode.insertBefore(el, s);
                         <h1><a class="header" href="#丢弃标志" id="丢弃标志">丢弃标志</a></h1>
 <p>上一节的例子为 Rust 引入了一个有趣的问题。我们已经看到，可以完全安全地对内存位置进行有条件的初始化、非初始化和重新初始化。对于实现了<code>Copy</code>的类型来说，这并不特别值得注意，因为它们只是一堆随机的比特。然而，带有析构器的类型是一个不同的故事。Rust 需要知道每当一个变量被赋值，或者一个变量超出范围时，是否要调用一个析构器。它怎么能用条件初始化来做到这一点呢？</p>
 <p>请注意，这不是所有赋值都需要担心的问题。特别是，通过解引用的赋值会无条件地被丢弃，而相对的，在<code>let</code>中的赋值无论如何都不会被丢弃：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = Box::new(0); // let 创建了一个全新的变量，所以一定(也没有必要)调用 drop
@@ -220,9 +220,9 @@ let y = &amp;mut x;
 <span class="boring">}
 </span></code></pre></pre>
 <p>仅当覆盖先前初始化的变量或其子字段之一时，这才是个问题。</p>
-<p>这种情况下，Rust 实际上是在<em>运行时</em>跟踪一个类型是否应该被丢弃。当一个变量被初始化和未初始化时，该变量的<em>drop flag</em>被切换。当一个变量可能需要被丢弃时，这个标志会被读取，以确定它是否应该被丢弃。</p>
+<p>这种情况下，Rust 实际上是在<em>运行时</em>跟踪一个类型是否应该被丢弃。当一个变量被初始化和未初始化时，该变量的<em>丢弃标志</em>被切换。当一个变量可能需要被丢弃时，这个标志会被读取，以确定它是否应该被丢弃。</p>
 <p>当然，通常的情况是，一个值的初始化状态在程序的每一个点上都是静态已知的。如果是这种情况，那么编译器理论上可以生成更有效的代码。例如，直线型代码就有这样的<em>静态丢弃语义（static drop semantics）</em>：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut x = Box::new(0); // x 未初始化；仅覆盖值
@@ -233,8 +233,8 @@ y = x;                   // y 已初始化；销毁 y，覆盖它的值，设置
                          // x 离开作用域；x 未初始化；什么都不用做
 <span class="boring">}
 </span></code></pre></pre>
-<p>类似地，所有分支都在初始化方面具有相同行为的代码具有<code>静态</code>丢弃语义：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p>类似地，所有分支都在初始化方面具有相同行为的代码具有静态丢弃语义：</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let condition = true;
@@ -250,7 +250,7 @@ x = Box::new(0);         // x 未初始化；仅覆盖值
 <span class="boring">}
 </span></code></pre></pre>
 <p>然而像这样的代码<em>需要</em>运行时的信息来正确地 Drop：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let condition = true;
@@ -264,7 +264,7 @@ if condition {
 <span class="boring">}
 </span></code></pre></pre>
 <p>当然，在这种情况下，获得静态丢弃语义是很简单的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">let condition = true;

@@ -210,7 +210,7 @@ s.parentNode.insertBefore(el, s);
                     <main>
                         <h1><a class="header" href="#生命周期的局限" id="生命周期的局限">生命周期的局限</a></h1>
 <p>让我们来看以下代码：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust compile_fail">#[derive(Debug)]
 struct Foo;
 
 impl Foo {
@@ -262,7 +262,7 @@ fn main() {
 <p>根据我们真正关心的引用语义，这个程序显然是正确的，但是生命周期系统太蠢了(原话是粗糙)，无法处理这个问题。</p>
 <h2><a class="header" href="#不正确地缩减借用" id="不正确地缩减借用">不正确地缩减借用</a></h2>
 <p>下面的代码无法编译成功，因为 Rust 发现<code>map</code>变量被借用了两次，并且不能推断出在第二次借用之前，第一次借用已经不需要了，所以保守地退回到使用整个作用域作为第一次借用的生命周期。不过不用担心，这个问题最终会得到解决：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::collections::HashMap;
@@ -282,7 +282,7 @@ where
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>由于所施加的生命周期限制，<code>&amp;mut map</code>的生命周期与其他可变的借用<code>重叠</code>，导致编译错误：</p>
+<p>由于所施加的生命周期限制，<code>&amp;mut map</code>的生命周期与其他可变的借用重叠，导致编译错误：</p>
 <pre><code class="language-text">error[E0499]: cannot borrow `*map` as mutable more than once at a time
   --&gt; src/main.rs:12:13
    |

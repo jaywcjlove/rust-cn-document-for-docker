@@ -208,39 +208,39 @@ s.parentNode.insertBefore(el, s);
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#安全和不安全如何交互" id="安全和不安全如何交互">安全和不安全如何交互</a></h1>
-<p>安全 Rust 和不安全 Rust 之间的关系是什么？它们如何交互？</p>
-<p>Safe Rust 和 Unsafe Rust 之间的边界是由<code>unsafe</code>关键字控制的，从而<code>unsafe</code>承接了它们之间交互的桥梁。这就是为什么我们可以说 Safe Rust 是一种安全的语言：所有不安全的部分都被限制在“unsafe”边界之内。如果你愿意，你甚至可以把<code>#![forbid(unsafe_code)]</code>扔进你的代码库，以静态地保证你只写安全的 Rust。</p>
-<p><code>unsafe</code>关键字有两个用途：声明存在编译器无法检查的契约，以及声明程序员已经确保这些契约得到了满足。</p>
-<p>你可以用<code>unsafe</code>来表示在 <em>函数</em> 和 <em>trait声明</em> 上存在未经检查的契约。对于函数，<code>unsafe</code>意味着函数的用户必须仔细阅读该函数的文档，以确保他们在使用该函数时能遵循该函数所要求的契约。对于 trait 声明，<code>unsafe</code>意味着 trait 的实现者必须仔细阅读 trait 文档，以确保他们的实现遵循了 trait 所要求的契约。</p>
-<p>你可以在一个块上使用<code>unsafe</code>来声明在其中执行的所有不安全操作都经过了验证以满足这些操作的契约。例如，传递给<a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>的索引是界内的。</p>
-<p>你可以在 trait 的实现上使用<code>unsafe</code>来声明该实现遵循了 trait 的契约。例如，一个实现<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>的类型移动到另一个线程是真正安全的。</p>
-<p>标准库中有许多不安全的函数，包括：</p>
+                        <h1><a class="header" href="#safe-和-unsafe-如何交互" id="safe-和-unsafe-如何交互">Safe 和 Unsafe 如何交互</a></h1>
+<p>Safe Rust 和 Unsafe Rust 之间有什么关系？它们又是如何交互的？</p>
+<p>Safe Rust 和 Unsafe Rust 之间的边界由<code>unsafe</code>关键字控制，<code>unsafe</code>是承接了它们之间交互的桥梁。这就是为什么我们可以说 Safe Rust 是一种安全的语言：所有不安全的部分都被限制在“unsafe”边界之内。如果你愿意，你甚至可以把<code>#![forbid(unsafe_code)]</code>扔进你的代码库，以静态地保证你只写安全的 Rust。</p>
+<p><code>unsafe</code>关键字有两个用途：声明编译器不会保证这些代码的安全性，以及声明程序员已经确保这些代码是安全的。</p>
+<p>你可以用<code>unsafe</code>来表示在 <em>函数</em> 和 <em>trait 声明</em> 这些行为不一定安全。对于函数，<code>unsafe</code>意味着函数的用户必须仔细阅读该函数的文档，以确保他们在使用该函数时能满足函数能安全运行的条件。对于 trait 声明，<code>unsafe</code>意味着 trait 的实现者必须仔细阅读 trait 文档，以确保他们的实现遵循了 trait 所要求条件。</p>
+<p>你可以在一个块上使用<code>unsafe</code>来声明在其中执行的所有不安全操作都经过了验证以保证操作的安全性。例如，当传递给<a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>的索引在边界内，这一行为就是安全的。</p>
+<p>你可以在 trait 的实现上使用<code>unsafe</code>来声明该实现满足了 trait 的条件。例如，实现<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>说明这个类型移动到另一个线程是真正安全的。</p>
+<p>标准库中有许多 unsafe 的函数，包括：</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>，它执行未经检查的索引，允许随意地违反内存安全。</li>
-<li><a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>mem::transmute</code></a>将一些值重新解释为具有给定的类型，以任意的方式绕过类型安全（详见<a href="conversions.html">conversions</a>）。</li>
+<li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>，它不会检查传入索引的有效性，允许违反内存安全的规则。</li>
+<li><a href="https://doc.rust-lang.org/std/mem/fn.transmute.html"><code>mem::transmute</code></a>将一些数据重新解释为给定的类型，绕过类型安全的规则（详见<a href="conversions.html">conversions</a>）。</li>
 <li>每一个指向一个 Sized 类型的原始指针都有一个<a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset"><code>offset</code></a>方法，如果传递的偏移量不在<a href="https://doc.rust-lang.org/std/primitive.pointer.html#method.offset">“界内”</a>，则该调用是未定义行为。</li>
-<li>所有 FFI（Foreign Function Interface）函数的调用都是<code>不安全</code>的，因为其他语言可以进行 Rust 编译器无法检查的任意操作。</li>
+<li>所有 FFI（外部函数接口 Foreign Function Interface）函数的调用都是<code>unsafe</code>的，因为 Rust 编译器无法检查其他语言的操作。</li>
 </ul>
-<p>从 Rust 1.29.2 开始，标准库定义了以下不安全特性（还有其他特性，但还没有稳定下来，有些可能永远不会稳定下来）：</p>
+<p>从 Rust 1.29.2 开始，标准库定义了以下 unsafe trait（还有其他 trait，但还没有稳定下来，有些可能永远不会稳定下来）：</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> 是一个标记 trait（一个没有 API 的 trait），承诺实现者可以安全地发送（移动）到另一个线程。</li>
-<li><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> 是一个标记特性，承诺线程可以通过共享引用安全地共享实现者。</li>
+<li><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> 是一个标记 trait（一个没有 API 的 trait），承诺实现了<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>的类型可以安全地发送（移动）到另一个线程。</li>
+<li><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> 是一个标记 trait，承诺线程可以通过共享引用安全地共享实现了<a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>的类型。</li>
 <li><a href="https://doc.rust-lang.org/std/alloc/trait.GlobalAlloc.html"><code>GlobalAlloc</code></a>允许自定义整个程序的内存分配器。</li>
 </ul>
-<p>Rust 标准库的大部分内容也在内部使用了 Unsafe Rust。这些实现一般都经过严格的人工检查，所以建立在这些实现之上的安全 Rust 接口可以被认为是安全的。</p>
-<p>我们需要将它们分离，是因为安全 Rust 的一个基本属性，即<em>健全性属性</em>。</p>
-<p><strong>无论怎样，安全 Rust 都不会导致未定义行为。</strong></p>
-<p>安全/不安全分离的设计意味着安全 Rust 和不安全 Rust 之间存在着不对称的信任关系。安全 Rust 本质上必须相信它所接触的任何不安全 Rust 都是正确编写的。另一方面，不安全的 Rust 在信任安全 Rust 时必须非常小心。</p>
-<p>例如，Rust 有<a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>和<a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a>特性来区分“只是”被比较的类型和提供“总”排序的类型（这意味着比较行为是合理的）。</p>
-<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a>对于<code>PartialOrd</code>的类型来说并没有实际意义，因此它要求其键实现<code>Ord</code>。然而，<code>BTreeMap</code>在其实现中包含了不安全的 Rust 代码。因为马虎的<code>Ord</code>实现（可以在安全 Rust 中编写）会导致未定义行为，这是不可接受的，BTreeMap 中的不安全代码必须被编写成对实际上不完全的<code>Ord</code>实现具有鲁棒性——尽管这正是要求<code>Ord</code>的全部意义。</p>
-<p>不安全的 Rust 代码不能相信安全的 Rust 代码会被正确编写。也就是说，如果你输入了没有总排序的值，<code>BTreeMap</code>仍然会表现得完全不正常。它只是不会导致未定义行为。</p>
+<p>Rust 标准库的大部分内容也在内部使用了 Unsafe Rust。这些实现一般都经过严格的人工检查，所以建立在这些实现之上的 Safe Rust 接口可以被认为是安全的。</p>
+<p>我们需要将它们分离，是因为 Safe Rust 的一个基本属性，即<em>健全性属性</em>。</p>
+<p><strong>无论怎样，Safe Rust 都不会导致未定义行为。</strong></p>
+<p>Safe 与 Unsafe 分离的设计意味着 Safe Rust 和 Unsafe Rust 之间存在着不对等的信任关系。一方面， Safe Rust 本质上必须相信它所接触的任何 Unsafe Rust 都是正确编写的。另一方面，Unsafe Rust 在信任 Safe Rust 时必须非常小心。</p>
+<p>例如，Rust 有<a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>和<a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a> trait 来区分“部分序”比较的类型和“全序”比较的类型（这意味着比较行为必须是合理的）。</p>
+<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a>对于<code>PartialOrd</code>的类型来说并没有实际意义，因此它要求其 key 实现<code>Ord</code>。然而，<code>BTreeMap</code>在其实现中包含了 Unsafe 的代码，所以无法接受马虎的（可以用Safe编写的）<code>Ord</code>实现，因为这会导致未定义行为。因此，BTreeMap 中的 Unsafe 代码必须被编写成对实际上不完全的<code>Ord</code>实现具有鲁棒性——尽管我们要求<code>Ord</code>是正确实现的。</p>
+<p>Unsafe Rust 代码不能相信 Safe Rust 代码会被正确编写。也就是说，如果你输入了没有正确实现全序排序的值，<code>BTreeMap</code>仍然会表现得完全不正常。它只是不会导致未定义行为。</p>
 <p>有人可能会问，如果<code>BTreeMap</code>不能信任<code>Ord</code>，因为它是安全的，那么它为什么能信任<em>任何</em>安全的代码呢？例如，<code>BTreeMap</code>依赖于整数和 slice 的正确实现。这些也是安全的，对吗？</p>
 <p>区别在于范围的不同。当<code>BTreeMap</code>依赖于整数和分片时，它依赖于一个非常具体的实现。这是一个可以衡量的风险，可以与收益相权衡。在这种情况下，风险基本上为零；如果整数和 slice 被破坏，那么<em>所有人</em>都会被破坏。而且，它们是由维护<code>BTreeMap</code>的人维护的，所以很容易对它们进行监控。</p>
-<p>另一方面，<code>BTreeMap</code>的键类型是泛型的。信任它的<code>Ord</code>实现意味着信任过去、现在和未来的每一个<code>Ord</code>实现。这里的风险很高：有人会犯错误，把他们的<code>Ord</code>实现搞得一团糟，甚至直接撒谎说提供了一个完整的排序，因为“它看起来很有效”。当这种情况发生时，<code>BTreeMap</code>需要做好准备。</p>
+<p>另一方面，<code>BTreeMap</code>的 key 类型是泛型的。信任它的<code>Ord</code>实现意味着信任过去、现在和未来的每一个<code>Ord</code>实现。这里的风险很高：有人会犯错误，把他们的<code>Ord</code>实现搞得一团糟，甚至直接撒谎说提供了一个完整的排序，因为“它看起来很有效”。<code>BTreeMap</code>需要做好准备应对这种情况的发生。</p>
 <p>同样的逻辑也适用于信任一个传递给你的闭包会有正确的行为。</p>
-<p>这种无限制的泛型信任问题是<code>unsafe</code> trait 存在的问题。以解决这个问题，理论上，<code>BTreeMap</code>类型可以要求键实现一个新的 trait，称为<code>UnsafeOrd</code>，而不是<code>Ord</code>，它可能看起来像这样：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p><code>unsafe</code> trait 就是用来解决泛型的信任问题。理论上，<code>BTreeMap</code>类型可以要求 key 实现一个新的 trait，称为<code>UnsafeOrd</code>，而不是<code>Ord</code>，它可能看起来像这样：</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::cmp::Ordering;
@@ -250,12 +250,12 @@ unsafe trait UnsafeOrd {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>然后，一个类型将使用<code>unsafe</code>来实现<code>UnsafeOrd</code>，表明他们已经确保他们的实现维护了该 trait 所期望的任何契约。在这种情况下，<code>BTreeMap</code>内部的 Unsafe Rust 有理由相信键类型的<code>UnsafeOrd</code>实现是正确的。如果不是这样，那就是不安全 trait 实现的错，这与 Rust 的安全保证是一致的。</p>
-<p>决定是否将一个 trait 标记为“不安全”是一个 API 设计选择。一个安全的 trait 更容易实现，但任何依赖它的不安全代码都必须抵御不正确的行为。将 trait 标记为“不安全”会将这个责任转移到实现者身上。Rust 传统上避免将特性标记为“不安全”，因为它使不安全的 Rust 普遍存在，这并不可取。</p>
-<p><code>Send</code>和<code>Sync</code>被标记为不安全，因为线程安全是一个<em>基本</em>的属性，不安全的代码不可能像抵御一个有缺陷的<code>Ord</code>实现那样去抵御它。同样地，<code>GlobalAllocator</code>是对程序中所有的内存进行记录，其他的东西如<code>Box</code>或<code>Vec</code>都建立在它的基础上。如果它做了一些奇怪的事情（当它还在使用的时候，把同一块内存给了另一个请求），就没有机会检测到并采取任何措施了。</p>
-<p>决定是否将你自己的特性标记为“不安全”，也是出于同样的考虑。如果“不安全”的代码不能合理地期望抵御 trait 被破坏的实现，那么将 trait 标记为“不安全”就是一个合理的选择。</p>
-<p>顺便说一下，虽然<code>Send</code>和<code>Sync</code>是<code>不安全</code>的特性，但它们<em>也是</em>自动实现的类型，当这种派生可以证明是安全的。<code>Send</code>是自动派生的，只适用于由类型也实现了<code>Send</code>的值组成的所有类型。<code>Sync</code>是自动派生的，只适用于由类型也实现了<code>Sync</code>的值组成的所有类型。这最大限度地减少了使这两个特征“不安全”的普遍的不安全因素。而且，没有多少人会去<em>实现</em>内存分配器（或者针对这个问题而言，直接使用它们）。</p>
-<p>这就是安全和不安全的 Rust 之间的平衡。这种分离是为了使安全 Rust 的使用尽可能符合人体工程学，但在编写不安全 Rust 时需要额外的努力和小心。本书的其余部分主要是讨论必须采取的那种谨慎，以及不安全的 Rust 必须坚持的契约。</p>
+<p>然后，一个类型将使用<code>unsafe</code>来实现<code>UnsafeOrd</code>，表明他们已经确保他们的实现满足了该 trait 所期望的任何条件。在这种情况下，<code>BTreeMap</code>内部的 Unsafe Rust 有理由相信 key 类型的<code>UnsafeOrd</code>实现是正确的。如果不是这样，那就是 unsafe trait 实现的错，这与 Rust 的安全保证是一致的。</p>
+<p>是否将一个 trait 标记为<code>unsafe</code>是一个 API 设计。一个 safe trait 更容易实现，但任何依赖它的 Unsafe 代码都必须抵御不正确的行为。将 trait 标记为<code>unsafe</code>会将这个责任转移到实现者身上。Rust 习惯于避免将 trait 标记为<code>unsafe</code>，因为它使 Unsafe Rust 普遍存在，这并不可取。</p>
+<p><code>Send</code>和<code>Sync</code>被标记为 unsafe，是因为线程安全是一个<em>基本</em>的属性，unsafe 代码不可能像抵御一个有缺陷的<code>Ord</code>实现那样去抵御它。同样地，<code>GlobalAllocator</code>是对程序中所有的内存进行记录，其他的东西如<code>Box</code>或<code>Vec</code>都建立在它的基础上。如果它做了一些奇怪的事情（当它还在使用的时候，把同一块内存给了另一个请求），就没有机会检测到并采取任何措施了。</p>
+<p>决定是否将你自己的 trait 标记为“unsafe”，也是出于同样的考虑。如果“unsafe”的代码不能抵御 trait 的错误实现，那么将 trait 标记为“unsafe”就是一个合理的选择。</p>
+<p>顺便说一下，虽然<code>Send</code>和<code>Sync</code>是<code>unsafe</code>的特性，但它们<em>也是</em>自动实现的类型，当这种派生可以证明是安全的。<code>Send</code>是自动派生的，只适用于一个类型下所有类型都实现了<code>Send</code>。<code>Sync</code>是自动派生的，只适用于一个类型下所有类型都实现了<code>Sync</code>。这最大限度地减少了使这两个 trait “unsafe” 的危险。而且，没有多少人会去<em>实现</em>内存分配器（或者针对这个问题而言，直接使用它们）。</p>
+<p>这就是 Safe Rust 和 Unsafe Rust 之间的平衡。这种分离是为了使 Safe Rust 的使用尽可能符合人体工程学，但在编写 Unsafe Rust 时需要额外的努力和小心。本书的其余部分主要是讨论必须采取的谨慎，以及Unsafe Rust 必须坚持的契约。</p>
 
                     </main>
 

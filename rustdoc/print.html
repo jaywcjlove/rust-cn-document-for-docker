@@ -187,7 +187,7 @@
 <pre><code class="language-bash">$ cargo new docs --lib
 $ cd docs
 </code></pre>
-<p>在 <code>src/lib.rs</code> 中，Cargo 生成了一些事例代码，删掉使用下面的代码代替</p>
+<p>在 <code>src/lib.rs</code> 中，Cargo 生成了一些示例代码，将其删除并替换为下面的代码：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -195,16 +195,16 @@ $ cd docs
 fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>然后我们运行 <code>rustdoc</code>。我们可以在 crate 根目录执行下面的命令</p>
+<p>然后我们运行 <code>rustdoc</code>。我们可以在 crate 根路径执行下面的命令：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs
 </code></pre>
-<p>这会创建一个新目录 <code>doc</code>，其中是一个网站结构。在我们的例子中，主页面是 <code>doc/lib/index.html</code>。如果你使用浏览器打开，可以在 tab 栏看到 &quot;Crate lib&quot;，页面没有内容。</p>
+<p>这会创建一个新目录 <code>doc</code>，其中包含一个网站。在我们的例子中，主页面是 <code>doc/lib/index.html</code>。如果你使用浏览器打开，可以看到一个带有搜索栏的页面，在顶部可以看到“Crate lib”，页面没有内容。</p>
 <h2><a class="header" href="#配置-rustdoc" id="配置-rustdoc">配置 rustdoc</a></h2>
-<p>现在有两个问题：第一，为什么我们的包名字是 &quot;lib&quot;？第二，为什么没有任何内容？</p>
+<p>现在有两个问题：第一，为什么我们的包名字是“lib”？第二，为什么没有任何内容？</p>
 <p>第一个问题的原因是因为 <code>rustdoc</code> 试图更好用，像 <code>rustc</code> 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name docs
 </code></pre>
-<p>现在， <code>doc/docs/index.html</code> 文件生成，页面名称为 &quot;Crate docs&quot;。</p>
+<p>现在，<code>doc/docs/index.html</code> 文件生成，页面名称为“Crate docs”。</p>
 <p>对于第二个问题，因为我们的函数 <code>foo</code> 不是公共的；<code>rustdoc</code> 默认只会为公共函数生成文档，如果我们将代码修改为</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -213,10 +213,10 @@ fn foo() {}
 pub fn foo() {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>然后重新运行 <code>rustdoc</code>:</p>
+<p>然后重新运行 <code>rustdoc</code>：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name docs
 </code></pre>
-<p>现在我们生成了文档，打开 <code>doc/docs/index.html</code>，显示了 <code>foo</code> 函数的连接页面，文件位置是 <code>doc/docs/fn.foo.html</code>。在函数的页面上，你可以看到我们写的注释 &quot;foo is a function&quot;。</p>
+<p>现在我们生成了文档，打开 <code>doc/docs/index.html</code>，显示了 <code>foo</code> 函数的连接页面，文件位置是 <code>doc/docs/fn.foo.html</code>。在函数的页面上，你可以看到我们写的注释“foo is a function”。</p>
 <h2><a class="header" href="#通过-cargo-使用-rustdoc" id="通过-cargo-使用-rustdoc">通过 Cargo 使用 rustdoc</a></h2>
 <p>Cargo 整合了 <code>rustdoc</code>，使得生成文档更容易。代替 <code>rustdoc</code> 命令，我们可以这样做：</p>
 <pre><code class="language-bash">$ cargo doc
@@ -242,7 +242,7 @@ dependency=&lt;path&gt;/docs/target/debug/deps
 <p>当这样用的时候，会生成 item 内部的文档，也就是 crate 自己。</p>
 <p>为了获取更多 <code>//!</code> 的信息，请看 <a href="https://doc.rust-lang.org/book/ch14-02-publishing-to-crates-io.html#commenting-contained-items">the Book</a></p>
 <h2><a class="header" href="#利用单独的-markdown-文件" id="利用单独的-markdown-文件">利用单独的 Markdown 文件</a></h2>
-<p><code>rustdoc</code> 可以为单独的 markdown 文件生成 HTML。让我们尝试一下，创建<code>README.md</code>，并输入如下内容</p>
+<p><code>rustdoc</code> 可以为单独的 markdown 文件生成 HTML。让我们尝试一下，创建 <code>README.md</code>，并输入如下内容：</p>
 <pre><code class="language-text"># Docs
 
 This is a project to test out `rustdoc`.

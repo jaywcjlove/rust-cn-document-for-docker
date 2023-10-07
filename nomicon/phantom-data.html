@@ -210,7 +210,7 @@ s.parentNode.insertBefore(el, s);
                     <main>
                         <h1><a class="header" href="#幽灵数据" id="幽灵数据">幽灵数据</a></h1>
 <p>在处理不安全代码时，我们经常会遇到这样的情况：类型或生命周期在逻辑上与结构相关，但实际上并不是字段的一部分。这种情况最常发生在生命周期上。例如，<code>&amp;'a [T]</code>的<code>Iter</code>（大约）定义如下：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Iter&lt;'a, T: 'a&gt; {
@@ -220,9 +220,9 @@ s.parentNode.insertBefore(el, s);
 <span class="boring">}
 </span></code></pre></pre>
 <p>但是由于<code>'a</code>在结构体中是未使用的，所以它是<em>无约束</em>的。<a href="https://rust-lang.github.io/rfcs/0738-variance.html#the-corner-case-unused-parameters-and-parameters-that-are-only-used-unsafely">由于这在历史上造成的麻烦</a>，在结构定义中，不受约束的生命周期和类型是<em>禁止</em>的，因此我们必须在主体中以某种方式引用这些类型，正确地做到这一点对于正确的变异性和丢弃检查是必要的。</p>
-<p>我们使用<code>PhantomData</code>来做这个，它是一个特殊的标记类型。<code>PhantomData</code>不消耗空间，但为了静态分析的目的，模拟了一个给定类型的字段。这被认为比明确告诉类型系统你想要的变量类型更不容易出错，同时也提供了其他有用的东西，例如 drop check 需要的信息。</p>
+<p>我们使用<code>PhantomData</code>来做这个，它是一个特殊的标记类型。<code>PhantomData</code>不消耗空间，但为了静态分析的目的，模拟了一个给定类型的字段。这被认为比明确告诉类型系统你想要的变量类型更不容易出错，同时也提供了其他有用的东西，例如 auto traits 和 drop check 需要的信息。</p>
 <p>Iter 逻辑上包含一堆<code>&amp;'a T</code>，所以这正是我们告诉<code>PhantomData</code>要模拟的。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::marker;
@@ -239,7 +239,7 @@ struct Iter&lt;'a, T: 'a&gt; {
 <p>在过去，曾经有另一个事情是需要仔细思考的，这篇文档曾经这么说：</p>
 <blockquote>
 <p>另一个重要的例子是 Vec，它（大约）定义如下：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Vec&lt;T&gt; {
@@ -253,7 +253,7 @@ struct Iter&lt;'a, T: 'a&gt; {
 <p>不对，不是这样。</p>
 <p>丢弃检查器将慷慨地确定<code>Vec&lt;T&gt;</code>不拥有任何 T 类型的值。这将反过来使它得出结论，它不需要担心 Vec 在其析构器中丢弃任何 T 来确定丢弃检查的合理性。这将反过来允许人们使用 Vec 的析构器来制造不健壮性。</p>
 <p>为了告诉 dropck 我们确实拥有 T 类型的值，因此在<em>我们</em>丢弃时可能会丢弃一些 T，我们必须添加一个额外的<code>PhantomData</code>，正如这样：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::marker;
@@ -269,7 +269,7 @@ struct Vec&lt;T&gt; {
 </blockquote>
 <p>但自从<a href="https://rust-lang.github.io/rfcs/1238-nonparametric-dropck.html">RFC 1238</a>之后，这就不正确也并不需要了。</p>
 <p>如果你这么写：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Vec&lt;T&gt; {
@@ -289,7 +289,7 @@ struct Vec&lt;T&gt; {
 <p>如果你只是写自己的库代码，那你可以跳过这章；但是如果你想知道标准库中真正的<code>Vec</code>是怎么实现的，你会发现它仍然需要<code>_owns_T: PhantomData&lt;T&gt;</code>字段来保证可靠性。</p>
 <details><summary>点这里查看原因</summary>
 <p>思考以下这个例子：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     let mut v: Vec&lt;&amp;str&gt; = Vec::new();
     let s: String = &quot;Short-lived&quot;.into();
     v.push(&amp;s);
@@ -314,7 +314,7 @@ struct Vec&lt;T&gt; {
 <p>所以当我们说<code>'s</code> <code>#[may_dangle]</code> 时，这是一个过于宽松的说法。我们更期望这么说说：“<code>'s</code>可能会悬垂，前提是它不涉及一些<code>Drop</code>自定义实现”。或者，更一般地说，“<code>T</code>可能会悬空，前提是它不涉及某些<code>Drop</code>自定义实现”。每当**我们拥有一个<code>T</code>**时，这种“例外的例外”是一种普遍的情况。这就是为什么 Rust 的<code>#[may_dangle]</code>足够聪明，<em>当泛型参数以拥有的方式</em> 被 struct 的某个字段所保存时，会被禁用。（原文：That's why Rust's <code>#[may_dangle]</code> is smart enough to know of this opt-out, and will thus be disabled <em>when the generic parameter is held
 in an owned fashion</em> by the fields of the struct.）</p>
 <p>这就是为什么最终标准库是这么写的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[cfg(any())]
@@ -354,16 +354,16 @@ struct Vec&lt;T&gt; {
 <h2><a class="header" href="#phantomdata模式表" id="phantomdata模式表"><code>PhantomData</code>模式表</a></h2>
 <p>下面是一个关于所有可以使用<code>PhantomData</code>的神奇方式的表格：
 (covariant:协变，invariant:不变，contravariant:逆变)</p>
-<table><thead><tr><th>Phantom type</th><th><code>'a</code></th><th><code>T</code></th></tr></thead><tbody>
-<tr><td><code>PhantomData&lt;T&gt;</code></td><td>-</td><td>covariant (with drop check)</td></tr>
-<tr><td><code>PhantomData&lt;&amp;'a T&gt;</code></td><td>covariant</td><td>covariant</td></tr>
-<tr><td><code>PhantomData&lt;&amp;'a mut T&gt;</code></td><td>covariant</td><td>invariant</td></tr>
-<tr><td><code>PhantomData&lt;*const T&gt;</code></td><td>-</td><td>covariant</td></tr>
-<tr><td><code>PhantomData&lt;*mut T&gt;</code></td><td>-</td><td>invariant</td></tr>
-<tr><td><code>PhantomData&lt;fn(T)&gt;</code></td><td>-</td><td>contravariant</td></tr>
-<tr><td><code>PhantomData&lt;fn() -&gt; T&gt;</code></td><td>-</td><td>covariant</td></tr>
-<tr><td><code>PhantomData&lt;fn(T) -&gt; T&gt;</code></td><td>-</td><td>invariant</td></tr>
-<tr><td><code>PhantomData&lt;Cell&lt;&amp;'a ()&gt;&gt;</code></td><td>invariant</td><td>-</td></tr>
+<table><thead><tr><th>Phantom type</th><th><code>'a</code></th><th><code>T</code></th><th><code>Send</code></th><th><code>Sync</code></th></tr></thead><tbody>
+<tr><td><code>PhantomData&lt;T&gt;</code></td><td>-</td><td>covariant (with drop check)</td><td><code>T: Send</code></td><td><code>T: Sync</code></td></tr>
+<tr><td><code>PhantomData&lt;&amp;'a T&gt;</code></td><td>covariant</td><td>covariant</td><td><code>T: Sync</code></td><td><code>T: Sync</code></td></tr>
+<tr><td><code>PhantomData&lt;&amp;'a mut T&gt;</code></td><td>covariant</td><td>invariant</td><td><code>T: Send</code></td><td><code>T: Sync</code></td></tr>
+<tr><td><code>PhantomData&lt;*const T&gt;</code></td><td>-</td><td>covariant</td><td>-</td><td>-</td></tr>
+<tr><td><code>PhantomData&lt;*mut T&gt;</code></td><td>-</td><td>invariant</td><td>-</td><td>-</td></tr>
+<tr><td><code>PhantomData&lt;fn(T)&gt;</code></td><td>-</td><td>contravariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
+<tr><td><code>PhantomData&lt;fn() -&gt; T&gt;</code></td><td>-</td><td>covariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
+<tr><td><code>PhantomData&lt;fn(T) -&gt; T&gt;</code></td><td>-</td><td>invariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
+<tr><td><code>PhantomData&lt;Cell&lt;&amp;'a ()&gt;&gt;</code></td><td>invariant</td><td>-</td><td><code>Send</code></td><td>-</td></tr>
 </tbody></table>
 
                     </main>

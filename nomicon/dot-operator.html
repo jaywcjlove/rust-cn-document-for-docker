@@ -224,7 +224,7 @@ let first_entry = array[0];
 <p>当数组在这么多的间接点后面时，编译器是如何实际计算<code>array[0]</code>的呢？首先，<code>array[0]</code>实际上只是<a href="https://doc.rust-lang.org/std/ops/trait.Index.html"><code>Index</code></a>特性的语法糖——编译器会将<code>array[0]</code>转换成<code>array.index(0)</code>。现在，编译器检查<code>array</code>是否实现了<code>Index</code>，这样它就可以调用这个函数。</p>
 <p>然后，编译器检查<code>Rc&lt;Box&lt;[T; 3]&gt;&gt;</code>是否实现了<code>Index</code>，但它没有，<code>&amp;Rc&lt;Box&lt;[T; 3]&gt;&gt;</code>和<code>&amp;mut Rc&lt;Box&lt;[T; 3]&gt;&gt;</code>也没有。由于这些方法都不起作用，编译器将<code>Rc&lt;Box&lt;[T; 3]&gt;</code>解引用到<code>Box&lt;[T; 3]&gt;</code>中，并再次尝试。<code>Box&lt;[T; 3]&gt;</code>、<code>&amp;Box&lt;[T; 3]&gt;</code>和<code>&amp;mut Box&lt;[T; 3]&gt;</code>没有实现<code>Index</code>，所以它再次解引用。<code>[T; 3]</code>和它的自动引用也没有实现<code>Index</code>。它不能再继续解引用<code>[T; 3]</code>，所以编译器取消了它的大小，得到了<code>[T]</code>。最后，<code>[T]</code>实现了<code>Index</code>，所以它现在可以调用实际的<code>index</code>函数。</p>
 <p>考虑一下下面这个更复杂的点运算符工作的例子：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn do_stuff&lt;T: Clone&gt;(value: &amp;T) {
@@ -235,7 +235,7 @@ let first_entry = array[0];
 <p>实现了<code>Clone</code>的是什么类型？首先，编译器检查是否可以按值调用。<code>value</code>的类型是<code>&amp;T</code>，所以<code>clone</code>函数的签名是<code>fn clone(&amp;T) -&gt; T</code>。它知道<code>T: Clone</code>，所以编译器发现<code>cloned: T</code>。</p>
 <p>如果取消<code>T: Clone</code>的限制，会发生什么？它将不能按值调用，因为<code>T</code>没有实现<code>Clone</code>。所以编译器会尝试通过自动搜索来调用。在这种情况下，该函数的签名是<code>fn clone(&amp;&amp;T) -&gt; &amp;T</code>，因为<code>Self = &amp;T</code>。编译器看到<code>&amp;T: Clone</code>，然后推断出<code>cloned: &amp;T</code>。</p>
 <p>下面是另一个例子，自动搜索行为被用来创造一些微妙的效果：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::sync::Arc;

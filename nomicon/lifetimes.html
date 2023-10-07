@@ -215,7 +215,7 @@ s.parentNode.insertBefore(el, s);
 <p>然而，一旦你跨越了函数的边界，你就需要开始考虑生命周期了。生命周期是用撇号表示的：<code>'a</code>、<code>'static</code>。为了尝试使用生命周期，我们将假装我们被允许用生命周期来标记作用域，并尝试手动解一下本章开头例子的语法糖。</p>
 <p>我们之前的例子使用了一种<em>激进</em>的语法糖——甚至是高果糖玉米糖浆——因为明确地写出所有东西是<em>非常繁琐</em>的。所有的 Rust 代码都依赖于积极的推理和对“显而易见”的东西的删除。</p>
 <p>一个特别有趣的语法糖是，每个<code>let</code>语句都隐含地引入了一个作用域。在大多数情况下，这其实并不重要。然而，这对那些相互引用的变量来说确实很重要。作为一个简单的例子，让我们对这段简单的 Rust 代码进行完全解糖：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 0;
@@ -240,7 +240,7 @@ let z = &amp;y;
 </code></pre>
 <p>哇，这真是……太可怕了！让我们花点时间感谢 Rust 让这一切变得简单。</p>
 <p>实际上，传递一个引用到外部作用域将导致 Rust 推断出一个更大的生命周期。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 0;
@@ -264,7 +264,7 @@ z = y;
 </code></pre>
 <h2><a class="header" href="#例子超出所有者生命周期的引用" id="例子超出所有者生命周期的引用">例子：超出所有者生命周期的引用</a></h2>
 <p>让我们看看之前的那些例子：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn as_str(data: &amp;u32) -&gt; &amp;str {
@@ -305,7 +305,7 @@ fn main() {
 }
 </code></pre>
 <p>当然，这个函数的正确写法是这样的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn to_string(data: &amp;u32) -&gt; String {
@@ -317,7 +317,7 @@ fn main() {
 <p>（实际上我们也可以直接返回一个字符串字面量，作为一个全局的字面量可以被认为是在堆栈的底部；尽管这对我们的实现<em>有一点</em>限制）。</p>
 <h2><a class="header" href="#示例别名一个可变引用" id="示例别名一个可变引用">示例：别名一个可变引用</a></h2>
 <p>来看另一个例子：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut data = vec![1, 2, 3];
@@ -346,7 +346,7 @@ println!(&quot;{}&quot;, x);
 <h2><a class="header" href="#生命周期所覆盖的区域" id="生命周期所覆盖的区域">生命周期所覆盖的区域</a></h2>
 <p>一个引用（有时称为<em>borrow</em>）从它被创建到最后一次使用都是<em>存活</em>的。被 borrow 的值的生命周期只需要超过引用的生命周期就行。这看起来很简单，但有一些微妙之处。</p>
 <p>下面的代码可以成功编译，因为在打印完<code>x</code>之后，它就不再需要了，所以它是悬空的还是别名的都无所谓（尽管变量<code>x</code><em>技术上</em>一直存活到作用域的最后）：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut data = vec![1, 2, 3];
@@ -357,7 +357,7 @@ data.push(4);
 <span class="boring">}
 </span></code></pre></pre>
 <p>然而，如果该值有一个析构器，析构器就会在作用域的末端运行。而运行析构器被认为是一种使用——显然是最后一次使用。所以，这将会编译报错：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[derive(Debug)]
@@ -376,7 +376,7 @@ data.push(4);
 </span></code></pre></pre>
 <p>让编译器相信<code>x</code>不再有效的一个方法是在<code>data.push(4)</code>之前使用<code>drop(x)</code>。</p>
 <p>此外，可能会有多种最后一次的引用使用，例如在一个条件的每个分支中：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn some_condition() -&gt; bool { true }
@@ -394,7 +394,7 @@ if some_condition() {
 <span class="boring">}
 </span></code></pre></pre>
 <p>生命周期中可以有暂停，或者你可以把它看成是两个不同的借用，只是被绑在同一个局部变量上。这种情况经常发生在循环周围（在循环结束时写入一个变量的新值，并在下一次迭代的顶部最后一次使用它）。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut data = vec![1, 2, 3];

@@ -212,10 +212,18 @@ s.parentNode.insertBefore(el, s);
 <p>不安全的代码经常会凭空产生引用或生命周期，这种生命周期是以<em>无约束</em>的形式出现在世界中的。最常见的原因是对原始指针的解引用，这产生了一个具有无约束生命周期的引用。这样的生命周期会随着上下文的要求而变大。这实际上比简单地标记为<code>'static</code>更强大，因为例如<code>&amp;'static &amp;'a T</code>将无法通过类型检查，但无约束的生命周期将根据需要完美地塑造为<code>&amp;'a &amp;'a T</code>。然而，对于大多数意图和目的来说，这样的无约束生命周期可以被看作是<code>'static</code>。</p>
 <p>几乎没有引用是<code>'static</code>的，所以这可能是错误的。<code>transmute</code>和<code>transmute_copy</code>是另外两个主要的违规者。我们应该尽可能快地约束一个无约束的生命周期，特别是当跨越函数边界的时候。</p>
 <p>给定一个函数，任何不来自输入的输出生命周期都是无约束的，比如说：</p>
-<!-- ignore: simplified code -->
-<pre><code class="language-rust ignore">fn get_str&lt;'a&gt;() -&gt; &amp;'a str;
-</code></pre>
-<p>将产生一个具有无约束生命周期的<code>&amp;str</code>。避免无约束生命周期的最简单方法是在函数边界使用生命周期省略。如果一个输出的生命周期被省略了，那么它<em>必须</em>被一个输入的生命周期所约束。当然，它也可能被错误的生命周期所约束，但这通常只会引起编译错误，而不是让内存安全被简单地违反。</p>
+<!-- no_run: This example exhibits undefined behavior. -->
+<pre><pre class="playground"><code class="language-rust no_run">fn get_str&lt;'a&gt;(s: *const String) -&gt; &amp;'a str {
+    unsafe { &amp;*s }
+}
+fn main() {
+    let soon_dropped = String::from(&quot;hello&quot;);
+    let dangling = get_str(&amp;soon_dropped);
+    drop(soon_dropped);
+    println!(&quot;Invalid str: {}&quot;, dangling); // Invalid str: gӚ_`
+}
+</code></pre></pre>
+<p>避免无约束生命周期的最简单方法是在函数边界使用生命周期省略。如果一个输出的生命周期被省略了，那么它<em>必须</em>被一个输入的生命周期所约束。当然，它也可能被错误的生命周期所约束，但这通常只会引起编译错误，而不是让内存安全被简单地违反。</p>
 <p>在一个函数中，对生命周期的约束更容易出错。约束生命周期的最安全和最简单的方法是从一个具有约束的生命周期的函数中返回它。然而，如果这样做是不可接受的，可以将引用放在一个有特定生命周期的位置。不幸的是，我们不可能命名一个函数中涉及的所有生命周期。</p>
 
                     </main>

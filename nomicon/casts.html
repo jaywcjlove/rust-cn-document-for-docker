@@ -218,7 +218,7 @@ s.parentNode.insertBefore(el, s);
 <h3><a class="header" href="#cast-raw-slice-时的长度问题" id="cast-raw-slice-时的长度问题">cast raw slice 时的长度问题</a></h3>
 <p>请注意，在 cast raw slice 时，长度不会被调整：<code>*const [u16] as *const [u8]</code>创建的 slice 只包括原始内存的一半。</p>
 <h3><a class="header" href="#传递性" id="传递性">传递性</a></h3>
-<p>Casting 不是递归的，也就是说，即使<code>e as U1 as U2</code>是一个有效的表达式，<code>e as U2</code>也不一定是。</p>
+<p>Casting 不是传递的，也就是说，即使<code>e as U1 as U2</code>是一个有效的表达式，<code>e as U2</code>也不一定是。</p>
 
                     </main>
 

@@ -209,7 +209,7 @@ s.parentNode.insertBefore(el, s);
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#插入和删除" id="插入和删除">插入和删除</a></h1>
-<p>slice 不提供的东西是“insert”和“remove”，所以我们接下来做这些。</p>
+<p>slice <em>不</em>提供的东西是<code>insert</code>和<code>remove</code>，所以我们接下来做这些。</p>
 <p>insert 需要将目标索引的所有元素向右移动一个。要做到这一点，我们需要使用<code>ptr::copy</code>，它是 C 语言<code>memmove</code>的 Rust 版本。它将一些内存块从一个位置复制到另一个位置，正确处理源和目标重叠的情况（这在这里肯定会发生）。</p>
 <p>如果我们在索引<code>i</code>处插入，我们要使用旧的 len 将<code>[i ... len]</code>转移到<code>[i+1 ... len+1]</code>。</p>
 <!-- ignore: simplified code -->
@@ -220,7 +220,7 @@ s.parentNode.insertBefore(el, s);
     if self.cap == self.len { self.grow(); }
 
     unsafe {
-        // ptr::copy(src, dest, len) 的含义： &quot;从 dst 复制连续的 len 个元素到 src &quot;
+        // ptr::copy(src, dest, len) 的含义： &quot;从 src 复制连续的 len 个元素到 dst &quot;
         ptr::copy(
             self.ptr.as_ptr().add(index),
             self.ptr.as_ptr().add(index + 1),

@@ -214,7 +214,7 @@ s.parentNode.insertBefore(el, s);
 <p>然而，有一个地方 Arc 需要关注可变：销毁。当 Arc 的所有所有者都销毁时，我们需要能够<code>drop</code>其内容并释放其分配。所以我们需要一种方法让所有者知道它是否是最后一个所有者，而最简单的方法就是对所有者进行计数——引用计数。</p>
 <p>不幸的是，这种引用计数本质上是共享的可变状态，所以 Arc <em>需要</em> 考虑同步问题。我们可以为此使用 Mutex，但那太过于杀鸡用牛刀了。相反，我们将使用 atomics。既然每个人都需要一个指向 T 的分配的指针，我们也可以把引用计数放在同一个分配中。</p>
 <p>直观地说，它看起来就像这样：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::sync::atomic;
@@ -237,7 +237,7 @@ pub struct ArcInner&lt;T&gt; {
 </ul>
 <p>为了解决第二个问题，我们可以包含一个包含<code>ArcInner&lt;T&gt;</code>的<code>PhantomData</code>标记。这将告诉 drop checker，我们对<code>ArcInner&lt;T&gt;</code>（它本身包含<code>T</code>）的值有一些所有权的概念。</p>
 <p>通过这些改变，我们得到了最终的结构：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::marker::PhantomData;

@@ -207,9 +207,6 @@ table {
   border-color: inherit;
   border-collapse: collapse;
 }
-table td:first-child {
-  white-space: nowrap;
-}
 
 table.shortcuts td:not(:last-child) > code,
 table.shortcuts td:not(:last-child) > del > code,
@@ -252,6 +249,9 @@ table thead th {
 table thead {
   display: none;
   border-bottom: solid 1px rgba(85, 102, 119, 0.3);
+}
+table.shortcuts td:first-child, table.code-nowrap td:first-child > code {
+  white-space: nowrap;
 }
 table td:first-child > code {
   --text-opacity: 1;
@@ -356,7 +356,7 @@ body.home .h2wrap > h2::after {
   width: 110%;
   margin-top: 0.5rem;
   --bg-opacity: 1;
-  background-color: rgb(30 41 59 / var(--bg-opacity));
+  background-color: var(--primary-color);
 }
 body.home .h1wrap .wrap-body p + p {
   margin-top: 1.6rem;
@@ -380,10 +380,42 @@ body.home .max-container a.home-button:visited:hover {
   color: #fff;
 }
 
+.home-links.home-card {
+  margin:2.2rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.3rem;
+  flex-wrap: wrap;
+}
+.home-links.home-card a {
+  background: rgb(16 185 129/ var(--bg-opacity));
+  height: 2.1rem;
+  border-radius: 0.3rem;
+  gap: 0.1rem;
+  padding: 0rem 0.5rem 0rem 0.4rem;
+}
+
+.home-links.home-card a svg {
+  height: 1em;
+  width: 1em;
+}
+
+.home-card.home-links a span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-card.home-links a {
+  width: 9rem;
+}
+
 .home-card {
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.home-card br {
+  display: none;
 }
 .home-card :is(a.contributing, a.tag) {
   position: relative;
@@ -394,8 +426,15 @@ body.home .max-container a.home-button:visited:hover {
   display: block;
   position: absolute;
   font-size: 10px;
-  left: 5px;
-  bottom: -15px;
+  left: 12px;
+  bottom: -18px;
+  overflow: hidden;
+  height: 1rem;
+  line-height: 1rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  width: 100%;
 }
 .home-card a.contributing:hover:after {
   color: var(--color-fg-muted);
@@ -451,12 +490,13 @@ body.home .max-container a.home-button:visited:hover {
   color: rgb(241 245 249 / var(--text-opacity));
   --bg-opacity: 0.5;
   background-color: rgb(62 69 72 / var(--bg-opacity));
+  background-size: 100% 100%;
   transition: all 0.3s;
   text-decoration: none;
 }
 .home-card a:hover {
-  --bg-opacity: 1;
-  --text-opacity: 0.75;
+  --bg-opacity: 1 !important;
+  --text-opacity: 0.75 !important;
 }
 .home-card a svg {
   min-width: 1.6rem;
@@ -602,6 +642,7 @@ a.text-grey {
 .h1wrap-body {
   display: flex;
   flex-direction: column;
+  padding-bottom: 1.75rem;
   gap: 3rem;
   position: relative;
 }
@@ -737,6 +778,11 @@ body:not(.home) .h2wrap-body > .wrap:hover .h3wrap > h3 a::after {
   font-size: 0.75rem;
   line-height: 1rem;
   letter-spacing: 0.05em;
+}
+
+.wrap-header.h3wrap > .wrap-body > blockquote,
+.h3wrap-body blockquote {
+  padding: 0.75rem 1rem;
 }
 
 .wrap-header.h3wrap > .wrap-body > p,
@@ -1086,6 +1132,7 @@ body:not(.home) .h2wrap-body > .wrap:hover .h3wrap > h3 a::after {
   visibility: visible;
   display: inline-block;
   opacity: 1;
+  z-index: 999;
 }
 
 /* 代码高亮 Start */
@@ -1148,11 +1195,13 @@ body:not(.home) .h2wrap-body > .wrap:hover .h3wrap > h3 a::after {
   color: var(--color-prettylights-syntax-string);
 }
 .token.color,
-.token.atrule,
 .token.attr-value,
 .token.function,
 .token.class-name {
   color: var(--color-prettylights-syntax-string);
+}
+.token.atrule {
+  color: var(--color-prettylights-syntax-markup-inserted-text);
 }
 .token.rule,
 .token.regex,

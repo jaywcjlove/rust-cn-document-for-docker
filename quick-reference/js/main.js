@@ -1,14 +1,14 @@
 /** ==========anchor============== */
-if(('onhashchange' in window) && ((typeof document.documentMode==='undefined') || document.documentMode==8)) {
+if ('onhashchange' in window && (typeof document.documentMode === 'undefined' || document.documentMode == 8)) {
   window.onhashchange = function () {
-    anchorPoint()
-    updateAnchor()
+    anchorPoint();
+    updateAnchor();
   };
 }
 function anchorPoint() {
   const hash = window.location.hash?.replace(/^#/, '') || '';
   const elm = document.getElementById(decodeURIComponent(hash));
-  Array.from(document.querySelectorAll('.h2wrap-body .wrap')).forEach((elm) => elm.classList.remove('active'))
+  Array.from(document.querySelectorAll('.h2wrap-body .wrap')).forEach((elm) => elm.classList.remove('active'));
   if (elm?.tagName === 'H3') {
     elm?.parentElement?.parentElement?.classList.add('active');
   }
@@ -25,13 +25,13 @@ function updateAnchor(element) {
   }
 }
 // toc 定位
-updateAnchor()
+updateAnchor();
 const anchorAll = document.querySelectorAll('.menu-tocs .menu-modal a.tocs-link');
 anchorAll.forEach((item) => {
   item.addEventListener('click', (e) => {
-    updateAnchor()
-  })
-})
+    updateAnchor();
+  });
+});
 
 /** ==========search============== */
 const fuse = new Fuse(REFS_DATA, {
@@ -39,12 +39,12 @@ const fuse = new Fuse(REFS_DATA, {
   shouldSort: !0,
   includeMatches: !0,
   matchEmptyQuery: !0,
-  threshold: .1,
+  threshold: 0.1,
   keys: [
-    { name: "name", weight: 20 }, 
-    { name: 'intro', weight: 2 }, 
-    { name: 'tags', weight: 2 }, 
-    { name: 'sections.t', weight: 5 }
+    { name: 'name', weight: 20 },
+    { name: 'intro', weight: 2 },
+    { name: 'tags', weight: 2 },
+    { name: 'sections.t', weight: 5 },
   ],
 });
 
@@ -68,24 +68,29 @@ searchBox.addEventListener('click', hideSearch);
 searchBox.firstChild.addEventListener('click', (ev) => ev.stopPropagation());
 searchInput.addEventListener('input', (evn) => searchResult(evn.target.value));
 
-let activeMenu = {}
-let result = []
+let activeMenu = {};
+let result = [];
 let inputValue = '';
-let activeIndex = 0
+let activeIndex = 0;
 
 document.addEventListener('keydown', (ev) => {
-  if (ev.metaKey && ev.key.toLocaleLowerCase() === 'k') {
+  const key = ev.key.toLocaleLowerCase();
+  if (key === 'escape') {
+    hideSearch();
+  }
+  if ((ev.metaKey || ev.ctrlKey) && key === 'k') {
+    ev.preventDefault();
     searchBox.classList.contains('show') ? hideSearch() : showSearch();
   }
-  if (ev.key.toLocaleLowerCase() === 'enter') {
+  if (key === 'enter') {
     const url = activeMenu.path || activeMenu?.item.path;
     window.location.href = getDocUrl(url);
   }
-  if (ev.key.toLocaleLowerCase() === 'arrowdown') {
-    activeAnchorElm('down')
+  if (key === 'arrowdown') {
+    activeAnchorElm('down');
   }
-  if (ev.key.toLocaleLowerCase() === 'arrowup') {
-    activeAnchorElm('up')
+  if (key === 'arrowup') {
+    activeAnchorElm('up');
   }
 });
 
@@ -101,7 +106,7 @@ function activeAnchorElm(type) {
   if (activeIndex >= data.length) activeIndex = data.length - 1;
   anchorElm = data[activeIndex];
   if (anchorElm) {
-    data.forEach(item => item.classList.remove('active'));
+    data.forEach((item) => item.classList.remove('active'));
     anchorElm.classList.add('active');
     activeMenu = result[activeIndex];
     activeIndex = activeIndex;
@@ -128,16 +133,16 @@ function searchResult(value) {
   inputValue = value;
   result = fuse.search(value);
   if (!value) {
-    result = REFS_DATA.map(item => ({ item: item }));
+    result = REFS_DATA.map((item) => ({ item: item }));
   }
   let menuHTML = '';
   result.forEach((item, idx) => {
     const label = (item.item.name || '').replace(getValueReg(value), (txt) => {
       return `<mark>${txt}</mark>`;
-    })
+    });
     const tags = (item.item.tags || []).join(',').replace(getValueReg(value), (txt) => {
       return `<mark>${txt}</mark>`;
-    })
+    });
     const href = isHome ? item.item.path : item.item.path.replace('docs/', '');
     if (idx === 0) {
       activeIndex = idx;
@@ -152,17 +157,17 @@ function searchResult(value) {
   const data = Array.from(searchMenu.children);
   data.forEach((anchor, idx) => {
     anchor.onmouseenter = (evn) => {
-      data.forEach(item => item.classList.remove('active'));
+      data.forEach((item) => item.classList.remove('active'));
       evn.target.classList.add('active');
       activeMenu = result[idx];
       activeIndex = idx;
       searchSectionsResult(idx);
-    }
+    };
   });
   const anchorData = searchContent.querySelectorAll('a');
   Array.from(anchorData).forEach((item) => {
     item.addEventListener('click', hideSearch);
-  })
+  });
 }
 function searchSectionsResult(idx = 0) {
   const data = result[idx] || [];
@@ -180,7 +185,7 @@ function searchSectionsResult(idx = 0) {
       if (data.item.sections.length === idx + 1) {
         sectionHTML += `</div></li>`;
       }
-    })
+    });
   }
   searchContent.innerHTML = sectionHTML;
 }

@@ -220,7 +220,7 @@ s.parentNode.insertBefore(el, s);
 <p>Trait 对象代表某种类型，实现了它所指定的 Trait。确切的原始类型被<em>删除</em>，以利于运行时的反射，其中包含使用该类型的所有必要信息的 vtable。补全 Trait 对象指针所需的信息是 vtable 指针，被指向的对象的运行时的大小可以从 vtable 中动态地获取。</p>
 <p>一个 slice 只是一些只读的连续存储——通常是一个数组或<code>Vec</code>。补全一个 slice 指针所需的信息只是它所指向的元素的数量，指针的运行时大小只是静态已知元素的大小乘以元素的数量。</p>
 <p>结构实际上可以直接存储一个 DST 作为其最后一个字段，但这也会使它们自身成为一个 DST：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// 不能直接存储在栈上
@@ -231,7 +231,7 @@ struct MySuperSlice {
 <span class="boring">}
 </span></code></pre></pre>
 <p>如果这样的类型没有方法来构造它，那么它在很大程度上来看是没啥用的。目前，唯一支持的创建自定义 DST 的方法是使你的类型成为泛型，并执行<em>非固定大小转换（unsizing coercion）</em>：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">struct MySuperSliceable&lt;T: ?Sized&gt; {
+<pre><pre class="playground"><code class="language-rust">struct MySuperSliceable&lt;T: ?Sized&gt; {
     info: u32,
     data: T,
 }
@@ -251,7 +251,7 @@ fn main() {
 <p>（是的，自定义 DST 目前仅仅是一个基本半成品的功能。）</p>
 <h2><a class="header" href="#零大小类型-zsts" id="零大小类型-zsts">零大小类型 (ZSTs)</a></h2>
 <p>Rust 也允许类型指定他们不占空间：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Nothing; // 无字段意味着没有大小
@@ -271,7 +271,7 @@ struct LotsOfNothing {
 <p>请注意，对 ZST 的引用（包括空片），就像所有其他的引用一样，必须是非空的，并且适当地对齐。解引用 ZST 的空指针或未对齐指针是<a href="what-unsafe-does.html">未定义的行为</a>，就像其他类型的引用一样。</p>
 <h2><a class="header" href="#空类型" id="空类型">空类型</a></h2>
 <p>Rust 还允许声明<em>不能被实例化</em>的类型。这些类型只能在类型层讨论，而不能在值层讨论。空类型可以通过指定一个没有变体的枚举来声明：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Void {} // 没有变体的类型 = 空类型
@@ -280,7 +280,7 @@ struct LotsOfNothing {
 <p>空类型甚至比 ZST 更加边缘化。空类型的主要作用是为了让某个类型不可达。例如，假设一个 API 需要在一般情况下返回一个结果，但一个特定的情况实际上是不可能的。实际上可以通过返回一个<code>Result&lt;T, Void&gt;</code>来在类型级别上传达这个信息。API 的消费者可以放心地 unwrap 这样一个结果，因为他们知道这个值在本质上不可能是<code>Err</code>，因为这需要提供一个<code>Void</code>类型的值。</p>
 <p>原则上，Rust 可以基于这个事实做一些有趣的分析和优化，例如，<code>Result&lt;T, Void&gt;</code>只表示为<code>T</code>，因为<code>Err</code>的情况实际上并不存在（严格来说，这只是一种优化，并不保证，所以例如将一个转化为另一个仍然是 UB）。</p>
 <p>下面的例子<em>本来应该</em>可以编译的:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">
+<pre><pre class="playground"><code class="language-rust compile_fail">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Void {}

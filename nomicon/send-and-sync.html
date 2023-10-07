@@ -225,7 +225,7 @@ s.parentNode.insertBefore(el, s);
 <p><code>Rc</code>和<code>UnsafeCell</code>从根本上说不是线程安全的：它们共享了非同步的可变状态。然而，严格来说，原始指针被标记为线程不安全，更像是一个<em>提示</em>。用原始指针做任何有用的事情都需要对其进行解引用，这已经是不安全的了；当然，从这个角度上说，人们也可以认为将它们标记为线程安全的做法也没啥问题。</p>
 <p>然而，更重要的是，它们不是线程安全的，是为了防止包含它们的类型被自动标记为线程安全的。这些类型的所有权并不明确，它们的作者也不太可能认真考虑线程安全问题。在<code>Rc</code>的例子中，我们有一个很好的例子，它包含一个绝对不是线程安全的<code>*mut</code>类型。</p>
 <p>如果需要的话，那些没有自动派生的类型可以很简单地实现它们：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct MyBox(*mut u8);
@@ -235,7 +235,7 @@ unsafe impl Sync for MyBox {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>在<em>难以置信</em>的罕见情况下，一个类型被不恰当地自动派生为 Send 或 Sync，那么我们也可以不实现 Send 和 Sync：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span>#![feature(negative_impls)]
 
@@ -252,7 +252,7 @@ impl !Sync for SpecialThreadToken {}
 <h2><a class="header" href="#示例" id="示例">示例</a></h2>
 <p><a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>由于<a href="https://manishearth.github.io/blog/2017/01/10/rust-tidbits-box-is-special/">各种原因</a>，编译器将其作为自己的特殊内建类型来实现，但是我们可以自己实现一些具有类似行为的东西，来看看什么时候实现 Send 和 Sync 是合理的。让我们把它叫做<code>Carton</code>。</p>
 <p>我们先写代码，把分配在栈上的一个值，转移到堆上：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub mod libc {
@@ -264,6 +264,7 @@ impl !Sync for SpecialThreadToken {}
 </span>use std::{
     mem::{align_of, size_of},
     ptr,
+    cmp::max,
 };
 
 struct Carton&lt;T&gt;(ptr::NonNull&lt;T&gt;);
@@ -275,8 +276,8 @@ impl&lt;T&gt; Carton&lt;T&gt; {
         let mut memptr: *mut T = ptr::null_mut();
         unsafe {
             let ret = libc::posix_memalign(
-                (&amp;mut memptr).cast(),
-                align_of::&lt;T&gt;(),
+                (&amp;mut memptr as *mut *mut T).cast(),
+                max(align_of::&lt;T&gt;(), size_of::&lt;usize&gt;()),
                 size_of::&lt;T&gt;()
             );
             assert_eq!(ret, 0, &quot;Failed to allocate or invalid alignment&quot;);
@@ -301,7 +302,7 @@ impl&lt;T&gt; Carton&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>这不是很有用，因为一旦我们的用户给了我们一个值，他们就没有办法访问它。<a href="https://doc.rust-lang.org/std/boxed/struct.Box.html"><code>Box</code></a>实现了<a href="https://doc.rust-lang.org/core/ops/trait.Deref.html"><code>Deref</code></a>和<a href="https://doc.rust-lang.org/core/ops/trait.DerefMut.html"><code>DerefMut</code></a>，这样你就可以访问内部的值。让我们来做这件事：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::ops::{Deref, DerefMut};
@@ -336,7 +337,7 @@ impl&lt;T&gt; DerefMut for Carton&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>最后，让我们考虑一下我们的<code>Carton</code>是否是 Send 和 Sync。一些东西可以安全地成为 Send，除非它与其他东西共享可变的状态，而不对其实施排他性访问。每个<code>Carton</code>都有一个唯一的指针，所以我们可以标记为 Send：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
@@ -345,7 +346,7 @@ unsafe impl&lt;T&gt; Send for Carton&lt;T&gt; where T: Send {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>那么 Sync 呢？为了使<code>Carton</code>能够 Sync，我们必须强制规定，你不能对存储在一个<code>Carton</code>中的东西进行写入，而这个东西可以从另一个<code>Carton</code>中读出或写入。因为你需要一个<code>&amp;mut Carton</code>来写指针，并且借用检查器强制要求可变引用必须是排他的，所以把<code>Carton</code>标记为<code>Sync</code>也没啥问题：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
@@ -359,15 +360,15 @@ unsafe impl&lt;T&gt; Sync for Carton&lt;T&gt; where T: Sync  {}
 <span class="boring">}
 </span></code></pre></pre>
 <p>当我们断言我们的类型是 Send 和 Sync 时，我们通常需要强制要求每个包含的类型都是 Send 和 Sync。当编写行为像标准库类型的自定义类型时，我们可以断言我们有相同的要求。例如，下面的代码断言，如果同类的 Box 是 Send，那么 Carton 就是 Send —— 在这种情况下，这就等于说 T 是 Send：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);
 </span>unsafe impl&lt;T&gt; Send for Carton&lt;T&gt; where Box&lt;T&gt;: Send {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>现在<code>Carton&lt;T&gt;</code>有一个内存泄漏，因为它从未释放它分配的内存。一旦我们解决了这个问题，我们就必须确保满足 Send 的新要求：我们需要确认<code>free</code>释放由另一个线程的分配产生的指针。我们可以在[<code>libc::free</code>][libc-freedocs]的文档中来确认这么做是可行的。</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<p>现在<code>Carton&lt;T&gt;</code>有一个内存泄漏，因为它从未释放它分配的内存。一旦我们解决了这个问题，我们就必须确保满足 Send 的新要求：我们需要确认<code>free</code>释放由另一个线程的分配产生的指针。我们可以在<a href="https://linux.die.net/man/3/free"><code>libc::free</code></a>的文档中来确认这么做是可行的。</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Carton&lt;T&gt;(std::ptr::NonNull&lt;T&gt;);

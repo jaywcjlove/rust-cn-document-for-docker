@@ -212,7 +212,7 @@ s.parentNode.insertBefore(el, s);
 <p>这个规则的一个有趣的例外是与数组一起工作。Safe Rust 不允许你部分初始化一个数组。当你初始化一个数组时，你可以用<code>let x = [val; N]</code>将每个值设置为相同的东西，或者你可以用 <code>let x = [val1, val2, val3]</code>单独指定每个成员。不幸的是，这是很死板的，特别是当你需要以更多的增量或动态方式初始化你的数组时。</p>
 <p>不安全的 Rust 给了我们一个强大的工具来处理这个问题：<a href="https://doc.rust-lang.org/core/mem/union.MaybeUninit.html"><code>MaybeUninit</code></a>。这个类型可以用来处理还没有完全初始化的内存。</p>
 <p>使用<code>MaybeUninit</code>，我们可以对一个数组进行逐个元素的初始化，如下所示：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::mem::{self, MaybeUninit};
@@ -245,7 +245,7 @@ dbg!(x);
 <p>这段代码分三步进行：</p>
 <ol>
 <li>
-<p>创建一个<code>MaybeUninit&lt;T&gt;</code>的数组。在当前稳定版的 Rust 中，我们必须使用不安全的代码来实现：我们取一些未初始化的内存（<code>MaybeUninit::uninit()</code>），并声称我们已经完全初始化了它（[<code>assume_init()</code>][assumed_init]）。这似乎很荒谬，因为我们没有！这是正确的，因为数组本身完全由<code>MaybeUninit</code>组成，实际上不需要初始化。对于大多数其他类型，<code>MaybeUninit::uninit().assume_init()</code>会产生一个无效的类型实例，所以你荣获了一些未定义行为。</p>
+<p>创建一个<code>MaybeUninit&lt;T&gt;</code>的数组。在当前稳定版的 Rust 中，我们必须使用不安全的代码来实现：我们取一些未初始化的内存（<code>MaybeUninit::uninit()</code>），并声称我们已经完全初始化了它（<a href="https://doc.rust-lang.org/core/mem/union.MaybeUninit.html#method.assume_init"><code>assume_init()</code></a>）。这似乎很荒谬，因为我们没有！这是正确的，因为数组本身完全由<code>MaybeUninit</code>组成，实际上不需要初始化。对于大多数其他类型，<code>MaybeUninit::uninit().assume_init()</code>会产生一个无效的类型实例，所以你荣获了一些未定义行为。</p>
 </li>
 <li>
 <p>初始化数组。这个问题的微妙之处在于，通常情况下，当我们使用<code>=</code>赋值给一个 Rust 类型检查器认为已经初始化的值时（比如<code>x[i]</code>），存储在左边的旧值会被丢掉。这将是一场灾难。然而，在这种情况下，左边的类型是<code>MaybeUninit&lt;Box&lt;u32&gt;&gt;</code>，丢弃这个类型什么都不会发生，关于这个<code>drop</code>问题的更多讨论，见下文。</p>
@@ -269,13 +269,13 @@ dbg!(x);
 </ul>
 <p>自然不用说，这些函数如果被误用，会造成严重的破坏，或者直接导致未定义行为。这些函数<em>本身</em>需要的唯一东西是，你想读和写的位置已经被分配并正确对齐。然而，向内存的任意位置写入任意位的方式所带来的问题是无穷无尽的。</p>
 <p>值得注意的是，你不需要担心在未实现<code>Drop</code>或者不包含<code>Drop</code>类型的类型上使用<code>ptr::write</code>带来的问题，因为 Rust 知道这个信息，并且不会调用<code>drop</code>。这也是我们在上面的例子中所依赖的。</p>
-<p>然而，当你处理未初始化的内存时，你需要时刻警惕 Rust 试图在它们完全初始化之前丢弃你创建的这些值。如果它有一个析构器的话，该变量作用域内的每个控制路径必须在结束前初始化该值。<em>[这包括 panic]（unwinding.html）</em>。<code>MaybeUninit</code>在这方面有一点用，因为它不会隐式地丢弃它的内容——但在 panic 的情况下，这实际上意味着不是对尚未初始化的部分进行双重释放，而是对已经初始化的部分导致了内存泄漏。</p>
+<p>然而，当你处理未初始化的内存时，你需要时刻警惕 Rust 试图在它们完全初始化之前丢弃你创建的这些值。如果它有一个析构器的话，该变量作用域内的每个控制路径必须在结束前初始化该值。<em><a href="unwinding.html">这包括 panic</a></em>。<code>MaybeUninit</code>在这方面有一点用，因为它不会隐式地丢弃它的内容——但在 panic 的情况下，这实际上意味着不是对尚未初始化的部分进行双重释放，而是对已经初始化的部分导致了内存泄漏。</p>
 <p>注意，为了使用<code>ptr</code>方法，你需要首先获得一个你想初始化的数据的<em>raw pointer</em>。对未初始化的数据构建一个<em>引用</em>是非法的，这意味着你在获得上述原始指针时必须小心：</p>
 <ul>
 <li>对于一个<code>T</code>的数组，你可以使用<code>base_ptr.add(idx)</code>，其中<code>base_ptr: *mut T</code>来计算数组索引<code>idx</code>的地址。这依赖于数组在内存中的布局方式</li>
 <li>然而，对于一个结构体，一般来说，我们不知道它是如何布局的，而且我们也不能使用<code>&amp;mut base_ptr.field</code>，因为这将创建一个引用。因此，当你使用<a href="https://doc.rust-lang.org/core/ptr/macro.addr_of_mut.html"><code>addr_of_mut</code></a>宏的时候，你必须非常小心，这将跳过中间层直接创建一个指向该字段的裸指针：</li>
 </ul>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::{ptr, mem::MaybeUninit};

@@ -210,7 +210,7 @@ s.parentNode.insertBefore(el, s);
                     <main>
                         <h1><a class="header" href="#经检查的未初始化的内存" id="经检查的未初始化的内存">经检查的未初始化的内存</a></h1>
 <p>和 C 语言一样，Rust 中的所有堆栈变量都是未初始化的，直到为它们明确赋值。与 C 不同的是，Rust 静态地阻止你读取它们，直到你为它们赋值。</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">fn main() {
+<pre><pre class="playground"><code class="language-rust compile_fail">fn main() {
     let x: i32;
     println!(&quot;{}&quot;, x);
 }
@@ -220,7 +220,7 @@ s.parentNode.insertBefore(el, s);
   |                    ^ 使用了没有初始化的 `x`
 </code></pre>
 <p>这基于一个基本的分支分析：每个分支都必须在第一次使用<code>x</code>之前给它赋值，方便起见，我们会说“x 被初始化了”或者“x 未初始化”。有趣的是，如果每个分支恰好赋值一次，Rust 不要求变量是可变的，以执行延迟初始化。然而这个分析并没有利用常量分析或类似的东西。所以下述的代码是可以编译的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     let x: i32;
 
     if true {
@@ -233,7 +233,7 @@ s.parentNode.insertBefore(el, s);
 }
 </code></pre></pre>
 <p>但这个不行：</p>
-<pre><pre class="playground"><code class="language-rust compile_fail edition2018">fn main() {
+<pre><pre class="playground"><code class="language-rust compile_fail">fn main() {
     let x: i32;
     if true {
         x = 1;
@@ -246,7 +246,7 @@ s.parentNode.insertBefore(el, s);
   |                    ^ 使用了可能没有初始化的 `x`
 </code></pre>
 <p>这个又可以了：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     let x: i32;
     if true {
         x = 1;
@@ -257,7 +257,7 @@ s.parentNode.insertBefore(el, s);
 }
 </code></pre></pre>
 <p>当然，虽然分析不考虑实际值，但它对依赖关系和控制流有相对复杂的理解。例如，这样是可以编译通过的：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: i32;
@@ -279,7 +279,7 @@ println!(&quot;{}&quot;, x);
 <span class="boring">}
 </span></code></pre></pre>
 <p>如果一个值从一个变量中移出，并且该值的类型不是 Copy，该变量在逻辑上就会变成未初始化。也就是说：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     let x = 0;
     let y = Box::new(0);
     let z1 = x; // x 仍然是有效的，因为 i32 可以 Copy
@@ -287,7 +287,7 @@ println!(&quot;{}&quot;, x);
 }
 </code></pre></pre>
 <p>然而，在这个例子中重新给<code>y</code>赋值需要将<code>y</code>标记为可变，这样一个安全的 Rust 程序就可以观察到<code>y</code>的值发生了变化：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">fn main() {
+<pre><pre class="playground"><code class="language-rust">fn main() {
     let mut y = Box::new(0);
     let z = y; // 现在 y 逻辑上未初始化，因为 Box 不能 Copy
     y = Box::new(1); // 重新初始化 y

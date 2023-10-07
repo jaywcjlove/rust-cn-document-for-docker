@@ -228,7 +228,7 @@ s.parentNode.insertBefore(el, s);
 <li>我们的指针从不为空（所以<code>Option&lt;Vec&lt;T&gt;&gt;</code>是空指针优化的）</li>
 </ul>
 <p>我们可以在稳定的 Rust 中实现上述所有的要求。为此，我们不使用<code>Unique&lt;T&gt;</code>，而是使用<a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull&lt;T&gt;</code></a>，这是对原始指针的另一种包装，它为我们提供了上述的两个属性，即它在<code>T</code>上是协变的，并且被声明为永不为空。通过在<code>T</code>是<code>Send/Sync</code>的情况下实现<code>Send/Sync</code>，我们得到与使用<code>Unique&lt;T&gt;</code>相同的结果：</p>
-<pre><pre class="playground"><code class="language-rust edition2018">use std::ptr::NonNull;
+<pre><pre class="playground"><code class="language-rust">use std::ptr::NonNull;
 use std::marker::PhantomData;
 
 pub struct Vec&lt;T&gt; {
