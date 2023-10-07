@@ -1,8 +1,0 @@
-[default.general]
-chip = "nrf52833_xxAA"
-
-[debug.gdb]
-enabled = true
-
-[debug.reset]
-halt_afterwards = true
