@@ -112,7 +112,7 @@ jobs:
         env: 
           MDBOOK_BOOK__LANGUAGE: zh-CN
         run: |
-          mdbook mdbook build -d book/zh-CN
+          mdbook build -d book/zh-CN
 
       - run: |
           cp -rp reference-cn/book dist/reference
