@@ -64,10 +64,11 @@ jobs:
       - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
       - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/rustdoc-cn.git -b master rustdoc-cn --depth 1
-      - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/cargo-cn.git -b master cargo --depth 1
       - run: git clone https://github.com/rust-lang-cn/edition-guide-cn.git -b master edition-guide --depth 1
       - run: git clone https://github.com/rust-lang-cn/nomicon-zh-Hans.git -b main nomicon --depth 1
+      - run: git clone https://github.com/rust-lang-cn/style-guide-cn.git -b main style-guide-cn --depth 1
+      - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
       - run: git clone https://github.com/jaywcjlove/reference.git -b gh-pages quick-reference --depth 1
       - run: git clone https://github.com/sunface/rust-course.git -b main rust-course --depth 1
       - run: git clone https://github.com/rustlang-cn/rusty-book.git -b main rusty-book --depth 1
@@ -80,6 +81,7 @@ jobs:
       - run: cp -rp quick-reference dist/quick-reference
       - run: rm -rf rust-course/.git
       - run: rm -rf rusty-book/.git
+      - run: rm -rf style-guide-cn/.git
       - run: rm -rf reference-cn/.git
 
       - name: 📗 book
@@ -89,6 +91,14 @@ jobs:
           rm -rf .git
           ls -al
           cp -rp ./book ../dist/book
+
+      - name: 📗 style-guide-cn
+        working-directory: style-guide-cn
+        run: |
+          mdbook build
+          rm -rf .git
+          ls -al
+          cp -rp ./book ../dist/style-guide-cn
 
       - name: 📗 rust-by-example-cn
         working-directory: rust-by-example-cn
@@ -235,6 +245,7 @@ jobs:
                 <li><a href="quick-reference/index.html" target="__blank"> Quick Reference (速查表) </a></li>
                 <li><a href="rust-course/index.html" target="__blank"> Rust 语言圣经 </a></li>
                 <li><a href="rusty-book/index.html" target="__blank"> Rusty Book(锈书) </a></li>
+                <li><a href="style-guide-cn/index.html" target="__blank"> Rust 语言风格指南 </a></li>
                 <li><a href="comprehensive-rust/index.html" target="__blank"> Comprehensive Rust 🦀 </a></li>
               </ul>
             </body>
@@ -255,7 +266,7 @@ jobs:
             [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/reference-cn?style=flat&label=last)](https://github.com/rust-lang-cn/reference-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/)
             [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rustdoc-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rustdoc-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/)
             [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-cookbook-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-cookbook-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/)
-            [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/edition-guide?style=flat&label=last)](https://github.com/rust-lang-cn/edition-guide/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/)
+            [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/edition-guide-cn?style=flat&label=last)](https://github.com/rust-lang-cn/edition-guide-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/)
             [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/)
             [Rust 秘典](https://github.com/rust-lang-cn/nomicon-zh-Hans) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/nomicon-zh-Hans?style=flat&label=last)](https://github.com/rust-lang-cn/nomicon-zh-Hans/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/nomicon/)
             [Cargo 备忘清单(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/quick-reference/docs/cargo.html)
@@ -263,6 +274,7 @@ jobs:
             [Quick Reference(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/quick-reference/index.html)
             [Rust 语言圣经](https://github.com/sunface/rust-course) | [![GitHub last commit](https://img.shields.io/github/last-commit/sunface/rust-course?style=flat&label=last)](https://github.com/sunface/rust-course/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-course/index.html)
             [Rusty Book(锈书)](https://github.com/rustlang-cn/rusty-book) | [![GitHub last commit](https://img.shields.io/github/last-commit/rustlang-cn/rusty-book?style=flat&label=last)](https://github.com/rustlang-cn/rusty-book/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rusty-book/index.html)
+            [Rust 语言风格指南](https://github.com/rust-lang-cn/style-guide-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/style-guide-cn?style=flat&label=last)](https://github.com/rust-lang-cn/style-guide-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/style-guide-cn/index.html)
             [Comprehensive Rust 🦀](https://github.com/google/comprehensive-rust) | [![GitHub last commit](https://img.shields.io/github/last-commit/google/comprehensive-rust?style=flat&label=last)](https://github.com/google/comprehensive-rust/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/comprehensive-rust/index.html)
             EOF
 
@@ -298,7 +310,7 @@ jobs:
             [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/reference-cn?style=flat&label=last)](https://github.com/rust-lang-cn/reference-cn/commits) | [#home](https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/reference/)
             [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rustdoc-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rustdoc-cn/commits) | [#home](https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/rustdoc/)
             [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-cookbook-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-cookbook-cn/commits) | [#home](https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/rust-cookbook/)
-            [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/edition-guide?style=flat&label=last)](https://github.com/rust-lang-cn/edition-guide/commits) | [#home](https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/edition-guide/)
+            [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/edition-guide-cn?style=flat&label=last)](https://github.com/rust-lang-cn/edition-guide-cn/commits) | [#home](https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/edition-guide/)
             [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/cargo/)
             [Rust 秘典](https://github.com/rust-lang-cn/nomicon-zh-Hans) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/nomicon-zh-Hans?style=flat&label=last)](https://github.com/rust-lang-cn/nomicon-zh-Hans/commits) | [#home](https://raw.githack.com/jaywcjlove/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/nomicon/)
             [Cargo 备忘清单(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://raw.githack.com/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/quick-reference/docs/cargo.html)
@@ -306,6 +318,7 @@ jobs:
             [Quick Reference(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://raw.githack.com/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/quick-reference/index.html)
             [Rust 语言圣经](https://github.com/sunface/rust-course) | [![GitHub last commit](https://img.shields.io/github/last-commit/sunface/rust-course?style=flat&label=last)](https://github.com/sunface/rust-course/commits) | [#home](https://raw.githack.com/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/rust-course/index.html)
             [Rusty Book(锈书)](https://github.com/rustlang-cn/rusty-book) | [![GitHub last commit](https://img.shields.io/github/last-commit/rustlang-cn/rusty-book?style=flat&label=last)](https://github.com/rustlang-cn/rusty-book/commits) | [#home](https://raw.githack.com/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/rusty-book/index.html)
+            [Rust 语言风格指南](https://github.com/rust-lang-cn/style-guide-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/style-guide-cn?style=flat&label=last)](https://github.com/rust-lang-cn/style-guide-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/style-guide-cn/index.html)
             [Comprehensive Rust 🦀](https://github.com/google/comprehensive-rust) | [![GitHub last commit](https://img.shields.io/github/last-commit/google/comprehensive-rust?style=flat&label=last)](https://github.com/google/comprehensive-rust/commits) | [#home](https://raw.githack.com/rust-cn-document-for-docker/${{ steps.changelog.outputs.gh-pages-short-hash }}/comprehensive-rust/index.html)
             
             ${{ steps.changelog.outputs.changelog }}
