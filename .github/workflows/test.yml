@@ -46,10 +46,10 @@ jobs:
       #     rustup install 1.76.0
       #     rustup default nightly-2024-02-04
 
-      - name: Install nightly rustfmt
-        run: |
-          rustup default nightly
-          rustup component add rustfmt
+      # - name: Install nightly rustfmt
+      #   run: |
+      #     rustup default nightly
+      #     rustup component add rustfmt
 
 
       # - name: Install latest nightly
@@ -59,8 +59,8 @@ jobs:
       #     override: true
       #     components: rustfmt, clippy
 
-      - name: Update rustup
-        run: rustup self update
+      # - name: Update rustup
+      #   run: rustup self update
 
       - name: Install Rust
         run: |
