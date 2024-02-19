@@ -76,20 +76,21 @@ jobs:
       - run: rm -rf rusty-book/.git
       - run: cp -rp rusty-book dist/rusty-book
 
-      - name: reference-cn
-        working-directory: reference-cn
-        run: |
-          ls -al
-          mdbook build
-          rm -rf .git
-          cp -rp reference-cn/book dist/reference
-
       - name: rustdoc-cn
         working-directory: rustdoc-cn
         run: |
           mdbook build
           rm -rf .git
           cp -rp rustdoc-cn/book dist/rustdoc
+
+      - name: reference-cn
+        working-directory: reference-cn
+        run: |
+          ls -al
+          mdbook build
+          rm -rf .git
+          ls -al
+          cp -rp reference-cn/book dist/reference
 
       - name: rust-cookbook-cn
         working-directory: rust-cookbook-cn
