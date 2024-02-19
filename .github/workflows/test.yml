@@ -92,7 +92,7 @@ jobs:
 
       - run: ls -al
       - run: mkdir dist
-      - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b master dist/rust-by-example-cn --depth 1
+      - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b master rust-by-example-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/book-cn.git -b master book --depth 1
       - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
       - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
@@ -108,7 +108,6 @@ jobs:
       - run: cp -rp std/doc dist/std
       - run: rm -rf book/.git
       - run: rm -rf rust-by-example-cn/.git
-      - run: rm -rf dist/rust-by-example-cn/.git
       - run: rm -rf comprehensive-rust/.git
       - run: rm -rf quick-reference/.git
       - run: cp -rp quick-reference dist/quick-reference
