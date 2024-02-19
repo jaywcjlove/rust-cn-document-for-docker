@@ -41,8 +41,8 @@ impl Philosopher {
     fn eat(&self) {
         // ANCHOR_END: Philosopher-eat
         println!("{} is trying to eat", &self.name);
-        let left = self.left_fork.lock().unwrap();
-        let right = self.right_fork.lock().unwrap();
+        let _left = self.left_fork.lock().unwrap();
+        let _right = self.right_fork.lock().unwrap();
 
         // ANCHOR: Philosopher-eat-end
         println!("{} is eating...", &self.name);
@@ -51,7 +51,7 @@ impl Philosopher {
 }
 
 static PHILOSOPHERS: &[&str] =
-    &["Socrates", "Plato", "Aristotle", "Thales", "Pythagoras"];
+    &["Socrates", "Hypatia", "Plato", "Aristotle", "Pythagoras"];
 
 fn main() {
     // ANCHOR_END: Philosopher-eat-end

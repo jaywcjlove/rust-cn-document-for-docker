@@ -303,7 +303,7 @@ impl&lt;'a, T&gt; Hole&lt;'a, T&gt; {
 
     fn removed(&amp;self) -&gt; &amp;T { self.elt.as_ref().unwrap() }
 
-    unsafe fn get(&amp;self, index: usize) -&gt; &amp;T { &amp;self.data[index] }
+    fn get(&amp;self, index: usize) -&gt; &amp;T { &amp;self.data[index] }
 
     unsafe fn move_to(&amp;mut self, index: usize) {
         let index_ptr: *const _ = &amp;self.data[index];

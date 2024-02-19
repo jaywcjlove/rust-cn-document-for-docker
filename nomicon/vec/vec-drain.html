@@ -289,7 +289,7 @@ impl&lt;T&gt; IntoIterator for Vec&lt;T&gt; {
             mem::forget(self);
 
             IntoIter {
-                iter: iter,
+                iter,
                 _buf: buf,
             }
         }
@@ -324,18 +324,16 @@ impl&lt;'a, T&gt; Drop for Drain&lt;'a, T&gt; {
 
 impl&lt;T&gt; Vec&lt;T&gt; {
     pub fn drain(&amp;mut self) -&gt; Drain&lt;T&gt; {
-        unsafe {
-            let iter = RawValIter::new(&amp;self);
+        let iter = unsafe { RawValIter::new(&amp;self) };
 
-            // 这里事关 mem::forget 的安全。
-            // 如果 Drain 被 forget，我们就会泄露整个 Vec 的内存，
-            // 既然我们始终要做这一步，为何不在这里完成呢？
-            self.len = 0;
+        // 这里事关 mem::forget 的安全。
+        // 如果 Drain 被 forget，我们就会泄露整个 Vec 的内存，
+        // 既然我们始终要做这一步，为何不在这里完成呢？
+        self.len = 0;
 
-            Drain {
-                iter: iter,
-                vec: PhantomData,
-            }
+        Drain {
+            iter: iter,
+            vec: PhantomData,
         }
     }
 }

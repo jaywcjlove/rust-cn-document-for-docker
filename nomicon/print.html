@@ -221,7 +221,7 @@ s.parentNode.insertBefore(el, s);
 <p>译者的话：首先，限于译者自身姿势水平，翻译有可能无法做到完全信达雅，并且有一些专业术语不知道如何翻译到中文，在这里先向大家道歉，请多包涵。</p>
 <p>不过，译者保证所有翻译的内容都是译者阅读并调整过多次的，并且译者会努力将内容调整到满足<strong>能看懂</strong>的要求，并且做到不遗漏原文内容。</p>
 <p>如果大家对于翻译有更好的建议或者想法，欢迎直接 PR~</p>
-<p>目前翻译基于 commit：ddfa4214487686e91b21aa29afb972c08a8f0d5b，基于时间：2023/9/25</p>
+<p>目前翻译基于 commit：6bc2415218d4dd0cb01433d8320f5ccf79c343a1，基于时间：2024/1/4</p>
 <p>Q：为什么不基于之前已有的中文版进行改进？</p>
 <p>A：因为翻译成中文版后，很难再回过头去看和现在的英文版原文到底差了啥，所以还不如完全重新翻译一遍。</p>
 <p>Q：那会不会有一天你的这个版本也过期了？</p>
@@ -272,11 +272,11 @@ s.parentNode.insertBefore(el, s);
 <p>仍然有一些问题——最明显的是，我们必须意识到类型系统有一些程序必须遵守的假设的规则，且认真审核任何与 Unsafe Rust 交互的代码以遵守规则。这就是本书的目的：教你了解这些规则以及如何遵守它们。</p>
 <h1><a class="header" href="#safe-和-unsafe-如何交互" id="safe-和-unsafe-如何交互">Safe 和 Unsafe 如何交互</a></h1>
 <p>Safe Rust 和 Unsafe Rust 之间有什么关系？它们又是如何交互的？</p>
-<p>Safe Rust 和 Unsafe Rust 之间的边界由<code>unsafe</code>关键字控制，<code>unsafe</code>是承接了它们之间交互的桥梁。这就是为什么我们可以说 Safe Rust 是一种安全的语言：所有不安全的部分都被限制在“unsafe”边界之内。如果你愿意，你甚至可以把<code>#![forbid(unsafe_code)]</code>扔进你的代码库，以静态地保证你只写安全的 Rust。</p>
+<p>Safe Rust 和 Unsafe Rust 之间的边界由<code>unsafe</code>关键字控制，<code>unsafe</code>是承接了它们之间交互的桥梁。这就是为什么我们可以说 Safe Rust 是一种安全的语言：所有不安全的部分都被限制在“unsafe”边界之内。如果你愿意，你甚至可以把<code>#![forbid(unsafe_code)]</code>扔进你的代码库，以静态地保证你只写 Safe Rust。</p>
 <p><code>unsafe</code>关键字有两个用途：声明编译器不会保证这些代码的安全性，以及声明程序员已经确保这些代码是安全的。</p>
-<p>你可以用<code>unsafe</code>来表示在 <em>函数</em> 和 <em>trait 声明</em> 这些行为不一定安全。对于函数，<code>unsafe</code>意味着函数的用户必须仔细阅读该函数的文档，以确保他们在使用该函数时能满足函数能安全运行的条件。对于 trait 声明，<code>unsafe</code>意味着 trait 的实现者必须仔细阅读 trait 文档，以确保他们的实现遵循了 trait 所要求条件。</p>
-<p>你可以在一个块上使用<code>unsafe</code>来声明在其中执行的所有不安全操作都经过了验证以保证操作的安全性。例如，当传递给<a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>的索引在边界内，这一行为就是安全的。</p>
-<p>你可以在 trait 的实现上使用<code>unsafe</code>来声明该实现满足了 trait 的条件。例如，实现<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>说明这个类型移动到另一个线程是真正安全的。</p>
+<p>在 <em>函数</em> 和 <em>trait 声明</em> 上添加<code>unsafe</code>前缀表示其中存在未经检查的约束。对于函数，<code>unsafe</code>意味着函数的用户必须仔细阅读该函数的文档，以确保他们的使用方式遵循了该函数规定的约束。对于 trait 声明，<code>unsafe</code>意味着 trait 的实现者必须仔细阅读 trait 文档，以确保他们的实现遵循了该 trait 规定的约束。</p>
+<p>在代码块上添加<code>unsafe</code>前缀可以声明在其中执行的所有不安全操作都经过了验证（遵循了内部不安全操作所规定的约束）。传递给<a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>的索引在边界内时，就是一个可以这样添加<code>unsafe</code>前缀的例子。</p>
+<p>在 trait 实现上添加<code>unsafe</code>前缀可以声明该实现满足了 trait 所规定的约束。例如，当一个类型的值移动到另一个线程是真正安全的时，便可在<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>的实现前添加<code>unsafe</code>前缀。</p>
 <p>标准库中有许多 unsafe 的函数，包括：</p>
 <ul>
 <li><a href="https://doc.rust-lang.org/std/primitive.slice.html#method.get_unchecked"><code>slice::get_unchecked</code></a>，它不会检查传入索引的有效性，允许违反内存安全的规则。</li>
@@ -286,22 +286,22 @@ s.parentNode.insertBefore(el, s);
 </ul>
 <p>从 Rust 1.29.2 开始，标准库定义了以下 unsafe trait（还有其他 trait，但还没有稳定下来，有些可能永远不会稳定下来）：</p>
 <ul>
-<li><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> 是一个标记 trait（一个没有 API 的 trait），承诺实现了<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>的类型可以安全地发送（移动）到另一个线程。</li>
-<li><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> 是一个标记 trait，承诺线程可以通过共享引用安全地共享实现了<a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>的类型。</li>
+<li><a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a> 是一个标记 trait（一个没有 API 的 trait），用于保证实现了<a href="https://doc.rust-lang.org/std/marker/trait.Send.html"><code>Send</code></a>的类型可以安全地发送（移动）到另一个线程。</li>
+<li><a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a> 是一个标记 trait，用于保证线程间可以通过共享引用安全地共享实现了<a href="https://doc.rust-lang.org/std/marker/trait.Sync.html"><code>Sync</code></a>的类型。</li>
 <li><a href="https://doc.rust-lang.org/std/alloc/trait.GlobalAlloc.html"><code>GlobalAlloc</code></a>允许自定义整个程序的内存分配器。</li>
 </ul>
-<p>Rust 标准库的大部分内容也在内部使用了 Unsafe Rust。这些实现一般都经过严格的人工检查，所以建立在这些实现之上的 Safe Rust 接口可以被认为是安全的。</p>
-<p>我们需要将它们分离，是因为 Safe Rust 的一个基本属性，即<em>健全性属性</em>。</p>
-<p><strong>无论怎样，Safe Rust 都不会导致未定义行为。</strong></p>
+<p>Rust 标准库也有很多地方在内部使用了 Unsafe Rust。这些实现一般都经过严格的人工检查，所以建立在这些实现之上的 Safe Rust 接口可以被认为是安全的。</p>
+<p>之所以要像这样分离 Safe 和 Unsafe，归根到底在于 Safe Rust 的一个根本属性，即<em>可靠性</em>。</p>
+<p><strong>无论怎样，Safe Rust 都不能导致未定义行为。</strong></p>
 <p>Safe 与 Unsafe 分离的设计意味着 Safe Rust 和 Unsafe Rust 之间存在着不对等的信任关系。一方面， Safe Rust 本质上必须相信它所接触的任何 Unsafe Rust 都是正确编写的。另一方面，Unsafe Rust 在信任 Safe Rust 时必须非常小心。</p>
-<p>例如，Rust 有<a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>和<a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a> trait 来区分“部分序”比较的类型和“全序”比较的类型（这意味着比较行为必须是合理的）。</p>
-<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a>对于<code>PartialOrd</code>的类型来说并没有实际意义，因此它要求其 key 实现<code>Ord</code>。然而，<code>BTreeMap</code>在其实现中包含了 Unsafe 的代码，所以无法接受马虎的（可以用Safe编写的）<code>Ord</code>实现，因为这会导致未定义行为。因此，BTreeMap 中的 Unsafe 代码必须被编写成对实际上不完全的<code>Ord</code>实现具有鲁棒性——尽管我们要求<code>Ord</code>是正确实现的。</p>
-<p>Unsafe Rust 代码不能相信 Safe Rust 代码会被正确编写。也就是说，如果你输入了没有正确实现全序排序的值，<code>BTreeMap</code>仍然会表现得完全不正常。它只是不会导致未定义行为。</p>
-<p>有人可能会问，如果<code>BTreeMap</code>不能信任<code>Ord</code>，因为它是安全的，那么它为什么能信任<em>任何</em>安全的代码呢？例如，<code>BTreeMap</code>依赖于整数和 slice 的正确实现。这些也是安全的，对吗？</p>
-<p>区别在于范围的不同。当<code>BTreeMap</code>依赖于整数和分片时，它依赖于一个非常具体的实现。这是一个可以衡量的风险，可以与收益相权衡。在这种情况下，风险基本上为零；如果整数和 slice 被破坏，那么<em>所有人</em>都会被破坏。而且，它们是由维护<code>BTreeMap</code>的人维护的，所以很容易对它们进行监控。</p>
-<p>另一方面，<code>BTreeMap</code>的 key 类型是泛型的。信任它的<code>Ord</code>实现意味着信任过去、现在和未来的每一个<code>Ord</code>实现。这里的风险很高：有人会犯错误，把他们的<code>Ord</code>实现搞得一团糟，甚至直接撒谎说提供了一个完整的排序，因为“它看起来很有效”。<code>BTreeMap</code>需要做好准备应对这种情况的发生。</p>
-<p>同样的逻辑也适用于信任一个传递给你的闭包会有正确的行为。</p>
-<p><code>unsafe</code> trait 就是用来解决泛型的信任问题。理论上，<code>BTreeMap</code>类型可以要求 key 实现一个新的 trait，称为<code>UnsafeOrd</code>，而不是<code>Ord</code>，它可能看起来像这样：</p>
+<p>例如，Rust 有<a href="https://doc.rust-lang.org/std/cmp/trait.PartialOrd.html"><code>PartialOrd</code></a>和<a href="https://doc.rust-lang.org/std/cmp/trait.Ord.html"><code>Ord</code></a> trait 来区分“偏序”比较的类型和“全序”比较的类型（前者仅能进行比较而未必得出大小关系，而后者意味着每一个比较都有合理的结果）。</p>
+<p><a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html"><code>BTreeMap</code></a>以没有定义全序关系的类型作为 key 是没有意义的，因此它要求其 key 实现<code>Ord</code>。然而，<code>BTreeMap</code>的实现中包含了 Unsafe 的代码。由于（用 Safe 代码就能写出的）不靠谱的<code>Ord</code>实现导致未定义行为是不可接受的，因此，BTreeMap 中的 Unsafe 代码必须健壮到这个地步：对于实际上并非全序关系的<code>Ord</code>实现也不会导致未定义行为——尽管我们指定<code>Ord</code>约束就是为了得到全序关系。</p>
+<p>Unsafe Rust 代码不能信任 Safe Rust 代码逻辑无误。话虽如此，如果你输入的值，其类型并没有全序关系，<code>BTreeMap</code>仍然会变得乱七八糟。上一段只是说明它不会导致未定义行为。</p>
+<p>有人可能会问，如果<code>BTreeMap</code>不能基于“它是 Safe 代码编写的”这一理由而信任<code>Ord</code>，那还有<em>什么</em> Safe 代码是能信任的呢？例如，<code>BTreeMap</code>依赖于整数和切片的正确实现。这些也是 Safe Rust 编写的，不是么？</p>
+<p>区别在于范围的不同。当<code>BTreeMap</code>依赖于整数和切片时，它依赖于一个完全特定的实现。这里的风险经过评估可以与收益相权衡。在这个特定场景下，风险基本为零；如果整数和切片出了问题，<em>什么东西</em>都会出问题，因此不可能被忽视。而且，它们和<code>BTreeMap</code>是由同一批人维护的，所以很容易对它们进行监控。</p>
+<p>另一方面，<code>BTreeMap</code>的 key 类型是泛型的。信任它的<code>Ord</code>实现意味着信任过去、现在和未来的每一个<code>Ord</code>实现。这里的风险很高：总有人会犯错误，把<code>Ord</code>实现坏，甚至直接谎称提供了一个全序关系，因为“这个实现看上去够用”。对于这种情况，<code>BTreeMap</code>需要有备无患。</p>
+<p>同样的逻辑也适用于信任一个传递给你的闭包的行为是正确的。</p>
+<p>问题是能否无限信任泛型类型参数？<code>unsafe</code> trait 应运而生。理论上，<code>BTreeMap</code>类型可以要求 key 实现一个新的 trait，称为<code>UnsafeOrd</code>，而不是<code>Ord</code>，它可能看起来像这样：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -312,12 +312,12 @@ unsafe trait UnsafeOrd {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>然后，一个类型将使用<code>unsafe</code>来实现<code>UnsafeOrd</code>，表明他们已经确保他们的实现满足了该 trait 所期望的任何条件。在这种情况下，<code>BTreeMap</code>内部的 Unsafe Rust 有理由相信 key 类型的<code>UnsafeOrd</code>实现是正确的。如果不是这样，那就是 unsafe trait 实现的错，这与 Rust 的安全保证是一致的。</p>
-<p>是否将一个 trait 标记为<code>unsafe</code>是一个 API 设计。一个 safe trait 更容易实现，但任何依赖它的 Unsafe 代码都必须抵御不正确的行为。将 trait 标记为<code>unsafe</code>会将这个责任转移到实现者身上。Rust 习惯于避免将 trait 标记为<code>unsafe</code>，因为它使 Unsafe Rust 普遍存在，这并不可取。</p>
-<p><code>Send</code>和<code>Sync</code>被标记为 unsafe，是因为线程安全是一个<em>基本</em>的属性，unsafe 代码不可能像抵御一个有缺陷的<code>Ord</code>实现那样去抵御它。同样地，<code>GlobalAllocator</code>是对程序中所有的内存进行记录，其他的东西如<code>Box</code>或<code>Vec</code>都建立在它的基础上。如果它做了一些奇怪的事情（当它还在使用的时候，把同一块内存给了另一个请求），就没有机会检测到并采取任何措施了。</p>
-<p>决定是否将你自己的 trait 标记为“unsafe”，也是出于同样的考虑。如果“unsafe”的代码不能抵御 trait 的错误实现，那么将 trait 标记为“unsafe”就是一个合理的选择。</p>
-<p>顺便说一下，虽然<code>Send</code>和<code>Sync</code>是<code>unsafe</code>的特性，但它们<em>也是</em>自动实现的类型，当这种派生可以证明是安全的。<code>Send</code>是自动派生的，只适用于一个类型下所有类型都实现了<code>Send</code>。<code>Sync</code>是自动派生的，只适用于一个类型下所有类型都实现了<code>Sync</code>。这最大限度地减少了使这两个 trait “unsafe” 的危险。而且，没有多少人会去<em>实现</em>内存分配器（或者针对这个问题而言，直接使用它们）。</p>
-<p>这就是 Safe Rust 和 Unsafe Rust 之间的平衡。这种分离是为了使 Safe Rust 的使用尽可能符合人体工程学，但在编写 Unsafe Rust 时需要额外的努力和小心。本书的其余部分主要是讨论必须采取的谨慎，以及Unsafe Rust 必须坚持的契约。</p>
+<p>然后，为一个类型实现<code>UnsafeOrd</code>就要带上<code>unsafe</code>前缀，表明开发者已经确保他们的实现遵循了该 trait 所预期的任何约束。在这种情况下，<code>BTreeMap</code>内部的 Unsafe Rust 有理由相信 key 类型的<code>UnsafeOrd</code>实现是正确的。否则错就在 unsafe trait 的实现，这与 Rust 的安全保证是一致的。</p>
+<p>是否将 trait 标记为<code>unsafe</code>是 API 设计取舍的问题。Safe trait 实现起来更轻松，但任何依赖它的 Unsafe 代码面临不正确的实现也不能引发未定义行为。将 trait 标记为<code>unsafe</code>会将这个责任转移到实现者身上。按照 Rust 传统，往往避免将 trait 标记为<code>unsafe</code>，否则 Unsafe Rust 会无处不在，我们并不想看到这个结果。</p>
+<p><code>Send</code>和<code>Sync</code>被标记为 unsafe，是因为线程安全是一个<em>根本的属性</em>，要像应对一个有缺陷的<code>Ord</code>实现一样应对线程安全问题，对 unsafe 代码来说是不可能的。同理，<code>GlobalAlloc</code>被用于管理程序中所有的内存分配，诸如<code>Box</code>或<code>Vec</code>都建立在它的基础上。如果<code>GlobalAlloc</code>不正常了（例如把一块还被占用着的内存返回给了另一个请求），是绝无可能靠检测来补救的。</p>
+<p>是否将你自己的 trait 标记为<code>unsafe</code>，也要基于类似的考虑做出决定。如果<code>unsafe</code>代码无法有效应对 trait 的错误实现，那么将 trait 标记为<code>unsafe</code>合情合理。</p>
+<p>顺便一提，虽然<code>Send</code>和<code>Sync</code>是<code>unsafe</code> trait，但是当类型系统可以证明派生<code>Send</code>/<code>Sync</code>安全时，它们<em>也会</em>被自动实现。每个字段类型都满足<code>Send</code>的类型会自动派生<code>Send</code>。每个字段类型都满足<code>Sync</code>的类型会自动派生<code>Sync</code>。通过这种方式，这两个 trait 扩散<code>unsafe</code>的影响被控制到最小。而对于内存分配器，没多少人会去<em>实现</em>它们（说起来，直接使用内存分配器的人都很少）。</p>
+<p>上文展示了 Safe Rust 和 Unsafe Rust 之间的平衡。将两者分离的设计，目的是让使用 Safe Rust 尽可能符合工效，反过来在编写 Unsafe Rust 时则需要额外的努力和细心。本书的其余部分主要是讨论需要什么形式的细心，以及Unsafe Rust 必须遵循什么约束。</p>
 <h1><a class="header" href="#unsafe-rust-能做什么" id="unsafe-rust-能做什么">Unsafe Rust 能做什么</a></h1>
 <p>在 Unsafe Rust 中唯一不同的是，你可以：</p>
 <ul>
@@ -331,7 +331,7 @@ unsafe trait UnsafeOrd {
 <p>与 C 语言不同，Rust 中的“未定义行为”的范围相当有限。核心语言中，你只需要关心防止以下事情：</p>
 <ul>
 <li>解除引用（使用<code>*</code>运算符）悬空或不对齐的指针（见下文）</li>
-<li>破坏<a href="references.html">指名针别规则</a></li>
+<li>破坏<a href="references.html">指针别名规则</a></li>
 <li>调用一个 ABI 错误的函数，或者从一个 unwind ABI 错误的函数中 unwinding</li>
 <li>引起<a href="races.html">数据竞争</a></li>
 <li>执行用当前执行线程不支持的<a href="https://doc.rust-lang.org/reference/attributes/codegen.html#the-target_feature-attribute">目标特性</a>编译的代码</li>
@@ -1296,10 +1296,10 @@ fn main() {
     println!(&quot;{}&quot;, clo.call());
 }
 </code></pre></pre>
-<h1><a class="header" href="#子类型和协变" id="子类型和协变">子类型和协变</a></h1>
-<p>Rust 使用生命周期来追踪借用和所有权之间的关系。
+<h1><a class="header" href="#子类型化和变异性" id="子类型化和变异性">子类型化和变异性</a></h1>
+<p>Rust 使用生命周期来追踪借用和所有权。
 但是，原生的生命周期实现可能过于严格，或者会允许未定义行为。</p>
-<p>为了实现对生命周期的灵活使用并防止滥用，Rust 使用 <strong>子类型</strong> 和 <strong>协变</strong>。</p>
+<p>为了实现对生命周期的灵活使用并防止滥用，Rust 使用 <strong>子类型</strong> 和 <strong>变异</strong>。</p>
 <p>让我们从一个例子开始。</p>
 <pre><pre class="playground"><code class="language-rust">// 注意：debug 需要两个具有相同生命周期的参数
 fn debug&lt;'a&gt;(a: &amp;'a str, b: &amp;'a str) {
@@ -1324,29 +1324,28 @@ fn main() {
    |                      |
    |                      expected `&amp;'static str`, found struct `&amp;'world str`
 </code></pre>
-<p>这是相当不幸的。在这种情况下，我们希望接受的类型至少要和 <code>'world</code> 一样长。
+<p>这是相当不幸的。在这种情况下，我们希望接受的类型的生命周期至少要和 <code>'world</code> 一样长。
 让我们尝试使用生命周期进行子类型化。</p>
 <h2><a class="header" href="#子类型化" id="子类型化">子类型化</a></h2>
 <p>子类型化是指一种类型可以替代另一种类型的概念。</p>
-<p>我们定义 <code>Sub</code> 是 <code>Super</code> 的子类型（在本章中我们将使用表示法 <code>Sub &lt;: Super</code>）。</p>
-<p>这表示 <code>Super</code> 定义的 <em>要求</em> 集合被 <code>Sub</code> 完全满足。然后，<code>Sub</code> 可能有更多的要求。</p>
-<p>现在，为了使用生命周期进行子类型化，我们需要定义一个生命周期的要求：</p>
+<p>我们定义 <code>Sub</code> 是 <code>Super</code> 的子类型（在本章中我们将其表示为 <code>Sub &lt;: Super</code>）。</p>
+<p>这表示生命周期 <code>Sub</code> 的范围要包含 <code>Super</code> 的范围，并且 <code>Sub</code> 的范围有可能更大。</p>
+<p>现在，为了使生命周期子类型化，我们需要先定义一个生命周期：</p>
 <blockquote>
 <p><code>'a</code> 定义了一段代码区域。</p>
 </blockquote>
-<p>既然我们为生命周期定义了一组要求，我们就可以定义它们之间的关系：</p>
+<p>然后我们就可以定义它们之间的关系：</p>
 <blockquote>
-<p>当且仅当 <code>'long</code> 定义一个 <strong>完全包含</strong> <code>'short</code> 的代码区域时，<code>'long &lt;: 'short</code>。</p>
+<p>当且仅当 <code>'long</code> 是一个 <strong>完全包含</strong> <code>'short</code> 的代码区域时，<code>'long &lt;: 'short</code>。</p>
 </blockquote>
 <p><code>'long</code> 可能定义了一个比 <code>'short</code> 更大的区域，但这仍符合我们的定义。</p>
 <blockquote>
-<p>正如我们将在本章后面看到的，子类型化比这要复杂得多，但这个简单的规则在大多数情况下是非常好的直觉。
-除非您编写不安全的代码，否则编译器将为您自动处理所有的特殊情况。</p>
+<p>虽然在本章后面，子类型化比这要复杂和微妙得多，但这个简单的规则在大多数情况下都适用。除非您编写不安全的代码，否则编译器将为您自动处理所有的特殊情况。</p>
 </blockquote>
 <blockquote>
 <p>但这是 Rustonomicon。我们正在编写不安全的代码，所以我们需要了解这些东西是如何真正工作的，以及我们如何搞乱它。</p>
 </blockquote>
-<p>回到我们上面的例子，我们可以说 <code>'static &lt;: 'world</code>。现在，让我们也接受子类型生命周期可以通过引用传递的想法（更多内容请参见 <a href="subtyping.html#variance">协变</a>），例如 <code>&amp;'static str</code> 是 <code>&amp;'world str</code> 的子类型，然后我们可以将 <code>&amp;'static str</code> 降级为 <code>&amp;'world str</code>。有了这个，上面的示例可以编译：</p>
+<p>回到我们上面的例子，我们可以说 <code>'static</code> 是 <code>'world</code> 的子类型，而又因为生命周期可以通过引用传递（更多内容请参见 <a href="subtyping.html#%E5%8F%98%E5%BC%82%E6%80%A7">变异性</a>），所以<code>&amp;'static str</code> 是 <code>&amp;'world str</code> 的子类型，通过下文讲述的 <em>变异性</em> 我们可以将 <code>&amp;'static str</code> 的生命周期收缩为 <code>&amp;'world str</code>。如此，上面的示例可以编译：</p>
 <pre><pre class="playground"><code class="language-rust">fn debug&lt;'a&gt;(a: &amp;'a str, b: &amp;'a str) {
     println!(&quot;a = {a:?} b = {b:?}&quot;);
 }
@@ -1356,12 +1355,12 @@ fn main() {
     {
         let world = String::from(&quot;world&quot;);
         let world = &amp;world; // 'world 的生命周期比 'static 短
-        debug(hello, world); // hello 从 `&amp;'static str` 静默降级为 `&amp;'world str`
+        debug(hello, world); // hello 从 `&amp;'static str` 静默收缩为 `&amp;'world str`
     }
 }
 </code></pre></pre>
-<h2><a class="header" href="#协变" id="协变">协变</a></h2>
-<p>在上面，我们简单地说明了 <code>'static &lt;: 'b</code>静默地暗示了<code>&amp;'static T &lt;: &amp;'b T</code>。这使用了一个名为 <em>协变</em> 的性质。然而，这并不总是像这个例子那样简单。为了理解这一点，让我们尝试稍微扩展这个例子：</p>
+<h2><a class="header" href="#变异性" id="变异性">变异性</a></h2>
+<p>在上面，我们简单地说明了 <code>'static &lt;: 'b</code> 静默地暗示了 <code>&amp;'static T &lt;: &amp;'b T</code> 。这使用了一个名为 <em>变异</em> 的性质。然而，这并不总是像这个例子那样简单。为了理解这一点，让我们尝试稍微改变这个例子：</p>
 <pre><pre class="playground"><code class="language-rust compile_fail E0597">fn assign&lt;T&gt;(input: &amp;mut T, val: T) {
     *input = val;
 }
@@ -1379,21 +1378,22 @@ fn main() {
 但是 <code>world</code> 在 <code>println</code> 使用 <code>hello</code> 之前就已经超出了作用域！</p>
 <p>这是一个典型的在释放后使用错误！</p>
 <p>我们第一反应可能是怪 <code>assign</code> 的实现，但实际上这里并没有什么错误。一个值想要赋值到一个具有相同类型的 <code>T</code> 也不奇怪。</p>
-<p>问题是我们不能假设 <code>&amp;mut &amp;'static str</code> 和 <code>&amp;mut &amp;'b str</code> 是兼容的。
-这意味着，即使 <code>'static</code> 是 <code>&amp;'b</code> 的子类型，<code>&amp;mut &amp;'static str</code> 也 <strong>不能</strong> 是 <code>&amp;mut &amp;'b str</code> 的子类型。</p>
-<p>协变是 Rust 借用的概念，用于定义泛型参数通过子类型之间的关系。</p>
+<p>所以，问题在于，我们不能假设 <code>&amp;mut &amp;'static str</code> 也可以转换成 <code>&amp;mut &amp;'b str</code>。
+这意味着，即使 <code>'static</code> 是 <code>'b</code> 的子类型，<code>&amp;mut &amp;'static str</code> 也 <strong>不能</strong> 是 <code>&amp;mut &amp;'b str</code> 的子类型。</p>
+<p><strong>变异性</strong> 是 Rust 引用通过它们的泛型参数，来定义引用之间的子类型关系。</p>
 <blockquote>
 <p>注意：为了方便起见，我们将定义一个泛型类型 <code>F&lt;T&gt;</code>，以便我们可以方便地讨论 <code>T</code>。希望这在上下文中是清楚的。</p>
 </blockquote>
-<p>类型 <code>F</code> 的 <em>协变性</em> 是其输入子类型化如何影响其输出子类型化。在 Rust 中有三种协变。设两种类型 <code>Sub</code> 和 <code>Super</code>，其中 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
+<p>类型 <code>F</code> 的 <em>变异性</em> 代表了其输入子类型如何影响其输出子类型。</p>
+<p>在 Rust 中有三种变异性，假设 <code>Sub</code> 是 <code>Super</code> 的子类型：</p>
 <ul>
-<li><code>F</code> 是 <strong>协变的</strong>，如果 <code>F&lt;Sub&gt;</code> 是 <code>F&lt;Super&gt;</code> 的子类型（子类型属性被传递）</li>
-<li><code>F</code> 是 <strong>逆变的</strong>，如果 <code>F&lt;Super&gt;</code> 是 <code>F&lt;Sub&gt;</code> 的子类型（子类型属性被 &quot;反转&quot;）</li>
-<li>否则，<code>F</code> 是 <strong>不变的</strong> （不存在子类型关系）</li>
+<li><code>F</code> 是 <strong>协变的</strong>，如果 <code>F&lt;Sub&gt;</code> 是 <code>F&lt;Super&gt;</code> 的子类型（子类型属性被传递）(译者注：这里被传递的意思是尖括号里面的子类型关系(<code>Sub &lt;: Super</code>)被传递到尖括号外(<code>F&lt;Sub&gt; &lt;: F&lt;Super&gt;</code>))</li>
+<li><code>F</code> 是 <strong>逆变的</strong>，如果 <code>F&lt;Super&gt;</code> 是 <code>F&lt;Sub&gt;</code> 的子类型（子类型属性被 &quot;反转&quot;）(译者注：即尖括号里面的子类型关系(<code>Sub &lt;: Super</code>)在尖括号外面被反转(<code>F&lt;Super&gt; &lt;: F&lt;Sub&gt;</code>))</li>
+<li>否则，<code>F</code> 是 <strong>不变的</strong> （不存在子类型关系）(译者注：即尖括号里面的子类型关系不会影响尖括号外面的子类型关系)</li>
 </ul>
-<p>如果我们回想上面的例子，<code>&amp;'a T</code> 在 <code>'a</code> 上是协变的，因此我们可以对其进行子类型化。我们可以这样说。</p>
+<p>让我们回想上面的例子，如果 <code>'a</code> 是 <code>'b</code> 的子类型，我们可以将 <code>&amp;'a T</code> 视作是 <code>&amp;'b T</code> 的子类型，因而<code>&amp;'a T</code>对于 <code>'a</code> 上是协变的。</p>
 <p>此外，我们注意到不能将 <code>&amp;mut &amp;'a U</code> 视为 <code>&amp;mut &amp;'b U</code> 的子类型，因此我们可以说 <code>&amp;mut T</code> 在 <code>T</code> 上是 <em>不变的</em></p>
-<p>以下是一些其他泛型类型及其协变性的表格：</p>
+<p>以下是一些其他泛型类型的变异性的表格：</p>
 <table><thead><tr><th></th><th align="center">'a</th><th align="center">T</th><th align="center">U</th></tr></thead><tbody>
 <tr><td><code>&amp;'a T </code></td><td align="center">协变</td><td align="center">协变</td><td align="center"></td></tr>
 <tr><td><code>&amp;'a mut T</code></td><td align="center">协变</td><td align="center">不变</td><td align="center"></td></tr>
@@ -1401,23 +1401,23 @@ fn main() {
 <tr><td><code>Vec&lt;T&gt;</code></td><td align="center"></td><td align="center">协变</td><td align="center"></td></tr>
 <tr><td><code>UnsafeCell&lt;T&gt;</code></td><td align="center"></td><td align="center">不变</td><td align="center"></td></tr>
 <tr><td><code>Cell&lt;T&gt;</code></td><td align="center"></td><td align="center">不变</td><td align="center"></td></tr>
-<tr><td><code>fn(T) -&gt; U</code></td><td align="center"></td><td align="center"><strong>逆</strong>变</td><td align="center">协变</td></tr>
+<tr><td><code>fn(T) -&gt; U</code></td><td align="center"></td><td align="center"><strong>逆变</strong></td><td align="center">协变</td></tr>
 <tr><td><code>*const T</code></td><td align="center"></td><td align="center">协变</td><td align="center"></td></tr>
 <tr><td><code>*mut T</code></td><td align="center"></td><td align="center">不变</td><td align="center"></td></tr>
 </tbody></table>
-<p>这些可以简单地解释为其他类型的关系：</p>
+<p>其中，一些类型的变异性可以直接类比成其他类型。</p>
 <ul>
-<li><code>Vec&lt;T&gt;</code> 以及所有其他拥有指针和集合遵循与 <code>Box&lt;T&gt;</code> 相同的逻辑</li>
+<li><code>Vec&lt;T&gt;</code> 以及所有其他占有所有权的集合遵循与 <code>Box&lt;T&gt;</code> 相同的逻辑</li>
 <li><code>Cell&lt;T&gt;</code> 以及所有其他内部可变性类型遵循与 <code>UnsafeCell&lt;T&gt;</code> 相同的逻辑</li>
-<li>具有内部可变性的 <code>UnsafeCell&lt;T&gt;</code> 使其具有与 <code>&amp;mut T</code> 相同的协变属性</li>
+<li>具有内部可变性的 <code>UnsafeCell&lt;T&gt;</code> 使其具有与 <code>&amp;mut T</code> 相同的变异性属性 (译者注：因为具有内部可变性的<code>UnsafeCell&lt;T&gt;</code> <code>Cell&lt;T&gt;</code>等，都可以通过仅仅使用 <code>&amp;T</code> 进行 <code>&amp;mut T</code> 才能进行的操作，所以它们必须和 <code>&amp;mut T</code> 一样是不变的)</li>
 <li><code>*const T</code> 遵循 <code>&amp;T</code> 的逻辑</li>
 <li><code>*mut T</code> 遵循 <code>&amp;mut T</code>（或 <code>UnsafeCell&lt;T&gt;</code>）的逻辑</li>
 </ul>
-<p>有关其他类型，请参见<a href="../reference/subtyping.html#variance">参考手册的 &quot;协变&quot; 部分</a>。</p>
+<p>有关其他类型，请参见<a href="../reference/subtyping.html#variance">参考手册的 &quot;变异性&quot; 部分</a>。</p>
 <blockquote>
-<p>注意：语言中唯一的逆变来源是函数参数，这就是为什么它实际上在实践中很少出现。调用逆变涉及到函数指针的高阶编程，这些函数指针需要具有特定生命周期（而不是通常的 &quot;任意生命周期&quot;）的引用，而这将涉及更高级别的生命周期，它们可以独立于子类型化工作。</p>
+<p>注意：语言中唯一的逆变来源于函数参数，这就是为什么它实际上在实践中很少出现。调用逆变涉及到函数指针的高阶编程，这些函数指针需要具有特定生命周期（而不是通常的 &quot;任意生命周期&quot;）的引用，而这将涉及更高级别的生命周期，它们可以独立于子类型化工作。</p>
 </blockquote>
-<p>现在我们对协变有了更正式的理解，让我们更详细地讨论一些例子。</p>
+<p>现在我们对变异性有了更深入的理解，让我们更详细地讨论一些例子。</p>
 <pre><pre class="playground"><code class="language-rust compile_fail E0597">fn assign&lt;T&gt;(input: &amp;mut T, val: T) {
     *input = val;
 }
@@ -1453,7 +1453,7 @@ fn main() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>它只是接收一个可变引用和一个值，然后将该值覆盖。这个函数的关键是它创建了一个类型相等约束。它在签名中清楚地说，被引用和值必须是 <em>完全相同</em> 的类型。</p>
+<p>它只是接收一个可变引用和一个值，然后将该值覆盖。这个函数的关键在于它在签名中清楚地说，被引用和值必须是 <em>完全相同</em> 的类型。</p>
 <p>与此同时，在调用者中，我们传入 <code>&amp;mut &amp;'static str</code> 和 <code>&amp;'world str</code>。</p>
 <p>由于 <code>&amp;mut T</code> 在 <code>T</code> 上是不变的，所以编译器得出结论，它不能对第一个参数应用任何子类型化，因此 <code>T</code> 必须是 <code>&amp;'static str</code>。</p>
 <p>这与 <code>&amp;T</code> 情况相反：</p>
@@ -1465,50 +1465,47 @@ fn main() {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>尽管 <code>a</code> 和 <code>b</code> 必须具有相同的类型 <code>T</code>，但由于 <code>&amp;'a T</code> 在 <code>'a</code> 上是协变的，我们可以执行子类型化。因此，编译器决定 <code>&amp;'static str</code> 可以变为 <code>&amp;'b str</code> 当且仅当 <code>&amp;'static str</code> 是 <code>&amp;'b str</code> 的子类型，这将在 <code>'static &lt;: 'b</code> 的情况下成立。这是正确的，因此编译器愿意继续编译此代码。</p>
+<p>尽管 <code>a</code> 和 <code>b</code> 必须具有相同的类型 <code>T</code>，但由于 <code>&amp;'a T</code> 在 <code>'a</code> 上是协变的，我们可以执行子类型化。因此，编译器认为，当且仅当 <code>&amp;'static str</code> 是 <code>&amp;'b str</code> 的子类型时（这种关系在 <code>'static &lt;: 'b</code> 时成立），<code>&amp;'static str</code> 才可以变为 <code>&amp;'b str</code>。这是正确的，因此编译器很乐意继续编译这段代码。</p>
 <p>事实证明，Box（以及 Vec，HashMap 等）协变的原因与生命周期协变的原因相似：只要你尝试将它们放入诸如可变引用之类的东西中，就会继承不变性，从而阻止你做任何坏事。</p>
-<p>然而，Box 更容易关注重引用的按值方面，我们之前部分忽略了这一点。</p>
-<p>与许多允许值在任何时候被自由别名的语言不同，Rust 有一个非常严格的规则：如果您可以修改或移动一个值，那么您必须确保是唯一一个可以访问该值的人。</p>
+<p>然而，Box 使我们更容易关注值传递的引用问题，我们之前部分忽略了这一点。</p>
+<p>与许多允许值在任何时候被自由别名的语言不同，Rust 有一个非常严格的规则：如果您可以修改或移动一个值，那么您必须确保是唯一一个可以访问该值的人(译者注：即拥有该值的所有权)。</p>
 <p>考虑以下代码：</p>
 <pre><code class="language-rust ignore">let hello: Box&lt;&amp;'static str&gt; = Box::new(&quot;hello&quot;);
 
 let mut world: Box&lt;&amp;'b str&gt;;
 world = hello;
 </code></pre>
-<p>我们已经忘记了 <code>hello</code> 的 <code>'static</code> 存活时间也没有任何问题，因为当我们将 <code>hello</code> 移动到只知道它活跃的变量时，<strong>我们销毁了唯一记住它存活时间更长的东西！</strong></p>
+<p>我们已经忘记了 <code>hello</code> 的 <code>'static</code> 生命周期也没有任何问题，因为当我们将 <code>hello</code> 移动到了一个只知道它的生命周期为 <code>'b</code> 的变量时，<strong>我们销毁了唯一记住它生命周期为<code>'static</code>的东西！我们不再需要 <code>hello</code> 的生命周期更长了！</strong></p>
 <p>现在还剩一件事要解释：函数指针。</p>
-<p>要了解为什么 <code>fn(T) -&gt; U</code> 应该在 <code>U</code> 上是协变的，请考虑以下签名：</p>
+<p>要了解为什么 <code>fn(T) -&gt; U</code> 应该在 <code>U</code> 上是协变的，请思考一下这个签名：</p>
 <!-- ignore: 简化代码 -->
 <pre><code class="language-rust ignore">fn get_str() -&gt; &amp;'a str;
 </code></pre>
-<p>该函数声明可以生成一个由某个生命周期 <code>'a</code> 绑定的 <code>str</code>。因此，使用以下签名的函数也是完全有效的：</p>
+<p>该函数声明可以生成一个由某个生命周期 <code>'a</code> 绑定的 <code>str</code>。类似地，我们可以使用以下签名来定义一个函数：</p>
 <!-- ignore: 简化代码 -->
 <pre><code class="language-rust ignore">fn get_static() -&gt; &amp;'static str;
 </code></pre>
-<p>所以当函数被调用时，它只期望一个至少活着 <code>&amp;str</code> 生命周期的值，实际生活的是否更长并不重要。</p>
-<p>然而，相同的逻辑不能应用于<em>参数</em>。考虑尝试满足：</p>
+<p>所以当函数被调用时，它只期望一个生命周期至少为 <code>'a</code> 的 <code>&amp;str</code> 的值，至于这个值的生命周期是不是比 <code>'a</code> 更长，并不重要。</p>
+<p>然而，相同的逻辑不能应用于<em>函数参数</em>。思考一下：</p>
 <!-- ignore: 简化代码 -->
 <pre><code class="language-rust ignore">fn store_ref(&amp;'a str);
 </code></pre>
-<p>使用：</p>
+<p>和</p>
 <!-- ignore: 简化代码 -->
 <pre><code class="language-rust ignore">fn store_static(&amp;'static str);
 </code></pre>
-<p>第一个函数可以接受任何字符串引用，只要它至少活到 <code>'a</code>，但第二个函数不能接受一个生命周期小于 <code>'static</code> 的字符串引用，这将导致冲突。协变不适用于此。但是，如果我们将其反过来，实际上<em>确实</em>可以工作！如果我们需要一个可以处理 <code>&amp;'static str</code> 的函数，一个可以处理<em>任意</em>引用生命周期的函数肯定可以很好地工作。</p>
+<p>第一个函数可以接受任何字符串引用，只要它的生命周期包含 <code>'a</code>，但第二个函数不能接受一个生命周期小于 <code>'static</code> 的字符串引用，这将导致冲突。变异性不适用于此。但是，如果我们将其反过来，实际上<em>确实</em>行得通！如果我们需要一个可以处理 <code>&amp;'static str</code> 的函数，一个可以处理<em>任意</em>引用生命周期的函数肯定可以很好地工作。</p>
 <p>让我们看看实践中的例子</p>
-<pre><pre class="playground"><code class="language-rust compile_fail"><span class="boring">use std::cell::RefCell;
-</span>thread_local! {
+<pre><pre class="playground"><code class="language-rust compile_fail">thread_local! {
     pub static StaticVecs: RefCell&lt;Vec&lt;&amp;'static str&gt;&gt; = RefCell::new(Vec::new());
 }
 
-/// 将给定的输入保存到一个线程局部的 `Vec&lt;&amp;'static str&gt;`
+/// 将给定的输入保存到一个thread local的 `Vec&lt;&amp;'static str&gt;`
 fn store(input: &amp;'static str) {
-    StaticVecs.with(|v| {
-        v.borrow_mut().push(input);
-    })
+    StaticVecs.with_borrow_mut(|v| v.push(input));
 }
 
-/// 使用相同生命周期的输入调用函数！
+/// 用有着相同生命周期的参数 `input` 去调用给定的函数
 fn demo&lt;'a&gt;(input: &amp;'a str, f: fn(&amp;'a str)) {
     f(input);
 }
@@ -1519,19 +1516,19 @@ fn main() {
     {
         let smuggle = String::from(&quot;smuggle&quot;);
 
-        // `&amp;smuggle` 不是静态的。如果我们用 `&amp;smuggle` 调用 `store`，
+        // `&amp;smuggle` 的生命周期并非· `'static`。
+        // 如果我们用 `&amp;smuggle` 调用 `store`，
         // 我们将把一个无效的生命周期推入 `StaticVecs`。
         // 因此，`fn(&amp;'static str)` 不能是 `fn(&amp;'a str)` 的子类型
         demo(&amp;smuggle, store);
     }
 
-    StaticVecs.with(|v| {
-        println!(&quot;{:?}&quot;, v.borrow()); // 使用在被释放后的值 😿
-    });
+    // use after free 😿
+    StaticVecs.with_borrow(|v| println!(&quot;{v:?}&quot;));
 }
 </code></pre></pre>
-<p>这就是为什么函数类型，与语言中的其他内容不同，是<em>逆</em>变量。</p>
-<p>现在，这对于标准库提供的类型来说是很好而已，但是如何确定<em>您</em>定义的类型的协变呢？结构体，非正式地说，继承了其字段的协变性。如果一个结构体 <code>MyType</code> 有一个泛型参数 <code>A</code>，并且在字段 <code>a</code> 中使用了 <code>A</code>，那么 MyType 对 <code>A</code> 的协变程度与 <code>a</code> 对 <code>A</code> 的协变程度完全相同。</p>
+<p>这就是为什么函数类型，与语言中的其他内容不同，是<em>逆变</em>的。</p>
+<p>现在，你对于标准库提供的类型的变异性应有了充分的理解，但是如何确定<em>您</em>定义的类型的变异性呢？ 不太规范地说，结构体继承了其字段的变异性。如果一个结构体 <code>MyType</code> 有一个泛型参数 <code>A</code>，并且在字段 <code>a</code> 中使用了 <code>A</code>，那么 MyType 对 <code>A</code> 的变异性与 <code>a</code> 对 <code>A</code> 的变异性完全相同。</p>
 <p>然而，如果 <code>A</code> 被多个字段使用：</p>
 <ul>
 <li>如果 <code>A</code> 的所有用途都是协变的，则 MyType 在 <code>A</code> 上是协变的</li>
@@ -1564,7 +1561,7 @@ struct MyType&lt;'a, 'b, A: 'a, B: 'b, C, D, E, F, G, H, In, Out, Mixed&gt; {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>现在你对 Rust 中的子类型和协变概念应该有了更深入的理解。尽管本章涵盖了许多概念，但通过编译器和类型系统所提供的严密检查来确保这些规则得到遵循和安全操作。当编写泛型代码时，要确保您正确理解子类型化和协变性，以避免出现意外错误和潜在安全问题。</p>
+<p>现在你对 Rust 中的子类型和变异性概念应该有了更深入的理解。尽管本章涵盖了许多概念，但通过编译器和类型系统所提供的严密检查来确保这些规则得到遵循和安全操作。当编写泛型代码时，要确保您正确理解子类型化和变异性，以避免出现意外错误和潜在安全问题。</p>
 <h1><a class="header" href="#丢弃检查" id="丢弃检查">丢弃检查</a></h1>
 <p>我们已经看到了生命周期如何为我们提供了一些相当简单的规则来确保我们永远不会读到悬空的引用。但是到目前为止， <em>outlives</em> 是一种包容的关系。也就是说，当我们谈论<code>'a: 'b</code>时，<code>'a</code>可以和<code>'b</code>的寿命一样长。乍一看，这似乎是一个无意义的特点。没有什么东西会和另一个东西同时被丢弃，对吗？这就是为什么我们对以下<code>let</code>语句解语法糖：</p>
 <!-- ignore: simplified code -->
@@ -1860,7 +1857,10 @@ struct Vec&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>那么<code>impl&lt;T&gt; Drop for Vec&lt;T&gt;</code>这条语句会让 Rust 知道<code>Vec&lt;T&gt;</code><em>拥有</em><code>T</code>类型的值（更准确地说：可能会在<code>Drop</code>实现中使用<code>T</code>类型的值），那么当<code>Vec&lt;T&gt;</code>被 drop 的时候，Rust 就不会允许它们 <em>悬垂</em>。</p>
-<p><strong>添加一个额外的 <code>_owns_T: PhantomData&lt;T&gt;</code> 字段因此是<em>多余的</em>并且什么都不做</strong>。</p>
+<p>当一个类型已经有了 <code>Drop impl</code> 时，<strong>添加一个额外的 <code>_owns_T: PhantomData&lt;T&gt;</code> 字段是多余的，而且没有任何效果</strong>，从 dropck（Drop 检查）的角度来看（它仍然会影响变量和自动特征）。</p>
+<ul>
+<li>（高级边缘情况：如果包含 <code>PhantomData</code> 的类型根本没有 <code>Drop</code> 实现，但仍然有 drop glue（通过拥有另一个带有 drop glue 的字段），那么这里提到的 dropck/<code>#[may_dangle]</code> 规则也同样适用：一个 <code>PhantomData&lt;T&gt;</code> 字段将要求 <code>T</code> 在包含类型作用域结束时可被丢弃）。</li>
+</ul>
 <hr />
 <p>但是这在某些场景下，会导致过于严格，这也是为啥标准库使用了一个不稳定并且<code>unsafe</code>的属性来切换回旧的<code>unchecked</code>的 drop 检查行为，也是接下来这个文档所警告的：<code>#[may_dangle]</code>属性。</p>
 <h3><a class="header" href="#一个例外标准库的特殊情况及不稳定的may_dangle" id="一个例外标准库的特殊情况及不稳定的may_dangle">一个例外：标准库的特殊情况及不稳定的<code>#[may_dangle]</code></a></h3>
@@ -1932,17 +1932,20 @@ struct Vec&lt;T&gt; {
 <h2><a class="header" href="#phantomdata模式表" id="phantomdata模式表"><code>PhantomData</code>模式表</a></h2>
 <p>下面是一个关于所有可以使用<code>PhantomData</code>的神奇方式的表格：
 (covariant:协变，invariant:不变，contravariant:逆变)</p>
-<table><thead><tr><th>Phantom type</th><th><code>'a</code></th><th><code>T</code></th><th><code>Send</code></th><th><code>Sync</code></th></tr></thead><tbody>
-<tr><td><code>PhantomData&lt;T&gt;</code></td><td>-</td><td>covariant (with drop check)</td><td><code>T: Send</code></td><td><code>T: Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;&amp;'a T&gt;</code></td><td>covariant</td><td>covariant</td><td><code>T: Sync</code></td><td><code>T: Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;&amp;'a mut T&gt;</code></td><td>covariant</td><td>invariant</td><td><code>T: Send</code></td><td><code>T: Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;*const T&gt;</code></td><td>-</td><td>covariant</td><td>-</td><td>-</td></tr>
-<tr><td><code>PhantomData&lt;*mut T&gt;</code></td><td>-</td><td>invariant</td><td>-</td><td>-</td></tr>
-<tr><td><code>PhantomData&lt;fn(T)&gt;</code></td><td>-</td><td>contravariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;fn() -&gt; T&gt;</code></td><td>-</td><td>covariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;fn(T) -&gt; T&gt;</code></td><td>-</td><td>invariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;Cell&lt;&amp;'a ()&gt;&gt;</code></td><td>invariant</td><td>-</td><td><code>Send</code></td><td>-</td></tr>
+<table><thead><tr><th>Phantom type</th><th align="center">variance of <code>'a</code></th><th align="center">variance of <code>T</code></th><th align="center"><code>Send</code>/<code>Sync</code><br/>(or lack thereof)</th><th align="center">dangling <code>'a</code> or <code>T</code> in drop glue<br/>(<em>e.g.</em>, <code>#[may_dangle] Drop</code>)</th></tr></thead><tbody>
+<tr><td><code>PhantomData&lt;T&gt;</code></td><td align="center">-</td><td align="center"><strong>cov</strong>ariant</td><td align="center">inherited</td><td align="center">disallowed (&quot;owns <code>T</code>&quot;)</td></tr>
+<tr><td><code>PhantomData&lt;&amp;'a T&gt;</code></td><td align="center"><strong>cov</strong>ariant</td><td align="center"><strong>cov</strong>ariant</td><td align="center"><code>Send + Sync</code><br/>requires<br/><code>T : Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;&amp;'a mut T&gt;</code></td><td align="center"><strong>cov</strong>ariant</td><td align="center"><strong>inv</strong>ariant</td><td align="center">inherited</td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;*const T&gt;</code></td><td align="center">-</td><td align="center"><strong>cov</strong>ariant</td><td align="center"><code>!Send + !Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;*mut T&gt;</code></td><td align="center">-</td><td align="center"><strong>inv</strong>ariant</td><td align="center"><code>!Send + !Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;fn(T)&gt;</code></td><td align="center">-</td><td align="center"><strong>contra</strong>variant</td><td align="center"><code>Send + Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;fn() -&gt; T&gt;</code></td><td align="center">-</td><td align="center"><strong>cov</strong>ariant</td><td align="center"><code>Send + Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;fn(T) -&gt; T&gt;</code></td><td align="center">-</td><td align="center"><strong>inv</strong>ariant</td><td align="center"><code>Send + Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;Cell&lt;&amp;'a ()&gt;&gt;</code></td><td align="center"><strong>inv</strong>ariant</td><td align="center">-</td><td align="center"><code>Send + !Sync</code></td><td align="center">allowed</td></tr>
 </tbody></table>
+<ul>
+<li>注意: opt-out Unpin 自动特性需要专用的 <a href="https://doc.rust-lang.org/std/marker/struct.PhantomPinned.html"><code>PhantomPinned</code></a> 类型。</li>
+</ul>
 <h1><a class="header" href="#拆分-borrows" id="拆分-borrows">拆分 Borrows</a></h1>
 <p>在处理复合结构时，可变引用的互斥属性会有很大的限制。借用检查器理解一些基本的东西，但是很容易就会出现问题。它对结构有足够的了解，知道有可能同时借用一个结构中不相干的字段。所以现在这个方法是可行的：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -2991,7 +2994,7 @@ impl&lt;'a, T&gt; Hole&lt;'a, T&gt; {
 
     fn removed(&amp;self) -&gt; &amp;T { self.elt.as_ref().unwrap() }
 
-    unsafe fn get(&amp;self, index: usize) -&gt; &amp;T { &amp;self.data[index] }
+    fn get(&amp;self, index: usize) -&gt; &amp;T { &amp;self.data[index] }
 
     unsafe fn move_to(&amp;mut self, index: usize) {
         let index_ptr: *const _ = &amp;self.data[index];
@@ -3043,9 +3046,9 @@ impl&lt;T: Ord&gt; BinaryHeap&lt;T&gt; {
 <li>其中一个或多个线程是写的</li>
 <li>其中一个或多个是非同步的</li>
 </ul>
-<p>数据竞争具有未定义行为，因此在 Safe Rust 中不可能执行。数据竞争主要是通过 Rust 的所有权系统来防止的：不可能别名一个可变引用，所以不可能进行数据竞争。但内部可变性使其更加复杂，这也是我们有 Send 和 Sync Trait 的主要原因（见下文）。</p>
+<p>数据竞争具有未定义行为，因此在 Safe Rust 中不可能执行。数据竞争主要是通过 Rust 的所有权系统来防止的：不可能别名一个可变引用，所以不可能进行数据竞争。但内部可变性使其更加复杂，这也是我们有 Send 和 Sync Trait 的主要原因（见下个章节更详细的说明）。</p>
 <p><strong>然而，Rust 并没有（也无法）阻止更广泛的竞态条件。</strong></p>
-<p>这从根本上说是不可能的，而且说实话也是不可取的。你的硬件很糟糕，你的操作系统很糟糕，你电脑上的其他程序也很糟糕，而这一切运行的世界也很糟糕。任何能够真正声称防止<em>所有</em>竞态条件的系统，如果不是不正确的话，使用起来也是非常糟糕的。</p>
+<p>在你无法控制调度器的情况下，这在数学上是不可能的，而对于普通的操作系统环境来说你是无法控制调度器的。如果你确实控制了抢占，那么 <em>有可能</em> 防止一般的竞态——这种技术被像 <a href="https://github.com/rtic-rs/rtic">RTIC</a> 这样的框架所使用。然而，实际上拥有对调度的控制是一个非常罕见的情况。</p>
 <p>因此，对于一个安全的 Rust 程序来说，在不正确的同步下出现死锁或做一些无意义的事情是完全“正常”的。很明显，这样的程序有问题，但 Rust 只能帮你到这里。不过，Rust 程序中的竞态条件本身并不能违反内存安全；只有与其他不安全的代码结合在一起，竞态条件才能真正违反内存安全。比如说：</p>
 <pre><pre class="playground"><code class="language-rust no_run">
 <span class="boring">#![allow(unused)]
@@ -3075,6 +3078,7 @@ thread::spawn(move || {
 println!(&quot;{}&quot;, data[idx.load(Ordering::SeqCst)]);
 <span class="boring">}
 </span></code></pre></pre>
+<p>如果我们提前进行边界检查，然后使用未经检查的值不安全地访问数据，我们就可能引起数据竞争：</p>
 <pre><pre class="playground"><code class="language-rust no_run">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3394,7 +3398,6 @@ fn main() {
 </ul>
 <p>我们可以在稳定的 Rust 中实现上述所有的要求。为此，我们不使用<code>Unique&lt;T&gt;</code>，而是使用<a href="https://doc.rust-lang.org/std/ptr/struct.NonNull.html"><code>NonNull&lt;T&gt;</code></a>，这是对原始指针的另一种包装，它为我们提供了上述的两个属性，即它在<code>T</code>上是协变的，并且被声明为永不为空。通过在<code>T</code>是<code>Send/Sync</code>的情况下实现<code>Send/Sync</code>，我们得到与使用<code>Unique&lt;T&gt;</code>相同的结果：</p>
 <pre><pre class="playground"><code class="language-rust">use std::ptr::NonNull;
-use std::marker::PhantomData;
 
 pub struct Vec&lt;T&gt; {
     ptr: NonNull&lt;T&gt;,
@@ -3579,7 +3582,7 @@ impl&lt;T&gt; DerefMut for Vec&lt;T&gt; {
     // 注意：`&lt;=` 是因为我们可以把值插入到任何索引范围 ([0,length-1]) 内的位置之后
     // 这种情况等同于 push
     assert!(index &lt;= self.len, &quot;index out of bounds&quot;);
-    if self.cap == self.len { self.grow(); }
+    if self.len == self.cap { self.grow(); }
 
     unsafe {
         // ptr::copy(src, dest, len) 的含义： &quot;从 src 复制连续的 len 个元素到 dst &quot;
@@ -3589,8 +3592,9 @@ impl&lt;T&gt; DerefMut for Vec&lt;T&gt; {
             self.len - index,
         );
         ptr::write(self.ptr.as_ptr().add(index), elem);
-        self.len += 1;
     }
+
+    self.len += 1;
 }
 </code></pre>
 <p>remove 的行为方式正好相反。我们需要将所有的元素从<code>[i+1 ... len + 1]</code>转移到<code>[i ... len]</code>，使用<em>新的</em> len。</p>
@@ -3645,18 +3649,16 @@ impl&lt;T&gt; DerefMut for Vec&lt;T&gt; {
         let cap = vec.cap;
         let len = vec.len;
 
-        unsafe {
-            IntoIter {
-                buf: ptr,
-                cap: cap,
-                start: ptr.as_ptr(),
-                end: if cap == 0 {
-                    // 不能通过这个指针获取偏移，因为没有分配内存
-                    ptr.as_ptr()
-                } else {
-                    ptr.as_ptr().add(len)
-                },
-            }
+        IntoIter {
+            buf: ptr,
+            cap,
+            start: ptr.as_ptr(),
+            end: if cap == 0 {
+                // 不能通过这个指针获取偏移，因为没有分配内存
+                ptr.as_ptr()
+            } else {
+                unsafe { ptr.as_ptr().add(len) }
+            },
         }
     }
 }
@@ -3833,23 +3835,21 @@ impl&lt;T&gt; IntoIterator for Vec&lt;T&gt; {
     type Item = T;
     type IntoIter = IntoIter&lt;T&gt;;
     fn into_iter(self) -&gt; IntoIter&lt;T&gt; {
-        unsafe {
-            // 需要使用 ptr::read 非安全地把 buf 移出，因为它没有实现 Copy，
-            // 而且 Vec 实现了 Drop Trait (因此我们不能销毁它)
-            let buf = ptr::read(&amp;self.buf);
-            let len = self.len;
-            mem::forget(self);
+        // 需要使用 ptr::read 非安全地把 buf 移出，因为它没有实现 Copy，
+        // 而且 Vec 实现了 Drop Trait (因此我们不能销毁它)
+        let buf = unsafe { ptr::read(&amp;self.buf) };
+        let len = self.len;
+        mem::forget(self);
 
-            IntoIter {
-                start: buf.ptr.as_ptr(),
-                end: if buf.cap == 0 {
-                    // 不能通过这个指针获取偏移，除非已经分配了内存
-                    buf.ptr.as_ptr()
-                } else {
-                    buf.ptr.as_ptr().add(len)
-                },
-                _buf: buf,
-            }
+        IntoIter {
+            start: buf.ptr.as_ptr(),
+            end: if buf.cap == 0 {
+                // 不能通过这个指针获取偏移，除非已经分配了内存
+                buf.ptr.as_ptr()
+            } else {
+                unsafe { buf.ptr.as_ptr().add(len) }
+            },
+            _buf: buf,
         }
     }
 }
@@ -3936,7 +3936,7 @@ impl&lt;T&gt; IntoIterator for Vec&lt;T&gt; {
             mem::forget(self);
 
             IntoIter {
-                iter: iter,
+                iter,
                 _buf: buf,
             }
         }
@@ -3971,18 +3971,16 @@ impl&lt;'a, T&gt; Drop for Drain&lt;'a, T&gt; {
 
 impl&lt;T&gt; Vec&lt;T&gt; {
     pub fn drain(&amp;mut self) -&gt; Drain&lt;T&gt; {
-        unsafe {
-            let iter = RawValIter::new(&amp;self);
+        let iter = unsafe { RawValIter::new(&amp;self) };
 
-            // 这里事关 mem::forget 的安全。
-            // 如果 Drain 被 forget，我们就会泄露整个 Vec 的内存，
-            // 既然我们始终要做这一步，为何不在这里完成呢？
-            self.len = 0;
+        // 这里事关 mem::forget 的安全。
+        // 如果 Drain 被 forget，我们就会泄露整个 Vec 的内存，
+        // 既然我们始终要做这一步，为何不在这里完成呢？
+        self.len = 0;
 
-            Drain {
-                iter: iter,
-                vec: PhantomData,
-            }
+        Drain {
+            iter: iter,
+            vec: PhantomData,
         }
     }
 }
@@ -4281,7 +4279,7 @@ impl&lt;T&gt; Vec&lt;T&gt; {
 
     pub fn insert(&amp;mut self, index: usize, elem: T) {
         assert!(index &lt;= self.len, &quot;index out of bounds&quot;);
-        if self.cap() == self.len {
+        if self.len == self.cap() {
             self.buf.grow();
         }
 
@@ -4292,14 +4290,17 @@ impl&lt;T&gt; Vec&lt;T&gt; {
                 self.len - index,
             );
             ptr::write(self.ptr().add(index), elem);
-            self.len += 1;
         }
+
+        self.len += 1;
     }
 
     pub fn remove(&amp;mut self, index: usize) -&gt; T {
         assert!(index &lt; self.len, &quot;index out of bounds&quot;);
+
+        self.len -= 1;
+
         unsafe {
-            self.len -= 1;
             let result = ptr::read(self.ptr().add(index));
             ptr::copy(
                 self.ptr().add(index + 1),
@@ -4311,18 +4312,16 @@ impl&lt;T&gt; Vec&lt;T&gt; {
     }
 
     pub fn drain(&amp;mut self) -&gt; Drain&lt;T&gt; {
-        unsafe {
-            let iter = RawValIter::new(&amp;self);
+        let iter = unsafe { RawValIter::new(&amp;self) };
 
-            // 这里事关 mem::forget 的安全。
-            // 如果 Drain 被 forget，我们就会泄露整个 Vec 的内存
-            // 既然我们始终要做这一步，为何不在这里完成呢？
-            self.len = 0;
+        // 这里事关 mem::forget 的安全。
+        // 如果 Drain 被 forget，我们就会泄露整个 Vec 的内存
+        // 既然我们始终要做这一步，为何不在这里完成呢？
+        self.len = 0;
 
-            Drain {
-                iter: iter,
-                vec: PhantomData,
-            }
+        Drain {
+            iter: iter,
+            vec: PhantomData,
         }
     }
 }
@@ -4351,14 +4350,15 @@ impl&lt;T&gt; IntoIterator for Vec&lt;T&gt; {
     type Item = T;
     type IntoIter = IntoIter&lt;T&gt;;
     fn into_iter(self) -&gt; IntoIter&lt;T&gt; {
-        unsafe {
-            let iter = RawValIter::new(&amp;self);
-            let buf = ptr::read(&amp;self.buf);
-            mem::forget(self);
-            IntoIter {
-                iter: iter,
-                _buf: buf,
-            }
+        let (iter, buf) = unsafe {
+            (RawValIter::new(&amp;self), ptr::read(&amp;self.buf))
+        };
+
+        mem::forget(self);
+
+        IntoIter {
+            iter: iter,
+            _buf: buf,
         }
     }
 }

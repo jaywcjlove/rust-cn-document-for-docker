@@ -13,10 +13,12 @@
 // limitations under the License.
 
 // ANCHOR: solution
-use std::{sync::Arc, sync::Mutex, sync::mpsc, thread};
+use std::sync::{mpsc, Arc, Mutex};
+use std::thread;
 
 // ANCHOR: setup
-use reqwest::{blocking::Client, Url};
+use reqwest::blocking::Client;
+use reqwest::Url;
 use scraper::{Html, Selector};
 use thiserror::Error;
 
@@ -79,10 +81,7 @@ impl CrawlState {
     fn new(start_url: &Url) -> CrawlState {
         let mut visited_pages = std::collections::HashSet::new();
         visited_pages.insert(start_url.as_str().to_string());
-        CrawlState {
-            domain: start_url.domain().unwrap().to_string(),
-            visited_pages,
-        }
+        CrawlState { domain: start_url.domain().unwrap().to_string(), visited_pages }
     }
 
     /// Determine whether links within the given page should be extracted.
@@ -93,7 +92,7 @@ impl CrawlState {
         url_domain == self.domain
     }
 
-    /// Mark the given page as visited, returning true if it had already
+    /// Mark the given page as visited, returning false if it had already
     /// been visited.
     fn mark_visited(&mut self, url: &Url) -> bool {
         self.visited_pages.insert(url.as_str().to_string())

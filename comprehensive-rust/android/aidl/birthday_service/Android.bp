@@ -20,7 +20,7 @@ rust_binary {
         "libbinder_rs",
         "libbirthdayservice",
     ],
-    prefer_rlib: true,
+    prefer_rlib: true, // To avoid dynamic link error.
 }
 // ANCHOR_END: birthday_server
 
@@ -33,6 +33,6 @@ rust_binary {
         "com.example.birthdayservice-rust",
         "libbinder_rs",
     ],
-    prefer_rlib: true,
+    prefer_rlib: true, // To avoid dynamic link error.
 }
 // ANCHOR_END: birthday_client

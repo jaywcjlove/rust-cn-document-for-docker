@@ -221,7 +221,7 @@ s.parentNode.insertBefore(el, s);
 <p>与 C 语言不同，Rust 中的“未定义行为”的范围相当有限。核心语言中，你只需要关心防止以下事情：</p>
 <ul>
 <li>解除引用（使用<code>*</code>运算符）悬空或不对齐的指针（见下文）</li>
-<li>破坏<a href="references.html">指名针别规则</a></li>
+<li>破坏<a href="references.html">指针别名规则</a></li>
 <li>调用一个 ABI 错误的函数，或者从一个 unwind ABI 错误的函数中 unwinding</li>
 <li>引起<a href="races.html">数据竞争</a></li>
 <li>执行用当前执行线程不支持的<a href="https://doc.rust-lang.org/reference/attributes/codegen.html#the-target_feature-attribute">目标特性</a>编译的代码</li>

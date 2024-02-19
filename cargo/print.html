@@ -557,46 +557,52 @@ rust-nightly:
 </code></pre>
 <p>这将测试 stable 版本和 nightly 版本，但 nightly 的任何破损，都不会使整体构建失败。欲获得更多信息，请看<a href="https://docs.gitlab.com/ce/ci/yaml/README.md">GitLab CI</a>.</p>
 <h2><a class="header" href="#cargo-home" id="cargo-home">Cargo Home</a></h2>
-<p>The &quot;Cargo home&quot; functions as a download and source cache.
-When building a <a href="guide/../appendix/glossary.html#crate" title="&quot;crate&quot; (glossary entry)">crate</a>, Cargo stores downloaded build dependencies in the Cargo home.
-You can alter the location of the Cargo home by setting the <code>CARGO_HOME</code> <a href="guide/../reference/environment-variables.html">environmental variable</a>.
-The <a href="https://crates.io/crates/home">home</a> crate provides an API for getting this location if you need this information inside your Rust crate.
-By default, the Cargo home is located in <code>$HOME/.cargo/</code>.</p>
-<p>Please note that the internal structure of the Cargo home is not stabilized and may be subject to change at any time.</p>
-<p>The Cargo home consists of following components:</p>
-<h2><a class="header" href="#files" id="files">Files:</a></h2>
+<p>“Cargo home”起到下载和源（source）缓存的作用。
+当我们构建一个<a href="guide/../appendix/glossary.html#crate" title="&quot;crate&quot; (glossary entry)">crate</a>时，Cargo将把下载的依赖项存储在Cargo home中。
+您可以通过修改<code>CARGO_HOME</code><a href="guide/../reference/environment-variables.html">环境变量</a>来改变Cargo home的位置。
+<a href="https://crates.io/crates/home">home</a> crate提供了一个API，允许您在您的Rust crate中检索Cargo home的位置。
+默认情况下，Cargo home的位置是<code>$HOME/.cargo/</code>。</p>
+<p>请注意，Cargo home的内部结构并不稳定，可能会随时发生变化。</p>
+<p>Cargo home由这些部件共同组成：</p>
+<h2><a class="header" href="#文件" id="文件">文件:</a></h2>
 <ul>
 <li>
 <p><code>config.toml</code>
-Cargo's global configuration file, see the <a href="guide/../reference/config.html">config entry in the reference</a>.</p>
+Caro的全局配置文件，请参阅<a href="guide/../reference/config.html">参考文档中的config条目</a>。</p>
 </li>
 <li>
 <p><code>credentials.toml</code>
+加密登录的凭证，来自（from）<a href="guide/../commands/cargo-login.html"><code>cargo login</code></a>，用于登录<a href="guide/../appendix/glossary.html#registry" title="&quot;registry&quot; (glossary entry)">registry</a>。
 Private login credentials from <a href="guide/../commands/cargo-login.html"><code>cargo login</code></a> in order to log in to a <a href="guide/../appendix/glossary.html#registry" title="&quot;registry&quot; (glossary entry)">registry</a>.</p>
 </li>
 <li>
 <p><code>.crates.toml</code>
-This hidden file contains <a href="guide/../appendix/glossary.html#package" title="&quot;package&quot; (glossary entry)">package</a> information of crates installed via <a href="guide/../commands/cargo-install.html"><code>cargo install</code></a>. Do NOT edit by hand!</p>
+该隐藏文件包含了通过<a href="guide/../commands/cargo-install.html"><code>cargo install</code></a>安装的crate的<a href="guide/../appendix/glossary.html#package" title="&quot;package&quot; (glossary entry)">package</a>信息。<strong>不要</strong>手动修改它！</p>
 </li>
 </ul>
-<h2><a class="header" href="#directories" id="directories">Directories:</a></h2>
+<h2><a class="header" href="#目录" id="目录">目录:</a></h2>
 <ul>
 <li>
 <p><code>bin</code>
-The bin directory contains executables of crates that were installed via <a href="guide/../commands/cargo-install.html"><code>cargo install</code></a> or <a href="https://rust-lang.github.io/rustup/"><code>rustup</code></a>.
-To be able to make these binaries accessible, add the path of the directory to your <code>$PATH</code> environment variable.</p>
+bin目录包含了通过<a href="guide/../commands/cargo-install.html"><code>cargo install</code></a>或者<a href="https://rust-lang.github.io/rustup/"><code>rustup</code></a>安装的crate的可执行文件。
+要使这些可执行文件可用，只需将目录的路径添加到<code>$PATH</code>环境变量中。</p>
 </li>
 <li>
 <p><code>git</code>
-Git sources are stored here:</p>
+Git源（Git sources）存储在这里：</p>
 <ul>
 <li>
 <p><code>git/db</code>
-When a crate depends on a git repository, Cargo clones the repo as a bare repo into this directory and updates it if necessary.</p>
+当一个crate依赖于一个git仓库时，Cargo将克隆一个该git仓库的裸仓库（bare repo）到这个文件夹，并在必要时更新它。</p>
+<blockquote>
+<p>译者注：裸仓库（bare repo）是没有<code>.git</code>目录的仓库。也就是说，它只有裸仓库数据，而没有工作目录或者工作树。</p>
+</blockquote>
 </li>
 <li>
 <p><code>git/checkouts</code>
-If a git source is used, the required commit of the repo is checked out from the bare repo inside <code>git/db</code> into this directory.
+若一个git源被使用，Cargo将从<code>git/db</code>中的裸仓库中检出（check out）所需的提交（commit）到这个目录。
+该目录为编译器提供了具体的文件，这些文件包含于这个依赖关系所指定的提交的仓库中。
+Cargo支持检出相同仓库中的多个不同提交。
 This provides the compiler with the actual files contained in the repo of the commit specified for that dependency.
 Multiple checkouts of different commits of the same repo are possible.</p>
 </li>
@@ -604,40 +610,40 @@ Multiple checkouts of different commits of the same repo are possible.</p>
 </li>
 <li>
 <p><code>registry</code>
-Packages and metadata of crate registries (such as <a href="https://crates.io/">crates.io</a>) are located here.</p>
+这里存放着包（Packages）和crate registries的元数据（例如<a href="https://crates.io/">crates.io</a>）</p>
 <ul>
 <li>
 <p><code>registry/index</code>
-The index is a bare git repository which contains the metadata (versions, dependencies etc) of all available crates of a registry.</p>
+该目录是个裸仓库，它包含了该registry中所有可用的crate的元数据（版本，依赖，等等）</p>
 </li>
 <li>
 <p><code>registry/cache</code>
-Downloaded dependencies are stored in the cache. The crates are compressed gzip archives named with a <code>.crate</code> extension.</p>
+已经下载的依赖将被存放于该文件夹中。这些crate会经过gzip压缩为归档文件（gzip archive），并以<code>.crate</code>为扩展名。</p>
 </li>
 <li>
 <p><code>registry/src</code>
-If a downloaded <code>.crate</code> archive is required by a package, it is unpacked into <code>registry/src</code> folder where rustc will find the <code>.rs</code> files.</p>
+若某个包要求依赖一个已下载的<code>.crate</code>归档文件，该归档文件将被解压到这个目录中。rustc将在该目录中找到它所需的<code>.rs</code>文件。</p>
 </li>
 </ul>
 </li>
 </ul>
-<h2><a class="header" href="#caching-the-cargo-home-in-ci" id="caching-the-cargo-home-in-ci">Caching the Cargo home in CI</a></h2>
-<p>To avoid redownloading all crate dependencies during continuous integration, you can cache the <code>$CARGO_HOME</code> directory.
-However, caching the entire directory is often inefficient as it will contain downloaded sources twice.
-If we depend on a crate such as <code>serde 1.0.92</code> and cache the entire <code>$CARGO_HOME</code> we would actually cache the sources twice, the <code>serde-1.0.92.crate</code> inside <code>registry/cache</code> and the extracted <code>.rs</code> files of serde inside <code>registry/src</code>.
-That can unnecessarily slow down the build as downloading, extracting, recompressing and reuploading the cache to the CI servers can take some time.</p>
-<p>It should be sufficient to only cache the following directories across builds:</p>
+<h2><a class="header" href="#在ci中缓存cargo-home" id="在ci中缓存cargo-home">在CI中缓存Cargo home</a></h2>
+<p>为防止在持续集成（CI）中重新下载所有crate依赖，您可以缓存<code>$CARGO_HOME</code>目录。
+然而，缓存整个目录通常并不高效，因为它可能会将已经下载过的源再缓存一次（it will contain downloaded sources twice）。
+若我们依赖了一个crate，例如<code>serde 1.0.92</code>，并将整个<code>$CARGO_HOME</code>缓存，我们实际上将缓存两次，一次是在<code>registry/cache</code>中的<code>serde-1.0.92.crate</code>，另一次是serde在<code>registry/src</code>中解压的<code>.rs</code>文件。
+由于下载、解压，再压缩和再上传缓存到CI服务器上这些操作可能花费大量时间，构建过程可能会额外耗费不必要的时间成本。</p>
+<p>实际上，在构建过程中只缓存下列目录就足够了：</p>
 <ul>
 <li><code>bin/</code></li>
 <li><code>registry/index/</code></li>
 <li><code>registry/cache/</code></li>
 <li><code>git/db/</code></li>
 </ul>
-<h2><a class="header" href="#vendoring-all-dependencies-of-a-project" id="vendoring-all-dependencies-of-a-project">Vendoring all dependencies of a project</a></h2>
-<p>See the <a href="guide/../commands/cargo-vendor.html"><code>cargo vendor</code></a> subcommand.</p>
-<h2><a class="header" href="#clearing-the-cache" id="clearing-the-cache">Clearing the cache</a></h2>
-<p>In theory, you can always remove any part of the cache and Cargo will do its best to restore sources if a crate needs them either by reextracting an archive or checking out a bare repo or by simply redownloading the sources from the web.</p>
-<p>Alternatively, the <a href="https://crates.io/crates/cargo-cache">cargo-cache</a> crate provides a simple CLI tool to only clear selected parts of the cache or show sizes of its components in your command-line.</p>
+<h2><a class="header" href="#供应vendoring项目中的所有依赖" id="供应vendoring项目中的所有依赖">供应（Vendoring）项目中的所有依赖</a></h2>
+<p>请参阅<a href="guide/../commands/cargo-vendor.html"><code>cargo vendor</code></a>子命令。</p>
+<h2><a class="header" href="#清除缓存" id="清除缓存">清除缓存</a></h2>
+<p>理论上，您可以随时清除缓存的任何部分，当某个crate要求这些被清除的依赖内容时，Cargo将尽力恢复它们。这可以通过解压归档文件、检出裸仓库或简单地重新下载来实现。</p>
+<p>作为替代，您可以使用<a href="https://crates.io/crates/cargo-cache">cargo-cache</a> crate提供的命令行工具来选择性清除指定部分的缓存，或显示其组件占用空间的大小。</p>
 <h2><a class="header" href="#构建-缓存" id="构建-缓存">构建 缓存</a></h2>
 <p>Cargo 在单个工作区，共享其中所有包的构建工件。今天，Cargo 不会在不同的工作区共享构建结果，但使用第三方工具可以实现类似的结果，<a href="https://github.com/mozilla/sccache">sccache</a>。</p>
 <p>装置<code>sccache</code>，用<code>cargo install sccache</code>安装它，并在调用 Cargo 之前，设置<code>RUSTC_WRAPPER</code>环境变量成<code>sccache</code>。如果你使用 bash，更好是添加<code>export RUSTC_WRAPPER=sccache</code>到<code>.bashrc</code>文件。有关更多详细信息，请参阅 sccache 文档.</p>
@@ -6698,7 +6704,7 @@ for more information about how toolchain overrides work.</dd>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#files-1" id="files-1">FILES</a></h2>
+<h2><a class="header" href="#files" id="files">FILES</a></h2>
 <p><code>~/.cargo/</code><br />
     Default location for Cargo's &quot;home&quot; directory where it
 stores various files. The location can be changed with the <code>CARGO_HOME</code>

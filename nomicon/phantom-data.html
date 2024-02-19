@@ -282,7 +282,10 @@ struct Vec&lt;T&gt; {
 <span class="boring">}
 </span></code></pre></pre>
 <p>那么<code>impl&lt;T&gt; Drop for Vec&lt;T&gt;</code>这条语句会让 Rust 知道<code>Vec&lt;T&gt;</code><em>拥有</em><code>T</code>类型的值（更准确地说：可能会在<code>Drop</code>实现中使用<code>T</code>类型的值），那么当<code>Vec&lt;T&gt;</code>被 drop 的时候，Rust 就不会允许它们 <em>悬垂</em>。</p>
-<p><strong>添加一个额外的 <code>_owns_T: PhantomData&lt;T&gt;</code> 字段因此是<em>多余的</em>并且什么都不做</strong>。</p>
+<p>当一个类型已经有了 <code>Drop impl</code> 时，<strong>添加一个额外的 <code>_owns_T: PhantomData&lt;T&gt;</code> 字段是多余的，而且没有任何效果</strong>，从 dropck（Drop 检查）的角度来看（它仍然会影响变量和自动特征）。</p>
+<ul>
+<li>（高级边缘情况：如果包含 <code>PhantomData</code> 的类型根本没有 <code>Drop</code> 实现，但仍然有 drop glue（通过拥有另一个带有 drop glue 的字段），那么这里提到的 dropck/<code>#[may_dangle]</code> 规则也同样适用：一个 <code>PhantomData&lt;T&gt;</code> 字段将要求 <code>T</code> 在包含类型作用域结束时可被丢弃）。</li>
+</ul>
 <hr />
 <p>但是这在某些场景下，会导致过于严格，这也是为啥标准库使用了一个不稳定并且<code>unsafe</code>的属性来切换回旧的<code>unchecked</code>的 drop 检查行为，也是接下来这个文档所警告的：<code>#[may_dangle]</code>属性。</p>
 <h3><a class="header" href="#一个例外标准库的特殊情况及不稳定的may_dangle" id="一个例外标准库的特殊情况及不稳定的may_dangle">一个例外：标准库的特殊情况及不稳定的<code>#[may_dangle]</code></a></h3>
@@ -354,17 +357,20 @@ struct Vec&lt;T&gt; {
 <h2><a class="header" href="#phantomdata模式表" id="phantomdata模式表"><code>PhantomData</code>模式表</a></h2>
 <p>下面是一个关于所有可以使用<code>PhantomData</code>的神奇方式的表格：
 (covariant:协变，invariant:不变，contravariant:逆变)</p>
-<table><thead><tr><th>Phantom type</th><th><code>'a</code></th><th><code>T</code></th><th><code>Send</code></th><th><code>Sync</code></th></tr></thead><tbody>
-<tr><td><code>PhantomData&lt;T&gt;</code></td><td>-</td><td>covariant (with drop check)</td><td><code>T: Send</code></td><td><code>T: Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;&amp;'a T&gt;</code></td><td>covariant</td><td>covariant</td><td><code>T: Sync</code></td><td><code>T: Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;&amp;'a mut T&gt;</code></td><td>covariant</td><td>invariant</td><td><code>T: Send</code></td><td><code>T: Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;*const T&gt;</code></td><td>-</td><td>covariant</td><td>-</td><td>-</td></tr>
-<tr><td><code>PhantomData&lt;*mut T&gt;</code></td><td>-</td><td>invariant</td><td>-</td><td>-</td></tr>
-<tr><td><code>PhantomData&lt;fn(T)&gt;</code></td><td>-</td><td>contravariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;fn() -&gt; T&gt;</code></td><td>-</td><td>covariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;fn(T) -&gt; T&gt;</code></td><td>-</td><td>invariant</td><td><code>Send</code></td><td><code>Sync</code></td></tr>
-<tr><td><code>PhantomData&lt;Cell&lt;&amp;'a ()&gt;&gt;</code></td><td>invariant</td><td>-</td><td><code>Send</code></td><td>-</td></tr>
+<table><thead><tr><th>Phantom type</th><th align="center">variance of <code>'a</code></th><th align="center">variance of <code>T</code></th><th align="center"><code>Send</code>/<code>Sync</code><br/>(or lack thereof)</th><th align="center">dangling <code>'a</code> or <code>T</code> in drop glue<br/>(<em>e.g.</em>, <code>#[may_dangle] Drop</code>)</th></tr></thead><tbody>
+<tr><td><code>PhantomData&lt;T&gt;</code></td><td align="center">-</td><td align="center"><strong>cov</strong>ariant</td><td align="center">inherited</td><td align="center">disallowed (&quot;owns <code>T</code>&quot;)</td></tr>
+<tr><td><code>PhantomData&lt;&amp;'a T&gt;</code></td><td align="center"><strong>cov</strong>ariant</td><td align="center"><strong>cov</strong>ariant</td><td align="center"><code>Send + Sync</code><br/>requires<br/><code>T : Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;&amp;'a mut T&gt;</code></td><td align="center"><strong>cov</strong>ariant</td><td align="center"><strong>inv</strong>ariant</td><td align="center">inherited</td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;*const T&gt;</code></td><td align="center">-</td><td align="center"><strong>cov</strong>ariant</td><td align="center"><code>!Send + !Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;*mut T&gt;</code></td><td align="center">-</td><td align="center"><strong>inv</strong>ariant</td><td align="center"><code>!Send + !Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;fn(T)&gt;</code></td><td align="center">-</td><td align="center"><strong>contra</strong>variant</td><td align="center"><code>Send + Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;fn() -&gt; T&gt;</code></td><td align="center">-</td><td align="center"><strong>cov</strong>ariant</td><td align="center"><code>Send + Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;fn(T) -&gt; T&gt;</code></td><td align="center">-</td><td align="center"><strong>inv</strong>ariant</td><td align="center"><code>Send + Sync</code></td><td align="center">allowed</td></tr>
+<tr><td><code>PhantomData&lt;Cell&lt;&amp;'a ()&gt;&gt;</code></td><td align="center"><strong>inv</strong>ariant</td><td align="center">-</td><td align="center"><code>Send + !Sync</code></td><td align="center">allowed</td></tr>
 </tbody></table>
+<ul>
+<li>注意: opt-out Unpin 自动特性需要专用的 <a href="https://doc.rust-lang.org/std/marker/struct.PhantomPinned.html"><code>PhantomPinned</code></a> 类型。</li>
+</ul>
 
                     </main>
 

@@ -217,7 +217,7 @@ s.parentNode.insertBefore(el, s);
     // 注意：`&lt;=` 是因为我们可以把值插入到任何索引范围 ([0,length-1]) 内的位置之后
     // 这种情况等同于 push
     assert!(index &lt;= self.len, &quot;index out of bounds&quot;);
-    if self.cap == self.len { self.grow(); }
+    if self.len == self.cap { self.grow(); }
 
     unsafe {
         // ptr::copy(src, dest, len) 的含义： &quot;从 src 复制连续的 len 个元素到 dst &quot;
@@ -227,8 +227,9 @@ s.parentNode.insertBefore(el, s);
             self.len - index,
         );
         ptr::write(self.ptr.as_ptr().add(index), elem);
-        self.len += 1;
     }
+
+    self.len += 1;
 }
 </code></pre>
 <p>remove 的行为方式正好相反。我们需要将所有的元素从<code>[i+1 ... len + 1]</code>转移到<code>[i ... len]</code>，使用<em>新的</em> len。</p>
