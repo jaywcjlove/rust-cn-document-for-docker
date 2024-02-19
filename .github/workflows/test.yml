@@ -27,17 +27,14 @@ jobs:
           sudo apt update
           sudo apt install gettext yapf3
 
-      - name: Install Rust
-        id: install-rust
-        uses: dtolnay/rust-toolchain@master
-        with:
-          # Pin nightly to specific version to avoid ahash breakage.
-          # See https://github.com/tkaitchuck/aHash/issues/200
-          # TODO(mina86): Unpin once situation with ahash is resolved.
-          # Hopefully we won’t need to patch.
-          #toolchain: nightly
-          toolchain: nightly-2024-02-05
-          components: clippy rustfmt miri
+
+      # - id: setup
+      #   name: Setup Toolchain
+      #   uses: dtolnay/rust-toolchain@stable
+      #   with:
+      #     toolchain: stable
+      #     components: llvm-tools-preview
+
       # - name: Install Rust
       #   run: |
       #     rustup set profile minimal
@@ -62,11 +59,23 @@ jobs:
       # - name: Update rustup
       #   run: rustup self update
 
+      # - name: Install Rust
+      #   run: |
+      #     rustup set profile minimal
+      #     rustup toolchain install nightly -c rust-docs
+      #     rustup default nightly
       - name: Install Rust
-        run: |
-          rustup set profile minimal
-          rustup toolchain install nightly -c rust-docs
-          rustup default nightly
+        id: install-rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          # Pin nightly to specific version to avoid ahash breakage.
+          # See https://github.com/tkaitchuck/aHash/issues/200
+          # TODO(mina86): Unpin once situation with ahash is resolved.
+          # Hopefully we won’t need to patch.
+          #toolchain: nightly
+          toolchain: nightly-2024-02-05
+          components: clippy rustfmt miri
+
 
       - name: Install mdbook
         run: |
