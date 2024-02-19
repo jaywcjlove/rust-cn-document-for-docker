@@ -225,3 +225,10 @@ jobs:
           mdbook build -d book/zh-CN
           rm -rf .git
           cp -rp ./book/zh-CN/html ../dist/comprehensive-rust
+
+      - name: Modify README.md
+        uses: jaywcjlove/github-action-modify-file-content@main
+        with:
+          path: README.md
+          body: "{{date:YYYY-MM-DD HH:mm:ss}}"
+  

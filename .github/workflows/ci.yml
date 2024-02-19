@@ -330,12 +330,6 @@ jobs:
             
             ${{ steps.changelog.outputs.changelog }}
 
-      - name: Modify README.md
-        uses: jaywcjlove/github-action-modify-file-content@main
-        with:
-          path: README.md
-          body: "{{date:YYYY-MM-DD HH:mm:ss}}"
-
       # Create Docker Image
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
