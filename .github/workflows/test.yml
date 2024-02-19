@@ -31,7 +31,13 @@ jobs:
         run: |
           rustup default nightly
           rustup component add rustfmt
-          
+
+      # - name: Install Rust
+      #   run: |
+      #     rustup set profile minimal
+      #     rustup toolchain install 1.57 -c rust-docs
+      #     rustup default 1.57
+
       # - name: Install latest nightly
       #   uses: actions-rs/toolchain@v1
       #   with:
@@ -130,6 +136,8 @@ jobs:
         env: 
           MDBOOK_BOOK__LANGUAGE: zh-CN
         run: |
+          cargo clean
+          cargo build
           cargo install mdbook --locked --version 0.4.36
           cargo install mdbook-svgbob --locked --version 0.2.1
           cargo install mdbook-i18n-helpers --locked --version 0.3.1
