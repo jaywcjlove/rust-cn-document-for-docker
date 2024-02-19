@@ -138,7 +138,7 @@ jobs:
           cargo install mdbook-i18n-helpers --locked --version 0.3.1
           cargo install --path mdbook-exerciser --locked
           cargo install --path mdbook-course --locked
-          
+
           mdbook build -d book/zh-CN
           rm -rf .git
           cp -rp ./book/zh-CN/html ../dist/comprehensive-rust
@@ -304,8 +304,8 @@ jobs:
           push: true
           context: .
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{ github.ref }}
-          # tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{ env.VERSION }}
+          # tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{ github.ref }}
+          tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{ env.VERSION }}
 
       - name: Modify README.md
         uses: jaywcjlove/github-action-modify-file-content@main
