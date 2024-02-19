@@ -6,10 +6,8 @@ env:
 
 on:
   push:
-    # branches:
-    # - main
-    tags:
-      - v*
+    branches:
+    - main
 
 jobs:
   check:
