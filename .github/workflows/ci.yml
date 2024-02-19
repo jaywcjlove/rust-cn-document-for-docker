@@ -24,22 +24,33 @@ jobs:
           repository: google/comprehensive-rust
           path: 'comprehensive-rust'
 
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
-          components: rustfmt, clippy
-
-      - name: Update rustup
-        run: rustup self update
-
-
-      - name: Install Rust
+      - name: Install formatting dependencies
         run: |
-          rustup set profile minimal
-          rustup toolchain install nightly -c rust-docs
-          rustup default nightly
+          sudo apt update
+          sudo apt install gettext yapf3
+  
+      # - name: Install latest nightly
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: nightly
+      #     override: true
+      #     components: rustfmt, clippy
+
+      # - name: Update rustup
+      #   run: rustup self update
+
+      - id: setup
+        name: Setup Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          components: llvm-tools-preview
+
+      # - name: Install Rust
+      #   run: |
+      #     rustup set profile minimal
+      #     rustup toolchain install nightly -c rust-docs
+      #     rustup default nightly
 
       - name: Install mdbook
         run: |
@@ -120,10 +131,14 @@ jobs:
         env: 
           MDBOOK_BOOK__LANGUAGE: zh-CN
         run: |
-          cargo install mdbook-svgbob
-          cargo install mdbook-i18n-helpers
-          cargo install --path mdbook-exerciser
-          cargo install --path mdbook-course
+          cargo clean
+          cargo build
+          cargo install mdbook --locked --version 0.4.36
+          cargo install mdbook-svgbob --locked --version 0.2.1
+          cargo install mdbook-i18n-helpers --locked --version 0.3.1
+          cargo install --path mdbook-exerciser --locked
+          cargo install --path mdbook-course --locked
+          
           mdbook build -d book/zh-CN
           rm -rf .git
           cp -rp ./book/zh-CN/html ../dist/comprehensive-rust
