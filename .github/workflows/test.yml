@@ -2,7 +2,7 @@ name: CI
 
 env:
   CARGO_TERM_COLOR: always
-  MSRV: 1.56.0
+  # MSRV: 1.56.0
 
 on:
   push:
@@ -131,6 +131,11 @@ jobs:
           rm -rf .git
           cp -rp ./book ../dist/nomicon
 
+      - name: Install Gettext
+        run: |
+          sudo apt update
+          sudo apt install gettext
+
       - name: comprehensive-rust
         working-directory: comprehensive-rust
         env: 
@@ -144,10 +149,6 @@ jobs:
           cargo install --path mdbook-exerciser --locked
           cargo install --path mdbook-course --locked
 
-          # cargo install mdbook-svgbob
-          # cargo install mdbook-i18n-helpers
-          # cargo install --path mdbook-exerciser
-          # cargo install --path mdbook-course
           mdbook build -d book/zh-CN
           rm -rf .git
           cp -rp ./book/zh-CN/html ../dist/comprehensive-rust
