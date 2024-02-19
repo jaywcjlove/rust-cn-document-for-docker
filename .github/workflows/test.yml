@@ -81,6 +81,7 @@ jobs:
         run: |
           mdbook build
           rm -rf .git
+          ls -al
           cp -rp rustdoc-cn/book dist/rustdoc
 
       - name: reference-cn
