@@ -90,20 +90,22 @@ jobs:
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.5/mdbook-v0.4.5-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
           echo "$(pwd)/bin" >> $GITHUB_PATH
 
-      - run: ls -al
       - run: mkdir dist
       - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b master rust-by-example-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/book-cn.git -b master book --depth 1
       - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
       - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/rustdoc-cn.git -b master rustdoc-cn --depth 1
-      - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/cargo-cn.git -b master cargo --depth 1
       - run: git clone https://github.com/rust-lang-cn/edition-guide-cn.git -b master edition-guide --depth 1
       - run: git clone https://github.com/rust-lang-cn/nomicon-zh-Hans.git -b main nomicon --depth 1
+      - run: git clone https://github.com/rust-lang-cn/style-guide-cn.git -b main style-guide-cn --depth 1
+      - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
       - run: git clone https://github.com/jaywcjlove/reference.git -b gh-pages quick-reference --depth 1
       - run: git clone https://github.com/sunface/rust-course.git -b main rust-course --depth 1
       - run: git clone https://github.com/rustlang-cn/rusty-book.git -b main rusty-book --depth 1
+
+      - run: git clone https://github.com/rustlang-cn/rust-algos.git -b gh-pages rust-algos --depth 1
 
       - run: cp -rp std/doc dist/std
       - run: rm -rf book/.git
@@ -111,8 +113,11 @@ jobs:
       - run: rm -rf comprehensive-rust/.git
       - run: rm -rf quick-reference/.git
       - run: cp -rp quick-reference dist/quick-reference
+      - run: rm -rf rust-algos/.git
+      - run: cp -rp rust-algos dist/rust-algos
       - run: rm -rf rust-course/.git
       - run: rm -rf rusty-book/.git
+      - run: rm -rf style-guide-cn/.git
       - run: rm -rf reference-cn/.git
 
       - name: 📗 book
@@ -122,6 +127,14 @@ jobs:
           rm -rf .git
           ls -al
           cp -rp ./book ../dist/book
+
+      - name: 📗 style-guide-cn
+        working-directory: style-guide-cn
+        run: |
+          mdbook build
+          rm -rf .git
+          ls -al
+          cp -rp ./book ../dist/style-guide-cn
 
       - name: 📗 rust-by-example-cn
         working-directory: rust-by-example-cn
@@ -196,7 +209,7 @@ jobs:
           sudo apt update
           sudo apt install gettext
 
-      - name: comprehensive-rust
+      - name: 📗 comprehensive-rust
         working-directory: comprehensive-rust
         env: 
           MDBOOK_BOOK__LANGUAGE: zh-CN
