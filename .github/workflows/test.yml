@@ -22,12 +22,22 @@ jobs:
           repository: google/comprehensive-rust
           path: 'comprehensive-rust'
 
-      - name: Install latest nightly
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
-          override: true
-          components: rustfmt, clippy
+      - name: Install formatting dependencies
+        run: |
+          sudo apt update
+          sudo apt install gettext yapf3
+
+      - name: Install nightly rustfmt
+        run: |
+          rustup default nightly
+          rustup component add rustfmt
+          
+      # - name: Install latest nightly
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: nightly
+      #     override: true
+      #     components: rustfmt, clippy
 
       - name: Update rustup
         run: rustup self update
