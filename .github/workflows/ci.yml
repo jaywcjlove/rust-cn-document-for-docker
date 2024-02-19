@@ -368,6 +368,7 @@ jobs:
         uses: jaywcjlove/github-action-modify-file-content@main
         with:
           path: README.md
+          body: "{{date:YYYY-MM-DD HH:mm:ss}}"
       # Create Docker Image in Github
       # - name: Login to the GitHub Container Registry
       #   uses: docker/login-action@v2
