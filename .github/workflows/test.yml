@@ -27,16 +27,17 @@ jobs:
           sudo apt update
           sudo apt install gettext yapf3
 
+      - name: Install Rust
+        run: |
+          rustup set profile minimal
+          rustup toolchain install 1.57 -c rust-docs
+          rustup default 1.57
+
       - name: Install nightly rustfmt
         run: |
           rustup default nightly
           rustup component add rustfmt
 
-      # - name: Install Rust
-      #   run: |
-      #     rustup set profile minimal
-      #     rustup toolchain install 1.57 -c rust-docs
-      #     rustup default 1.57
 
       # - name: Install latest nightly
       #   uses: actions-rs/toolchain@v1
