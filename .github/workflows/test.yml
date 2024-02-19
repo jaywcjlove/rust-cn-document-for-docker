@@ -50,7 +50,11 @@ jobs:
       - run: git clone https://github.com/rust-lang-cn/book-cn.git -b gh-pages dist/book --depth 1
       - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
       # - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b 059771b reference-cn --depth 1
-      - run: git clone --branch 059771b --single-branch --depth 1 https://github.com/rust-lang-cn/reference-cn.git
+      - run: |
+          git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn
+          cd reference-cn
+          git checkout 059771b
+
       - run: git clone https://github.com/rust-lang-cn/rustdoc-cn.git -b master rustdoc-cn --depth 1
       - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/cargo-cn.git -b master cargo --depth 1
