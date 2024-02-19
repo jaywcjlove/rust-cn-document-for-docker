@@ -1,0 +1,369 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>简介 - Rust 语言风格指南 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html" class="active">简介</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">1.</strong> 程序项</a></li><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">2.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">3.</strong> 表达式</a></li><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">4.</strong> 类型和约束</a></li><li class="chapter-item expanded "><a href="advice.html"><strong aria-hidden="true">5.</strong> 其他风格建议</a></li><li class="chapter-item expanded "><a href="cargo.html"><strong aria-hidden="true">6.</strong> Cargo.toml 的约定</a></li><li class="chapter-item expanded "><a href="principles.html"><strong aria-hidden="true">7.</strong> 指导原则和基本原理</a></li><li class="chapter-item expanded "><a href="nightly.html"><strong aria-hidden="true">8.</strong> 开发版特定语法</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 语言风格指南 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/style-guide-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#rust-语言风格指南" id="rust-语言风格指南">Rust 语言风格指南</a></h1>
+<h2><a class="header" href="#动机为什么要使用格式化工具" id="动机为什么要使用格式化工具">动机——为什么要使用格式化工具？</a></h2>
+<p>格式化代码是一项耗时耗力的机械性工作。如果使用自动格式化工具，开发者就可以从这项工作中解脱出来，专注于更重要的事情。</p>
+<p>此外，通过坚持使用既定的风格指南（如本指南），开发者无需制定特别的风格规则，也无需与其他开发者争论应使用何种样式规则，从而节省了时间、沟通成本和精神耗损。</p>
+<p>人类通过模式匹配来理解信息。通过确保所有 Rust 代码具有相似的格式，就能减少理解新项目所需的脑力劳动，从而降低新开发人员的入门门槛。</p>
+<p>因此，使用格式化工具（如 <code>rustfmt</code>）可以提高工作效率，而使用社区一致的格式规约（通常是使用格式化工具的默认设置）则会带来更大的好处。</p>
+<h2><a class="header" href="#默认-rust-风格" id="默认-rust-风格">默认 Rust 风格</a></h2>
+<p>《Rust 语言风格指南》定义了默认 Rust 风格，并<strong>建议</strong>开发者和工具遵循默认 Rust 样式。<code>rustfmt</code> 等工具使用此风格指南作为默认风格的参考。本风格指南中的所有内容，无论是否使用“必须”等语言或“插入空格......”或“在......后换行”等命令式语气，都是指默认样式。</p>
+<p>这不应被解释为禁止开发人员遵循非默认样式，或禁止工具添加任何特定的配置选项。</p>
+<h2><a class="header" href="#格式约定" id="格式约定">格式约定</a></h2>
+<h3><a class="header" href="#缩进和行宽" id="缩进和行宽">缩进和行宽</a></h3>
+<ul>
+<li>使用空格，而不是制表符。</li>
+<li>每级缩进必须是 4 个空格（也就是说，字符串字面量和注释之外的所有缩进空格数都必须是 4 的倍数）。</li>
+<li>一行的最大宽度为 100 个字符。</li>
+</ul>
+<h4><a class="header" href="#块缩进" id="块缩进">块缩进</a></h4>
+<p>与视觉化缩进（visual indent）相比，更倾向于分块缩进：</p>
+<pre><code class="language-rust ignore">// 块缩进
+a_function_call(
+    foo,
+    bar,
+);
+
+// 视觉化缩进
+a_function_call(foo,
+                bar);
+</code></pre>
+<p>这样做的差异就会变小（例如，在上例中重命名了<code>a_function_call</code>），向右移动的情况也会减少。</p>
+<h3><a class="header" href="#尾逗号" id="尾逗号">尾逗号</a></h3>
+<p>在任何类型的逗号分隔列表中，如果后面有换行符，请使用尾逗号：</p>
+<pre><code class="language-rust ignore">function_call(
+    argument,
+    another_argument,
+);
+
+let array = [
+    element,
+    another_element,
+    yet_another_element,
+];
+</code></pre>
+<p>这使得移动代码（例如通过复制和粘贴）变得更容易，并使差异更小，因为添加或删除项目不需要修改另一行来添加或删除逗号。</p>
+<h3><a class="header" href="#空行" id="空行">空行</a></h3>
+<p>不用空行或一个空行（即 1 或 2 个换行符）分隔程序项和语句。例如：</p>
+<pre><code class="language-rust ignore">fn foo() {
+    let x = ...;
+
+    let y = ...;
+    let z = ...;
+}
+
+fn bar() {}
+fn baz() {}
+</code></pre>
+<h3><a class="header" href="#a-hrefitemshtml模块级别的程序序项a" id="a-hrefitemshtml模块级别的程序序项a"><a href="items.html">模块级别的程序序项</a></a></h3>
+<h3><a class="header" href="#a-hrefstatementshtml语句a" id="a-hrefstatementshtml语句a"><a href="statements.html">语句</a></a></h3>
+<h3><a class="header" href="#a-hrefexpressionshtml表达式a" id="a-hrefexpressionshtml表达式a"><a href="expressions.html">表达式</a></a></h3>
+<h3><a class="header" href="#a-hreftypeshtml类型a" id="a-hreftypeshtml类型a"><a href="types.html">类型</a></a></h3>
+<h3><a class="header" href="#注释" id="注释">注释</a></h3>
+<p>以下关于注释的指导原则仅为建议，机器格式化工具可能会跳过注释格式化。</p>
+<p>行注释 (<code>//</code>) 优先于块注释 (<code>/* ... */</code>)。</p>
+<p>使用行注释时，在开头符号后留一个空格。</p>
+<p>使用单行块注释时，在开头符号后和结尾符号前各留一个空格。对于多行块注释，在开头符号后加一个换行符，在结尾符号前加一个换行符。</p>
+<p>注释最好独立成行。如果注释紧跟代码，则在注释前空格一个。如果块注释出现在行内，则使用周围的空格，就像使用标识符或关键字一样。不要在注释后或多行注释中任何一行的末尾使用拖尾空格。例如：</p>
+<pre><code class="language-rust ignore">// 程序项中的注释。
+struct Foo { ... }
+
+fn foo() {} // 在一个项后的注释。
+
+pub fn foo(/* 在参数前的注释 */ x: T) {...}
+</code></pre>
+<p>注释通常应是完整的句子。英文的注释开头用大写字母，结尾用句点（<code>.</code>）（译注：若是使用中文注释，则换成中文标点符号）。内联块注释可视为不带标点符号的注释。</p>
+<p>完全是注释的源文件行长度应限制在 80 个字符以内（包括注释符号，但不包括缩进），或该行的最大宽度（包括注释符号和缩进），以较小者为准：</p>
+<pre><code class="language-rust ignore">// This comment goes up to the ................................. 80 char margin.
+// 该注释的边距为 ............................. 80 字符。
+
+{
+    // This comment is .............................................. 80 chars wide.
+    // 此注释宽 ............................................................. 80 字符。
+}
+
+{
+    {
+        {
+            {
+                {
+                    {
+                        // This comment is limited by the ......................... 100 char margin.
+                        // 此注释受 ................................................ 100 字符边距的限制。
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h4><a class="header" href="#文档注释" id="文档注释">文档注释</a></h4>
+<p>优先使用行注释 (<code>///</code>) 而不是块注释 (<code>/** ... */</code>)。</p>
+<p>优先使用外层文档注释（<code>///</code> 或 <code>/** ... */</code>），仅使用内层文档注释（<code>//!</code> 和 <code>/*! ... */</code>）编写模块级或 crate 块级的文档。</p>
+<p>将文档注释放在属性之前。</p>
+<h3><a class="header" href="#属性" id="属性">属性</a></h3>
+<p>每个属性放在单独一行，跟程序项保持一致的缩进。如果是内部属性 (<code>#!</code>)，则缩进到程序项内部的位置。尽可能使用外属性。</p>
+<p>对于带有参数列表的属性，格式应与函数类似。</p>
+<pre><code class="language-rust ignore">#[repr(C)]
+#[foo(foo, bar)]
+#[long_multi_line_attribute(
+    split,
+    across,
+    lines,
+)]
+struct CRepr {
+    #![repr(C)]
+    x: f32,
+    y: f32,
+}
+</code></pre>
+<p>对于带有等号的属性，在 <code>=</code> 前后各加一个空格，如 <code>#[foo = 42]</code>。</p>
+<p>必须只有一个 <code>derive</code> 属性。工具的作者们要注意：如果将多个 <code>derive</code> 属性合并为一个属性，通常必须保留派生名称的顺序，以保证正确性： <code>#[derive(Foo)] #[derive(Bar)] struct Baz;</code>  必须格式化为 <code>#[derive(Foo, Bar)] struct Baz;</code>。</p>
+<p>For attributes with an equal sign, put a single space before and after the <code>=</code>,
+e.g., <code>#[foo = 42]</code>.</p>
+<h3><a class="header" href="#简短程序项" id="简短程序项"><strong>简短</strong>程序项</a></h3>
+<p>在本指南的许多地方，我们指定的格式取决于代码结构的<strong>简短</strong>。例如，单行结构文字与多行结构文字：</p>
+<pre><code class="language-rust ignore">// 正常格式化
+Foo {
+    f1: an_expression,
+    f2: another_expression(),
+}
+
+// “简短”格式化
+Foo { f1, f2 }
+</code></pre>
+<p>我们让各个工具自行决定“简短”的确切含义。特别是，在不同的情况下，工具可以自由使用不同的定义。</p>
+<p>一些合适的启发式方法是程序项的大小（以字符为单位）或程序项的复杂程度（例如，所有组件必须是简单的名称，而不是更复杂的子表达式）。有关合适的启发式方法的更多讨论，请参考<a href="https://github.com/rust-lang-nursery/fmt-rfcs/issues/47">此讨论问题</a>。</p>
+<h2><a class="header" href="#a-hrefadvicehtml非格式化约定a" id="a-hrefadvicehtml非格式化约定a"><a href="advice.html">非格式化约定</a></a></h2>
+<h2><a class="header" href="#a-hrefcargohtmlcargotoml-的约定a" id="a-hrefcargohtmlcargotoml-的约定a"><a href="cargo.html">Cargo.toml 的约定</a></a></h2>
+<h2><a class="header" href="#a-hrefprincipleshtml决定这些准则的原则a" id="a-hrefprincipleshtml决定这些准则的原则a"><a href="principles.html">决定这些准则的原则</a></a></h2>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+                            <a rel="next" href="items.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+                    <a rel="next" href="items.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

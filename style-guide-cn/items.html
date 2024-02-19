@@ -1,0 +1,600 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>程序项 - Rust 语言风格指南 中文版</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">简介</a></li><li class="chapter-item expanded "><a href="items.html" class="active"><strong aria-hidden="true">1.</strong> 程序项</a></li><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">2.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">3.</strong> 表达式</a></li><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">4.</strong> 类型和约束</a></li><li class="chapter-item expanded "><a href="advice.html"><strong aria-hidden="true">5.</strong> 其他风格建议</a></li><li class="chapter-item expanded "><a href="cargo.html"><strong aria-hidden="true">6.</strong> Cargo.toml 的约定</a></li><li class="chapter-item expanded "><a href="principles.html"><strong aria-hidden="true">7.</strong> 指导原则和基本原理</a></li><li class="chapter-item expanded "><a href="nightly.html"><strong aria-hidden="true">8.</strong> 开发版特定语法</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 语言风格指南 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/style-guide-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#程序项" id="程序项">程序项</a></h1>
+<p>程序项（item，简称项）包括模块顶层允许使用的一系列内容。不过，Rust 也允许某些程序项出现在其他类型的程序项中，如函数中。无论程序项是出现在模块层还是出现在其他程序项中，都适用相同的格式约定。</p>
+<p><code>extern crate</code> 语句必须放在文件的首位。它们必须按字母顺序排列。</p>
+<p><code>use</code> 语句和模块声明（<code>mod foo;</code>，而不是 <code>mod { ... }</code>）必须放在其他程序项之前。将导入放在模块声明之前。按字母顺序排序，但 <code>self</code> 和 <code>super</code> 必须排在其他名称之前。</p>
+<p>不要自动移动注有 <code>#[macro_use]</code> 的模块声明，因为这可能会改变语义。</p>
+<h2><a class="header" href="#函数定义" id="函数定义">函数定义</a></h2>
+<p>在 Rust 中，人们经常通过搜索 <code>fn [function-name]</code> 来查找函数，因此函数定义的格式必须能够满足这一点。</p>
+<p>正确的排序和空格位置是：</p>
+<pre><code class="language-rust ignore">[pub] [unsafe] [extern [&quot;ABI&quot;]] fn foo(arg1: i32, arg2: i32) -&gt; i32 {
+    ...
+}
+</code></pre>
+<p>避免在签名本身中添加注释。</p>
+<p>如果函数签名不能放在一行内，则在开头括号后和结尾括号前分隔，并将每个参数放在自己的缩进行内。例如：</p>
+<pre><code class="language-rust ignore">fn foo(
+    arg1: i32,
+    arg2: i32,
+) -&gt; i32 {
+    ...
+}
+</code></pre>
+<p>注意最后一个参数后面的逗号。</p>
+<h2><a class="header" href="#元组和元组结构" id="元组和元组结构">元组和元组结构</a></h2>
+<p>像编写函数的参数列表一样编写类型列表。</p>
+<p>像调用函数一样构建元组或元组结构体。</p>
+<h3><a class="header" href="#单行" id="单行">单行</a></h3>
+<pre><code class="language-rust ignore">struct Bar(Type1, Type2);
+
+let x = Bar(11, 22);
+let y = (11, 22, 33);
+</code></pre>
+<h2><a class="header" href="#enums" id="enums">Enums</a></h2>
+<p>In the declaration, put each variant on its own line, block indented.</p>
+<p>Format each variant accordingly as either a struct (but without the <code>struct</code>
+keyword), a tuple struct, or an identifier (which doesn't require special
+formatting):</p>
+<pre><code class="language-rust ignore">enum FooBar {
+    First(u32),
+    Second,
+    Error {
+        err: Box&lt;Error&gt;,
+        line: u32,
+    },
+}
+</code></pre>
+<p>If a struct variant is <a href="index.html#small-items"><em>small</em></a>, format it on one
+line. In this case, do not use a trailing comma for the field list, but do put
+spaces around each brace:</p>
+<pre><code class="language-rust ignore">enum FooBar {
+    Error { err: Box&lt;Error&gt;, line: u32 },
+}
+</code></pre>
+<p>In an enum with multiple struct variants, if any struct variant is written on
+multiple lines, use the multi-line formatting for all struct variants. However,
+such a situation might be an indication that you should factor out the fields
+of the variant into their own struct.</p>
+<h2><a class="header" href="#structs-and-unions" id="structs-and-unions">Structs and Unions</a></h2>
+<p>Struct names follow on the same line as the <code>struct</code> keyword, with the opening
+brace on the same line when it fits within the right margin. All struct fields
+are indented once and end with a trailing comma. The closing brace is not
+indented and appears on its own line.</p>
+<pre><code class="language-rust ignore">struct Foo {
+    a: A,
+    b: B,
+}
+</code></pre>
+<p>If and only if the type of a field does not fit within the right margin, it is
+pulled down to its own line and indented again.</p>
+<pre><code class="language-rust ignore">struct Foo {
+    a: A,
+    long_name:
+        LongType,
+}
+</code></pre>
+<p>Prefer using a unit struct (e.g., <code>struct Foo;</code>) to an empty struct (e.g.,
+<code>struct Foo();</code> or <code>struct Foo {}</code>, these only exist to simplify code
+generation), but if you must use an empty struct, keep it on one line with no
+space between the braces: <code>struct Foo;</code> or <code>struct Foo {}</code>.</p>
+<p>The same guidelines are used for untagged union declarations.</p>
+<pre><code class="language-rust ignore">union Foo {
+    a: A,
+    b: B,
+    long_name:
+        LongType,
+}
+</code></pre>
+<h2><a class="header" href="#tuple-structs" id="tuple-structs">Tuple structs</a></h2>
+<p>Put the whole struct on one line if possible. Separate types within the
+parentheses using a comma and space. Don't use a trailing comma for a
+single-line tuple struct. Don't put spaces around the parentheses or semicolon:</p>
+<pre><code class="language-rust ignore">pub struct Foo(String, u8);
+</code></pre>
+<p>Prefer unit structs to empty tuple structs (these only exist to simplify code
+generation), e.g., <code>struct Foo;</code> rather than <code>struct Foo();</code>.</p>
+<p>For more than a few fields (in particular if the tuple struct does not fit on
+one line), prefer a proper struct with named fields.</p>
+<p>For a multi-line tuple struct, block-format the fields with a field on each
+line and a trailing comma:</p>
+<pre><code class="language-rust ignore">pub struct Foo(
+    String,
+    u8,
+);
+</code></pre>
+<h2><a class="header" href="#traits" id="traits">Traits</a></h2>
+<p>Use block-indent for trait items. If there are no items, format the trait (including its <code>{}</code>)
+on a single line. Otherwise, break after the opening brace and before
+the closing brace:</p>
+<pre><code class="language-rust ignore">trait Foo {}
+
+pub trait Bar {
+    ...
+}
+</code></pre>
+<p>If the trait has bounds, put a space after the colon but not before,
+and put spaces around each <code>+</code>, e.g.,</p>
+<pre><code class="language-rust ignore">trait Foo: Debug + Bar {}
+</code></pre>
+<p>Prefer not to line-break in the bounds if possible (consider using a <code>where</code>
+clause). Prefer to break between bounds than to break any individual bound. If
+you must break the bounds, put each bound (including the first) on its own
+block-indented line, break before the <code>+</code> and put the opening brace on its own
+line:</p>
+<pre><code class="language-rust ignore">pub trait IndexRanges:
+    Index&lt;Range&lt;usize&gt;, Output=Self&gt;
+    + Index&lt;RangeTo&lt;usize&gt;, Output=Self&gt;
+    + Index&lt;RangeFrom&lt;usize&gt;, Output=Self&gt;
+    + Index&lt;RangeFull, Output=Self&gt;
+{
+    ...
+}
+</code></pre>
+<h2><a class="header" href="#impls" id="impls">Impls</a></h2>
+<p>Use block-indent for impl items. If there are no items, format the impl
+(including its <code>{}</code>) on a single line. Otherwise, break after the opening brace
+and before the closing brace:</p>
+<pre><code class="language-rust ignore">impl Foo {}
+
+impl Bar for Foo {
+    ...
+}
+</code></pre>
+<p>Avoid line-breaking in the signature if possible. If a line break is required in
+a non-inherent impl, break immediately before <code>for</code>, block indent the concrete type
+and put the opening brace on its own line:</p>
+<pre><code class="language-rust ignore">impl Bar
+    for Foo
+{
+    ...
+}
+</code></pre>
+<h2><a class="header" href="#extern-crate" id="extern-crate">Extern crate</a></h2>
+<p><code>extern crate foo;</code></p>
+<p>Use spaces around keywords, no spaces around the semicolon.</p>
+<h3><a class="header" href="#modules" id="modules">Modules</a></h3>
+<pre><code class="language-rust ignore">mod foo {
+}
+</code></pre>
+<pre><code class="language-rust ignore">mod foo;
+</code></pre>
+<p>Use spaces around keywords and before the opening brace, no spaces around the
+semicolon.</p>
+<h3><a class="header" href="#macro_rules" id="macro_rules">macro_rules!</a></h3>
+<p>Use <code>{}</code> for the full definition of the macro.</p>
+<pre><code class="language-rust ignore">macro_rules! foo {
+}
+</code></pre>
+<h2><a class="header" href="#generics" id="generics">Generics</a></h2>
+<p>Prefer to put a generics clause on one line. Break other parts of an item
+declaration rather than line-breaking a generics clause. If a generics clause is
+large enough to require line-breaking, prefer a <code>where</code> clause instead.</p>
+<p>Do not put spaces before or after <code>&lt;</code> nor before <code>&gt;</code>. Only put a space after
+<code>&gt;</code> if it is followed by a word or opening brace, not an opening parenthesis.
+Put a space after each comma. Do not use a trailing comma for a single-line
+generics clause.</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: Display, U: Debug&gt;(x: Vec&lt;T&gt;, y: Vec&lt;U&gt;) ...
+
+impl&lt;T: Display, U: Debug&gt; SomeType&lt;T, U&gt; { ...
+</code></pre>
+<p>If the generics clause must be formatted across multiple lines, put each
+parameter on its own block-indented line, break after the opening <code>&lt;</code> and
+before the closing <code>&gt;</code>, and use a trailing comma.</p>
+<pre><code class="language-rust ignore">fn foo&lt;
+    T: Display,
+    U: Debug,
+&gt;(x: Vec&lt;T&gt;, y: Vec&lt;U&gt;) ...
+</code></pre>
+<p>If an associated type is bound in a generic type, put spaces around the <code>=</code>:</p>
+<pre><code class="language-rust ignore">&lt;T: Example&lt;Item = u32&gt;&gt;
+</code></pre>
+<p>Prefer to use single-letter names for generic parameters.</p>
+<h2><a class="header" href="#where-clauses" id="where-clauses"><code>where</code> clauses</a></h2>
+<p>These rules apply for <code>where</code> clauses on any item.</p>
+<p>If immediately following a closing bracket of any kind, write the keyword
+<code>where</code> on the same line, with a space before it.</p>
+<p>Otherwise, put <code>where</code> on a new line at the same indentation level. Put each
+component of a <code>where</code> clause on its own line, block-indented. Use a trailing
+comma, unless the clause is terminated with a semicolon. If the <code>where</code> clause
+is followed by a block (or assignment), start that block on a new line.
+Examples:</p>
+<pre><code class="language-rust ignore">fn function&lt;T, U&gt;(args)
+where
+    T: Bound,
+    U: AnotherBound,
+{
+    body
+}
+
+fn foo&lt;T&gt;(
+    args
+) -&gt; ReturnType
+where
+    T: Bound,
+{
+    body
+}
+
+fn foo&lt;T, U&gt;(
+    args,
+) where
+    T: Bound,
+    U: AnotherBound,
+{
+    body
+}
+
+fn foo&lt;T, U&gt;(
+    args
+) -&gt; ReturnType
+where
+    T: Bound,
+    U: AnotherBound;  // Note, no trailing comma.
+
+// Note that where clauses on `type` aliases are not enforced and should not
+// be used.
+type Foo&lt;T&gt;
+where
+    T: Bound
+= Bar&lt;T&gt;;
+</code></pre>
+<p>If a <code>where</code> clause is very short, prefer using an inline bound on the type
+parameter.</p>
+<p>If a component of a <code>where</code> clause does not fit and contains <code>+</code>, break it
+before each <code>+</code> and block-indent the continuation lines. Put each bound on its
+own line. E.g.,</p>
+<pre><code class="language-rust ignore">impl&lt;T: ?Sized, Idx&gt; IndexRanges&lt;Idx&gt; for T
+where
+    T: Index&lt;Range&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeTo&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeFrom&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeInclusive&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeToInclusive&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeFull&gt;,
+</code></pre>
+<h2><a class="header" href="#type-aliases" id="type-aliases">Type aliases</a></h2>
+<p>Keep type aliases on one line when they fit. If necessary to break the line, do
+so after the <code>=</code>, and block-indent the right-hand side:</p>
+<pre><code class="language-rust ignore">pub type Foo = Bar&lt;T&gt;;
+
+// If multi-line is required
+type VeryLongType&lt;T, U: SomeBound&gt; =
+    AnEvenLongerType&lt;T, U, Foo&lt;T&gt;&gt;;
+</code></pre>
+<p>Where possible avoid <code>where</code> clauses and keep type constraints inline. Where
+that is not possible split the line before and after the <code>where</code> clause (and
+split the <code>where</code> clause as normal), e.g.,</p>
+<pre><code class="language-rust ignore">type VeryLongType&lt;T, U&gt;
+where
+    T: U::AnAssociatedType,
+    U: SomeBound,
+= AnEvenLongerType&lt;T, U, Foo&lt;T&gt;&gt;;
+</code></pre>
+<h2><a class="header" href="#associated-types" id="associated-types">Associated types</a></h2>
+<p>Format associated types like type aliases. Where an associated type has a
+bound, put a space after the colon but not before:</p>
+<pre><code class="language-rust ignore">pub type Foo: Bar;
+</code></pre>
+<h2><a class="header" href="#extern-items" id="extern-items">extern items</a></h2>
+<p>When writing extern items (such as <code>extern &quot;C&quot; fn</code>), always specify the ABI.
+For example, write <code>extern &quot;C&quot; fn foo ...</code>, not <code>extern fn foo ...</code>, or
+<code>extern &quot;C&quot; { ... }</code>.</p>
+<h2><a class="header" href="#imports-use-statements" id="imports-use-statements">Imports (<code>use</code> statements)</a></h2>
+<p>Format imports on one line where possible. Don't put spaces around braces.</p>
+<pre><code class="language-rust ignore">use a::b::c;
+use a::b::d::*;
+use a::b::{foo, bar, baz};
+</code></pre>
+<h3><a class="header" href="#large-list-imports" id="large-list-imports">Large list imports</a></h3>
+<p>Prefer to use multiple imports rather than a multi-line import. However, tools
+should not split imports by default.</p>
+<p>If an import does require multiple lines (either because a list of single names
+does not fit within the max width, or because of the rules for nested imports
+below), then break after the opening brace and before the closing brace, use a
+trailing comma, and block indent the names.</p>
+<pre><code class="language-rust ignore">// Prefer
+foo::{long, list, of, imports};
+foo::{more, imports};
+
+// If necessary
+foo::{
+    long, list, of, imports, more,
+    imports,  // Note trailing comma
+};
+</code></pre>
+<h3><a class="header" href="#ordering-of-imports" id="ordering-of-imports">Ordering of imports</a></h3>
+<p>A <em>group</em> of imports is a set of imports on the same or sequential lines. One or
+more blank lines or other items (e.g., a function) separate groups of imports.</p>
+<p>Within a group of imports, imports must be sorted ASCIIbetically (uppercase
+before lowercase). Groups of imports must not be merged or re-ordered.</p>
+<p>E.g., input:</p>
+<pre><code class="language-rust ignore">use d;
+use c;
+
+use b;
+use a;
+</code></pre>
+<p>output:</p>
+<pre><code class="language-rust ignore">use c;
+use d;
+
+use a;
+use b;
+</code></pre>
+<p>Because of <code>macro_use</code>, attributes must also start a new group and prevent
+re-ordering.</p>
+<h3><a class="header" href="#ordering-list-import" id="ordering-list-import">Ordering list import</a></h3>
+<p>Names in a list import must be sorted ASCIIbetically, but with <code>self</code> and
+<code>super</code> first, and groups and glob imports last. This applies recursively. For
+example, <code>a::*</code> comes before <code>b::a</code> but <code>a::b</code> comes before <code>a::*</code>. E.g.,
+<code>use foo::bar::{a, b::c, b::d, b::d::{x, y, z}, b::{self, r, s}};</code>.</p>
+<h3><a class="header" href="#normalisation" id="normalisation">Normalisation</a></h3>
+<p>Tools must make the following normalisations, recursively:</p>
+<ul>
+<li><code>use a::self;</code> -&gt; <code>use a;</code></li>
+<li><code>use a::{};</code> -&gt; (nothing)</li>
+<li><code>use a::{b};</code> -&gt; <code>use a::b;</code></li>
+</ul>
+<p>Tools must not otherwise merge or un-merge import lists or adjust glob imports
+(without an explicit option).</p>
+<h3><a class="header" href="#nested-imports" id="nested-imports">Nested imports</a></h3>
+<p>If there are any nested imports in a list import, then use the multi-line form,
+even if the import fits on one line. Each nested import must be on its own line,
+but non-nested imports must be grouped on as few lines as possible.</p>
+<p>For example,</p>
+<pre><code class="language-rust ignore">use a::b::{
+    x, y, z,
+    u::{...},
+    w::{...},
+};
+</code></pre>
+<h3><a class="header" href="#mergingun-merging-imports" id="mergingun-merging-imports">Merging/un-merging imports</a></h3>
+<p>An example:</p>
+<pre><code class="language-rust ignore">// Un-merged
+use a::b;
+use a::c::d;
+
+// Merged
+use a::{b, c::d};
+</code></pre>
+<p>Tools must not merge or un-merge imports by default. They may offer merging or
+un-merging as an option.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="statements.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="statements.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,1738 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust 语言风格指南 中文版</title>
+        
+        <meta name="robots" content="noindex" />
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">简介</a></li><li class="chapter-item expanded "><a href="items.html"><strong aria-hidden="true">1.</strong> 程序项</a></li><li class="chapter-item expanded "><a href="statements.html"><strong aria-hidden="true">2.</strong> 语句</a></li><li class="chapter-item expanded "><a href="expressions.html"><strong aria-hidden="true">3.</strong> 表达式</a></li><li class="chapter-item expanded "><a href="types.html"><strong aria-hidden="true">4.</strong> 类型和约束</a></li><li class="chapter-item expanded "><a href="advice.html"><strong aria-hidden="true">5.</strong> 其他风格建议</a></li><li class="chapter-item expanded "><a href="cargo.html"><strong aria-hidden="true">6.</strong> Cargo.toml 的约定</a></li><li class="chapter-item expanded "><a href="principles.html"><strong aria-hidden="true">7.</strong> 指导原则和基本原理</a></li><li class="chapter-item expanded "><a href="nightly.html"><strong aria-hidden="true">8.</strong> 开发版特定语法</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Rust 语言风格指南 中文版</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-cn/style-guide-cn" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#rust-语言风格指南" id="rust-语言风格指南">Rust 语言风格指南</a></h1>
+<h2><a class="header" href="#动机为什么要使用格式化工具" id="动机为什么要使用格式化工具">动机——为什么要使用格式化工具？</a></h2>
+<p>格式化代码是一项耗时耗力的机械性工作。如果使用自动格式化工具，开发者就可以从这项工作中解脱出来，专注于更重要的事情。</p>
+<p>此外，通过坚持使用既定的风格指南（如本指南），开发者无需制定特别的风格规则，也无需与其他开发者争论应使用何种样式规则，从而节省了时间、沟通成本和精神耗损。</p>
+<p>人类通过模式匹配来理解信息。通过确保所有 Rust 代码具有相似的格式，就能减少理解新项目所需的脑力劳动，从而降低新开发人员的入门门槛。</p>
+<p>因此，使用格式化工具（如 <code>rustfmt</code>）可以提高工作效率，而使用社区一致的格式规约（通常是使用格式化工具的默认设置）则会带来更大的好处。</p>
+<h2><a class="header" href="#默认-rust-风格" id="默认-rust-风格">默认 Rust 风格</a></h2>
+<p>《Rust 语言风格指南》定义了默认 Rust 风格，并<strong>建议</strong>开发者和工具遵循默认 Rust 样式。<code>rustfmt</code> 等工具使用此风格指南作为默认风格的参考。本风格指南中的所有内容，无论是否使用“必须”等语言或“插入空格......”或“在......后换行”等命令式语气，都是指默认样式。</p>
+<p>这不应被解释为禁止开发人员遵循非默认样式，或禁止工具添加任何特定的配置选项。</p>
+<h2><a class="header" href="#格式约定" id="格式约定">格式约定</a></h2>
+<h3><a class="header" href="#缩进和行宽" id="缩进和行宽">缩进和行宽</a></h3>
+<ul>
+<li>使用空格，而不是制表符。</li>
+<li>每级缩进必须是 4 个空格（也就是说，字符串字面量和注释之外的所有缩进空格数都必须是 4 的倍数）。</li>
+<li>一行的最大宽度为 100 个字符。</li>
+</ul>
+<h4><a class="header" href="#块缩进" id="块缩进">块缩进</a></h4>
+<p>与视觉化缩进（visual indent）相比，更倾向于分块缩进：</p>
+<pre><code class="language-rust ignore">// 块缩进
+a_function_call(
+    foo,
+    bar,
+);
+
+// 视觉化缩进
+a_function_call(foo,
+                bar);
+</code></pre>
+<p>这样做的差异就会变小（例如，在上例中重命名了<code>a_function_call</code>），向右移动的情况也会减少。</p>
+<h3><a class="header" href="#尾逗号" id="尾逗号">尾逗号</a></h3>
+<p>在任何类型的逗号分隔列表中，如果后面有换行符，请使用尾逗号：</p>
+<pre><code class="language-rust ignore">function_call(
+    argument,
+    another_argument,
+);
+
+let array = [
+    element,
+    another_element,
+    yet_another_element,
+];
+</code></pre>
+<p>这使得移动代码（例如通过复制和粘贴）变得更容易，并使差异更小，因为添加或删除项目不需要修改另一行来添加或删除逗号。</p>
+<h3><a class="header" href="#空行" id="空行">空行</a></h3>
+<p>不用空行或一个空行（即 1 或 2 个换行符）分隔程序项和语句。例如：</p>
+<pre><code class="language-rust ignore">fn foo() {
+    let x = ...;
+
+    let y = ...;
+    let z = ...;
+}
+
+fn bar() {}
+fn baz() {}
+</code></pre>
+<h3><a class="header" href="#a-hrefitemshtml模块级别的程序序项a" id="a-hrefitemshtml模块级别的程序序项a"><a href="items.html">模块级别的程序序项</a></a></h3>
+<h3><a class="header" href="#a-hrefstatementshtml语句a" id="a-hrefstatementshtml语句a"><a href="statements.html">语句</a></a></h3>
+<h3><a class="header" href="#a-hrefexpressionshtml表达式a" id="a-hrefexpressionshtml表达式a"><a href="expressions.html">表达式</a></a></h3>
+<h3><a class="header" href="#a-hreftypeshtml类型a" id="a-hreftypeshtml类型a"><a href="types.html">类型</a></a></h3>
+<h3><a class="header" href="#注释" id="注释">注释</a></h3>
+<p>以下关于注释的指导原则仅为建议，机器格式化工具可能会跳过注释格式化。</p>
+<p>行注释 (<code>//</code>) 优先于块注释 (<code>/* ... */</code>)。</p>
+<p>使用行注释时，在开头符号后留一个空格。</p>
+<p>使用单行块注释时，在开头符号后和结尾符号前各留一个空格。对于多行块注释，在开头符号后加一个换行符，在结尾符号前加一个换行符。</p>
+<p>注释最好独立成行。如果注释紧跟代码，则在注释前空格一个。如果块注释出现在行内，则使用周围的空格，就像使用标识符或关键字一样。不要在注释后或多行注释中任何一行的末尾使用拖尾空格。例如：</p>
+<pre><code class="language-rust ignore">// 程序项中的注释。
+struct Foo { ... }
+
+fn foo() {} // 在一个项后的注释。
+
+pub fn foo(/* 在参数前的注释 */ x: T) {...}
+</code></pre>
+<p>注释通常应是完整的句子。英文的注释开头用大写字母，结尾用句点（<code>.</code>）（译注：若是使用中文注释，则换成中文标点符号）。内联块注释可视为不带标点符号的注释。</p>
+<p>完全是注释的源文件行长度应限制在 80 个字符以内（包括注释符号，但不包括缩进），或该行的最大宽度（包括注释符号和缩进），以较小者为准：</p>
+<pre><code class="language-rust ignore">// This comment goes up to the ................................. 80 char margin.
+// 该注释的边距为 ............................. 80 字符。
+
+{
+    // This comment is .............................................. 80 chars wide.
+    // 此注释宽 ............................................................. 80 字符。
+}
+
+{
+    {
+        {
+            {
+                {
+                    {
+                        // This comment is limited by the ......................... 100 char margin.
+                        // 此注释受 ................................................ 100 字符边距的限制。
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h4><a class="header" href="#文档注释" id="文档注释">文档注释</a></h4>
+<p>优先使用行注释 (<code>///</code>) 而不是块注释 (<code>/** ... */</code>)。</p>
+<p>优先使用外层文档注释（<code>///</code> 或 <code>/** ... */</code>），仅使用内层文档注释（<code>//!</code> 和 <code>/*! ... */</code>）编写模块级或 crate 块级的文档。</p>
+<p>将文档注释放在属性之前。</p>
+<h3><a class="header" href="#属性" id="属性">属性</a></h3>
+<p>每个属性放在单独一行，跟程序项保持一致的缩进。如果是内部属性 (<code>#!</code>)，则缩进到程序项内部的位置。尽可能使用外属性。</p>
+<p>对于带有参数列表的属性，格式应与函数类似。</p>
+<pre><code class="language-rust ignore">#[repr(C)]
+#[foo(foo, bar)]
+#[long_multi_line_attribute(
+    split,
+    across,
+    lines,
+)]
+struct CRepr {
+    #![repr(C)]
+    x: f32,
+    y: f32,
+}
+</code></pre>
+<p>对于带有等号的属性，在 <code>=</code> 前后各加一个空格，如 <code>#[foo = 42]</code>。</p>
+<p>必须只有一个 <code>derive</code> 属性。工具的作者们要注意：如果将多个 <code>derive</code> 属性合并为一个属性，通常必须保留派生名称的顺序，以保证正确性： <code>#[derive(Foo)] #[derive(Bar)] struct Baz;</code>  必须格式化为 <code>#[derive(Foo, Bar)] struct Baz;</code>。</p>
+<p>For attributes with an equal sign, put a single space before and after the <code>=</code>,
+e.g., <code>#[foo = 42]</code>.</p>
+<h3><a class="header" href="#简短程序项" id="简短程序项"><strong>简短</strong>程序项</a></h3>
+<p>在本指南的许多地方，我们指定的格式取决于代码结构的<strong>简短</strong>。例如，单行结构文字与多行结构文字：</p>
+<pre><code class="language-rust ignore">// 正常格式化
+Foo {
+    f1: an_expression,
+    f2: another_expression(),
+}
+
+// “简短”格式化
+Foo { f1, f2 }
+</code></pre>
+<p>我们让各个工具自行决定“简短”的确切含义。特别是，在不同的情况下，工具可以自由使用不同的定义。</p>
+<p>一些合适的启发式方法是程序项的大小（以字符为单位）或程序项的复杂程度（例如，所有组件必须是简单的名称，而不是更复杂的子表达式）。有关合适的启发式方法的更多讨论，请参考<a href="https://github.com/rust-lang-nursery/fmt-rfcs/issues/47">此讨论问题</a>。</p>
+<h2><a class="header" href="#a-hrefadvicehtml非格式化约定a" id="a-hrefadvicehtml非格式化约定a"><a href="advice.html">非格式化约定</a></a></h2>
+<h2><a class="header" href="#a-hrefcargohtmlcargotoml-的约定a" id="a-hrefcargohtmlcargotoml-的约定a"><a href="cargo.html">Cargo.toml 的约定</a></a></h2>
+<h2><a class="header" href="#a-hrefprincipleshtml决定这些准则的原则a" id="a-hrefprincipleshtml决定这些准则的原则a"><a href="principles.html">决定这些准则的原则</a></a></h2>
+<h1><a class="header" href="#程序项" id="程序项">程序项</a></h1>
+<p>程序项（item，简称项）包括模块顶层允许使用的一系列内容。不过，Rust 也允许某些程序项出现在其他类型的程序项中，如函数中。无论程序项是出现在模块层还是出现在其他程序项中，都适用相同的格式约定。</p>
+<p><code>extern crate</code> 语句必须放在文件的首位。它们必须按字母顺序排列。</p>
+<p><code>use</code> 语句和模块声明（<code>mod foo;</code>，而不是 <code>mod { ... }</code>）必须放在其他程序项之前。将导入放在模块声明之前。按字母顺序排序，但 <code>self</code> 和 <code>super</code> 必须排在其他名称之前。</p>
+<p>不要自动移动注有 <code>#[macro_use]</code> 的模块声明，因为这可能会改变语义。</p>
+<h2><a class="header" href="#函数定义" id="函数定义">函数定义</a></h2>
+<p>在 Rust 中，人们经常通过搜索 <code>fn [function-name]</code> 来查找函数，因此函数定义的格式必须能够满足这一点。</p>
+<p>正确的排序和空格位置是：</p>
+<pre><code class="language-rust ignore">[pub] [unsafe] [extern [&quot;ABI&quot;]] fn foo(arg1: i32, arg2: i32) -&gt; i32 {
+    ...
+}
+</code></pre>
+<p>避免在签名本身中添加注释。</p>
+<p>如果函数签名不能放在一行内，则在开头括号后和结尾括号前分隔，并将每个参数放在自己的缩进行内。例如：</p>
+<pre><code class="language-rust ignore">fn foo(
+    arg1: i32,
+    arg2: i32,
+) -&gt; i32 {
+    ...
+}
+</code></pre>
+<p>注意最后一个参数后面的逗号。</p>
+<h2><a class="header" href="#元组和元组结构" id="元组和元组结构">元组和元组结构</a></h2>
+<p>像编写函数的参数列表一样编写类型列表。</p>
+<p>像调用函数一样构建元组或元组结构体。</p>
+<h3><a class="header" href="#单行" id="单行">单行</a></h3>
+<pre><code class="language-rust ignore">struct Bar(Type1, Type2);
+
+let x = Bar(11, 22);
+let y = (11, 22, 33);
+</code></pre>
+<h2><a class="header" href="#enums" id="enums">Enums</a></h2>
+<p>In the declaration, put each variant on its own line, block indented.</p>
+<p>Format each variant accordingly as either a struct (but without the <code>struct</code>
+keyword), a tuple struct, or an identifier (which doesn't require special
+formatting):</p>
+<pre><code class="language-rust ignore">enum FooBar {
+    First(u32),
+    Second,
+    Error {
+        err: Box&lt;Error&gt;,
+        line: u32,
+    },
+}
+</code></pre>
+<p>If a struct variant is <a href="index.html#small-items"><em>small</em></a>, format it on one
+line. In this case, do not use a trailing comma for the field list, but do put
+spaces around each brace:</p>
+<pre><code class="language-rust ignore">enum FooBar {
+    Error { err: Box&lt;Error&gt;, line: u32 },
+}
+</code></pre>
+<p>In an enum with multiple struct variants, if any struct variant is written on
+multiple lines, use the multi-line formatting for all struct variants. However,
+such a situation might be an indication that you should factor out the fields
+of the variant into their own struct.</p>
+<h2><a class="header" href="#structs-and-unions" id="structs-and-unions">Structs and Unions</a></h2>
+<p>Struct names follow on the same line as the <code>struct</code> keyword, with the opening
+brace on the same line when it fits within the right margin. All struct fields
+are indented once and end with a trailing comma. The closing brace is not
+indented and appears on its own line.</p>
+<pre><code class="language-rust ignore">struct Foo {
+    a: A,
+    b: B,
+}
+</code></pre>
+<p>If and only if the type of a field does not fit within the right margin, it is
+pulled down to its own line and indented again.</p>
+<pre><code class="language-rust ignore">struct Foo {
+    a: A,
+    long_name:
+        LongType,
+}
+</code></pre>
+<p>Prefer using a unit struct (e.g., <code>struct Foo;</code>) to an empty struct (e.g.,
+<code>struct Foo();</code> or <code>struct Foo {}</code>, these only exist to simplify code
+generation), but if you must use an empty struct, keep it on one line with no
+space between the braces: <code>struct Foo;</code> or <code>struct Foo {}</code>.</p>
+<p>The same guidelines are used for untagged union declarations.</p>
+<pre><code class="language-rust ignore">union Foo {
+    a: A,
+    b: B,
+    long_name:
+        LongType,
+}
+</code></pre>
+<h2><a class="header" href="#tuple-structs" id="tuple-structs">Tuple structs</a></h2>
+<p>Put the whole struct on one line if possible. Separate types within the
+parentheses using a comma and space. Don't use a trailing comma for a
+single-line tuple struct. Don't put spaces around the parentheses or semicolon:</p>
+<pre><code class="language-rust ignore">pub struct Foo(String, u8);
+</code></pre>
+<p>Prefer unit structs to empty tuple structs (these only exist to simplify code
+generation), e.g., <code>struct Foo;</code> rather than <code>struct Foo();</code>.</p>
+<p>For more than a few fields (in particular if the tuple struct does not fit on
+one line), prefer a proper struct with named fields.</p>
+<p>For a multi-line tuple struct, block-format the fields with a field on each
+line and a trailing comma:</p>
+<pre><code class="language-rust ignore">pub struct Foo(
+    String,
+    u8,
+);
+</code></pre>
+<h2><a class="header" href="#traits" id="traits">Traits</a></h2>
+<p>Use block-indent for trait items. If there are no items, format the trait (including its <code>{}</code>)
+on a single line. Otherwise, break after the opening brace and before
+the closing brace:</p>
+<pre><code class="language-rust ignore">trait Foo {}
+
+pub trait Bar {
+    ...
+}
+</code></pre>
+<p>If the trait has bounds, put a space after the colon but not before,
+and put spaces around each <code>+</code>, e.g.,</p>
+<pre><code class="language-rust ignore">trait Foo: Debug + Bar {}
+</code></pre>
+<p>Prefer not to line-break in the bounds if possible (consider using a <code>where</code>
+clause). Prefer to break between bounds than to break any individual bound. If
+you must break the bounds, put each bound (including the first) on its own
+block-indented line, break before the <code>+</code> and put the opening brace on its own
+line:</p>
+<pre><code class="language-rust ignore">pub trait IndexRanges:
+    Index&lt;Range&lt;usize&gt;, Output=Self&gt;
+    + Index&lt;RangeTo&lt;usize&gt;, Output=Self&gt;
+    + Index&lt;RangeFrom&lt;usize&gt;, Output=Self&gt;
+    + Index&lt;RangeFull, Output=Self&gt;
+{
+    ...
+}
+</code></pre>
+<h2><a class="header" href="#impls" id="impls">Impls</a></h2>
+<p>Use block-indent for impl items. If there are no items, format the impl
+(including its <code>{}</code>) on a single line. Otherwise, break after the opening brace
+and before the closing brace:</p>
+<pre><code class="language-rust ignore">impl Foo {}
+
+impl Bar for Foo {
+    ...
+}
+</code></pre>
+<p>Avoid line-breaking in the signature if possible. If a line break is required in
+a non-inherent impl, break immediately before <code>for</code>, block indent the concrete type
+and put the opening brace on its own line:</p>
+<pre><code class="language-rust ignore">impl Bar
+    for Foo
+{
+    ...
+}
+</code></pre>
+<h2><a class="header" href="#extern-crate" id="extern-crate">Extern crate</a></h2>
+<p><code>extern crate foo;</code></p>
+<p>Use spaces around keywords, no spaces around the semicolon.</p>
+<h3><a class="header" href="#modules" id="modules">Modules</a></h3>
+<pre><code class="language-rust ignore">mod foo {
+}
+</code></pre>
+<pre><code class="language-rust ignore">mod foo;
+</code></pre>
+<p>Use spaces around keywords and before the opening brace, no spaces around the
+semicolon.</p>
+<h3><a class="header" href="#macro_rules" id="macro_rules">macro_rules!</a></h3>
+<p>Use <code>{}</code> for the full definition of the macro.</p>
+<pre><code class="language-rust ignore">macro_rules! foo {
+}
+</code></pre>
+<h2><a class="header" href="#generics" id="generics">Generics</a></h2>
+<p>Prefer to put a generics clause on one line. Break other parts of an item
+declaration rather than line-breaking a generics clause. If a generics clause is
+large enough to require line-breaking, prefer a <code>where</code> clause instead.</p>
+<p>Do not put spaces before or after <code>&lt;</code> nor before <code>&gt;</code>. Only put a space after
+<code>&gt;</code> if it is followed by a word or opening brace, not an opening parenthesis.
+Put a space after each comma. Do not use a trailing comma for a single-line
+generics clause.</p>
+<pre><code class="language-rust ignore">fn foo&lt;T: Display, U: Debug&gt;(x: Vec&lt;T&gt;, y: Vec&lt;U&gt;) ...
+
+impl&lt;T: Display, U: Debug&gt; SomeType&lt;T, U&gt; { ...
+</code></pre>
+<p>If the generics clause must be formatted across multiple lines, put each
+parameter on its own block-indented line, break after the opening <code>&lt;</code> and
+before the closing <code>&gt;</code>, and use a trailing comma.</p>
+<pre><code class="language-rust ignore">fn foo&lt;
+    T: Display,
+    U: Debug,
+&gt;(x: Vec&lt;T&gt;, y: Vec&lt;U&gt;) ...
+</code></pre>
+<p>If an associated type is bound in a generic type, put spaces around the <code>=</code>:</p>
+<pre><code class="language-rust ignore">&lt;T: Example&lt;Item = u32&gt;&gt;
+</code></pre>
+<p>Prefer to use single-letter names for generic parameters.</p>
+<h2><a class="header" href="#where-clauses" id="where-clauses"><code>where</code> clauses</a></h2>
+<p>These rules apply for <code>where</code> clauses on any item.</p>
+<p>If immediately following a closing bracket of any kind, write the keyword
+<code>where</code> on the same line, with a space before it.</p>
+<p>Otherwise, put <code>where</code> on a new line at the same indentation level. Put each
+component of a <code>where</code> clause on its own line, block-indented. Use a trailing
+comma, unless the clause is terminated with a semicolon. If the <code>where</code> clause
+is followed by a block (or assignment), start that block on a new line.
+Examples:</p>
+<pre><code class="language-rust ignore">fn function&lt;T, U&gt;(args)
+where
+    T: Bound,
+    U: AnotherBound,
+{
+    body
+}
+
+fn foo&lt;T&gt;(
+    args
+) -&gt; ReturnType
+where
+    T: Bound,
+{
+    body
+}
+
+fn foo&lt;T, U&gt;(
+    args,
+) where
+    T: Bound,
+    U: AnotherBound,
+{
+    body
+}
+
+fn foo&lt;T, U&gt;(
+    args
+) -&gt; ReturnType
+where
+    T: Bound,
+    U: AnotherBound;  // Note, no trailing comma.
+
+// Note that where clauses on `type` aliases are not enforced and should not
+// be used.
+type Foo&lt;T&gt;
+where
+    T: Bound
+= Bar&lt;T&gt;;
+</code></pre>
+<p>If a <code>where</code> clause is very short, prefer using an inline bound on the type
+parameter.</p>
+<p>If a component of a <code>where</code> clause does not fit and contains <code>+</code>, break it
+before each <code>+</code> and block-indent the continuation lines. Put each bound on its
+own line. E.g.,</p>
+<pre><code class="language-rust ignore">impl&lt;T: ?Sized, Idx&gt; IndexRanges&lt;Idx&gt; for T
+where
+    T: Index&lt;Range&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeTo&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeFrom&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeInclusive&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeToInclusive&lt;Idx&gt;, Output = Self::Output&gt;
+        + Index&lt;RangeFull&gt;,
+</code></pre>
+<h2><a class="header" href="#type-aliases" id="type-aliases">Type aliases</a></h2>
+<p>Keep type aliases on one line when they fit. If necessary to break the line, do
+so after the <code>=</code>, and block-indent the right-hand side:</p>
+<pre><code class="language-rust ignore">pub type Foo = Bar&lt;T&gt;;
+
+// If multi-line is required
+type VeryLongType&lt;T, U: SomeBound&gt; =
+    AnEvenLongerType&lt;T, U, Foo&lt;T&gt;&gt;;
+</code></pre>
+<p>Where possible avoid <code>where</code> clauses and keep type constraints inline. Where
+that is not possible split the line before and after the <code>where</code> clause (and
+split the <code>where</code> clause as normal), e.g.,</p>
+<pre><code class="language-rust ignore">type VeryLongType&lt;T, U&gt;
+where
+    T: U::AnAssociatedType,
+    U: SomeBound,
+= AnEvenLongerType&lt;T, U, Foo&lt;T&gt;&gt;;
+</code></pre>
+<h2><a class="header" href="#associated-types" id="associated-types">Associated types</a></h2>
+<p>Format associated types like type aliases. Where an associated type has a
+bound, put a space after the colon but not before:</p>
+<pre><code class="language-rust ignore">pub type Foo: Bar;
+</code></pre>
+<h2><a class="header" href="#extern-items" id="extern-items">extern items</a></h2>
+<p>When writing extern items (such as <code>extern &quot;C&quot; fn</code>), always specify the ABI.
+For example, write <code>extern &quot;C&quot; fn foo ...</code>, not <code>extern fn foo ...</code>, or
+<code>extern &quot;C&quot; { ... }</code>.</p>
+<h2><a class="header" href="#imports-use-statements" id="imports-use-statements">Imports (<code>use</code> statements)</a></h2>
+<p>Format imports on one line where possible. Don't put spaces around braces.</p>
+<pre><code class="language-rust ignore">use a::b::c;
+use a::b::d::*;
+use a::b::{foo, bar, baz};
+</code></pre>
+<h3><a class="header" href="#large-list-imports" id="large-list-imports">Large list imports</a></h3>
+<p>Prefer to use multiple imports rather than a multi-line import. However, tools
+should not split imports by default.</p>
+<p>If an import does require multiple lines (either because a list of single names
+does not fit within the max width, or because of the rules for nested imports
+below), then break after the opening brace and before the closing brace, use a
+trailing comma, and block indent the names.</p>
+<pre><code class="language-rust ignore">// Prefer
+foo::{long, list, of, imports};
+foo::{more, imports};
+
+// If necessary
+foo::{
+    long, list, of, imports, more,
+    imports,  // Note trailing comma
+};
+</code></pre>
+<h3><a class="header" href="#ordering-of-imports" id="ordering-of-imports">Ordering of imports</a></h3>
+<p>A <em>group</em> of imports is a set of imports on the same or sequential lines. One or
+more blank lines or other items (e.g., a function) separate groups of imports.</p>
+<p>Within a group of imports, imports must be sorted ASCIIbetically (uppercase
+before lowercase). Groups of imports must not be merged or re-ordered.</p>
+<p>E.g., input:</p>
+<pre><code class="language-rust ignore">use d;
+use c;
+
+use b;
+use a;
+</code></pre>
+<p>output:</p>
+<pre><code class="language-rust ignore">use c;
+use d;
+
+use a;
+use b;
+</code></pre>
+<p>Because of <code>macro_use</code>, attributes must also start a new group and prevent
+re-ordering.</p>
+<h3><a class="header" href="#ordering-list-import" id="ordering-list-import">Ordering list import</a></h3>
+<p>Names in a list import must be sorted ASCIIbetically, but with <code>self</code> and
+<code>super</code> first, and groups and glob imports last. This applies recursively. For
+example, <code>a::*</code> comes before <code>b::a</code> but <code>a::b</code> comes before <code>a::*</code>. E.g.,
+<code>use foo::bar::{a, b::c, b::d, b::d::{x, y, z}, b::{self, r, s}};</code>.</p>
+<h3><a class="header" href="#normalisation" id="normalisation">Normalisation</a></h3>
+<p>Tools must make the following normalisations, recursively:</p>
+<ul>
+<li><code>use a::self;</code> -&gt; <code>use a;</code></li>
+<li><code>use a::{};</code> -&gt; (nothing)</li>
+<li><code>use a::{b};</code> -&gt; <code>use a::b;</code></li>
+</ul>
+<p>Tools must not otherwise merge or un-merge import lists or adjust glob imports
+(without an explicit option).</p>
+<h3><a class="header" href="#nested-imports" id="nested-imports">Nested imports</a></h3>
+<p>If there are any nested imports in a list import, then use the multi-line form,
+even if the import fits on one line. Each nested import must be on its own line,
+but non-nested imports must be grouped on as few lines as possible.</p>
+<p>For example,</p>
+<pre><code class="language-rust ignore">use a::b::{
+    x, y, z,
+    u::{...},
+    w::{...},
+};
+</code></pre>
+<h3><a class="header" href="#mergingun-merging-imports" id="mergingun-merging-imports">Merging/un-merging imports</a></h3>
+<p>An example:</p>
+<pre><code class="language-rust ignore">// Un-merged
+use a::b;
+use a::c::d;
+
+// Merged
+use a::{b, c::d};
+</code></pre>
+<p>Tools must not merge or un-merge imports by default. They may offer merging or
+un-merging as an option.</p>
+<h1><a class="header" href="#语句" id="语句">语句</a></h1>
+<h2><a class="header" href="#let-语句" id="let-语句"><code>let</code> 语句</a></h2>
+<p>在 <code>:</code> 后面和 <code>=</code> 的两边（若它们存在的话）空一格。分号前不要空格。</p>
+<pre><code class="language-rust ignore">// 一条注释。
+let pattern: Type = expr;
+
+let pattern;
+let pattern: Type;
+let pattern = expr;
+</code></pre>
+<p>如果可能，将声明格式化成一行。如果不可能，则在 <code>=</code> 之后尝试分割，如果声明适合在两行中进行。将表达式块缩进。</p>
+<pre><code class="language-rust ignore">let pattern: Type =
+    expr;
+</code></pre>
+<p>如果第一行仍不能排在一行上，则在 <code>:</code> 之后分行，并使用块缩进。即使在 <code>:</code> 后分行后类型还需要多行，也应将第一行放在与 <code>:</code> 相同的行上，并遵守<a href="expressions.html#combinable-expressions">合并规则</a>。</p>
+<pre><code class="language-rust ignore">let pattern:
+    Type =
+    expr;
+</code></pre>
+<p>例如：</p>
+<pre><code class="language-rust ignore">let Foo {
+    f: abcd,
+    g: qwer,
+}: Foo&lt;Bar&gt; =
+    Foo { f, g };
+
+let (abcd,
+    defg):
+    Baz =
+{ ... }
+</code></pre>
+<p>如果表达式包含多行，若表达式的第一行适合在余下空位上，则表达式与 <code>=</code> 保留在同一行，表达式的其余部分不再缩进。如果第一行不合适，则将表达式放在后面的行中，分块缩进。如果表达式是一个代码块，且类型或模式覆盖多行，则将开头括号放在新的一行，且不缩进（这样可以将代码块内部与类型分开）；否则，开头括号放在 <code>=</code> 之后。</p>
+<p>示例：</p>
+<pre><code class="language-rust ignore">let foo = Foo {
+    f: abcd,
+    g: qwer,
+};
+
+let foo =
+    ALongName {
+        f: abcd,
+        g: qwer,
+    };
+
+let foo: Type = {
+    an_expression();
+    ...
+};
+
+let foo:
+    ALongType =
+{
+    an_expression();
+    ...
+};
+
+let Foo {
+    f: abcd,
+    g: qwer,
+}: Foo&lt;Bar&gt; = Foo {
+    f: blimblimblim,
+    g: blamblamblam,
+};
+
+let Foo {
+    f: abcd,
+    g: qwer,
+}: Foo&lt;Bar&gt; = foo(
+    blimblimblim,
+    blamblamblam,
+);
+</code></pre>
+<h3><a class="header" href="#else-块let-else-语句" id="else-块let-else-语句">else 块（let-else 语句）</a></h3>
+<p>一个 let 语句可以包含一个 <code>else</code> 组件，使其成为一个 let-else 语句。在这种情况下，应始终对 else 块前面的组件（即 <code>let pattern: Type = initializer_expr</code> 部分）采用与<a href="statements.html#let-%E8%AF%AD%E5%8F%A5">其他 let 语句</a>相同的格式化规则。</p>
+<p>如果以下条件都符合，则将整个 let-else 语句格式化为一行：</p>
+<ul>
+<li>整个语句很<strong>短</strong></li>
+<li><code>else</code> 块只包含一个单行表达式，不包含任何语句</li>
+<li><code>else</code> 块不包含注释</li>
+<li><code>else</code> 块前面的 let 语句组件可以格式化为单行</li>
+</ul>
+<pre><code class="language-rust ignore">let Some(1) = opt else { return };
+</code></pre>
+<p>否则，let-else 语句需要换行。</p>
+<p>如果将 let-else 语句换成多行，切勿在<code>else</code> 和 <code>{</code> 之间换行，一定要在 <code>}</code> 之前换行。</p>
+<p>如果 <code>else</code> 前面的 let 语句组件可以格式化为一行，但 let-else 不符合完全放在一行的条件，则应将 <code>else {</code> 放在初始化表达式的同一行，并在两者之间留一个空格，然后在 <code>{</code> 之后换行。缩进结尾的 <code>}</code> 以匹配 <code>let</code>，并将包含的代码块再缩进一步。</p>
+<pre><code class="language-rust ignore">let Some(1) = opt else {
+    return;
+};
+
+let Some(1) = opt else {
+    // nope
+    return
+};
+</code></pre>
+<p>如果 <code>else</code> 前面的 let 语句组件可以在一行中格式化，但 <code>else {</code> 不能在同一行中格式化时，则在 <code>else</code> 之前换行。</p>
+<pre><code class="language-rust ignore">    let Some(x) = some_really_really_really_really_really_really_really_really_really_long_name
+    else {
+        return;
+    };
+</code></pre>
+<p>如果初始化表达式为多行，则在且仅在以下所有条件都符合的情况下，将 <code>else</code> 关键字和代码块的开头括号（即 <code>else {</code>）放在与初始化表达式结尾相同的行上，并在它们之间留一个空格：</p>
+<ul>
+<li>初始化表达式以一个或多个结束括号、方括号和/或大括号结束</li>
+<li>该行没有其他内容</li>
+<li>该行的缩进级别与初始 <code>let</code> 关键字的缩进级别相同</li>
+</ul>
+<p>例如：</p>
+<pre><code class="language-rust ignore">let Some(x) = y.foo(
+    &quot;abc&quot;,
+    fairly_long_identifier,
+    &quot;def&quot;,
+    &quot;123456&quot;,
+    &quot;string&quot;,
+    &quot;cheese&quot;,
+) else {
+    bar()
+}
+</code></pre>
+<p>否则，将 <code>else</code> 关键字和开头括号放在初始化表达式结束后的下一行，<code>else</code> 关键字的缩进级别与 <code>let</code> 关键字的缩进级别相同。</p>
+<p>例如：</p>
+<pre><code class="language-rust ignore">fn main() {
+    let Some(x) = abcdef()
+        .foo(
+            &quot;abc&quot;,
+            some_really_really_really_long_ident,
+            &quot;ident&quot;,
+            &quot;123456&quot;,
+        )
+        .bar()
+        .baz()
+        .qux(&quot;fffffffffffffffff&quot;)
+    else {
+        return
+    };
+
+    let Some(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa) =
+        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    else {
+        return;
+    };
+
+    let LongStructName(AnotherStruct {
+        multi,
+        line,
+        pattern,
+    }) = slice.as_ref()
+    else {
+        return;
+    };
+
+    let LongStructName(AnotherStruct {
+        multi,
+        line,
+        pattern,
+    }) = multi_line_function_call(
+        arg1,
+        arg2,
+        arg3,
+        arg4,
+    ) else {
+        return;
+    };
+}
+</code></pre>
+<h2><a class="header" href="#在语句位置使用宏" id="在语句位置使用宏">在语句位置使用宏</a></h2>
+<p>在语句位置使用宏时，使用圆括号或方括号作为分隔符，并以分号结束。请勿在名称、<code>!</code>、分隔符或 <code>;</code> 前后使用空格。</p>
+<pre><code class="language-rust ignore">// 注释
+a_macro!(...);
+</code></pre>
+<h2><a class="header" href="#语句位置中的表达式" id="语句位置中的表达式">语句位置中的表达式</a></h2>
+<p>表达式和分号之间不要加空格。</p>
+<pre><code class="language-rust ignore">&lt;expr&gt;;
+</code></pre>
+<p>用分号结束语句位置上的所有表达式，除非这些表达式以块结束或用作块的值。</p>
+<p>例如：</p>
+<pre><code class="language-rust ignore">{
+    an_expression();
+    expr_as_value()
+}
+
+return foo();
+
+loop {
+    break;
+}
+</code></pre>
+<p>表达式为空类型时，即使可以传递，也要使用分号。例如：</p>
+<pre><code class="language-rust ignore">fn foo() { ... }
+
+fn bar() {
+    foo();
+}
+</code></pre>
+<h1><a class="header" href="#表达式" id="表达式">表达式</a></h1>
+<h2><a class="header" href="#块" id="块">块</a></h2>
+<p>块表达式必须在首行 <code>{</code> 后和末行 <code>}</code> 前加换行符，除非根据其他样式规则可以写成单行。</p>
+<p>代码块前的关键字（如 <code>unsafe</code> 或 <code>async</code>）必须与开头的括号在同一行，关键字与开头的括号之间用一个空格隔开。缩进代码块的内容。</p>
+<pre><code class="language-rust ignore">fn block_as_stmt() {
+    a_call();
+
+    {
+        a_call_inside_a_block();
+
+        // a comment in a block
+        the_value
+    }
+}
+
+fn block_as_expr() {
+    let foo = {
+        a_call_inside_a_block();
+
+        // a comment in a block
+        the_value
+    };
+}
+
+fn unsafe_block_as_stmt() {
+    a_call();
+
+    unsafe {
+        a_call_inside_a_block();
+
+        // a comment in a block
+        the_value
+    }
+}
+</code></pre>
+<p>If a block has an attribute, put it on its own line before the block:</p>
+<pre><code class="language-rust ignore">fn block_as_stmt() {
+    #[an_attribute]
+    {
+        #![an_inner_attribute]
+
+        // a comment in a block
+        the_value
+    }
+}
+</code></pre>
+<p>Avoid writing comments on the same lines as either of the braces.</p>
+<p>Write an empty block as <code>{}</code>.</p>
+<p>Write a block on a single line if:</p>
+<ul>
+<li>it is either used in expression position (not statement position) or is an
+unsafe block in statement position,</li>
+<li>it contains a single-line expression and no statements, and</li>
+<li>it contains no comments</li>
+</ul>
+<p>For a single-line block, put spaces after the opening brace and before the
+closing brace.</p>
+<p>Examples:</p>
+<pre><code class="language-rust ignore">fn main() {
+    // Single line
+    let _ = { a_call() };
+    let _ = unsafe { a_call() };
+
+    // Not allowed on one line
+    // Statement position.
+    {
+        a_call()
+    }
+
+    // Contains a statement
+    let _ = {
+        a_call();
+    };
+    unsafe {
+        a_call();
+    }
+
+    // Contains a comment
+    let _ = {
+        // A comment
+    };
+    let _ = {
+        // A comment
+        a_call()
+    };
+
+    // Multiple lines
+    let _ = {
+        a_call();
+        another_call()
+    };
+    let _ = {
+        a_call(
+            an_argument,
+            another_arg,
+        )
+    };
+}
+</code></pre>
+<h2><a class="header" href="#closures" id="closures">Closures</a></h2>
+<p>Don't put any extra spaces before the first <code>|</code> (unless the closure is prefixed
+by a keyword such as <code>move</code>); put a space between the second <code>|</code> and the
+expression of the closure. Between the <code>|</code>s, use function definition syntax,
+but elide types where possible.</p>
+<p>Use closures without the enclosing <code>{}</code>, if possible. Add the <code>{}</code> when you have
+a return type, when there are statements, when there are comments inside the
+closure, or when the body expression is a control-flow expression that spans
+multiple lines. If using braces, follow the rules above for blocks. Examples:</p>
+<pre><code class="language-rust ignore">|arg1, arg2| expr
+
+move |arg1: i32, arg2: i32| -&gt; i32 {
+    expr1;
+    expr2
+}
+
+|| Foo {
+    field1,
+    field2: 0,
+}
+
+|| {
+    if true {
+        blah
+    } else {
+        boo
+    }
+}
+
+|x| unsafe {
+    expr
+}
+</code></pre>
+<h2><a class="header" href="#struct-literals" id="struct-literals">Struct literals</a></h2>
+<p>If a struct literal is <em>small</em>, format it on a single line, and do not use a
+trailing comma. If not, split it across multiple lines, with each field on its
+own block-indented line, and use a trailing comma.</p>
+<p>For each <code>field: value</code> entry, put a space after the colon only.</p>
+<p>Put a space before the opening brace. In the single-line form, put spaces after
+the opening brace and before the closing brace.</p>
+<pre><code class="language-rust ignore">Foo { field1, field2: 0 }
+let f = Foo {
+    field1,
+    field2: an_expr,
+};
+</code></pre>
+<p>Functional record update syntax is treated like a field, but it must never have
+a trailing comma. Do not put a space after <code>..</code>.</p>
+<pre><code class="language-rust ignore">let f = Foo {
+    field1,
+    ..an_expr
+};
+</code></pre>
+<h2><a class="header" href="#tuple-literals" id="tuple-literals">Tuple literals</a></h2>
+<p>Use a single-line form where possible. Do not put spaces between the opening
+parenthesis and the first element, or between the last element and the closing
+parenthesis. Separate elements with a comma followed by a space.</p>
+<p>Where a single-line form is not possible, write the tuple across
+multiple lines, with each element of the tuple on its own block-indented line,
+and use a trailing comma.</p>
+<pre><code class="language-rust ignore">(a, b, c)
+
+let x = (
+    a_long_expr,
+    another_very_long_expr,
+);
+</code></pre>
+<h2><a class="header" href="#tuple-struct-literals" id="tuple-struct-literals">Tuple struct literals</a></h2>
+<p>Do not put space between the identifier and the opening parenthesis. Otherwise,
+follow the rules for tuple literals:</p>
+<pre><code class="language-rust ignore">Foo(a, b, c)
+
+let x = Foo(
+    a_long_expr,
+    another_very_long_expr,
+);
+</code></pre>
+<h2><a class="header" href="#enum-literals" id="enum-literals">Enum literals</a></h2>
+<p>Follow the formatting rules for the various struct literals. Prefer using the
+name of the enum as a qualifying name, unless the enum is in the prelude:</p>
+<pre><code class="language-rust ignore">Foo::Bar(a, b)
+Foo::Baz {
+    field1,
+    field2: 1001,
+}
+Ok(an_expr)
+</code></pre>
+<h2><a class="header" href="#array-literals" id="array-literals">Array literals</a></h2>
+<p>Write small array literals on a single line. Do not put spaces between the opening
+square bracket and the first element, or between the last element and the closing
+square bracket. Separate elements with a comma followed by a space.</p>
+<p>If using the repeating initializer, put a space after the semicolon
+only.</p>
+<p>Apply the same rules if using <code>vec!</code> or similar array-like macros; always use
+square brackets with such macros. Examples:</p>
+<pre><code class="language-rust ignore">fn main() {
+    let x = [1, 2, 3];
+    let y = vec![a, b, c, d];
+    let a = [42; 10];
+}
+</code></pre>
+<p>For arrays that have to be broken across lines, if using the repeating
+initializer, break after the <code>;</code>, not before. Otherwise, follow the rules below
+for function calls. In any case, block-indent the contents of the initializer,
+and put line breaks after the opening square bracket and before the closing
+square bracket:</p>
+<pre><code class="language-rust ignore">fn main() {
+    [
+        a_long_expression();
+        1234567890
+    ]
+    let x = [
+        an_expression,
+        another_expression,
+        a_third_expression,
+    ];
+}
+</code></pre>
+<h2><a class="header" href="#array-accesses-indexing-and-slicing" id="array-accesses-indexing-and-slicing">Array accesses, indexing, and slicing.</a></h2>
+<p>Don't put spaces around the square brackets. Avoid breaking lines if possible.
+Never break a line between the target expression and the opening square
+bracket. If the indexing expression must be broken onto a subsequent line, or
+spans multiple lines itself, then block-indent the indexing expression, and put
+newlines after the opening square bracket and before the closing square
+bracket:</p>
+<p>Examples:</p>
+<pre><code class="language-rust ignore">fn main() {
+    foo[42];
+    &amp;foo[..10];
+    bar[0..100];
+    foo[4 + 5 / bar];
+    a_long_target[
+        a_long_indexing_expression
+    ];
+}
+</code></pre>
+<h2><a class="header" href="#unary-operations" id="unary-operations">Unary operations</a></h2>
+<p>Do not include a space between a unary op and its operand (i.e., <code>!x</code>, not
+<code>! x</code>). However, there must be a space after <code>&amp;mut</code>. Avoid line-breaking
+between a unary operator and its operand.</p>
+<h2><a class="header" href="#binary-operations" id="binary-operations">Binary operations</a></h2>
+<p>Do include spaces around binary ops (i.e., <code>x + 1</code>, not <code>x+1</code>) (including <code>=</code>
+and other assignment operators such as <code>+=</code> or <code>*=</code>).</p>
+<p>For comparison operators, because for <code>T op U</code>, <code>&amp;T op &amp;U</code> is also implemented:
+if you have <code>t: &amp;T</code>, and <code>u: U</code>, prefer <code>*t op u</code> to <code>t op &amp;u</code>. In general,
+within expressions, prefer dereferencing to taking references, unless necessary
+(e.g. to avoid an unnecessarily expensive operation).</p>
+<p>Use parentheses liberally; do not necessarily elide them due to precedence.
+Tools should not automatically insert or remove parentheses. Do not use spaces
+to indicate precedence.</p>
+<p>If line-breaking, block-indent each subsequent line. For assignment operators,
+break after the operator; for all other operators, put the operator on the
+subsequent line. Put each sub-expression on its own line:</p>
+<pre><code class="language-rust ignore">foo_bar
+    + bar
+    + baz
+    + qux
+    + whatever
+</code></pre>
+<p>Prefer line-breaking at an assignment operator (either <code>=</code> or <code>+=</code>, etc.) rather
+than at other binary operators.</p>
+<h2><a class="header" href="#control-flow" id="control-flow">Control flow</a></h2>
+<p>Do not include extraneous parentheses for <code>if</code> and <code>while</code> expressions.</p>
+<pre><code class="language-rust ignore">if true {
+}
+</code></pre>
+<p>is better than</p>
+<pre><code class="language-rust ignore">if (true) {
+}
+</code></pre>
+<p>Do include extraneous parentheses if it makes an arithmetic or logic expression
+easier to understand (<code>(x * 15) + (y * 20)</code> is fine)</p>
+<h2><a class="header" href="#function-calls" id="function-calls">Function calls</a></h2>
+<p>Do not put a space between the function name, and the opening parenthesis.</p>
+<p>Do not put a space between an argument, and the comma which follows.</p>
+<p>Do put a space between an argument, and the comma which precedes it.</p>
+<p>Prefer not to break a line in the callee expression.</p>
+<h3><a class="header" href="#single-line-calls" id="single-line-calls">Single-line calls</a></h3>
+<p>Do not put a space between the function name and open paren, between the open
+paren and the first argument, or between the last argument and the close paren.</p>
+<p>Do not put a comma after the last argument.</p>
+<pre><code class="language-rust ignore">foo(x, y, z)
+</code></pre>
+<h3><a class="header" href="#multi-line-calls" id="multi-line-calls">Multi-line calls</a></h3>
+<p>If the function call is not <em>small</em>, it would otherwise over-run the max width,
+or any argument or the callee is multi-line, then format the call across
+multiple lines. In this case, put each argument on its own block-indented line,
+break after the opening parenthesis and before the closing parenthesis,
+and use a trailing comma:</p>
+<pre><code class="language-rust ignore">a_function_call(
+    arg1,
+    a_nested_call(a, b),
+)
+</code></pre>
+<h2><a class="header" href="#method-calls" id="method-calls">Method calls</a></h2>
+<p>Follow the function rules for calling.</p>
+<p>Do not put any spaces around the <code>.</code>.</p>
+<pre><code class="language-rust ignore">x.foo().bar().baz(x, y, z);
+</code></pre>
+<h2><a class="header" href="#macro-uses" id="macro-uses">Macro uses</a></h2>
+<p>If a macro can be parsed like other constructs, format it like those
+constructs. For example, a macro use <code>foo!(a, b, c)</code> can be parsed like a
+function call (ignoring the <code>!</code>), so format it using the rules for function
+calls.</p>
+<h3><a class="header" href="#special-case-macros" id="special-case-macros">Special case macros</a></h3>
+<p>For macros which take a format string, if all other arguments are <em>small</em>,
+format the arguments before the format string on a single line if they fit, and
+format the arguments after the format string on a single line if they fit, with
+the format string on its own line. If the arguments are not small or do not
+fit, put each on its own line as with a function. For example:</p>
+<pre><code class="language-rust ignore">println!(
+    &quot;Hello {} and {}&quot;,
+    name1, name2,
+);
+
+assert_eq!(
+    x, y,
+    &quot;x and y were not equal, see {}&quot;,
+    reason,
+);
+</code></pre>
+<h2><a class="header" href="#casts-as" id="casts-as">Casts (<code>as</code>)</a></h2>
+<p>Put spaces before and after <code>as</code>:</p>
+<pre><code class="language-rust ignore">let cstr = &quot;Hi\0&quot; as *const str as *const [u8] as *const std::os::raw::c_char;
+</code></pre>
+<h2><a class="header" href="#chains-of-fields-and-method-calls" id="chains-of-fields-and-method-calls">Chains of fields and method calls</a></h2>
+<p>A chain is a sequence of field accesses, method calls, and/or uses of the try
+operator <code>?</code>. E.g., <code>a.b.c().d</code> or <code>foo?.bar().baz?</code>.</p>
+<p>Format the chain on one line if it is &quot;small&quot; and otherwise possible to do so.
+If formatting on multiple lines, put each field access or method call in the
+chain on its own line, with the line-break before the <code>.</code> and after any <code>?</code>.
+Block-indent each subsequent line:</p>
+<pre><code class="language-rust ignore">let foo = bar
+    .baz?
+    .qux();
+</code></pre>
+<p>If the length of the last line of the first element plus its indentation is
+less than or equal to the indentation of the second line, then combine the
+first and second lines if they fit. Apply this rule recursively.</p>
+<pre><code class="language-rust ignore">x.baz?
+    .qux()
+
+x.y.z
+    .qux()
+
+let foo = x
+    .baz?
+    .qux();
+
+foo(
+    expr1,
+    expr2,
+).baz?
+    .qux();
+</code></pre>
+<h3><a class="header" href="#multi-line-elements" id="multi-line-elements">Multi-line elements</a></h3>
+<p>If any element in a chain is formatted across multiple lines, put that element
+and any later elements on their own lines.</p>
+<pre><code class="language-rust ignore">a.b.c()?
+    .foo(
+        an_expr,
+        another_expr,
+    )
+    .bar
+    .baz
+</code></pre>
+<p>Note there is block indent due to the chain and the function call in the above
+example.</p>
+<p>Prefer formatting the whole chain in multi-line style and each element on one
+line, rather than putting some elements on multiple lines and some on a single
+line, e.g.,</p>
+<pre><code class="language-rust ignore">// Better
+self.pre_comment
+    .as_ref()
+    .map_or(false, |comment| comment.starts_with(&quot;//&quot;))
+
+// Worse
+self.pre_comment.as_ref().map_or(
+    false,
+    |comment| comment.starts_with(&quot;//&quot;),
+)
+</code></pre>
+<h2><a class="header" href="#control-flow-expressions" id="control-flow-expressions">Control flow expressions</a></h2>
+<p>This section covers <code>if</code>, <code>if let</code>, <code>loop</code>, <code>while</code>, <code>while let</code>, and <code>for</code>
+expressions.</p>
+<p>Put the keyword, any initial clauses, and the opening brace of the block all on
+a single line, if they fit. Apply the usual rules for <a href="expressions.html#blocks">block
+formatting</a> to the block.</p>
+<p>If there is an <code>else</code> component, then put the closing brace, <code>else</code>, any
+following clause, and the opening brace all on the same line, with a single
+space before and after the <code>else</code> keyword:</p>
+<pre><code class="language-rust ignore">if ... {
+    ...
+} else {
+    ...
+}
+
+if let ... {
+    ...
+} else if ... {
+    ...
+} else {
+    ...
+}
+</code></pre>
+<p>If the control line needs to be broken, prefer to break before the <code>=</code> in <code>* let</code> expressions and before <code>in</code> in a <code>for</code> expression; block-indent the
+following line. If the control line is broken for any reason, put the opening
+brace on its own line, not indented. Examples:</p>
+<pre><code class="language-rust ignore">while let Some(foo)
+    = a_long_expression
+{
+    ...
+}
+
+for foo
+    in a_long_expression
+{
+    ...
+}
+
+if a_long_expression
+    &amp;&amp; another_long_expression
+    || a_third_long_expression
+{
+    ...
+}
+</code></pre>
+<p>Where the initial clause spans multiple lines and ends with one or more closing
+parentheses, square brackets, or braces, and there is nothing else on that
+line, and that line is not indented beyond the indent on the first line of the
+control flow expression, then put the opening brace of the block on the same
+line with a preceding space. For example:</p>
+<pre><code class="language-rust ignore">if !self.config.file_lines().intersects(
+    &amp;self.codemap.lookup_line_range(
+        stmt.span,
+    ),
+) {  // Opening brace on same line as initial clause.
+    ...
+}
+</code></pre>
+<h3><a class="header" href="#single-line-if-else" id="single-line-if-else">Single line <code>if else</code></a></h3>
+<p>Put an <code>if else</code> or <code>if let else</code> on a single line if it occurs in expression
+context (i.e., is not a standalone statement), it contains a single <code>else</code>
+clause, and is <em>small</em>:</p>
+<pre><code class="language-rust ignore">let y = if x { 0 } else { 1 };
+
+// Examples that must be multi-line.
+let y = if something_very_long {
+    not_small
+} else {
+    also_not_small
+};
+
+if x {
+    0
+} else {
+    1
+}
+</code></pre>
+<h2><a class="header" href="#match" id="match">Match</a></h2>
+<p>Prefer not to line-break inside the discriminant expression. Always break after
+the opening brace and before the closing brace. Block-indent the match arms
+once:</p>
+<pre><code class="language-rust ignore">match foo {
+    // arms
+}
+
+let x = match foo.bar.baz() {
+    // arms
+};
+</code></pre>
+<p>Use a trailing comma for a match arm if and only if not using a block.</p>
+<p>Never start a match arm pattern with <code>|</code>:</p>
+<pre><code class="language-rust ignore">match foo {
+    // Don't do this.
+    | foo =&gt; bar,
+    // Or this.
+    | a_very_long_pattern
+    | another_pattern
+    | yet_another_pattern
+    | a_fourth_pattern =&gt; {
+        ...
+    }
+}
+</code></pre>
+<p>Prefer:</p>
+<pre><code class="language-rust ignore">match foo {
+    foo =&gt; bar,
+    a_very_long_pattern
+    | another_pattern
+    | yet_another_pattern
+    | a_fourth_pattern =&gt; {
+        ...
+    }
+}
+</code></pre>
+<p>Avoid splitting the left-hand side (before the <code>=&gt;</code>) of a match arm where
+possible. If the right-hand side of the match arm is kept on the same line,
+never use a block (unless the block is empty).</p>
+<p>If the right-hand side consists of multiple statements, or has line comments,
+or the start of the line does not fit on the same line as the left-hand side,
+use a block. Do not flatten a right-hand side block containing a single macro call
+because its expanded form could contain a trailing semicolon.</p>
+<p>Block-indent the body of a block arm.</p>
+<p>Examples:</p>
+<pre><code class="language-rust ignore">match foo {
+    foo =&gt; bar,
+    a_very_long_pattern | another_pattern if an_expression() =&gt; {
+        no_room_for_this_expression()
+    }
+    foo =&gt; {
+        // A comment.
+        an_expression()
+    }
+    foo =&gt; {
+        let a = statement();
+        an_expression()
+    }
+    bar =&gt; {}
+    // Trailing comma on last item.
+    foo =&gt; bar,
+    baz =&gt; qux!(),
+    lorem =&gt; {
+        ipsum!()
+    }
+}
+</code></pre>
+<p>If the body is a single expression with no line comments and not a control flow
+expression, start it on the same line as the left-hand side. If not, then it
+must be in a block. Example:</p>
+<pre><code class="language-rust ignore">match foo {
+    // A combinable expression.
+    foo =&gt; a_function_call(another_call(
+        argument1,
+        argument2,
+    )),
+    // A non-combinable expression
+    bar =&gt; {
+        a_function_call(
+            another_call(
+                argument1,
+                argument2,
+            ),
+            another_argument,
+        )
+    }
+}
+</code></pre>
+<h3><a class="header" href="#line-breaking" id="line-breaking">Line-breaking</a></h3>
+<p>If using a block form on the right-hand side of a match arm makes it possible
+to avoid breaking on the left-hand side, do that:</p>
+<pre><code class="language-rust ignore">    // Assuming the following line does not fit in the max width
+    a_very_long_pattern | another_pattern =&gt; ALongStructName {
+        ...
+    },
+    // Prefer this
+    a_very_long_pattern | another_pattern =&gt; {
+        ALongStructName {
+            ...
+        }
+    }
+    // To splitting the pattern.
+</code></pre>
+<p>Never break after <code>=&gt;</code> without using the block form of the body.</p>
+<p>If the left-hand side must be split and there is an <code>if</code> clause, break before
+the <code>if</code> and block indent. In this case, always use a block body and start the
+body on a new line:</p>
+<pre><code class="language-rust ignore">    a_very_long_pattern | another_pattern
+        if expr =&gt;
+    {
+        ...
+    }
+</code></pre>
+<p>If required to break the pattern, put each clause of the pattern on its own
+line with no additional indent, breaking before the <code>|</code>. If there is an <code>if</code>
+clause, use the above form:</p>
+<pre><code class="language-rust ignore">    a_very_long_pattern
+    | another_pattern
+    | yet_another_pattern
+    | a_forth_pattern =&gt; {
+        ...
+    }
+    a_very_long_pattern
+    | another_pattern
+    | yet_another_pattern
+    | a_forth_pattern
+        if expr =&gt;
+    {
+        ...
+    }
+</code></pre>
+<p>If the pattern is multi-line, and the last line is less wide than the indent, do
+not put the <code>if</code> clause on a new line. E.g.,</p>
+<pre><code class="language-rust ignore">    Token::Dimension {
+         value,
+         ref unit,
+         ..
+    } if num_context.is_ok(context.parsing_mode, value) =&gt; {
+        ...
+    }
+</code></pre>
+<p>If every clause in a pattern is <em>small</em>, but the whole pattern does not fit on
+one line, then format the pattern across multiple lines with as many clauses
+per line as possible. Again, break before a <code>|</code>:</p>
+<pre><code class="language-rust ignore">    foo | bar | baz
+    | qux =&gt; {
+        ...
+    }
+</code></pre>
+<p>We define a pattern clause to be <em>small</em> if it fits on a single line and
+matches &quot;small&quot; in the following grammar:</p>
+<pre><code class="language-text">small:
+    - small_no_tuple
+    - unary tuple constructor: `(` small_no_tuple `,` `)`
+    - `&amp;` small
+
+small_no_tuple:
+    - single token
+    - `&amp;` small_no_tuple
+</code></pre>
+<p>E.g., <code>&amp;&amp;Some(foo)</code> matches, <code>Foo(4, Bar)</code> does not.</p>
+<h2><a class="header" href="#combinable-expressions" id="combinable-expressions">Combinable expressions</a></h2>
+<p>Where a function call has a single argument, and that argument is formatted
+across multiple-lines, format the outer call as if it were a single-line call,
+if the result fits. Apply the same combining behaviour to any similar
+expressions which have multi-line, block-indented lists of sub-expressions
+delimited by parentheses (e.g., macros or tuple struct literals). E.g.,</p>
+<pre><code class="language-rust ignore">foo(bar(
+    an_expr,
+    another_expr,
+))
+
+let x = foo(Bar {
+    field: whatever,
+});
+
+foo(|param| {
+    action();
+    foo(param)
+})
+
+let x = combinable([
+    an_expr,
+    another_expr,
+]);
+
+let arr = [combinable(
+    an_expr,
+    another_expr,
+)];
+</code></pre>
+<p>Apply this behavior recursively.</p>
+<p>For a function with multiple arguments, if the last argument is a multi-line
+closure with an explicit block, there are no other closure arguments, and all
+the arguments and the first line of the closure fit on the first line, use the
+same combining behavior:</p>
+<pre><code class="language-rust ignore">foo(first_arg, x, |param| {
+    action();
+    foo(param)
+})
+</code></pre>
+<h2><a class="header" href="#ranges" id="ranges">Ranges</a></h2>
+<p>Do not put spaces in ranges, e.g., <code>0..10</code>, <code>x..=y</code>, <code>..x.len()</code>, <code>foo..</code>.</p>
+<p>When writing a range with both upper and lower bounds, if the line must be
+broken within the range, break before the range operator and block indent the
+second line:</p>
+<pre><code class="language-rust ignore">a_long_expression
+    ..another_long_expression
+</code></pre>
+<p>For the sake of indicating precedence, if either bound is a compound
+expression, use parentheses around it, e.g., <code>..(x + 1)</code>, <code>(x.f)..(x.f.len())</code>,
+or <code>0..(x - 10)</code>.</p>
+<h2><a class="header" href="#hexadecimal-literals" id="hexadecimal-literals">Hexadecimal literals</a></h2>
+<p>Hexadecimal literals may use upper- or lower-case letters, but they must not be
+mixed within the same literal. Projects should use the same case for all
+literals, but we do not make a recommendation for either lower- or upper-case.</p>
+<h1><a class="header" href="#patterns" id="patterns">Patterns</a></h1>
+<p>Format patterns like their corresponding expressions. See the section on
+<code>match</code> for additional formatting for patterns in match arms.</p>
+<h1><a class="header" href="#类型和约束" id="类型和约束">类型和约束</a></h1>
+<h2><a class="header" href="#单行格式" id="单行格式">单行格式</a></h2>
+<ul>
+<li><code>[T]</code> 不带空格</li>
+<li><code>[T; expr]</code>，例如：<code>[u32; 42]</code>、<code>[Vec&lt;Foo&gt;; 10 * 2 + foo()]</code>（冒号后空格，方括号无空格）</li>
+<li><code>*const T</code>、<code>*mut T</code>（<code>*</code>后无空格，类型前有空格）</li>
+<li><code>&amp;'a T</code>、<code>&amp;T</code>、<code>&amp;'a mut T</code>、<code>&amp;mut T</code>（<code>&amp;</code> 后无空格，其他单词用单个空格隔开）</li>
+<li><code>unsafe extern &quot;C&quot; fn&lt;'a， 'b, 'c&gt;(T, U, V) -&gt; W</code> 或 <code>fn()</code>（关键字和符号后有空格，逗号后有空格，逗号后无空格，括号后无空格）。</li>
+<li><code>!</code> 与其他类型名称一样，<code>Name</code></li>
+<li><code>(A, B, C, D)</code>（逗号后有空格，双引号无空格，除非是单元组，否则逗号后无空格）</li>
+<li><code>&lt;Baz&lt;T&gt; as SomeTrait&gt;::Foo::Bar</code> 或 F<code>oo::Bar</code> 或 <code>::Foo::Bar</code> （<code>::</code> 或尖括号后无空格，<code>as</code> 前后各有一个空格）</li>
+<li><code>Foo::Bar&lt;T, U, V&gt;</code>（逗号后有空格，逗号前无空格，尖括号前后无空格）</li>
+<li><code>T + T + T</code>（类型和 <code>＋</code> 之间用一个空格）。</li>
+<li><code>impl T + T + T</code>（关键字、类型和 `+`` 之间用空格隔开）。</li>
+</ul>
+<p>类型中使用的括号不要空格，例如 <code>(Foo)</code>。</p>
+<h2><a class="header" href="#换行" id="换行">换行</a></h2>
+<p>尽可能避免在类型中换行。最好在最外层的范围内换行，例如，最好使用以下形式：</p>
+<pre><code class="language-rust ignore">Foo&lt;
+    Bar,
+    Baz&lt;Type1, Type2&gt;,
+&gt;
+</code></pre>
+<p>而不采用：</p>
+<pre><code class="language-rust ignore">Foo&lt;Bar, Baz&lt;
+    Type1,
+    Type2,
+&gt;&gt;
+</code></pre>
+<p>如果一个类型需要换行才能适应，本节概括了在必要时应在何处换行。</p>
+<p>必要时，在 <code>;</code> 后分隔 <code>[T; expr]</code>。</p>
+<p>按照函数声明的规则断开函数类型。</p>
+<p>按照泛型的规则断开泛型类型。</p>
+<p>断开带 <code>+</code> 的类型，方法是在 <code>+</code> 之前断开，并在随后的行中用块缩进。断开此类类型时，应在<strong>每个</strong> <code>+</code> 之前断开：</p>
+<pre><code class="language-rust ignore">impl Clone
+    + Copy
+    + Debug
+
+Box&lt;
+    Clone
+    + Copy
+    + Debug
+&gt;
+</code></pre>
+<h1><a class="header" href="#其他风格建议" id="其他风格建议">其他风格建议</a></h1>
+<h2><a class="header" href="#表达式-1" id="表达式-1">表达式</a></h2>
+<p>尽可能使用 Rust 面向表达式的特性；</p>
+<pre><code class="language-rust ignore">// 使用
+let x = if y { 1 } else { 0 };
+// 不使用
+let x;
+if y {
+    x = 1;
+} else {
+    x = 0;
+}
+</code></pre>
+<h2><a class="header" href="#命名规范" id="命名规范">命名规范</a></h2>
+<ul>
+<li>类型应为首字母大写的驼峰命名法（<code>UpperCamelCase</code>），</li>
+<li>枚举变量应为首字母大写的驼峰命名法（<code>UpperCamelCase</code>），</li>
+<li>结构体字段应使用纯小写下划线命名法（<code>snake_case</code>），</li>
+<li>函数和方法名称应使用纯小写下划线命名法（<code>snake_case</code>），</li>
+<li>局部变量应为纯小写下划线命名法（<code>snake_case</code>），</li>
+<li>宏名称应为纯小写下划线命名法（<code>snake_case</code>），</li>
+<li>常量（常量和不可变静态）应使用纯大写下划线命名（<code>SCREAMING_SNAKE_CASE</code>）</li>
+<li>当名称是保留字（如 <code>crate</code>）而禁止使用时，要么使用原始标识符（<code>r#crate</code>），要么使用尾部下划线（<code>crate_</code>）——不要拼错单词 (<code>krate</code>)。</li>
+</ul>
+<h3><a class="header" href="#模块" id="模块">模块</a></h3>
+<p>尽可能避免使用 <code>#[path]</code> 标注。</p>
+<h1><a class="header" href="#cargotoml-的约定" id="cargotoml-的约定"><code>Cargo.toml</code> 的约定</a></h1>
+<h2><a class="header" href="#格式约定-1" id="格式约定-1">格式约定</a></h2>
+<p>使用与 Rust 代码相同的行宽和缩进。</p>
+<p>在一个表块的最后一个键值对与下一表块的标题之间空一行。在表块标题和该表块中的键值对之间，或同一表块中的键值对之间，不要加空行。</p>
+<p>除 <code>[package]</code> 表块外，按字母顺序排列各部分中的键名。将 <code>[package]</code> 表块放在文件的顶部；将 <code>name</code> 和 <code>version</code> 键按顺序放在该表块的顶部，接着除 <code>description</code> 外的其余键按字母顺序排列，最后是该表块的末尾的 <code>description</code>。</p>
+<p>任何标准键名都不要使用引号，使用裸键。只有名称需要引号的非标准键才使用引号，并尽可能避免引入此类键名。详情请参见 <a href="https://toml.io/cn/v1.0.0#%E9%94%AE%E5%90%8D">TOML 规范</a>。</p>
+<p>在键和值之间的 <code>=</code> 前后各留一个空格。不要缩进任何键名；所有键名都从一行的开头开始。</p>
+<p>对于包含多行的字符串值，如 crate 说明，应使用多行字符串（而不是换行符）。</p>
+<p>对于数组值（如特性列表），如果合适，可将整个列表与键放在同一行。否则，使用分块缩进：在开头的方括号后加一个换行符，每个项缩进一级，每个项（包括最后一个项）后加一个逗号，最后一个项后将结尾的方括号放在一行的开头。</p>
+<p>对于数组值（如特征列表），如果合适，可将整个列表与键放在同一行。否则，使用分块缩进：在开头的方括号后加一个换行符，每个项目缩进一级，每个项目（包括最后一个项目）后加一个逗号，最后一个项目后将结尾的方括号放在一行的开头。</p>
+<pre><code class="language-rust ignore">some_feature = [
+    &quot;another_feature&quot;,
+    &quot;yet_another_feature&quot;,
+    &quot;some_dependency?/some_feature&quot;,
+]
+</code></pre>
+<p>对于表值，例如带有路径的 crate 依赖关系，如果合适的话，使用大括号和逗号将整个表写在与键相同的行上。如果整个表格不能与关键字写在同一行，则应使用键值对将其分隔成一个单独的部分：</p>
+<pre><code class="language-toml">[dependencies]
+crate1 = { path = &quot;crate1&quot;, version = &quot;1.2.3&quot; }
+
+[dependencies.extremely_long_crate_name_goes_here]
+path = &quot;extremely_long_path_name_goes_right_here&quot;
+version = &quot;4.5.6&quot;
+</code></pre>
+<h2><a class="header" href="#元数据约定" id="元数据约定">元数据约定</a></h2>
+<p>作者列表（若有的话）应由字符串组成，每个字符串包含一个作者姓名，后面是置于尖括号内的电子邮件地址： <code>Full Name &lt;email@address&gt;</code>。不应包含空电子邮件地址或没有电子邮件地址的姓名。(作者列表中也可以包含没有相关姓名的邮件列表地址）。</p>
+<p>许可证字段必须包含有效的 <a href="https://spdx.org/spdx-specification-21-web-version#h.jxpfx0ykyb60">SPDX 表达式</a>，并使用有效的 <a href="https://spdx.org/licenses/">SPDX 许可证名称</a>。(作为例外，根据普遍惯例，许可证字段可以使用 <code>/</code> 代替 <code>OR</code>，例如 <code>MIT/Apache-2.0</code>）。</p>
+<p>主页字段（若有的话）必须包含一个单独的 URL，包括协议（如 <code>https://example.org/</code>，而不只是 <code>example.org</code>）。</p>
+<p>在描述字段中，按 80 列对文本进行换行。不要以 crate 的名称作为描述字段的开头（例如 &quot;cratename is a ...&quot;）；只需描述 crate 本身。如果提供的是多句描述，第一句应单独成行并概括 crate，就像电子邮件或提交信息的主题一样；随后的句子可以更详细地描述 crate。</p>
+<h1><a class="header" href="#指导原则和基本原理" id="指导原则和基本原理">指导原则和基本原理</a></h1>
+<p>在确定风格指南时，风格团队遵循以下指导原则（按大致优先顺序排列）：</p>
+<ul>
+<li>可读性
+<ul>
+<li>可扫描性</li>
+<li>避免格式误导</li>
+<li>可访问性——使用各种硬件（包括非视觉可访问界面）的用户均可阅读辑</li>
+<li>代码在没有语法高亮或集成开发环境辅助的情况下的可读性，如 rustc 错误信息、差异内容、grep 和其他纯文本情况下的可读性</li>
+</ul>
+</li>
+<li>美感
+<ul>
+<li>美感</li>
+<li>与其他语言/工具保持一</li>
+</ul>
+</li>
+<li>特殊性
+<ul>
+<li>与版本控制实践兼容——保留差异、便于合并等</li>
+<li>防止向右偏移（preventing rightward drift）</li>
+<li>尽量减少垂直空</li>
+</ul>
+</li>
+<li>应用
+<ul>
+<li>易于手动应用</li>
+<li>易于实施（在 `rustfmt`` 和其他工具/编辑器/代码生成器中）</li>
+<li>内部一致性</li>
+<li>格式规则简单</li>
+</ul>
+</li>
+</ul>
+<p>本章记录了开发版特定（nightly-only，直译为：夜间特定）语法的样式和格式。风格指南的其余部分记录了 Rust 稳定语法的风格；开发版特定语法仅出现在本章。这里的每一节都包含了特性门类的名称，因此在 Rust 代码库中搜索（例如 <code>git grep</code>）开发版特性时，也会出现样式指南部分。</p>
+<p>开发版特定语法的样式和格式应从本章移除，并在稳定化时整合到样式指南的相应章节中。</p>
+<p>与样式指南的其他部分相比，本章的稳定性无法保证。有关对本章进行中断更改的夜间格式化程序，请参阅样式团队政策。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="language.js"></script>
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
