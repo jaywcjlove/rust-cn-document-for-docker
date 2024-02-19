@@ -82,44 +82,43 @@ jobs:
           mdbook build
           rm -rf .git
           ls -al
-          cp -rp rustdoc-cn/book dist/rustdoc
+          cp -rp ./book ../dist/rustdoc
 
       - name: reference-cn
         working-directory: reference-cn
         run: |
-          ls -al
           mdbook build
           rm -rf .git
           ls -al
-          cp -rp reference-cn/book dist/reference
+          cp -rp ./book ../dist/reference
 
       - name: rust-cookbook-cn
         working-directory: rust-cookbook-cn
         run: |
           mdbook build
           rm -rf .git
-          cp -rp rust-cookbook-cn/book dist/rust-cookbook
+          cp -rp ./book ../dist/rust-cookbook
 
       - name: cargo
         working-directory: cargo
         run: |
           mdbook build
           rm -rf .git
-          cp -rp cargo/book dist/cargo
+          cp -rp ./book ../dist/cargo
 
       - name: edition-guide
         working-directory: edition-guide
         run: |
           mdbook build
           rm -rf .git
-          cp -rp edition-guide/book dist/edition-guide
+          cp -rp ./book ../dist/edition-guide
 
       - name: nomicon
         working-directory: nomicon
         run: |
           mdbook build
           rm -rf .git
-          cp -rp nomicon/book dist/nomicon
+          cp -rp ./book ../dist/nomicon
 
       - name: comprehensive-rust
         working-directory: comprehensive-rust
@@ -132,7 +131,7 @@ jobs:
           cargo install --path mdbook-course
           mdbook build -d book/zh-CN
           rm -rf .git
-          cp -rp comprehensive-rust/book/zh-CN/html dist/comprehensive-rust
+          cp -rp ./book/zh-CN/html ../dist/comprehensive-rust
       
       - name: Create index.html
         working-directory: ./dist
