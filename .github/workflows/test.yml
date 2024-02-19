@@ -32,7 +32,6 @@ jobs:
       - name: Update rustup
         run: rustup self update
 
-
       - name: Install Rust
         run: |
           rustup set profile minimal
@@ -45,6 +44,7 @@ jobs:
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.5/mdbook-v0.4.5-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
           echo "$(pwd)/bin" >> $GITHUB_PATH
 
+      - run: ls -al
       - run: mkdir dist
       - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b gh-pages dist/rust-by-example-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/book-cn.git -b gh-pages dist/book --depth 1
@@ -120,10 +120,16 @@ jobs:
         env: 
           MDBOOK_BOOK__LANGUAGE: zh-CN
         run: |
-          cargo install mdbook-svgbob
-          cargo install mdbook-i18n-helpers
-          cargo install --path mdbook-exerciser
-          cargo install --path mdbook-course
+          cargo install mdbook --locked --version 0.4.36
+          cargo install mdbook-svgbob --locked --version 0.2.1
+          cargo install mdbook-i18n-helpers --locked --version 0.3.1
+          cargo install --path mdbook-exerciser --locked
+          cargo install --path mdbook-course --locked
+
+          # cargo install mdbook-svgbob
+          # cargo install mdbook-i18n-helpers
+          # cargo install --path mdbook-exerciser
+          # cargo install --path mdbook-course
           mdbook build -d book/zh-CN
           rm -rf .git
           cp -rp ./book/zh-CN/html ../dist/comprehensive-rust
