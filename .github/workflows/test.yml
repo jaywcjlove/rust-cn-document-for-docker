@@ -30,8 +30,10 @@ jobs:
       - name: Install Rust
         run: |
           rustup set profile minimal
-          rustup toolchain install 1.57 -c rust-docs
-          rustup default 1.57
+          # rustup toolchain install 1.57 -c rust-docs
+          # rustup default 1.57
+          rustup install 1.76.0
+          rustup default nightly-2024-02-04
 
       - name: Install nightly rustfmt
         run: |
