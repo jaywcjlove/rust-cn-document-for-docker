@@ -330,6 +330,11 @@ jobs:
             
             ${{ steps.changelog.outputs.changelog }}
 
+      - name: Modify README.md
+        uses: jaywcjlove/github-action-modify-file-content@main
+        with:
+          path: README.md
+          body: "{{date:YYYY-MM-DD HH:mm:ss}}"
 
       # Create Docker Image
       - name: Set up Docker Buildx
@@ -364,11 +369,6 @@ jobs:
           # tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{ github.ref }}
           tags: ${{ secrets.DOCKER_USER }}/rust-cn-document-for-docker:${{ env.VERSION }}
 
-      - name: Modify README.md
-        uses: jaywcjlove/github-action-modify-file-content@main
-        with:
-          path: README.md
-          body: "{{date:YYYY-MM-DD HH:mm:ss}}"
       # Create Docker Image in Github
       # - name: Login to the GitHub Container Registry
       #   uses: docker/login-action@v2
