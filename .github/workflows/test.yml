@@ -49,13 +49,7 @@ jobs:
       - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b gh-pages dist/rust-by-example-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/book-cn.git -b gh-pages dist/book --depth 1
       - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
-      # - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b 059771b reference-cn --depth 1
-      - run: |
-          git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn
-          cd reference-cn
-          git checkout 059771b
-          rm -rf reference-cn/.git
-
+      - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/rustdoc-cn.git -b master rustdoc-cn --depth 1
       - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/cargo-cn.git -b master cargo --depth 1
@@ -74,6 +68,7 @@ jobs:
       - run: rm -rf rust-course/.git
       - run: cp -rp rust-course dist/rust-course
       - run: rm -rf rusty-book/.git
+      - run: rm -rf reference-cn/.git
       - run: cp -rp rusty-book dist/rusty-book
 
       - name: rustdoc-cn
