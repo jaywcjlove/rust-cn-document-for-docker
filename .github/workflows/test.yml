@@ -54,6 +54,7 @@ jobs:
           git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn
           cd reference-cn
           git checkout 059771b
+          rm -rf reference-cn/.git
 
       - run: git clone https://github.com/rust-lang-cn/rustdoc-cn.git -b master rustdoc-cn --depth 1
       - run: git clone https://github.com/zzy/rust-cookbook-zh-cn.git -b master rust-cookbook-cn --depth 1
@@ -78,6 +79,7 @@ jobs:
       - name: reference-cn
         working-directory: reference-cn
         run: |
+          ls -al
           mdbook build
           rm -rf .git
           cp -rp reference-cn/book dist/reference
