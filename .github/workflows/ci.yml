@@ -59,8 +59,8 @@ jobs:
           echo "$(pwd)/bin" >> $GITHUB_PATH
 
       - run: mkdir dist
-      - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b gh-pages dist/rust-by-example-cn --depth 1
-      - run: git clone https://github.com/rust-lang-cn/book-cn.git -b gh-pages dist/book --depth 1
+      - run: git clone https://github.com/rust-lang-cn/rust-by-example-cn.git -b master rust-by-example-cn --depth 1
+      - run: git clone https://github.com/rust-lang-cn/book-cn.git -b master book --depth 1
       - run: git clone https://github.com/rust-lang-cn/std-cn.git -b main std --depth 1
       - run: git clone https://github.com/rust-lang-cn/reference-cn.git -b master reference-cn --depth 1
       - run: git clone https://github.com/rust-lang-cn/rustdoc-cn.git -b master rustdoc-cn --depth 1
@@ -69,64 +69,101 @@ jobs:
       - run: git clone https://github.com/rust-lang-cn/edition-guide-cn.git -b master edition-guide --depth 1
       - run: git clone https://github.com/rust-lang-cn/nomicon-zh-Hans.git -b main nomicon --depth 1
       - run: git clone https://github.com/jaywcjlove/reference.git -b gh-pages quick-reference --depth 1
-      - run: git clone https://github.com/sunface/rust-course.git -b gh-pages rust-course --depth 1
-      - run: git clone https://github.com/rustlang-cn/rusty-book.git -b gh-pages rusty-book --depth 1
+      - run: git clone https://github.com/sunface/rust-course.git -b main rust-course --depth 1
+      - run: git clone https://github.com/rustlang-cn/rusty-book.git -b main rusty-book --depth 1
 
       - run: cp -rp std/doc dist/std
-      - run: rm -rf dist/book/.git
-      - run: rm -rf dist/rust-by-example-cn/.git
+      - run: rm -rf book/.git
+      - run: rm -rf rust-by-example-cn/.git
       - run: rm -rf comprehensive-rust/.git
       - run: rm -rf quick-reference/.git
       - run: cp -rp quick-reference dist/quick-reference
       - run: rm -rf rust-course/.git
-      - run: cp -rp rust-course dist/rust-course
       - run: rm -rf rusty-book/.git
       - run: rm -rf reference-cn/.git
-      - run: cp -rp rusty-book dist/rusty-book
 
-      - name: rustdoc-cn
+      - name: 📗 book
+        working-directory: book
+        run: |
+          mdbook build
+          rm -rf .git
+          ls -al
+          cp -rp ./book ../dist/book
+
+      - name: 📗 rust-by-example-cn
+        working-directory: rust-by-example-cn
+        run: |
+          mdbook build
+          rm -rf .git
+          ls -al
+          cp -rp ./book ../dist/rust-by-example-cn
+
+      - name: 📗 rust-course
+        working-directory: rust-course
+        run: |
+          mdbook build
+          rm -rf .git
+          ls -al
+          cp -rp ./book ../dist/rust-course
+
+      - name: 📗 rusty-book
+        working-directory: rusty-book
+        run: |
+          mdbook build
+          rm -rf .git
+          ls -al
+          cp -rp ./book ../dist/rusty-book
+
+      - name: 📗 rustdoc-cn
         working-directory: rustdoc-cn
         run: |
           mdbook build
           rm -rf .git
+          ls -al
           cp -rp ./book ../dist/rustdoc
 
-      - name: reference-cn
+      - name: 📗 reference-cn
         working-directory: reference-cn
         run: |
           mdbook build
           rm -rf .git
+          ls -al
           cp -rp ./book ../dist/reference
 
-      - name: rust-cookbook-cn
+      - name: 📗 rust-cookbook-cn
         working-directory: rust-cookbook-cn
         run: |
           mdbook build
           rm -rf .git
           cp -rp ./book ../dist/rust-cookbook
 
-      - name: cargo
+      - name: 📗 cargo
         working-directory: cargo
         run: |
           mdbook build
           rm -rf .git
           cp -rp ./book ../dist/cargo
 
-      - name: edition-guide
+      - name: 📗 edition-guide
         working-directory: edition-guide
         run: |
           mdbook build
           rm -rf .git
           cp -rp ./book ../dist/edition-guide
 
-      - name: nomicon
+      - name: 📗 nomicon
         working-directory: nomicon
         run: |
           mdbook build
           rm -rf .git
           cp -rp ./book ../dist/nomicon
 
-      - name: comprehensive-rust
+      - name: Install Gettext
+        run: |
+          sudo apt update
+          sudo apt install gettext
+
+      - name: 📗 comprehensive-rust
         working-directory: comprehensive-rust
         env: 
           MDBOOK_BOOK__LANGUAGE: zh-CN
