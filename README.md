@@ -59,6 +59,7 @@ http://localhost:9613/rust-course/index.html
 http://localhost:9613/rusty-book/index.html  
 http://localhost:9613/comprehensive-rust/index.html  
 http://localhost:9613/style-guide-cn/index.html  
+http://localhost:9613/hello-algo/index.html  
 
 ## License
 
