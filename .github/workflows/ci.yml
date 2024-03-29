@@ -204,6 +204,7 @@ jobs:
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
               <title>Rust 相关中文文档</title>
+              <meta name="description" content="将数十本 Rust 相关的中文电子文档打包到 Docker 中，以供本地部署和预览。">
               <style>
                 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'; }
                 h1 { text-align: center; }
