@@ -256,7 +256,7 @@ jobs:
                 <li><a href="style-guide-cn/index.html" target="__blank"> Rust 语言风格指南 </a></li>
                 <li><a href="comprehensive-rust/index.html" target="__blank"> Comprehensive Rust 🦀 </a></li>
                 <li><a href="rust-algos/index.html" target="__blank"> Rust 算法题解 </a></li>
-                <li><a href="hello-algo/index.html" target="__blank"> Hello 算法(动画图解 支持 Rust) </a></li>
+                <li><a href="hello-algo/chapter_preface/index.html" target="__blank"> Hello 算法(动画图解 支持 Rust) </a></li>
               </ul>
             </body>
             </html>
@@ -287,7 +287,7 @@ jobs:
             [Rust 算法题解](https://github.com/rustlang-cn/rust-algos) | [![GitHub last commit](https://img.shields.io/github/last-commit/rustlang-cn/rust-algos?style=flat&label=last)](https://github.com/rustlang-cn/rust-algos/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-algos/index.html)
             [Rust 语言风格指南](https://github.com/rust-lang-cn/style-guide-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/style-guide-cn?style=flat&label=last)](https://github.com/rust-lang-cn/style-guide-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/style-guide-cn/index.html)
             [Comprehensive Rust 🦀](https://github.com/google/comprehensive-rust) | [![GitHub last commit](https://img.shields.io/github/last-commit/google/comprehensive-rust?style=flat&label=last)](https://github.com/google/comprehensive-rust/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/comprehensive-rust/index.html)
-            [Hello 算法(动画图解 支持 Rust)](https://github.com/krahets/hello-algo) | [![GitHub last commit](https://img.shields.io/github/last-commit/krahets/hello-algo?style=flat&label=last)](https://github.com/krahets/hello-algo/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/hello-algo/index.html)
+            [Hello 算法(动画图解 支持 Rust)](https://github.com/krahets/hello-algo) | [![GitHub last commit](https://img.shields.io/github/last-commit/krahets/hello-algo?style=flat&label=last)](https://github.com/krahets/hello-algo/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/hello-algo/chapter_preface/index.html)
             EOF
 
       - name: Deploy Website
@@ -333,7 +333,7 @@ jobs:
             [Rust 算法题解](https://github.com/rustlang-cn/rust-algos) | [![GitHub last commit](https://img.shields.io/github/last-commit/rustlang-cn/rust-algos?style=flat&label=last)](https://github.com/rustlang-cn/rust-algos/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-algos/index.html)
             [Rust 语言风格指南](https://github.com/rust-lang-cn/style-guide-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/style-guide-cn?style=flat&label=last)](https://github.com/rust-lang-cn/style-guide-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/style-guide-cn/index.html)
             [Comprehensive Rust 🦀](https://github.com/google/comprehensive-rust) | [![GitHub last commit](https://img.shields.io/github/last-commit/google/comprehensive-rust?style=flat&label=last)](https://github.com/google/comprehensive-rust/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/comprehensive-rust/index.html)
-            [Hello 算法(动画图解 支持 Rust)](https://github.com/krahets/hello-algo) | [![GitHub last commit](https://img.shields.io/github/last-commit/krahets/hello-algo?style=flat&label=last)](https://github.com/krahets/hello-algo/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/hello-algo/index.html)
+            [Hello 算法(动画图解 支持 Rust)](https://github.com/krahets/hello-algo) | [![GitHub last commit](https://img.shields.io/github/last-commit/krahets/hello-algo?style=flat&label=last)](https://github.com/krahets/hello-algo/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/hello-algo/chapter_preface/index.html)
             
             ${{ steps.changelog.outputs.changelog }}
 
