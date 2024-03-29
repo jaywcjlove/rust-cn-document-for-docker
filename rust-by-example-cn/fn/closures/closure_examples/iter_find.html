@@ -202,7 +202,7 @@
 
     // 对数组的 `iter()` 举出 `&amp;i32`。
     println!(&quot;Find 2 in array1: {:?}&quot;, array1.iter()     .find(|&amp;&amp;x| x == 2));
-    // 对数组的 `into_iter()` 通常举出 `&amp;i32`。
+    // 对数组的 `into_iter()` 通常举出 `i32`。
     println!(&quot;Find 2 in array2: {:?}&quot;, array2.into_iter().find(|&amp;x| x == 2));
 }
 </code></pre></pre>

@@ -9090,7 +9090,7 @@ fn iterator_demonstration() {
 <p>另外需要注意到从 <code>next</code> 调用中得到的值是 vector 的不可变引用。<code>iter</code> 方法生成一个不可变引用的迭代器。如果我们需要一个获取 <code>v1</code> 所有权并返回拥有所有权的迭代器，则可以调用 <code>into_iter</code> 而不是 <code>iter</code>。类似的，如果我们希望迭代可变引用，则可以调用 <code>iter_mut</code> 而不是 <code>iter</code>。</p>
 <h3><a class="header" href="#消费迭代器的方法" id="消费迭代器的方法">消费迭代器的方法</a></h3>
 <p><code>Iterator</code> trait 有一系列不同的由标准库提供默认实现的方法；你可以在 <code>Iterator</code> trait 的标准库 API 文档中找到所有这些方法。一些方法在其定义中调用了 <code>next</code> 方法，这就是为什么在实现 <code>Iterator</code> trait 时要求实现 <code>next</code> 方法。</p>
-<p>这些调用 <code>next</code> 方法的方法被称为 <strong>消费适配器</strong>（<em>consuming adaptors</em>），因为调用他们会消耗迭代器。一个消费适配器的例子是 <code>sum</code> 方法。这个方法获取迭代器的所有权并反复调用 <code>next</code> 来遍历迭代器，因而会消费迭代器。当其遍历每一个项时，它将每一个项加总到一个总和并在迭代完成时返回总和。示例 13-16 有一个展示 <code>sum</code> 方法使用的测试：</p>
+<p>这些调用 <code>next</code> 方法的方法被称为 <strong>消费适配器</strong>（<em>consuming adaptors</em>），因为调用他们会消费迭代器。一个消费适配器的例子是 <code>sum</code> 方法。这个方法获取迭代器的所有权并反复调用 <code>next</code> 来遍历迭代器，因而会消费迭代器。当其遍历每一个项时，它将每一个项加总到一个总和并在迭代完成时返回总和。示例 13-16 有一个展示 <code>sum</code> 方法使用的测试：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -10666,7 +10666,7 @@ mod tests {
 <p>最后必须做出的修改位于断言中：为了看到其内部 vector 中有多少个项，需要调用 <code>RefCell</code> 的 <code>borrow</code> 以获取 vector 的不可变引用。</p>
 <p>现在我们见识了如何使用 <code>RefCell&lt;T&gt;</code>，让我们研究一下它怎样工作的！</p>
 <h3><a class="header" href="#refcellt-在运行时记录借用" id="refcellt-在运行时记录借用"><code>RefCell&lt;T&gt;</code> 在运行时记录借用</a></h3>
-<p>当创建不可变和可变引用时，我们分别使用 <code>&amp;</code> 和 <code>&amp;mut</code> 语法。对于 <code>RefCell&lt;T&gt;</code> 来说，则是 <code>borrow</code> 和 <code>borrow_mut</code> 方法，这属于 <code>RefCell&lt;T&gt;</code> 安全 API 的一部分。<code>borrow</code> 方法返回 <code>Ref&lt;T&gt;</code> 类型的智能指针，<code>borrow_mut</code> 方法返回 <code>RefMut</code> 类型的智能指针。这两个类型都实现了 <code>Deref</code>，所以可以当作常规引用对待。</p>
+<p>当创建不可变和可变引用时，我们分别使用 <code>&amp;</code> 和 <code>&amp;mut</code> 语法。对于 <code>RefCell&lt;T&gt;</code> 来说，则是 <code>borrow</code> 和 <code>borrow_mut</code> 方法，这属于 <code>RefCell&lt;T&gt;</code> 安全 API 的一部分。<code>borrow</code> 方法返回 <code>Ref&lt;T&gt;</code> 类型的智能指针，<code>borrow_mut</code> 方法返回 <code>RefMut&lt;T&gt;</code> 类型的智能指针。这两个类型都实现了 <code>Deref</code>，所以可以当作常规引用对待。</p>
 <p><code>RefCell&lt;T&gt;</code> 记录当前有多少个活动的 <code>Ref&lt;T&gt;</code> 和 <code>RefMut&lt;T&gt;</code> 智能指针。每次调用 <code>borrow</code>，<code>RefCell&lt;T&gt;</code> 将活动的不可变借用计数加一。当 <code>Ref&lt;T&gt;</code> 值离开作用域时，不可变借用计数减一。就像编译时借用规则一样，<code>RefCell&lt;T&gt;</code> 在任何时候只允许有多个不可变借用或一个可变借用。</p>
 <p>如果我们尝试违反这些规则，相比引用时的编译时错误，<code>RefCell&lt;T&gt;</code> 的实现会在运行时出现 panic。示例 15-23 展示了对示例 15-22 中 <code>send</code> 实现的修改，这里我们故意尝试在相同作用域创建两个可变借用以便演示 <code>RefCell&lt;T&gt;</code> 不允许我们在运行时这么做：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
@@ -12142,7 +12142,7 @@ impl State for Published {
 <p><span class="caption">示例 17-17: 更新 <code>Post</code> 的 <code>content</code> 方法来委托调用 <code>State</code> 的<code>content</code> 方法</span></p>
 <p>因为目标是将所有像这样的规则保持在实现了 <code>State</code> 的结构体中，我们将调用 <code>state</code> 中的值的 <code>content</code> 方法并传递博文实例（也就是 <code>self</code>）作为参数。接着返回 <code>state</code> 值的 <code>content</code> 方法的返回值。</p>
 <p>这里调用 <code>Option</code> 的 <code>as_ref</code> 方法是因为需要 <code>Option</code> 中值的引用而不是获取其所有权。因为 <code>state</code> 是一个 <code>Option&lt;Box&lt;State&gt;&gt;</code>，调用 <code>as_ref</code> 会返回一个 <code>Option&lt;&amp;Box&lt;State&gt;&gt;</code>。如果不调用 <code>as_ref</code>，将会得到一个错误，因为不能将 <code>state</code> 移动出借用的 <code>&amp;self</code> 函数参数。</p>
-<p>接着调用 <code>unwrap</code> 方法，这里我们知道它永远也不会 panic，因为 <code>Post</code> 的所有方法都确保在他们返回时 <code>state</code> 会有一个 <code>Some</code> 值。这就是一个第 12 章 <a href="ch09-03-to-panic-or-not-to-panic.html#cases-in-which-you-have-more-information-than-the-compiler">“当我们比编译器知道更多的情况”</a>  部分讨论过的我们知道 <code>None</code> 是不可能的而编译器却不能理解的情况。</p>
+<p>接着调用 <code>unwrap</code> 方法，这里我们知道它永远也不会 panic，因为 <code>Post</code> 的所有方法都确保在他们返回时 <code>state</code> 会有一个 <code>Some</code> 值。这就是一个第 9 章 <a href="ch09-03-to-panic-or-not-to-panic.html#cases-in-which-you-have-more-information-than-the-compiler">“当我们比编译器知道更多的情况”</a>  部分讨论过的我们知道 <code>None</code> 是不可能的而编译器却不能理解的情况。</p>
 <p>接着我们就有了一个 <code>&amp;Box&lt;State&gt;</code>，当调用其 <code>content</code> 时，解引用强制转换会作用于 <code>&amp;</code> 和 <code>Box</code> ，这样最终会调用实现了 <code>State</code> trait 的类型的 <code>content</code> 方法。这意味着需要为 <code>State</code> trait 定义增加 <code>content</code>，这也是放置根据所处状态返回什么内容的逻辑的地方，如示例 17-18 所示：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -13649,7 +13649,7 @@ impl fmt::Display for Point {
 <p>那么在 <code>Point</code> 上实现 <code>OutlinePrint</code> trait 将能成功编译，并可以在 <code>Point</code> 实例上调用 <code>outline_print</code> 来显示位于星号框中的点的值。</p>
 <h3><a class="header" href="#newtype-模式用于在外部类型上实现外部-trait" id="newtype-模式用于在外部类型上实现外部-trait">newtype 模式用于在外部类型上实现外部 trait</a></h3>
 <p>在第 10 章的 <a href="ch10-02-traits.html#%E4%B8%BA%E7%B1%BB%E5%9E%8B%E5%AE%9E%E7%8E%B0-trait">“为类型实现 trait”</a><!-- ignore -->  部分，我们提到了孤儿规则（orphan rule），它说明只要 trait 或类型对于当前 crate 是本地的话就可以在此类型上实现该 trait。一个绕开这个限制的方法是使用 <strong>newtype 模式</strong>（<em>newtype pattern</em>），它涉及到在一个元组结构体（第 5 章 <a href="ch05-01-defining-structs.html#%E4%BD%BF%E7%94%A8%E6%B2%A1%E6%9C%89%E5%91%BD%E5%90%8D%E5%AD%97%E6%AE%B5%E7%9A%84%E5%85%83%E7%BB%84%E7%BB%93%E6%9E%84%E4%BD%93%E6%9D%A5%E5%88%9B%E5%BB%BA%E4%B8%8D%E5%90%8C%E7%9A%84%E7%B1%BB%E5%9E%8B">“使用没有命名字段的元组结构体来创建不同的类型”</a><!-- ignore -->   部分介绍了元组结构体）中创建一个新类型。这个元组结构体带有一个字段作为希望实现 trait 的类型的简单封装。接着这个封装类型对于 crate 是本地的，这样就可以在这个封装上实现 trait。<em>Newtype</em> 是一个源自 Haskell 编程语言的概念。使用这个模式没有运行时性能消耗，这个封装类型在编译时就被省略了。</p>
-<p>例如，如果想要在 <code>Vec&lt;T&gt;</code> 上实现 <code>Display</code>，而孤儿规则阻止我们直接这么做，因为 <code>Display</code> trait 和 <code>Vec&lt;T&gt;</code> 都定义于我们的 crate 之外。可以创建一个包含 <code>Vec&lt;T&gt;</code> 实例的 <code>Wrapper</code> 结构体，接着可以如列表 19-31 那样在 <code>Wrapper</code> 上实现 <code>Display</code> 并使用 <code>Vec&lt;T&gt;</code> 的值：</p>
+<p>例如，如果想要在 <code>Vec&lt;T&gt;</code> 上实现 <code>Display</code>，而孤儿规则阻止我们直接这么做，因为 <code>Display</code> trait 和 <code>Vec&lt;T&gt;</code> 都定义于我们的 crate 之外。可以创建一个包含 <code>Vec&lt;T&gt;</code> 实例的 <code>Wrapper</code> 结构体，接着可以如示例 19-31 那样在 <code>Wrapper</code> 上实现 <code>Display</code> 并使用 <code>Vec&lt;T&gt;</code> 的值：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::fmt;
 

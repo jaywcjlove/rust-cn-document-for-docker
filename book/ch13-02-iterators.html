@@ -239,7 +239,7 @@ fn iterator_demonstration() {
 <p>另外需要注意到从 <code>next</code> 调用中得到的值是 vector 的不可变引用。<code>iter</code> 方法生成一个不可变引用的迭代器。如果我们需要一个获取 <code>v1</code> 所有权并返回拥有所有权的迭代器，则可以调用 <code>into_iter</code> 而不是 <code>iter</code>。类似的，如果我们希望迭代可变引用，则可以调用 <code>iter_mut</code> 而不是 <code>iter</code>。</p>
 <h3><a class="header" href="#消费迭代器的方法" id="消费迭代器的方法">消费迭代器的方法</a></h3>
 <p><code>Iterator</code> trait 有一系列不同的由标准库提供默认实现的方法；你可以在 <code>Iterator</code> trait 的标准库 API 文档中找到所有这些方法。一些方法在其定义中调用了 <code>next</code> 方法，这就是为什么在实现 <code>Iterator</code> trait 时要求实现 <code>next</code> 方法。</p>
-<p>这些调用 <code>next</code> 方法的方法被称为 <strong>消费适配器</strong>（<em>consuming adaptors</em>），因为调用他们会消耗迭代器。一个消费适配器的例子是 <code>sum</code> 方法。这个方法获取迭代器的所有权并反复调用 <code>next</code> 来遍历迭代器，因而会消费迭代器。当其遍历每一个项时，它将每一个项加总到一个总和并在迭代完成时返回总和。示例 13-16 有一个展示 <code>sum</code> 方法使用的测试：</p>
+<p>这些调用 <code>next</code> 方法的方法被称为 <strong>消费适配器</strong>（<em>consuming adaptors</em>），因为调用他们会消费迭代器。一个消费适配器的例子是 <code>sum</code> 方法。这个方法获取迭代器的所有权并反复调用 <code>next</code> 来遍历迭代器，因而会消费迭代器。当其遍历每一个项时，它将每一个项加总到一个总和并在迭代完成时返回总和。示例 13-16 有一个展示 <code>sum</code> 方法使用的测试：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

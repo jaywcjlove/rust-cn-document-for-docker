@@ -379,7 +379,7 @@ mod tests {
 <p>最后必须做出的修改位于断言中：为了看到其内部 vector 中有多少个项，需要调用 <code>RefCell</code> 的 <code>borrow</code> 以获取 vector 的不可变引用。</p>
 <p>现在我们见识了如何使用 <code>RefCell&lt;T&gt;</code>，让我们研究一下它怎样工作的！</p>
 <h3><a class="header" href="#refcellt-在运行时记录借用" id="refcellt-在运行时记录借用"><code>RefCell&lt;T&gt;</code> 在运行时记录借用</a></h3>
-<p>当创建不可变和可变引用时，我们分别使用 <code>&amp;</code> 和 <code>&amp;mut</code> 语法。对于 <code>RefCell&lt;T&gt;</code> 来说，则是 <code>borrow</code> 和 <code>borrow_mut</code> 方法，这属于 <code>RefCell&lt;T&gt;</code> 安全 API 的一部分。<code>borrow</code> 方法返回 <code>Ref&lt;T&gt;</code> 类型的智能指针，<code>borrow_mut</code> 方法返回 <code>RefMut</code> 类型的智能指针。这两个类型都实现了 <code>Deref</code>，所以可以当作常规引用对待。</p>
+<p>当创建不可变和可变引用时，我们分别使用 <code>&amp;</code> 和 <code>&amp;mut</code> 语法。对于 <code>RefCell&lt;T&gt;</code> 来说，则是 <code>borrow</code> 和 <code>borrow_mut</code> 方法，这属于 <code>RefCell&lt;T&gt;</code> 安全 API 的一部分。<code>borrow</code> 方法返回 <code>Ref&lt;T&gt;</code> 类型的智能指针，<code>borrow_mut</code> 方法返回 <code>RefMut&lt;T&gt;</code> 类型的智能指针。这两个类型都实现了 <code>Deref</code>，所以可以当作常规引用对待。</p>
 <p><code>RefCell&lt;T&gt;</code> 记录当前有多少个活动的 <code>Ref&lt;T&gt;</code> 和 <code>RefMut&lt;T&gt;</code> 智能指针。每次调用 <code>borrow</code>，<code>RefCell&lt;T&gt;</code> 将活动的不可变借用计数加一。当 <code>Ref&lt;T&gt;</code> 值离开作用域时，不可变借用计数减一。就像编译时借用规则一样，<code>RefCell&lt;T&gt;</code> 在任何时候只允许有多个不可变借用或一个可变借用。</p>
 <p>如果我们尝试违反这些规则，相比引用时的编译时错误，<code>RefCell&lt;T&gt;</code> 的实现会在运行时出现 panic。示例 15-23 展示了对示例 15-22 中 <code>send</code> 实现的修改，这里我们故意尝试在相同作用域创建两个可变借用以便演示 <code>RefCell&lt;T&gt;</code> 不允许我们在运行时这么做：</p>
 <p><span class="filename">文件名: src/lib.rs</span></p>
