@@ -201,11 +201,11 @@ fn foo() {}
 <p>这会创建一个新目录 <code>doc</code>，其中包含一个网站。在我们的例子中，主页面是 <code>doc/lib/index.html</code>。如果你使用浏览器打开，可以看到一个带有搜索栏的页面，在顶部可以看到“Crate lib”，页面没有内容。</p>
 <h2><a class="header" href="#配置-rustdoc" id="配置-rustdoc">配置 rustdoc</a></h2>
 <p>现在有两个问题：第一，为什么我们的包名字是“lib”？第二，为什么没有任何内容？</p>
-<p>第一个问题的原因是因为 <code>rustdoc</code> 试图更好用，像 <code>rustc</code> 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：</p>
+<p>第一个问题的原因是因为 <code>rustdoc</code> 试图更好用，像 <code>rustc</code>, 就假定我们 crate 的名字就是 crate 根目录文件的名字。为了修复这个问题，可以通过命令行传递参数：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name docs
 </code></pre>
-<p>现在，<code>doc/docs/index.html</code> 文件生成，页面名称为“Crate docs”。</p>
-<p>对于第二个问题，因为我们的函数 <code>foo</code> 不是公共的；<code>rustdoc</code> 默认只会为公共函数生成文档，如果我们将代码修改为</p>
+<p>现在，将生成<code>doc/docs/index.html</code> 文件，页面名称为“Crate docs”。</p>
+<p>对于第二个问题，因为我们的 <code>foo</code> 函数不是公共的；<code>rustdoc</code> 默认只会为公共函数生成文档，如果我们将代码修改为</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -228,11 +228,11 @@ dependency=&lt;path&gt;/docs/target/debug/deps
 <p>你可以使用 <code>cargo doc --verbose</code> 看到这个过程。</p>
 <p>它会自动生成正确的 crate 名称 <code>--crate-name</code>，同时指向 <code>src/lib.rs</code>。但是其他的参数表示什么呢？</p>
 <ul>
-<li><code>-o</code> 控制文档的输出。不使用顶层的 <code>doc</code> 目录，Cargo 会把生成的文档生成在 <code>target</code>。这是 Cargo 项目的惯用生成文件的位置。</li>
+<li><code>-o</code> 控制文档的输出。请注意，Cargo 会把生成的文档放在<code>target</code>目录，而不是顶层的 <code>doc</code> 目录，。这是 Cargo 项目中生成文件的惯用位置。</li>
 <li><code>-L</code> 帮助 rustdoc 找到代码的依赖，如果我们的项目有依赖，也会生成依赖的文档。</li>
 </ul>
 <h2><a class="header" href="#outer-和-inner-文档" id="outer-和-inner-文档">Outer 和 inner 文档</a></h2>
-<p><code>///</code> 语法用来对下面一个 item 生成文档，所以称为 outer 文档。还有语法<code>//!</code>，用来生成 item 内部的文档，也叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要这样用 <code>//!</code>：</p>
+<p><code>///</code> 语法用来对下面一个 item 生成文档，所以称为 outer 文档。还有另一种语法：<code>//!</code>，用来生成 item 内部的文档，叫做 inner 文档，通常用来对整个 crate 生成文档，因为是 crate 的根，没有 item 在前面。所以为了生成整个 crate 的文档，你需要使用 <code>//!</code>语法，例如：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -265,7 +265,7 @@ fn foo() -&gt; i32 {
 <h2><a class="header" href="#总结" id="总结">总结</a></h2>
 <p>本节涵盖了 <code>rustdoc</code> 的基本使用方法。本书的剩余部分会展示 <code>rustdoc</code> 所有的可选功能，以及如何使用它们。</p>
 <h1><a class="header" href="#如何阅读-rustdoc-的输出" id="如何阅读-rustdoc-的输出">如何阅读 rustdoc 的输出</a></h1>
-<p>Rustdoc 的 HTML 文件包含了有用的跳转入口，便于用户跳转理解你的代码。本章会覆盖入口的主要特性，同时也是良好的文档作者和用户的开端。</p>
+<p>Rustdoc 的 HTML 文件包含了一个友好且有用的导航界面，使用户可以更轻松地导航和理解您的代码。本章涵盖了该界面的主要功能，对于文档作者和用户来说都是一个很好的的开端。</p>
 <h2><a class="header" href="#结构" id="结构">结构</a></h2>
 <p><code>rustdoc</code> 的输出包含三部分，左侧是整个页面的快速导航，展示了当前条目的上下文信息。页面的右侧大版面由顶部的搜索和下面的文档页面主体组成。</p>
 <h2><a class="header" href="#item-文档" id="item-文档">Item 文档</a></h2>
@@ -275,14 +275,14 @@ fn foo() -&gt; i32 {
 <li>item 的类型和名称，比如 &quot;Struct <code>std::time::Duration</code>&quot;；</li>
 <li>复制 crate 路径的按钮；</li>
 <li>展开和收起 item 顶层文档的按钮 (<code>[+]</code> or <code>[-]</code>)；</li>
-<li>如果 <a href="the-doc-attribute.html#html_no_source">configured</a>, 并且可以展示（如果文档创建通过 <code>cargo doc --no-deps</code> 源码可能是无效的），会有源码的连接 (<code>[src]</code>)；</li>
+<li>指向源代码 ([src]) 的链接如果<a href="the-doc-attribute.html#html_no_source">已配置</a>并且存在，（如果通过 <code>cargo doc --no-deps</code> 创建文档）则源码可能无效；</li>
 <li>如果 item 是标准库，会展示 item 稳定的版本。</li>
 </ul>
-<p>下面是 item 的主要文档，包括函数签名，Rust 类型的 fields 列表或者 variants。最后页面列出关联的函数以及 trait 实现，包括 <code>rustdoc</code> 知道的自动和空白实现。</p>
+<p>下面是 item 的主要文档，包括函数签名，Rust 类型的 fields 列表或者 variants。最后，该页面列出了关联函数以及 trait 实现，包括 <code>rustdoc</code> 知道的自动和空白实现。</p>
 <h3><a class="header" href="#导航" id="导航">导航</a></h3>
-<p>subheadings，variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当悬停或给定键盘焦点时，印刷符号 &quot;§&quot; 出现在带有锚点的行旁边。</p>
+<p>subheadings，variants，fields 和文档中很多元素都是锚，可以被链接，这是可以准确传递你表达的好方法。当鼠标悬停或给定键盘焦点时，印刷符号 &quot;§&quot; 出现在带有锚点的行旁边。</p>
 <h2><a class="header" href="#导航栏" id="导航栏">导航栏</a></h2>
-<p>比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。顶部，在当前 crate 名称和版本旁边或者当前 item 旁边展示 <a href="the-doc-attribute.html#html_logo_url">configurable logo</a>。</p>
+<p>比如，当查看 crate 根文档的时候，会展示所有的 crate 文档的 modules，structs，traits，functions，macros 的快速链接。在顶部，它会在当前 crate 名称和版本旁边或者当前 item 旁边展示 <a href="the-doc-attribute.html#html_logo_url">configurable logo</a>。</p>
 <h2><a class="header" href="#主题选择和搜索栏" id="主题选择和搜索栏">主题选择和搜索栏</a></h2>
 <p>当在支持 JavaScript 的浏览器中打开 <code>rustdoc</code> 的输出时，页面顶部会出现一个接口，左侧是主题选择（一个画笔图标），搜索栏，帮助提示和配置按钮。【译者注：主题选择已经在配置设置中】</p>
 <h3><a class="header" href="#主题选择" id="主题选择">主题选择</a></h3>

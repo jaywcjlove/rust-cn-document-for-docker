@@ -170,8 +170,8 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#构建-缓存" id="构建-缓存">构建 缓存</a></h2>
-<p>Cargo 在单个工作区，共享其中所有包的构建工件。今天，Cargo 不会在不同的工作区共享构建结果，但使用第三方工具可以实现类似的结果，<a href="https://github.com/mozilla/sccache">sccache</a>。</p>
-<p>装置<code>sccache</code>，用<code>cargo install sccache</code>安装它，并在调用 Cargo 之前，设置<code>RUSTC_WRAPPER</code>环境变量成<code>sccache</code>。如果你使用 bash，更好是添加<code>export RUSTC_WRAPPER=sccache</code>到<code>.bashrc</code>文件。有关更多详细信息，请参阅 sccache 文档.</p>
+<p>Cargo 在单个工作区，共享其中所有包的构建结果。今天，Cargo 不会在不同的工作区共享构建结果，但使用第三方工具可以实现类似的结果，如<a href="https://github.com/mozilla/sccache">sccache</a>。</p>
+<p>用<code>cargo install sccache</code>安装 sccache，并在调用 Cargo 之前，设置<code>RUSTC_WRAPPER</code>环境变量成<code>sccache</code>。如果你使用 bash，更好的方法是<code>export RUSTC_WRAPPER=sccache</code>到<code>.bashrc</code>文件。有关更多详细信息，请参阅 sccache 文档.</p>
 
                     </main>
 

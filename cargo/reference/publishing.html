@@ -216,7 +216,7 @@ include = [
 <pre><code class="language-console">$ cargo yank --vers 1.0.1
 $ cargo yank --vers 1.0.1 --undo
 </code></pre>
-<p>一个 yank <strong>不是</strong>删除任何代码。例如，此功能不用于删除意外上传的机密。如果发生这种情况，您必须立即重置这些秘密.</p>
+<p>一个 yank <strong>不是</strong>删除任何代码。例如，此功能不用于删除意外上传的私钥。如果发生这种情况，您必须立即重置这些私钥.</p>
 <p>一个 yank 版本的语义是，不为该版本创建新的依赖项，但所有现有的依赖项继续有效。<a href="https://crates.io/">crates.io</a>其中一个主要目标是作为永久存档的箱子库，不会随着时间的推移而改变，而允许删除版本将违背这一目标。所以基本上，一个 yank 意味着所有包的<code>Cargo.lock</code>不会被破坏，在任何的未来，<code>Cargo.lock</code>生成的文件不会列出 yank 的版本。(成为了一个孤岛版本)</p>
 <h4><a class="header" href="#cargo-owner" id="cargo-owner"><code>cargo owner</code></a></h4>
 <p>箱子通常由不止一个人开发，或者主要维护者可能会随着时间而改变!箱子的所有者是唯一允许发布新版本箱子的人，但是所有者可以指定其他所有者。</p>

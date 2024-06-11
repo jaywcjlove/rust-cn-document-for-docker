@@ -184,17 +184,17 @@
 </ol>
 </blockquote>
 <p><img src="images/Cargo-Logo-Small.png" alt="Cargo Logo" /></p>
-<p>Cargo 是<a href="https://www.rust-lang.org/">Rust</a>的 <em>包经理</em>。Cargo 会下载您 Rust 的包依赖项，编译您的包，生成可分发的包，并将它们上传到<a href="https://crates.io/">crates.io</a> - Rust 社区的<em>包注册表</em>。你可以为这本书做出贡献在<a href="https://github.com/rust-lang/cargo/tree/master/src/doc/src">GitHub</a>.</p>
+<p>Cargo 是<a href="https://www.rust-lang.org/">Rust</a>的 <em>包管理器</em>。Cargo 会下载您 Rust 的包依赖项，编译您的包，生成可分发的包，并将它们上传到<a href="https://crates.io/">crates.io</a> - Rust 社区的<em>包注册表</em>。你可以为这本书做出贡献在<a href="https://github.com/rust-lang/cargo/tree/master/src/doc/src">GitHub</a>.</p>
 <h3><a class="header" href="#章节" id="章节">章节</a></h3>
 <p><strong><a href="getting-started/index.html">入门</a></strong></p>
-<p>要开始使用 Cargo，请安装 Cargo(和 Rust)并设置您的第一个箱子.</p>
+<p>要开始使用 Cargo，请安装 Cargo(和 Rust)并设置您的第一个crate.</p>
 <p><strong><a href="guide/index.html">Cargo 指南</a></strong></p>
 <p>该指南将为您提供，有关如何使用 Cargo 开发 Rust 包的所有信息.</p>
 <p><strong><a href="reference/index.html">Cargo 参考</a></strong></p>
 <p>该参考文献涵盖了 Cargo 各个领域的细节.</p>
 <p><strong><a href="faq.html">常见问题</a></strong></p>
 <h2><a class="header" href="#开始入门" id="开始入门">开始入门</a></h2>
-<p>要开始使用 Cargo，请安装 Cargo(和 Rust)，并设置您的第一个箱子.</p>
+<p>要开始使用 Cargo，请安装 Cargo(和 Rust)，并设置您的第一个crate.</p>
 <ul>
 <li><a href="getting-started/./installation.html">安装</a></li>
 <li><a href="getting-started/./first-steps.html">Cargo 的第一步</a></li>
@@ -645,8 +645,8 @@ Multiple checkouts of different commits of the same repo are possible.</p>
 <p>理论上，您可以随时清除缓存的任何部分，当某个crate要求这些被清除的依赖内容时，Cargo将尽力恢复它们。这可以通过解压归档文件、检出裸仓库或简单地重新下载来实现。</p>
 <p>作为替代，您可以使用<a href="https://crates.io/crates/cargo-cache">cargo-cache</a> crate提供的命令行工具来选择性清除指定部分的缓存，或显示其组件占用空间的大小。</p>
 <h2><a class="header" href="#构建-缓存" id="构建-缓存">构建 缓存</a></h2>
-<p>Cargo 在单个工作区，共享其中所有包的构建工件。今天，Cargo 不会在不同的工作区共享构建结果，但使用第三方工具可以实现类似的结果，<a href="https://github.com/mozilla/sccache">sccache</a>。</p>
-<p>装置<code>sccache</code>，用<code>cargo install sccache</code>安装它，并在调用 Cargo 之前，设置<code>RUSTC_WRAPPER</code>环境变量成<code>sccache</code>。如果你使用 bash，更好是添加<code>export RUSTC_WRAPPER=sccache</code>到<code>.bashrc</code>文件。有关更多详细信息，请参阅 sccache 文档.</p>
+<p>Cargo 在单个工作区，共享其中所有包的构建结果。今天，Cargo 不会在不同的工作区共享构建结果，但使用第三方工具可以实现类似的结果，如<a href="https://github.com/mozilla/sccache">sccache</a>。</p>
+<p>用<code>cargo install sccache</code>安装 sccache，并在调用 Cargo 之前，设置<code>RUSTC_WRAPPER</code>环境变量成<code>sccache</code>。如果你使用 bash，更好的方法是<code>export RUSTC_WRAPPER=sccache</code>到<code>.bashrc</code>文件。有关更多详细信息，请参阅 sccache 文档.</p>
 <h2><a class="header" href="#cargo-参考" id="cargo-参考">Cargo 参考</a></h2>
 <p>该参考文献涵盖了 Cargo 各个领域的细节.</p>
 <ul>
@@ -3958,7 +3958,7 @@ include = [
 <pre><code class="language-console">$ cargo yank --vers 1.0.1
 $ cargo yank --vers 1.0.1 --undo
 </code></pre>
-<p>一个 yank <strong>不是</strong>删除任何代码。例如，此功能不用于删除意外上传的机密。如果发生这种情况，您必须立即重置这些秘密.</p>
+<p>一个 yank <strong>不是</strong>删除任何代码。例如，此功能不用于删除意外上传的私钥。如果发生这种情况，您必须立即重置这些私钥.</p>
 <p>一个 yank 版本的语义是，不为该版本创建新的依赖项，但所有现有的依赖项继续有效。<a href="https://crates.io/">crates.io</a>其中一个主要目标是作为永久存档的箱子库，不会随着时间的推移而改变，而允许删除版本将违背这一目标。所以基本上，一个 yank 意味着所有包的<code>Cargo.lock</code>不会被破坏，在任何的未来，<code>Cargo.lock</code>生成的文件不会列出 yank 的版本。(成为了一个孤岛版本)</p>
 <h4><a class="header" href="#cargo-owner" id="cargo-owner"><code>cargo owner</code></a></h4>
 <p>箱子通常由不止一个人开发，或者主要维护者可能会随着时间而改变!箱子的所有者是唯一允许发布新版本箱子的人，但是所有者可以指定其他所有者。</p>
@@ -8285,36 +8285,25 @@ for more information about how toolchain overrides work.</dd>
 </ol>
 <h2><a class="header" href="#see-also-8" id="see-also-8">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-check.html">cargo-check(1)</a></p>
-<h1><a class="header" href="#cargo-run1" id="cargo-run1">cargo-run(1)</a></h1>
-<h2><a class="header" href="#name-9" id="name-9">NAME</a></h2>
-<p>cargo-run - Run the current package</p>
-<h2><a class="header" href="#synopsis-9" id="synopsis-9">SYNOPSIS</a></h2>
-<p><code>cargo run</code> [<em>options</em>] [<code>--</code> <em>args</em>]</p>
-<h2><a class="header" href="#description-9" id="description-9">DESCRIPTION</a></h2>
-<p>Run a binary or example of the local package.</p>
-<p>All the arguments following the two dashes (<code>--</code>) are passed to the binary to
-run. If you're passing arguments to both Cargo and the binary, the ones after
-<code>--</code> go to the binary, the ones before go to Cargo.</p>
-<h2><a class="header" href="#options-8" id="options-8">OPTIONS</a></h2>
-<h3><a class="header" href="#package-selection-2" id="package-selection-2">Package Selection</a></h3>
-<p>By default, the package in the current working directory is selected. The <code>-p</code>
-flag can be used to choose a different package in a workspace.</p>
-<dl>
-<dt class="option-term" id="option-cargo-run--p"><a class="option-anchor" href="commands/cargo-run.html#option-cargo-run--p"></a><code>-p</code> <em>spec</em></dt>
-<dt class="option-term" id="option-cargo-run---package"><a class="option-anchor" href="commands/cargo-run.html#option-cargo-run---package"></a><code>--package</code> <em>spec</em></dt>
-<dd class="option-desc">The package to run. See <a href="commands/cargo-pkgid.html">cargo-pkgid(1)</a> for the SPEC
-format.</dd>
-</dl>
-<h3><a class="header" href="#target-selection-5" id="target-selection-5">Target Selection</a></h3>
-<p>When no target selection options are given, <code>cargo run</code> will run the binary
-target. If there are multiple binary targets, you must pass a target flag to
-choose one. Or, the <code>default-run</code> field may be specified in the <code>[package]</code>
-section of <code>Cargo.toml</code> to choose the name of the binary to run by default.</p>
-<dl>
-<dt class="option-term" id="option-cargo-run---bin"><a class="option-anchor" href="commands/cargo-run.html#option-cargo-run---bin"></a><code>--bin</code> <em>name</em></dt>
-<dd class="option-desc">Run the specified binary.</dd>
-<dt class="option-term" id="option-cargo-run---example"><a class="option-anchor" href="commands/cargo-run.html#option-cargo-run---example"></a><code>--example</code> <em>name</em></dt>
-<dd class="option-desc">Run the specified example.</dd>
+<h2><a class="header" href="#名字" id="名字">名字</a></h2>
+<p>cargo-run —— 运行当前包</p>
+<h2><a class="header" href="#概要synopsis" id="概要synopsis">概要（synopsis）</a></h2>
+<p><code>cargo run</code> [options] [<code>--</code> args]</p>
+<h3><a class="header" href="#描述-1" id="描述-1">描述</a></h3>
+<p>运行一个二进制或者本地包的实例
+所有在 两个横线（<code>--</code>） 后面的参数都会被传递给二进制程序来运行。如果你需要同时传递一些参数给 Cargo 和二进制程序，那么在 <code>--</code> 后面的将会给二进制，在<code>--</code>前面的将会给 Cargo。</p>
+<h2><a class="header" href="#选项" id="选项">选项</a></h2>
+<h3><a class="header" href="#包选择" id="包选择">包选择</a></h3>
+<p>默认情况下，选择的是当前工作目录中的包。<code>-p</code>标志可以用来选择在工作目录中的一个不同的包。
+<code>-p</code>spec
+<code>--package</code> spec
+运行包。SPEC 格式参考<a href="https://rustwiki.org/zh-CN/cargo/commands/cargo-pkgid.html">cargo-pkgid(1)</a>。</p>
+<h3><a class="header" href="#目标选择" id="目标选择">目标选择</a></h3>
+<p>当没有传目标选项，<code>cargo run</code>将会运行二进制目标。如果有多个二进制目标，你必须传递一个目标标志来选中他们中的一个。或者 在 <code>Cargo.toml</code>的<code>[package]</code> 中的<code>default-run</code>字段指定一个运行时候的默认二进制名。
+<code>--bin</code> name
+运行一个特定的二进制
+<code>--example</code> name
+运行特定的例子</p>
 </dl>
 <h3><a class="header" href="#特性选择-5" id="特性选择-5">特性选择</a></h3>
 <p>可通过传递特性参数来控制启用哪些特性。如果没有给定要使用的特性，
@@ -8438,33 +8427,31 @@ for more information about how toolchain overrides work.</dd>
 默认为CPU数量。</dd>
 </dl>
 <h2><a class="header" href="#环境-8" id="环境-8">环境</a></h2>
-<p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
+<p>关于 Cargo 所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
 <h2><a class="header" href="#退出状态-8" id="退出状态-8">退出状态</a></h2>
 <ul>
-<li><code>0</code>: Cargo命令执行成功</li>
-<li><code>101</code>: Cargo命令未能完成.</li>
+<li><code>0</code>: Cargo 命令执行成功</li>
+<li><code>101</code>: Cargo 命令未能完成.</li>
 </ul>
 <h2><a class="header" href="#examples-11" id="examples-11">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Build the local package and run its main target (assuming only one binary):</p>
-<pre><code>cargo run
-</code></pre>
+<p>cargo run</p>
 </li>
 <li>
 <p>Run an example with extra arguments:</p>
-<pre><code>cargo run --example exname -- --exoption exarg1 exarg2
-</code></pre>
+<p>cargo run --example exname -- --exoption exarg1 exarg2</p>
 </li>
 </ol>
 <h2><a class="header" href="#see-also-9" id="see-also-9">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-build.html">cargo-build(1)</a></p>
 <h1><a class="header" href="#cargo-rustc1" id="cargo-rustc1">cargo-rustc(1)</a></h1>
-<h2><a class="header" href="#name-10" id="name-10">NAME</a></h2>
+<h2><a class="header" href="#name-9" id="name-9">NAME</a></h2>
 <p>cargo-rustc - Compile the current package, and pass extra options to the compiler</p>
-<h2><a class="header" href="#synopsis-10" id="synopsis-10">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-9" id="synopsis-9">SYNOPSIS</a></h2>
 <p><code>cargo rustc</code> [<em>options</em>] [<code>--</code> <em>args</em>]</p>
-<h2><a class="header" href="#description-10" id="description-10">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-9" id="description-9">DESCRIPTION</a></h2>
 <p>The specified target for the current package (or package specified by <code>-p</code> if
 provided) will be compiled along with all of its dependencies. The specified
 <em>args</em> will all be passed to the final compiler invocation, not any of the
@@ -8480,8 +8467,8 @@ target is compiled.</p>
 <p>To pass flags to all compiler processes spawned by Cargo, use the <code>RUSTFLAGS</code>
 <a href="commands/../reference/environment-variables.html">environment variable</a> or the
 <code>build.rustflags</code> <a href="commands/../reference/config.html">config value</a>.</p>
-<h2><a class="header" href="#options-9" id="options-9">OPTIONS</a></h2>
-<h3><a class="header" href="#package-selection-3" id="package-selection-3">Package Selection</a></h3>
+<h2><a class="header" href="#options-8" id="options-8">OPTIONS</a></h2>
+<h3><a class="header" href="#package-selection-2" id="package-selection-2">Package Selection</a></h3>
 <p>By default, the package in the current working directory is selected. The <code>-p</code>
 flag can be used to choose a different package in a workspace.</p>
 <dl>
@@ -8490,7 +8477,7 @@ flag can be used to choose a different package in a workspace.</p>
 <dd class="option-desc">The package to build. See <a href="commands/cargo-pkgid.html">cargo-pkgid(1)</a> for the SPEC
 format.</dd>
 </dl>
-<h3><a class="header" href="#target-selection-6" id="target-selection-6">Target Selection</a></h3>
+<h3><a class="header" href="#target-selection-5" id="target-selection-5">Target Selection</a></h3>
 <p>When no target selection options are given, <code>cargo rustc</code> will build all
 binary and library targets of the selected package.</p>
 <p>Passing target selection flags will build only the specified
@@ -8697,11 +8684,11 @@ the size of every type:</p>
 <h2><a class="header" href="#see-also-10" id="see-also-10">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-build.html">cargo-build(1)</a>, <a href="https://doc.rust-lang.org/rustc/index.html">rustc(1)</a></p>
 <h1><a class="header" href="#cargo-rustdoc1" id="cargo-rustdoc1">cargo-rustdoc(1)</a></h1>
-<h2><a class="header" href="#name-11" id="name-11">NAME</a></h2>
+<h2><a class="header" href="#name-10" id="name-10">NAME</a></h2>
 <p>cargo-rustdoc - Build a package's documentation, using specified custom flags</p>
-<h2><a class="header" href="#synopsis-11" id="synopsis-11">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-10" id="synopsis-10">SYNOPSIS</a></h2>
 <p><code>cargo rustdoc</code> [<em>options</em>] [<code>--</code> <em>args</em>]</p>
-<h2><a class="header" href="#description-11" id="description-11">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-10" id="description-10">DESCRIPTION</a></h2>
 <p>The specified target for the current package (or package specified by <code>-p</code> if
 provided) will be documented with the specified <em>args</em> being passed to the
 final rustdoc invocation. Dependencies will not be documented as part of this
@@ -8717,7 +8704,7 @@ target is compiled.</p>
 <p>To pass flags to all rustdoc processes spawned by Cargo, use the
 <code>RUSTDOCFLAGS</code> <a href="commands/../reference/environment-variables.html">environment variable</a>
 or the <code>build.rustdocflags</code> <a href="commands/../reference/config.html">config value</a>.</p>
-<h2><a class="header" href="#options-10" id="options-10">OPTIONS</a></h2>
+<h2><a class="header" href="#options-9" id="options-9">OPTIONS</a></h2>
 <h3><a class="header" href="#documentation-options-1" id="documentation-options-1">Documentation Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-rustdoc---open"><a class="option-anchor" href="commands/cargo-rustdoc.html#option-cargo-rustdoc---open"></a><code>--open</code></dt>
@@ -8726,7 +8713,7 @@ browser unless you define another one in the <code>BROWSER</code> environment va
 or use the <a href="commands/../reference/config.html#docbrowser"><code>doc.browser</code></a> configuration
 option.</dd>
 </dl>
-<h3><a class="header" href="#package-selection-4" id="package-selection-4">Package Selection</a></h3>
+<h3><a class="header" href="#package-selection-3" id="package-selection-3">Package Selection</a></h3>
 <p>By default, the package in the current working directory is selected. The <code>-p</code>
 flag can be used to choose a different package in a workspace.</p>
 <dl>
@@ -8735,7 +8722,7 @@ flag can be used to choose a different package in a workspace.</p>
 <dd class="option-desc">The package to document. See <a href="commands/cargo-pkgid.html">cargo-pkgid(1)</a> for the SPEC
 format.</dd>
 </dl>
-<h3><a class="header" href="#target-selection-7" id="target-selection-7">Target Selection</a></h3>
+<h3><a class="header" href="#target-selection-6" id="target-selection-6">Target Selection</a></h3>
 <p>When no target selection options are given, <code>cargo rustdoc</code> will document all
 binary and library targets of the selected package. The binary will be skipped
 if its name is the same as the lib target. Binaries are skipped if they have
@@ -8923,11 +8910,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-11" id="see-also-11">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-doc.html">cargo-doc(1)</a>, <a href="https://doc.rust-lang.org/rustdoc/index.html">rustdoc(1)</a></p>
 <h1><a class="header" href="#cargo-test1" id="cargo-test1">cargo-test(1)</a></h1>
-<h2><a class="header" href="#name-12" id="name-12">NAME</a></h2>
+<h2><a class="header" href="#name-11" id="name-11">NAME</a></h2>
 <p>cargo-test - Execute unit and integration tests of a package</p>
-<h2><a class="header" href="#synopsis-12" id="synopsis-12">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-11" id="synopsis-11">SYNOPSIS</a></h2>
 <p><code>cargo test</code> [<em>options</em>] [<em>testname</em>] [<code>--</code> <em>test-options</em>]</p>
-<h2><a class="header" href="#description-12" id="description-12">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-11" id="description-11">DESCRIPTION</a></h2>
 <p>Compile and execute unit and integration tests.</p>
 <p>The test filtering argument <code>TESTNAME</code> and all the arguments following the two
 dashes (<code>--</code>) are passed to the test binaries and thus to <em>libtest</em> (rustc's
@@ -8952,7 +8939,7 @@ function to handle running tests.</p>
 extracts code samples from documentation comments and executes them. See the
 <a href="https://doc.rust-lang.org/rustdoc/">rustdoc book</a> for more information on
 writing doc tests.</p>
-<h2><a class="header" href="#options-11" id="options-11">OPTIONS</a></h2>
+<h2><a class="header" href="#options-10" id="options-10">OPTIONS</a></h2>
 <h3><a class="header" href="#test-options" id="test-options">Test Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-test---no-run"><a class="option-anchor" href="commands/cargo-test.html#option-cargo-test---no-run"></a><code>--no-run</code></dt>
@@ -8984,7 +8971,7 @@ as a whole.</dd>
 此标志参数可多次使用且支持Unix通配符(<code>*</code>, <code>?</code> 和 <code>[]</code>)。不过，为避免shell可能错误地在Cargo获取到
 之前就将通配符展开，应在各个模式串两侧使用单引号或双引号。</dd>
 </dl>
-<h3><a class="header" href="#target-selection-8" id="target-selection-8">Target Selection</a></h3>
+<h3><a class="header" href="#target-selection-7" id="target-selection-7">Target Selection</a></h3>
 <p>When no target selection options are given, <code>cargo test</code> will build the
 following targets of the selected packages:</p>
 <ul>
@@ -9234,17 +9221,17 @@ produced during execution of this command</p>
 <li><a href="commands/cargo-verify-project.html">cargo verify-project</a></li>
 </ul>
 <h1><a class="header" href="#cargo-generate-lockfile1" id="cargo-generate-lockfile1">cargo-generate-lockfile(1)</a></h1>
-<h2><a class="header" href="#name-13" id="name-13">NAME</a></h2>
+<h2><a class="header" href="#name-12" id="name-12">NAME</a></h2>
 <p>cargo-generate-lockfile - Generate the lockfile for a package</p>
-<h2><a class="header" href="#synopsis-13" id="synopsis-13">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-12" id="synopsis-12">SYNOPSIS</a></h2>
 <p><code>cargo generate-lockfile</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-13" id="description-13">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-12" id="description-12">DESCRIPTION</a></h2>
 <p>This command will create the <code>Cargo.lock</code> lockfile for the current package or
 workspace. If the lockfile already exists, it will be rebuilt with the latest
 available version of every package.</p>
 <p>See also <a href="commands/cargo-update.html">cargo-update(1)</a> which is also capable of creating a <code>Cargo.lock</code>
 lockfile and has more options for controlling update behavior.</p>
-<h2><a class="header" href="#options-12" id="options-12">OPTIONS</a></h2>
+<h2><a class="header" href="#options-11" id="options-11">OPTIONS</a></h2>
 <h3><a class="header" href="#display-options-11" id="display-options-11">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-generate-lockfile--v"><a class="option-anchor" href="commands/cargo-generate-lockfile.html#option-cargo-generate-lockfile--v"></a><code>-v</code></dt>
@@ -9316,14 +9303,14 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-13" id="see-also-13">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-update.html">cargo-update(1)</a></p>
 <h1><a class="header" href="#cargo-locate-project1" id="cargo-locate-project1">cargo-locate-project(1)</a></h1>
-<h2><a class="header" href="#name-14" id="name-14">NAME</a></h2>
+<h2><a class="header" href="#name-13" id="name-13">NAME</a></h2>
 <p>cargo-locate-project - Print a JSON representation of a Cargo.toml file's location</p>
-<h2><a class="header" href="#synopsis-14" id="synopsis-14">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-13" id="synopsis-13">SYNOPSIS</a></h2>
 <p><code>cargo locate-project</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-14" id="description-14">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-13" id="description-13">DESCRIPTION</a></h2>
 <p>This command will print a JSON object to stdout with the full path to the
 <code>Cargo.toml</code> manifest.</p>
-<h2><a class="header" href="#options-13" id="options-13">OPTIONS</a></h2>
+<h2><a class="header" href="#options-12" id="options-12">OPTIONS</a></h2>
 <dl>
 <dt class="option-term" id="option-cargo-locate-project---workspace"><a class="option-anchor" href="commands/cargo-locate-project.html#option-cargo-locate-project---workspace"></a><code>--workspace</code></dt>
 <dd class="option-desc">Locate the <code>Cargo.toml</code> at the root of the workspace, as opposed to the current
@@ -9393,11 +9380,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-14" id="see-also-14">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-metadata.html">cargo-metadata(1)</a></p>
 <h1><a class="header" href="#cargo-metadata1" id="cargo-metadata1">cargo-metadata(1)</a></h1>
-<h2><a class="header" href="#name-15" id="name-15">NAME</a></h2>
+<h2><a class="header" href="#name-14" id="name-14">NAME</a></h2>
 <p>cargo-metadata - Machine-readable metadata about the current package</p>
-<h2><a class="header" href="#synopsis-15" id="synopsis-15">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-14" id="synopsis-14">SYNOPSIS</a></h2>
 <p><code>cargo metadata</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-15" id="description-15">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-14" id="description-14">DESCRIPTION</a></h2>
 <p>Output JSON to stdout containing information about the workspace members and
 resolved dependencies of the current package.</p>
 <p>It is recommended to include the <code>--format-version</code> flag to future-proof
@@ -9674,7 +9661,7 @@ for a Rust API for reading the metadata.</p>
     }
 }
 </code></pre>
-<h2><a class="header" href="#options-14" id="options-14">OPTIONS</a></h2>
+<h2><a class="header" href="#options-13" id="options-13">OPTIONS</a></h2>
 <h3><a class="header" href="#output-options-9" id="output-options-9">Output Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-metadata---no-deps"><a class="option-anchor" href="commands/cargo-metadata.html#option-cargo-metadata---no-deps"></a><code>--no-deps</code></dt>
@@ -9774,11 +9761,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-15" id="see-also-15">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a></p>
 <h1><a class="header" href="#cargo-pkgid1" id="cargo-pkgid1">cargo-pkgid(1)</a></h1>
-<h2><a class="header" href="#name-16" id="name-16">NAME</a></h2>
+<h2><a class="header" href="#name-15" id="name-15">NAME</a></h2>
 <p>cargo-pkgid - Print a fully qualified package specification</p>
-<h2><a class="header" href="#synopsis-16" id="synopsis-16">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-15" id="synopsis-15">SYNOPSIS</a></h2>
 <p><code>cargo pkgid</code> [<em>options</em>] [<em>spec</em>]</p>
-<h2><a class="header" href="#description-16" id="description-16">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-15" id="description-15">DESCRIPTION</a></h2>
 <p>Given a <em>spec</em> argument, print out the fully qualified package ID specifier
 for a package or dependency in the current workspace. This command will
 generate an error if <em>spec</em> is ambiguous as to which package it refers to in
@@ -9798,8 +9785,8 @@ following:</p>
 <tr><td><em>url</em><code>#</code><em>name</em></td><td><code>https://github.com/rust-lang/crates.io-index#bitflags</code></td></tr>
 <tr><td><em>url</em><code>#</code><em>name</em><code>:</code><em>version</em></td><td><code>https://github.com/rust-lang/cargo#crates-io:0.21.0</code></td></tr>
 </tbody></table>
-<h2><a class="header" href="#options-15" id="options-15">OPTIONS</a></h2>
-<h3><a class="header" href="#package-selection-5" id="package-selection-5">Package Selection</a></h3>
+<h2><a class="header" href="#options-14" id="options-14">OPTIONS</a></h2>
+<h3><a class="header" href="#package-selection-4" id="package-selection-4">Package Selection</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-pkgid--p"><a class="option-anchor" href="commands/cargo-pkgid.html#option-cargo-pkgid--p"></a><code>-p</code> <em>spec</em></dt>
 <dt class="option-term" id="option-cargo-pkgid---package"><a class="option-anchor" href="commands/cargo-pkgid.html#option-cargo-pkgid---package"></a><code>--package</code> <em>spec</em></dt>
@@ -9891,11 +9878,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-16" id="see-also-16">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-generate-lockfile.html">cargo-generate-lockfile(1)</a>, <a href="commands/cargo-metadata.html">cargo-metadata(1)</a></p>
 <h1><a class="header" href="#cargo-tree1" id="cargo-tree1">cargo-tree(1)</a></h1>
-<h2><a class="header" href="#name-17" id="name-17">NAME</a></h2>
+<h2><a class="header" href="#name-16" id="name-16">NAME</a></h2>
 <p>cargo-tree - Display a tree visualization of a dependency graph</p>
-<h2><a class="header" href="#synopsis-17" id="synopsis-17">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-16" id="synopsis-16">SYNOPSIS</a></h2>
 <p><code>cargo tree</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-17" id="description-17">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-16" id="description-16">DESCRIPTION</a></h2>
 <p>This command will display a tree of dependencies to the terminal. An example
 of a simple project that depends on the &quot;rand&quot; package:</p>
 <pre><code>myproject v0.1.0 (/myproject)
@@ -9929,7 +9916,7 @@ each dependency. For example, <code>cargo tree -e features</code>:</p>
 turn depends on <code>cfg-if</code> with &quot;default&quot; features. When using <code>-e features</code> it
 can be helpful to use <code>-i</code> flag to show how the features flow into a package.
 See the examples below for more detail.</p>
-<h2><a class="header" href="#options-16" id="options-16">OPTIONS</a></h2>
+<h2><a class="header" href="#options-15" id="options-15">OPTIONS</a></h2>
 <h3><a class="header" href="#tree-options" id="tree-options">Tree Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-tree--i"><a class="option-anchor" href="commands/cargo-tree.html#option-cargo-tree--i"></a><code>-i</code> <em>spec</em></dt>
@@ -10166,15 +10153,15 @@ entries, try with the <code>--no-dedupe</code> flag to get the full output.</p>
 <h2><a class="header" href="#see-also-17" id="see-also-17">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-metadata.html">cargo-metadata(1)</a></p>
 <h1><a class="header" href="#cargo-update1" id="cargo-update1">cargo-update(1)</a></h1>
-<h2><a class="header" href="#name-18" id="name-18">NAME</a></h2>
+<h2><a class="header" href="#name-17" id="name-17">NAME</a></h2>
 <p>cargo-update - Update dependencies as recorded in the local lock file</p>
-<h2><a class="header" href="#synopsis-18" id="synopsis-18">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-17" id="synopsis-17">SYNOPSIS</a></h2>
 <p><code>cargo update</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-18" id="description-18">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-17" id="description-17">DESCRIPTION</a></h2>
 <p>This command will update dependencies in the <code>Cargo.lock</code> file to the latest
 version. If the <code>Cargo.lock</code> file does not exist, it will be created with the
 latest available versions.</p>
-<h2><a class="header" href="#options-17" id="options-17">OPTIONS</a></h2>
+<h2><a class="header" href="#options-16" id="options-16">OPTIONS</a></h2>
 <h3><a class="header" href="#update-options" id="update-options">Update Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-update--p"><a class="option-anchor" href="commands/cargo-update.html#option-cargo-update--p"></a><code>-p</code> <em>spec</em>...</dt>
@@ -10284,11 +10271,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-18" id="see-also-18">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-generate-lockfile.html">cargo-generate-lockfile(1)</a></p>
 <h1><a class="header" href="#cargo-vendor1" id="cargo-vendor1">cargo-vendor(1)</a></h1>
-<h2><a class="header" href="#name-19" id="name-19">NAME</a></h2>
+<h2><a class="header" href="#name-18" id="name-18">NAME</a></h2>
 <p>cargo-vendor - Vendor all dependencies locally</p>
-<h2><a class="header" href="#synopsis-19" id="synopsis-19">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-18" id="synopsis-18">SYNOPSIS</a></h2>
 <p><code>cargo vendor</code> [<em>options</em>] [<em>path</em>]</p>
-<h2><a class="header" href="#description-19" id="description-19">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-18" id="description-18">DESCRIPTION</a></h2>
 <p>This cargo subcommand will vendor all crates.io and git dependencies for a
 project into the specified directory at <code>&lt;path&gt;</code>. After this command completes
 the vendor directory specified by <code>&lt;path&gt;</code> will contain all remote sources from
@@ -10296,7 +10283,7 @@ dependencies specified. Additional manifests beyond the default one can be
 specified with the <code>-s</code> option.</p>
 <p>The <code>cargo vendor</code> command will also print out the configuration necessary
 to use the vendored sources, which you will need to add to <code>.cargo/config.toml</code>.</p>
-<h2><a class="header" href="#options-18" id="options-18">OPTIONS</a></h2>
+<h2><a class="header" href="#options-17" id="options-17">OPTIONS</a></h2>
 <h3><a class="header" href="#vendor-options" id="vendor-options">Vendor Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor--s"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor--s"></a><code>-s</code> <em>manifest</em></dt>
@@ -10397,11 +10384,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-19" id="see-also-19">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a></p>
 <h1><a class="header" href="#cargo-verify-project1" id="cargo-verify-project1">cargo-verify-project(1)</a></h1>
-<h2><a class="header" href="#name-20" id="name-20">NAME</a></h2>
+<h2><a class="header" href="#name-19" id="name-19">NAME</a></h2>
 <p>cargo-verify-project - Check correctness of crate manifest</p>
-<h2><a class="header" href="#synopsis-20" id="synopsis-20">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-19" id="synopsis-19">SYNOPSIS</a></h2>
 <p><code>cargo verify-project</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-20" id="description-20">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-19" id="description-19">DESCRIPTION</a></h2>
 <p>This command will parse the local manifest and check its validity. It emits a
 JSON object with the result. A successful validation will display:</p>
 <pre><code>{&quot;success&quot;:&quot;true&quot;}
@@ -10409,7 +10396,7 @@ JSON object with the result. A successful validation will display:</p>
 <p>An invalid workspace will display:</p>
 <pre><code>{&quot;invalid&quot;:&quot;human-readable error message&quot;}
 </code></pre>
-<h2><a class="header" href="#options-19" id="options-19">OPTIONS</a></h2>
+<h2><a class="header" href="#options-18" id="options-18">OPTIONS</a></h2>
 <h3><a class="header" href="#display-options-18" id="display-options-18">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-verify-project--v"><a class="option-anchor" href="commands/cargo-verify-project.html#option-cargo-verify-project--v"></a><code>-v</code></dt>
@@ -10489,11 +10476,11 @@ for more information about how toolchain overrides work.</dd>
 <li><a href="commands/cargo-uninstall.html">cargo uninstall</a></li>
 </ul>
 <h1><a class="header" href="#cargo-init1" id="cargo-init1">cargo-init(1)</a></h1>
-<h2><a class="header" href="#name-21" id="name-21">NAME</a></h2>
+<h2><a class="header" href="#name-20" id="name-20">NAME</a></h2>
 <p>cargo-init - Create a new Cargo package in an existing directory</p>
-<h2><a class="header" href="#synopsis-21" id="synopsis-21">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-20" id="synopsis-20">SYNOPSIS</a></h2>
 <p><code>cargo init</code> [<em>options</em>] [<em>path</em>]</p>
-<h2><a class="header" href="#description-21" id="description-21">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-20" id="description-20">DESCRIPTION</a></h2>
 <p>This command will create a new Cargo manifest in the current directory. Give a
 path as an argument to create in the given directory.</p>
 <p>If there are typically-named Rust source files already in the directory, those
@@ -10503,7 +10490,7 @@ will be used. If not, then a sample <code>src/main.rs</code> file will be create
 is created (see <code>--vcs</code> below).</p>
 <p>See <a href="commands/cargo-new.html">cargo-new(1)</a> for a similar command which will create a new package in
 a new directory.</p>
-<h2><a class="header" href="#options-20" id="options-20">OPTIONS</a></h2>
+<h2><a class="header" href="#options-19" id="options-19">OPTIONS</a></h2>
 <h3><a class="header" href="#init-options" id="init-options">Init Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-init---bin"><a class="option-anchor" href="commands/cargo-init.html#option-cargo-init---bin"></a><code>--bin</code></dt>
@@ -10583,14 +10570,14 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-21" id="see-also-21">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-new.html">cargo-new(1)</a></p>
 <h1><a class="header" href="#cargo-install1" id="cargo-install1">cargo-install(1)</a></h1>
-<h2><a class="header" href="#name-22" id="name-22">NAME</a></h2>
+<h2><a class="header" href="#name-21" id="name-21">NAME</a></h2>
 <p>cargo-install - Build and install a Rust binary</p>
-<h2><a class="header" href="#synopsis-22" id="synopsis-22">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-21" id="synopsis-21">SYNOPSIS</a></h2>
 <p><code>cargo install</code> [<em>options</em>] <em>crate</em>...<br />
 <code>cargo install</code> [<em>options</em>] <code>--path</code> <em>path</em><br />
 <code>cargo install</code> [<em>options</em>] <code>--git</code> <em>url</em> [<em>crate</em>...]<br />
 <code>cargo install</code> [<em>options</em>] <code>--list</code></p>
-<h2><a class="header" href="#description-22" id="description-22">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-21" id="description-21">DESCRIPTION</a></h2>
 <p>This command manages Cargo's local set of installed binary crates. Only
 packages which have executable <code>[[bin]]</code> or <code>[[example]]</code> targets can be
 installed, and all executables are installed into the installation root's
@@ -10645,7 +10632,7 @@ will not receive any fixes or updates to any dependency. Note that Cargo did
 not start publishing <code>Cargo.lock</code> files until version 1.37, which means
 packages published with prior versions will not have a <code>Cargo.lock</code> file
 available.</p>
-<h2><a class="header" href="#options-21" id="options-21">OPTIONS</a></h2>
+<h2><a class="header" href="#options-20" id="options-20">OPTIONS</a></h2>
 <h3><a class="header" href="#install-options" id="install-options">Install Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-install---vers"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install---vers"></a><code>--vers</code> <em>version</em></dt>
@@ -10840,18 +10827,18 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-22" id="see-also-22">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-uninstall.html">cargo-uninstall(1)</a>, <a href="commands/cargo-search.html">cargo-search(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-new1" id="cargo-new1">cargo-new(1)</a></h1>
-<h2><a class="header" href="#name-23" id="name-23">NAME</a></h2>
+<h2><a class="header" href="#name-22" id="name-22">NAME</a></h2>
 <p>cargo-new - Create a new Cargo package</p>
-<h2><a class="header" href="#synopsis-23" id="synopsis-23">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-22" id="synopsis-22">SYNOPSIS</a></h2>
 <p><code>cargo new</code> [<em>options</em>] <em>path</em></p>
-<h2><a class="header" href="#description-23" id="description-23">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-22" id="description-22">DESCRIPTION</a></h2>
 <p>This command will create a new Cargo package in the given directory. This
 includes a simple template with a <code>Cargo.toml</code> manifest, sample source file,
 and a VCS ignore file. If the directory is not already in a VCS repository,
 then a new repository is created (see <code>--vcs</code> below).</p>
 <p>See <a href="commands/cargo-init.html">cargo-init(1)</a> for a similar command which will create a new manifest
 in an existing directory.</p>
-<h2><a class="header" href="#options-22" id="options-22">OPTIONS</a></h2>
+<h2><a class="header" href="#options-21" id="options-21">OPTIONS</a></h2>
 <h3><a class="header" href="#new-options" id="new-options">New Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-new---bin"><a class="option-anchor" href="commands/cargo-new.html#option-cargo-new---bin"></a><code>--bin</code></dt>
@@ -10931,15 +10918,15 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-23" id="see-also-23">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-init.html">cargo-init(1)</a></p>
 <h1><a class="header" href="#cargo-search1" id="cargo-search1">cargo-search(1)</a></h1>
-<h2><a class="header" href="#name-24" id="name-24">NAME</a></h2>
+<h2><a class="header" href="#name-23" id="name-23">NAME</a></h2>
 <p>cargo-search - Search packages in crates.io</p>
-<h2><a class="header" href="#synopsis-24" id="synopsis-24">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-23" id="synopsis-23">SYNOPSIS</a></h2>
 <p><code>cargo search</code> [<em>options</em>] [<em>query</em>...]</p>
-<h2><a class="header" href="#description-24" id="description-24">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-23" id="description-23">DESCRIPTION</a></h2>
 <p>This performs a textual search for crates on <a href="https://crates.io">https://crates.io</a>. The matching
 crates will be displayed along with their description in TOML format suitable
 for copying into a <code>Cargo.toml</code> manifest.</p>
-<h2><a class="header" href="#options-23" id="options-23">OPTIONS</a></h2>
+<h2><a class="header" href="#options-22" id="options-22">OPTIONS</a></h2>
 <h3><a class="header" href="#search-options" id="search-options">Search Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-search---limit"><a class="option-anchor" href="commands/cargo-search.html#option-cargo-search---limit"></a><code>--limit</code> <em>limit</em></dt>
@@ -11005,11 +10992,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-24" id="see-also-24">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-install.html">cargo-install(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-uninstall1" id="cargo-uninstall1">cargo-uninstall(1)</a></h1>
-<h2><a class="header" href="#name-25" id="name-25">NAME</a></h2>
+<h2><a class="header" href="#name-24" id="name-24">NAME</a></h2>
 <p>cargo-uninstall - Remove a Rust binary</p>
-<h2><a class="header" href="#synopsis-25" id="synopsis-25">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-24" id="synopsis-24">SYNOPSIS</a></h2>
 <p><code>cargo uninstall</code> [<em>options</em>] [<em>spec</em>...]</p>
-<h2><a class="header" href="#description-25" id="description-25">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-24" id="description-24">DESCRIPTION</a></h2>
 <p>This command removes a package installed with <a href="commands/cargo-install.html">cargo-install(1)</a>. The <em>spec</em>
 argument is a package ID specification of the package to remove (see
 <a href="commands/cargo-pkgid.html">cargo-pkgid(1)</a>).</p>
@@ -11023,7 +11010,7 @@ argument is a package ID specification of the package to remove (see
 <li><code>CARGO_HOME</code> environment variable</li>
 <li><code>$HOME/.cargo</code></li>
 </ul>
-<h2><a class="header" href="#options-24" id="options-24">OPTIONS</a></h2>
+<h2><a class="header" href="#options-23" id="options-23">OPTIONS</a></h2>
 <h3><a class="header" href="#install-options-1" id="install-options-1">Install Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-uninstall--p"><a class="option-anchor" href="commands/cargo-uninstall.html#option-cargo-uninstall--p"></a><code>-p</code></dt>
@@ -11095,11 +11082,11 @@ for more information about how toolchain overrides work.</dd>
 <li><a href="commands/cargo-yank.html">cargo yank</a></li>
 </ul>
 <h1><a class="header" href="#cargo-login1" id="cargo-login1">cargo-login(1)</a></h1>
-<h2><a class="header" href="#name-26" id="name-26">NAME</a></h2>
+<h2><a class="header" href="#name-25" id="name-25">NAME</a></h2>
 <p>cargo-login - Save an API token from the registry locally</p>
-<h2><a class="header" href="#synopsis-26" id="synopsis-26">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-25" id="synopsis-25">SYNOPSIS</a></h2>
 <p><code>cargo login</code> [<em>options</em>] [<em>token</em>]</p>
-<h2><a class="header" href="#description-26" id="description-26">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-25" id="description-25">DESCRIPTION</a></h2>
 <p>This command will save the API token to disk so that commands that require
 authentication, such as <a href="commands/cargo-publish.html">cargo-publish(1)</a>, will be automatically
 authenticated. The token is saved in <code>$CARGO_HOME/credentials.toml</code>. <code>CARGO_HOME</code>
@@ -11107,7 +11094,7 @@ defaults to <code>.cargo</code> in your home directory.</p>
 <p>If the <em>token</em> argument is not specified, it will be read from stdin.</p>
 <p>The API token for crates.io may be retrieved from <a href="https://crates.io/me">https://crates.io/me</a>.</p>
 <p>Take care to keep the token secret, it should not be shared with anyone else.</p>
-<h2><a class="header" href="#options-25" id="options-25">OPTIONS</a></h2>
+<h2><a class="header" href="#options-24" id="options-24">OPTIONS</a></h2>
 <h3><a class="header" href="#login-options" id="login-options">Login Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-login---registry"><a class="option-anchor" href="commands/cargo-login.html#option-cargo-login---registry"></a><code>--registry</code> <em>registry</em></dt>
@@ -11169,13 +11156,13 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-26" id="see-also-26">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-owner1" id="cargo-owner1">cargo-owner(1)</a></h1>
-<h2><a class="header" href="#name-27" id="name-27">NAME</a></h2>
+<h2><a class="header" href="#name-26" id="name-26">NAME</a></h2>
 <p>cargo-owner - Manage the owners of a crate on the registry</p>
-<h2><a class="header" href="#synopsis-27" id="synopsis-27">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-26" id="synopsis-26">SYNOPSIS</a></h2>
 <p><code>cargo owner</code> [<em>options</em>] <code>--add</code> <em>login</em> [<em>crate</em>]<br />
 <code>cargo owner</code> [<em>options</em>] <code>--remove</code> <em>login</em> [<em>crate</em>]<br />
 <code>cargo owner</code> [<em>options</em>] <code>--list</code> [<em>crate</em>]</p>
-<h2><a class="header" href="#description-27" id="description-27">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-26" id="description-26">DESCRIPTION</a></h2>
 <p>This command will modify the owners for a crate on the registry. Owners of a
 crate can upload new versions and yank old versions. Non-team owners can also
 modify the set of owners, so take care!</p>
@@ -11185,7 +11172,7 @@ or using <a href="commands/cargo-login.html">cargo-login(1)</a>.</p>
 current directory.</p>
 <p>See <a href="commands/../reference/publishing.html#cargo-owner">the reference</a> for more
 information about owners and publishing.</p>
-<h2><a class="header" href="#options-26" id="options-26">OPTIONS</a></h2>
+<h2><a class="header" href="#options-25" id="options-25">OPTIONS</a></h2>
 <h3><a class="header" href="#owner-options" id="owner-options">Owner Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-owner--a"><a class="option-anchor" href="commands/cargo-owner.html#option-cargo-owner--a"></a><code>-a</code></dt>
@@ -11281,7 +11268,7 @@ for more information about how toolchain overrides work.</dd>
 <p>cargo-package - 将本地包打包为可分发的压缩文件</p>
 <h2><a class="header" href="#用法-1" id="用法-1">用法</a></h2>
 <p><code>cargo package</code> [<em>options</em>]</p>
-<h2><a class="header" href="#描述-1" id="描述-1">描述</a></h2>
+<h2><a class="header" href="#描述-2" id="描述-2">描述</a></h2>
 <p>此命令会在当前目录创建一个可分发的，压缩过的<code>.crate</code>文件并附带其源代码。文件会存储于
 <code>target/package</code>目录中。命令的执行可分为以下步骤：</p>
 <ol>
@@ -11457,11 +11444,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#相关-1" id="相关-1">相关</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-publish1" id="cargo-publish1">cargo-publish(1)</a></h1>
-<h2><a class="header" href="#name-28" id="name-28">NAME</a></h2>
+<h2><a class="header" href="#name-27" id="name-27">NAME</a></h2>
 <p>cargo-publish - Upload a package to the registry</p>
-<h2><a class="header" href="#synopsis-28" id="synopsis-28">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-27" id="synopsis-27">SYNOPSIS</a></h2>
 <p><code>cargo publish</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-28" id="description-28">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-27" id="description-27">DESCRIPTION</a></h2>
 <p>This command will create a distributable, compressed <code>.crate</code> file with the
 source code of the package in the current directory and upload it to a
 registry. The default registry is <a href="https://crates.io">https://crates.io</a>. This performs the
@@ -11481,7 +11468,7 @@ additional checks on the crate.</li>
 or using <a href="commands/cargo-login.html">cargo-login(1)</a>.</p>
 <p>See <a href="commands/../reference/publishing.html">the reference</a> for more details about
 packaging and publishing.</p>
-<h2><a class="header" href="#options-27" id="options-27">OPTIONS</a></h2>
+<h2><a class="header" href="#options-26" id="options-26">OPTIONS</a></h2>
 <h3><a class="header" href="#publish-options" id="publish-options">Publish Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-publish---dry-run"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish---dry-run"></a><code>--dry-run</code></dt>
@@ -11510,7 +11497,7 @@ Otherwise it will use the default registry, which is defined by the
 <a href="commands/../reference/config.html#registrydefault"><code>registry.default</code></a> config key
 which defaults to <code>crates-io</code>.</dd>
 </dl>
-<h3><a class="header" href="#package-selection-6" id="package-selection-6">Package Selection</a></h3>
+<h3><a class="header" href="#package-selection-5" id="package-selection-5">Package Selection</a></h3>
 <p>By default, the package in the current working directory is selected. The <code>-p</code>
 flag can be used to choose a different package in a workspace.</p>
 <dl>
@@ -11624,11 +11611,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-28" id="see-also-28">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-package.html">cargo-package(1)</a>, <a href="commands/cargo-login.html">cargo-login(1)</a></p>
 <h1><a class="header" href="#cargo-yank1" id="cargo-yank1">cargo-yank(1)</a></h1>
-<h2><a class="header" href="#name-29" id="name-29">NAME</a></h2>
+<h2><a class="header" href="#name-28" id="name-28">NAME</a></h2>
 <p>cargo-yank - Remove a pushed crate from the index</p>
-<h2><a class="header" href="#synopsis-29" id="synopsis-29">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-28" id="synopsis-28">SYNOPSIS</a></h2>
 <p><code>cargo yank</code> [<em>options</em>] <code>--vers</code> <em>version</em> [<em>crate</em>]</p>
-<h2><a class="header" href="#description-29" id="description-29">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-28" id="description-28">DESCRIPTION</a></h2>
 <p>The yank command removes a previously published crate's version from the
 server's index. This command does not delete any data, and the crate will
 still be available for download via the registry's download link.</p>
@@ -11639,7 +11626,7 @@ crates to be locked to any yanked version.</p>
 or using <a href="commands/cargo-login.html">cargo-login(1)</a>.</p>
 <p>If the crate name is not specified, it will use the package name from the
 current directory.</p>
-<h2><a class="header" href="#options-28" id="options-28">OPTIONS</a></h2>
+<h2><a class="header" href="#options-27" id="options-27">OPTIONS</a></h2>
 <h3><a class="header" href="#yank-options" id="yank-options">Yank Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-yank---vers"><a class="option-anchor" href="commands/cargo-yank.html#option-cargo-yank---vers"></a><code>--vers</code> <em>version</em></dt>
@@ -11795,7 +11782,7 @@ for more information about how toolchain overrides work.</dd>
 <p>Cargo 通常用于网络访问有限，或没有网络访问的情况，如飞机、CI 环境或嵌入大型生产部署中。当 Cargo 试图从网络获取资源时，用户常常感到惊讶，因频繁出现 Cargo 离线工作的请求。</p>
 <p>Cargo 的核心是不会试图访问网络，除非被告知这样做。也就是说，如果没有来自 crates.io、git 存储库或其他网络位置的箱，则 Cargo 永远不会尝试进行网络连接。因此，如果 Cargo 试图接触网络，那是因为它需要获取所需的资源。</p>
 <p>Cargo 还非常积极地缓存信息，保持最小化的网络活动量。例如，它将保证<code>cargo build</code>(或类似的)运行到完成，那下一次<code>cargo build</code>保证不接触网络，只要<code>Cargo.toml</code>在此期间还没有被修改。网络的这种回避归结为，已存在<code>Cargo.lock</code>，和在 lock 文件中反映了，箱子的充分缓存。如果这些组件中的任何一个丢失，那么构建的成功就需要它们，并且必须远程获取它们。</p>
-<p>对 Rust 1.11.0 打后的 Cargo ，可以看到新的(标志)参数<code>--frozen</code>，这是它不应该接触网络的断言。当传递给 Cargo，如果 Cargo 试图进行网络请求，它将立即返回一个错误。错误应该包括关于为什么进行网络请求(第一个地方），以帮助调试的上下文信息。注意这个标志是<em>不改变 Cargo 的行为</em>，它只是断言 Cargo 不应该触摸网络，这作为上一个命令已完成的保证，可以相同的网络活动是不必的。</p>
+<p>对 Rust 1.11.0 后的 Cargo ，可以看到新的(标志)参数<code>--frozen</code>，这是它不应该接触网络的断言。当传递给 Cargo，如果 Cargo 试图进行网络请求，它将立即返回一个错误。错误应该包括关于为什么进行网络请求(第一个地方），以帮助调试的上下文信息。注意这个标志是<em>不改变 Cargo 的行为</em>，它只是断言 Cargo 不应该触摸网络，这作为上一个命令已完成的保证，可以相同的网络活动是不必的。</p>
 <blockquote>
 <p>上一个命令，如<code>cargo build</code></p>
 </blockquote>

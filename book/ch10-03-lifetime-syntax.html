@@ -235,7 +235,7 @@
 </span></code></pre></pre>
 <p><span class="caption">示例 10-19：一个有效的引用，因为数据比引用有着更长的生命周期</span></p>
 <p>这里 <code>x</code> 拥有生命周期 <code>'b</code>，比 <code>'a</code> 要大。这就意味着 <code>r</code> 可以引用 <code>x</code>：Rust 知道 <code>r</code> 中的引用在 <code>x</code> 有效的时候也总是有效的。</p>
-<p>现在我们已经在一个具体的例子中展示了引用的生命周期位于何处，并讨论了 Rust 如何分析生命周期来保证引用总是有效的，接下来让我们聊聊在函数的上下文中参数和返回值的泛型生命周期。</p>
+<p>现在我们已经在一个具体的例子中展示了什么是引用的生命周期，并讨论了 Rust 如何分析生命周期来保证引用总是有效的，接下来让我们聊聊在函数的上下文中参数和返回值的泛型生命周期。</p>
 <h3><a class="header" href="#函数中的泛型生命周期" id="函数中的泛型生命周期">函数中的泛型生命周期</a></h3>
 <p>让我们来编写一个函数，返回两个字符串 slice 中较长的那一个。这个函数获取两个字符串 slice 并返回一个字符串 slice。一旦我们实现了 <code>longest</code> 函数，示例 10-20 中的代码应该会打印出 <code>The longest string is abcd</code>：</p>
 <p><span class="filename">文件名: src/main.rs</span></p>

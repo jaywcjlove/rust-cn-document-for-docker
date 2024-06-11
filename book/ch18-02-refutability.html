@@ -198,7 +198,7 @@
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">示例 18-9: 使用 <code>if let</code> 和一个带有可反驳模式的代码块来代替 <code>let</code></span></p>
-<p>我们给了代码一个得以继续的出路！这段代码完全有效，尽管这意味着我们不能在避免产生错误的情况下使用无可辩驳的模式。如果为 <code>if let</code> 提供了一个总是会匹配的模式，比如示例 18-10 中的 <code>x</code>，编译器会给出一个警告。</p>
+<p>我们给了代码一个得以继续的出路！这段代码完全有效，尽管这意味着我们不能在避免产生警告的情况下使用无可辩驳的模式。如果为 <code>if let</code> 提供了一个总是会匹配的模式，比如示例 18-10 中的 <code>x</code>，编译器会给出一个警告。</p>
 <pre><code class="language-rust ignore">if let x = 5 {
     println!(&quot;{}&quot;, x);
 };

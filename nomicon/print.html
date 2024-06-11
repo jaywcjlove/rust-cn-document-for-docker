@@ -221,7 +221,7 @@ s.parentNode.insertBefore(el, s);
 <p>译者的话：首先，限于译者自身姿势水平，翻译有可能无法做到完全信达雅，并且有一些专业术语不知道如何翻译到中文，在这里先向大家道歉，请多包涵。</p>
 <p>不过，译者保证所有翻译的内容都是译者阅读并调整过多次的，并且译者会努力将内容调整到满足<strong>能看懂</strong>的要求，并且做到不遗漏原文内容。</p>
 <p>如果大家对于翻译有更好的建议或者想法，欢迎直接 PR~</p>
-<p>目前翻译基于 commit：6bc2415218d4dd0cb01433d8320f5ccf79c343a1，基于时间：2024/1/4</p>
+<p>目前翻译基于 commit：0ebdacadbda8ce2cd8fbf93985e15af61a7ab895，基于时间：2024/6/5</p>
 <p>Q：为什么不基于之前已有的中文版进行改进？</p>
 <p>A：因为翻译成中文版后，很难再回过头去看和现在的英文版原文到底差了啥，所以还不如完全重新翻译一遍。</p>
 <p>Q：那会不会有一天你的这个版本也过期了？</p>
@@ -354,6 +354,7 @@ unsafe trait UnsafeOrd {
 </ul>
 </li>
 </ul>
+<p>如果你想要了解更多关于“未定义行为”的信息，可以参考 <a href="https://www.rustwiki.org.cn/zh-CN/reference/behavior-considered-undefined.html">Rust 参考手册</a>。</p>
 <p>赋值、传递给一个函数/原始操作、从一个函数/原始操作返回的时候，都会“产生”一个值。</p>
 <p>如果一个引用/指针是空的，或者它所指向的地址并非都是合法的地址（合法地址都应该是已分配内存的），那么它就是<code>悬垂</code>的。它所指向的范围是由指针值和被指向类型的大小决定的（使用<code>size_of_val</code>）。因此，如果指向的范围是空的，<code>悬垂</code>与<code>空</code>是一样的。要注意，切片和字符串指向它们的整个范围，所以它们元数据中的长度不能太大。内存分配的长度、切片和字符串的长度不能大于<code>isize::MAX</code>字节。如果因为某些原因，这太麻烦了，可以考虑使用原始指针。</p>
 <p>这就是所有 Rust 中可能会导致未定义行为的原因。当然，unsafe 的函数和 trait 可以自由地声明任意的其他约束，程序必须保持这些约束以避免未定义行为。例如，分配器 API 声明，释放未分配的内存是未定义行为。</p>
@@ -367,6 +368,7 @@ unsafe trait UnsafeOrd {
 <li>中止程序</li>
 <li>删除生产数据库</li>
 </ul>
+<p>如果你想了解更多信息，可以参考 <a href="https://www.rustwiki.org.cn/zh-CN/reference/behavior-not-considered-unsafe.html">Rust 参考手册</a>。</p>
 <p>然而任何真正可能做这种事情的程序都是<em>可能</em>不正确的，Rust 提供了很多工具来尽可能检查出这些问题，但要这些问题完全被预防是不现实的。</p>
 <h1><a class="header" href="#使用-unsafe" id="使用-unsafe">使用 Unsafe</a></h1>
 <p>Rust 通常让我们以作用域的方式来限制 unsafe 代码块。不幸的是，现实要比这复杂得多。例如，考虑下面这个玩具函数：</p>
@@ -5518,7 +5520,7 @@ extern &quot;C&quot; {
 libc = { version = &quot;0.2.146&quot;, default-features = false }
 </code></pre>
 <p>注意已经禁用了默认功能。这是一个关键步骤——** <code>libc</code> 的默认功能包括 <code>std</code> crate，因此必须禁用。**</p>
-<p>另外，我们可以使用不稳定的 <code>rustc_private</code> 私有功能，以及下面示例中显示的 <code>extern crate libc;</code> 声明。</p>
+<p>另外，我们可以像下述例子一样，结合使用不稳定的 <code>rustc_private</code> 私有功能和 <code>extern crate libc;</code> 声明。需要注意的是，windows-msvc target 不需要 libc，对应的在 sysroot 中也不存在 <code>libc</code> 这个 crate，因此在 windows-msvc target 下，我们不需要添加这个声明，并且添加了这个声明会导致编译错误。</p>
 <h2><a class="header" href="#在没有-std-的情况下编写可执行文件" id="在没有-std-的情况下编写可执行文件">在没有 <code>std</code> 的情况下编写可执行文件</a></h2>
 <p>我们可能需要编译器的 nightly 版本来生成 <code>#![no_std]</code> 可执行文件，因为在许多平台上，我们必须提供不稳定的 <code>eh_personality</code> <a href="https://doc.rust-lang.org/nightly/unstable-book/language-features/lang-items.html">lang item</a>。</p>
 <p>可以通过两种方式控制入口点：<code>#[start]</code> 属性，或者用您自己的函数覆盖 C 语言 <code>main</code> 函数的默认实现。此外，还需要定义一个 <a href="panic-handler.html">panic handler function</a>。</p>
@@ -5527,11 +5529,12 @@ libc = { version = &quot;0.2.146&quot;, default-features = false }
 #![allow(internal_features)]
 #![no_std]
 
-// 在某些平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
+// 在 cfg(unix) 平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
 #![feature(panic_unwind)]
 extern crate unwind;
 
-// 为 crt0.o 可能需要的系统 libc 库拉取。
+// 导入 crt0.o 可能需要的系统 libc 库。
+#[cfg(not(windows))]
 extern crate libc;
 
 use core::panic::PanicInfo;
@@ -5555,11 +5558,12 @@ fn panic_handler(_info: &amp;PanicInfo) -&gt; ! { core::intrinsics::abort() }
 #![no_std]
 #![no_main]
 
-// 在某些平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
+// 在 cfg(unix) 平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
 #![feature(panic_unwind)]
 extern crate unwind;
 
-// 为 crt0.o 可能需要的系统 libc 库拉取。
+// 导入 crt0.o 可能需要的系统 libc 库。
+#[cfg(not(windows))]
 extern crate libc;
 
 use core::ffi::{c_char, c_int};

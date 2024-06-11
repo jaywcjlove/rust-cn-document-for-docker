@@ -216,7 +216,7 @@ s.parentNode.insertBefore(el, s);
 libc = { version = &quot;0.2.146&quot;, default-features = false }
 </code></pre>
 <p>注意已经禁用了默认功能。这是一个关键步骤——** <code>libc</code> 的默认功能包括 <code>std</code> crate，因此必须禁用。**</p>
-<p>另外，我们可以使用不稳定的 <code>rustc_private</code> 私有功能，以及下面示例中显示的 <code>extern crate libc;</code> 声明。</p>
+<p>另外，我们可以像下述例子一样，结合使用不稳定的 <code>rustc_private</code> 私有功能和 <code>extern crate libc;</code> 声明。需要注意的是，windows-msvc target 不需要 libc，对应的在 sysroot 中也不存在 <code>libc</code> 这个 crate，因此在 windows-msvc target 下，我们不需要添加这个声明，并且添加了这个声明会导致编译错误。</p>
 <h2><a class="header" href="#在没有-std-的情况下编写可执行文件" id="在没有-std-的情况下编写可执行文件">在没有 <code>std</code> 的情况下编写可执行文件</a></h2>
 <p>我们可能需要编译器的 nightly 版本来生成 <code>#![no_std]</code> 可执行文件，因为在许多平台上，我们必须提供不稳定的 <code>eh_personality</code> <a href="https://doc.rust-lang.org/nightly/unstable-book/language-features/lang-items.html">lang item</a>。</p>
 <p>可以通过两种方式控制入口点：<code>#[start]</code> 属性，或者用您自己的函数覆盖 C 语言 <code>main</code> 函数的默认实现。此外，还需要定义一个 <a href="panic-handler.html">panic handler function</a>。</p>
@@ -225,11 +225,12 @@ libc = { version = &quot;0.2.146&quot;, default-features = false }
 #![allow(internal_features)]
 #![no_std]
 
-// 在某些平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
+// 在 cfg(unix) 平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
 #![feature(panic_unwind)]
 extern crate unwind;
 
-// 为 crt0.o 可能需要的系统 libc 库拉取。
+// 导入 crt0.o 可能需要的系统 libc 库。
+#[cfg(not(windows))]
 extern crate libc;
 
 use core::panic::PanicInfo;
@@ -253,11 +254,12 @@ fn panic_handler(_info: &amp;PanicInfo) -&gt; ! { core::intrinsics::abort() }
 #![no_std]
 #![no_main]
 
-// 在某些平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
+// 在 cfg(unix) 平台上，对于 `panic = &quot;unwind&quot;` 构建来说是必要的。
 #![feature(panic_unwind)]
 extern crate unwind;
 
-// 为 crt0.o 可能需要的系统 libc 库拉取。
+// 导入 crt0.o 可能需要的系统 libc 库。
+#[cfg(not(windows))]
 extern crate libc;
 
 use core::ffi::{c_char, c_int};

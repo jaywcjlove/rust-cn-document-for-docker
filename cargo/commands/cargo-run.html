@@ -169,36 +169,25 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#cargo-run1" id="cargo-run1">cargo-run(1)</a></h1>
-<h2><a class="header" href="#name" id="name">NAME</a></h2>
-<p>cargo-run - Run the current package</p>
-<h2><a class="header" href="#synopsis" id="synopsis">SYNOPSIS</a></h2>
-<p><code>cargo run</code> [<em>options</em>] [<code>--</code> <em>args</em>]</p>
-<h2><a class="header" href="#description" id="description">DESCRIPTION</a></h2>
-<p>Run a binary or example of the local package.</p>
-<p>All the arguments following the two dashes (<code>--</code>) are passed to the binary to
-run. If you're passing arguments to both Cargo and the binary, the ones after
-<code>--</code> go to the binary, the ones before go to Cargo.</p>
-<h2><a class="header" href="#options" id="options">OPTIONS</a></h2>
-<h3><a class="header" href="#package-selection" id="package-selection">Package Selection</a></h3>
-<p>By default, the package in the current working directory is selected. The <code>-p</code>
-flag can be used to choose a different package in a workspace.</p>
-<dl>
-<dt class="option-term" id="option-cargo-run--p"><a class="option-anchor" href="#option-cargo-run--p"></a><code>-p</code> <em>spec</em></dt>
-<dt class="option-term" id="option-cargo-run---package"><a class="option-anchor" href="#option-cargo-run---package"></a><code>--package</code> <em>spec</em></dt>
-<dd class="option-desc">The package to run. See <a href="cargo-pkgid.html">cargo-pkgid(1)</a> for the SPEC
-format.</dd>
-</dl>
-<h3><a class="header" href="#target-selection" id="target-selection">Target Selection</a></h3>
-<p>When no target selection options are given, <code>cargo run</code> will run the binary
-target. If there are multiple binary targets, you must pass a target flag to
-choose one. Or, the <code>default-run</code> field may be specified in the <code>[package]</code>
-section of <code>Cargo.toml</code> to choose the name of the binary to run by default.</p>
-<dl>
-<dt class="option-term" id="option-cargo-run---bin"><a class="option-anchor" href="#option-cargo-run---bin"></a><code>--bin</code> <em>name</em></dt>
-<dd class="option-desc">Run the specified binary.</dd>
-<dt class="option-term" id="option-cargo-run---example"><a class="option-anchor" href="#option-cargo-run---example"></a><code>--example</code> <em>name</em></dt>
-<dd class="option-desc">Run the specified example.</dd>
+                        <h2><a class="header" href="#名字" id="名字">名字</a></h2>
+<p>cargo-run —— 运行当前包</p>
+<h2><a class="header" href="#概要synopsis" id="概要synopsis">概要（synopsis）</a></h2>
+<p><code>cargo run</code> [options] [<code>--</code> args]</p>
+<h3><a class="header" href="#描述" id="描述">描述</a></h3>
+<p>运行一个二进制或者本地包的实例
+所有在 两个横线（<code>--</code>） 后面的参数都会被传递给二进制程序来运行。如果你需要同时传递一些参数给 Cargo 和二进制程序，那么在 <code>--</code> 后面的将会给二进制，在<code>--</code>前面的将会给 Cargo。</p>
+<h2><a class="header" href="#选项" id="选项">选项</a></h2>
+<h3><a class="header" href="#包选择" id="包选择">包选择</a></h3>
+<p>默认情况下，选择的是当前工作目录中的包。<code>-p</code>标志可以用来选择在工作目录中的一个不同的包。
+<code>-p</code>spec
+<code>--package</code> spec
+运行包。SPEC 格式参考<a href="https://rustwiki.org/zh-CN/cargo/commands/cargo-pkgid.html">cargo-pkgid(1)</a>。</p>
+<h3><a class="header" href="#目标选择" id="目标选择">目标选择</a></h3>
+<p>当没有传目标选项，<code>cargo run</code>将会运行二进制目标。如果有多个二进制目标，你必须传递一个目标标志来选中他们中的一个。或者 在 <code>Cargo.toml</code>的<code>[package]</code> 中的<code>default-run</code>字段指定一个运行时候的默认二进制名。
+<code>--bin</code> name
+运行一个特定的二进制
+<code>--example</code> name
+运行特定的例子</p>
 </dl>
 <h3><a class="header" href="#特性选择" id="特性选择">特性选择</a></h3>
 <p>可通过传递特性参数来控制启用哪些特性。如果没有给定要使用的特性，
@@ -322,23 +311,21 @@ for more information about how toolchain overrides work.</dd>
 默认为CPU数量。</dd>
 </dl>
 <h2><a class="header" href="#环境" id="环境">环境</a></h2>
-<p>关于Cargo所读取的环境变量，可参见<a href="../reference/environment-variables.html">the reference</a></p>
+<p>关于 Cargo 所读取的环境变量，可参见<a href="../reference/environment-variables.html">the reference</a></p>
 <h2><a class="header" href="#退出状态" id="退出状态">退出状态</a></h2>
 <ul>
-<li><code>0</code>: Cargo命令执行成功</li>
-<li><code>101</code>: Cargo命令未能完成.</li>
+<li><code>0</code>: Cargo 命令执行成功</li>
+<li><code>101</code>: Cargo 命令未能完成.</li>
 </ul>
 <h2><a class="header" href="#examples" id="examples">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Build the local package and run its main target (assuming only one binary):</p>
-<pre><code>cargo run
-</code></pre>
+<p>cargo run</p>
 </li>
 <li>
 <p>Run an example with extra arguments:</p>
-<pre><code>cargo run --example exname -- --exoption exarg1 exarg2
-</code></pre>
+<p>cargo run --example exname -- --exoption exarg1 exarg2</p>
 </li>
 </ol>
 <h2><a class="header" href="#see-also" id="see-also">SEE ALSO</a></h2>
