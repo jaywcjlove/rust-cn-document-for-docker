@@ -220,12 +220,12 @@ jobs:
           cargo clean
           cargo build
           cargo install mdbook --version 0.4.37
-          cargo install --locked mdbook-svgbob --locked --version 0.2.1
-          cargo install --locked mdbook-i18n-helpers --locked --version 0.3.3
-          cargo install --locked i18n-report --locked --version 0.2.0
+          cargo install --locked mdbook-svgbob --version 0.2.1
+          cargo install --locked mdbook-i18n-helpers --version 0.3.3
+          cargo install --locked i18n-report --version 0.2.0
           cargo install --locked mdbook-linkcheck
-          cargo install --locked --path mdbook-exerciser
-          cargo install --locked --path mdbook-course
+          cargo install --path mdbook-exerciser
+          cargo install --path mdbook-course
 
           mdbook build -d book/zh-CN
           rm -rf .git
