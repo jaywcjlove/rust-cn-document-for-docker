@@ -24,6 +24,12 @@ jobs:
           repository: google/comprehensive-rust
           path: 'comprehensive-rust'
 
+      - name: Checkout chuxiuhong/chuxiuhong-rust-patterns-zh code
+        uses: actions/checkout@v4
+        with:
+          repository: chuxiuhong/chuxiuhong-rust-patterns-zh
+          path: 'chuxiuhong-rust-patterns-zh'
+  
       - name: Install formatting dependencies
         run: |
           sudo apt update
@@ -154,6 +160,13 @@ jobs:
           rm -rf .git
           cp -rp ./book ../dist/rust-cookbook
 
+      - name: 📗 chuxiuhong-rust-patterns-zh
+        working-directory: chuxiuhong-rust-patterns-zh
+        run: |
+          mdbook build
+          rm -rf .git
+          cp -rp ./book ../dist/chuxiuhong-rust-patterns-zh
+  
       - name: 📗 cargo
         working-directory: cargo
         run: |
@@ -241,23 +254,24 @@ jobs:
               </header>
               <h1>Rust 相关中文文档</h1>
               <ul>
+              <li><a href="std/std/" target="__blank"> Rust 标准库文档中文版 </a></li>
                 <li><a href="book/" target="__blank"> Rust 程序设计语言中文版 </a></li>
-                <li><a href="cargo/" target="__blank"> Cargo 手册中文版 </a></li>
-                <li><a href="edition-guide/" target="__blank"> Rust 版本指南 </a></li>
+                <li><a href="rust-by-example-cn/" target="__blank"> 通过例子学 Rust 中文版 </a></li>
                 <li><a href="reference/" target="__blank"> Rust 参考手册中文版 </a></li>
                 <li><a href="rustdoc/" target="__blank"> RustDoc 手册中文版 </a></li>
                 <li><a href="rust-cookbook/" target="__blank"> Rust Cookbook 中文版 </a></li>
-                <li><a href="std/std/" target="__blank"> Rust 标准库文档中文版 </a></li>
-                <li><a href="rust-by-example-cn/" target="__blank"> Rust By Example 中文版 </a></li>
+                <li><a href="edition-guide/" target="__blank"> Rust 版本指南 </a></li>
+                <li><a href="chuxiuhong-rust-patterns-zh/index.html" target="__blank"> Rust 设计模式中文版 </a></li>
+                <li><a href="cargo/" target="__blank"> Cargo 手册中文版 </a></li>
                 <li><a href="nomicon/" target="__blank"> Rust 秘典 </a></li>
                 <li><a href="quick-reference/docs/cargo.html" target="__blank"> Cargo 备忘清单(速查表) </a></li>
                 <li><a href="quick-reference/docs/rust.html" target="__blank"> Rust 备忘清单(速查表) </a></li>
                 <li><a href="quick-reference/index.html" target="__blank"> Quick Reference (速查表) </a></li>
                 <li><a href="rust-course/index.html" target="__blank"> Rust 语言圣经 </a></li>
                 <li><a href="rusty-book/index.html" target="__blank"> Rusty Book(锈书) </a></li>
+                <li><a href="rust-algos/index.html" target="__blank"> Rust 算法题解 </a></li>
                 <li><a href="style-guide-cn/index.html" target="__blank"> Rust 语言风格指南 </a></li>
                 <li><a href="comprehensive-rust/index.html" target="__blank"> Comprehensive Rust 🦀 </a></li>
-                <li><a href="rust-algos/index.html" target="__blank"> Rust 算法题解 </a></li>
                 <li><a href="hello-algo/chapter_preface/index.html" target="__blank"> Hello 算法(动画图解 支持 Rust) </a></li>
               </ul>
             </body>
@@ -273,12 +287,13 @@ jobs:
             Github Repo | last commit | home
             ---- | ---- | ----
             [Rust 标准库文档中文版](https://github.com/rust-lang-cn/std-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/std-cn?style=flat&label=last)](https://github.com/rust-lang-cn/std-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/std/std/)
-            [Rust 程序设计语言 中文版](https://github.com/rust-lang-cn/book-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/book-cn?style=flat&label=last)](https://github.com/rust-lang-cn/book-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/book/)
-            [Rust By Example 中文版](https://github.com/rust-lang-cn/rust-by-example-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-by-example-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-by-example-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-by-example-cn/)
+            [Rust 程序设计语言中文版](https://github.com/rust-lang-cn/book-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/book-cn?style=flat&label=last)](https://github.com/rust-lang-cn/book-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/book/)
+            [通过例子学 Rust 中文版](https://github.com/rust-lang-cn/rust-by-example-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-by-example-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-by-example-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-by-example-cn/)
             [Rust 参考手册中文版](https://github.com/rust-lang-cn/reference-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/reference-cn?style=flat&label=last)](https://github.com/rust-lang-cn/reference-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/)
             [RustDoc 手册中文版](https://github.com/rust-lang-cn/rustdoc-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rustdoc-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rustdoc-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/)
             [Rust Cookbook 中文版](https://github.com/rust-lang-cn/rust-cookbook-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/rust-cookbook-cn?style=flat&label=last)](https://github.com/rust-lang-cn/rust-cookbook-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/)
             [Rust 版本指南](https://github.com/rust-lang-cn/edition-guide-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/edition-guide-cn?style=flat&label=last)](https://github.com/rust-lang-cn/edition-guide-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/edition-guide/)
+            [Rust 设计模式中文版](https://github.com/chuxiuhong/chuxiuhong-rust-patterns-zh) | [![GitHub last commit](https://img.shields.io/github/last-commit/chuxiuhong/chuxiuhong-rust-patterns-zh?style=flat&label=last)](https://github.com/chuxiuhong/chuxiuhong-rust-patterns-zh/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/chuxiuhong-rust-patterns-zh/)
             [Cargo 手册](https://github.com/rust-lang-cn/cargo-cn) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/cargo-cn?style=flat&label=last)](https://github.com/rust-lang-cn/cargo-cn/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/cargo/)
             [Rust 秘典](https://github.com/rust-lang-cn/nomicon-zh-Hans) | [![GitHub last commit](https://img.shields.io/github/last-commit/rust-lang-cn/nomicon-zh-Hans?style=flat&label=last)](https://github.com/rust-lang-cn/nomicon-zh-Hans/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/nomicon/)
             [Cargo 备忘清单(速查表)](https://github.com/jaywcjlove/reference) | [![GitHub last commit](https://img.shields.io/github/last-commit/jaywcjlove/reference?style=flat&label=last)](https://github.com/jaywcjlove/reference/commits) | [#home](https://jaywcjlove.github.io/rust-cn-document-for-docker/quick-reference/docs/cargo.html)

@@ -22,48 +22,17 @@ jobs:
           repository: google/comprehensive-rust
           path: 'comprehensive-rust'
 
+      - name: Checkout chuxiuhong/chuxiuhong-rust-patterns-zh code
+        uses: actions/checkout@v4
+        with:
+          repository: chuxiuhong/chuxiuhong-rust-patterns-zh
+          path: 'chuxiuhong-rust-patterns-zh'
+
       - name: Install formatting dependencies
         run: |
           sudo apt update
           sudo apt install gettext yapf3
 
-
-      # - id: setup
-      #   name: Setup Toolchain
-      #   uses: dtolnay/rust-toolchain@stable
-      #   with:
-      #     toolchain: stable
-      #     components: llvm-tools-preview
-
-      # - name: Install Rust
-      #   run: |
-      #     rustup set profile minimal
-      #     # rustup toolchain install 1.57 -c rust-docs
-      #     # rustup default 1.57
-      #     rustup install 1.76.0
-      #     rustup default nightly-2024-02-04
-
-      # - name: Install nightly rustfmt
-      #   run: |
-      #     rustup default nightly
-      #     rustup component add rustfmt
-
-
-      # - name: Install latest nightly
-      #   uses: actions-rs/toolchain@v1
-      #   with:
-      #     toolchain: nightly
-      #     override: true
-      #     components: rustfmt, clippy
-
-      # - name: Update rustup
-      #   run: rustup self update
-
-      # - name: Install Rust
-      #   run: |
-      #     rustup set profile minimal
-      #     rustup toolchain install nightly -c rust-docs
-      #     rustup default nightly
       - id: setup
         name: Setup Toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -112,6 +81,7 @@ jobs:
       - run: rm -rf book/.git
       - run: rm -rf rust-by-example-cn/.git
       - run: rm -rf comprehensive-rust/.git
+      - run: rm -rf chuxiuhong-rust-patterns-zh/.git
       - run: rm -rf quick-reference/.git
       - run: cp -rp quick-reference dist/quick-reference
       - run: rm -rf rust-algos/.git
@@ -185,6 +155,13 @@ jobs:
           mdbook build
           rm -rf .git
           cp -rp ./book ../dist/rust-cookbook
+
+      - name: 📗 chuxiuhong-rust-patterns-zh
+        working-directory: chuxiuhong-rust-patterns-zh
+        run: |
+          mdbook build
+          rm -rf .git
+          cp -rp ./book ../dist/chuxiuhong-rust-patterns-zh
 
       - name: 📗 cargo
         working-directory: cargo
