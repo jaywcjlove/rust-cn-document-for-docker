@@ -1,0 +1,4 @@
+# Generated output of mdbook
+.idea
+.DS_Store
+book/
