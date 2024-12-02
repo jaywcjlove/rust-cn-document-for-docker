@@ -24,12 +24,6 @@ jobs:
           repository: google/comprehensive-rust
           path: 'comprehensive-rust'
 
-      - name: Checkout chuxiuhong/chuxiuhong-rust-patterns-zh code
-        uses: actions/checkout@v4
-        with:
-          repository: chuxiuhong/chuxiuhong-rust-patterns-zh
-          path: 'chuxiuhong-rust-patterns-zh'
-  
       - name: Install formatting dependencies
         run: |
           sudo apt update
