@@ -219,11 +219,13 @@ jobs:
         run: |
           cargo clean
           cargo build
-          cargo install mdbook --locked --version 0.4.36
-          cargo install mdbook-svgbob --locked --version 0.2.1
-          cargo install mdbook-i18n-helpers --locked --version 0.3.1
-          cargo install --path mdbook-exerciser --locked
-          cargo install --path mdbook-course --locked
+          cargo install mdbook --version 0.4.37
+          cargo install --locked mdbook-svgbob --locked --version 0.2.1
+          cargo install --locked mdbook-i18n-helpers --locked --version 0.3.3
+          cargo install --locked i18n-report --locked --version 0.2.0
+          cargo install --locked mdbook-linkcheck
+          cargo install --locked --path mdbook-exerciser
+          cargo install --locked --path mdbook-course
 
           mdbook build -d book/zh-CN
           rm -rf .git
