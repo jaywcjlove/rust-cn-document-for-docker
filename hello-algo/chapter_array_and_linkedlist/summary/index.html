@@ -1144,14 +1144,6 @@
     4.4 &nbsp; 内存与缓存 *
   </span>
   
-    
-  
-  
-    <span class="md-status md-status--new" title="最近添加">
-    </span>
-  
-
-  
 
       </a>
     </li>
@@ -3685,7 +3677,7 @@
 </ol>
 <p><strong>Q</strong>：为什么数组要求相同类型的元素，而在链表中却没有强调相同类型呢？</p>
 <p>链表由节点组成，节点之间通过引用（指针）连接，各个节点可以存储不同类型的数据，例如 <code>int</code>、<code>double</code>、<code>string</code>、<code>object</code> 等。</p>
-<p>相对地，数组元素则必须是相同类型的，这样才能通过计算偏移量来获取对应元素位置。例如，数组同时包含 <code>int</code> 和 <code>long</code> 两种类型，单个元素分别占用 4 字节 和 8 字节 ，此时就不能用以下公式计算偏移量了，因为数组中包含了两种“元素长度”。</p>
+<p>相对地，数组元素则必须是相同类型的，这样才能通过计算偏移量来获取对应元素位置。例如，数组同时包含 <code>int</code> 和 <code>long</code> 两种类型，单个元素分别占用 4 字节和 8 字节 ，此时就不能用以下公式计算偏移量了，因为数组中包含了两种“元素长度”。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 元素内存地址 = 数组内存地址（首元素内存地址） + 元素长度 * 元素索引</span>
 </code></pre></div>
 <p><strong>Q</strong>：删除节点 <code>P</code> 后，是否需要把 <code>P.next</code> 设为 <code>None</code> 呢？</p>
@@ -3713,8 +3705,13 @@
 <li>缓存不友好：由于数据不是连续存放的，因此 <code>std::list</code> 对缓存的利用率较低。一般情况下，<code>std::vector</code> 的性能会更好。</li>
 </ul>
 <p>另一方面，必要使用链表的情况主要是二叉树和图。栈和队列往往会使用编程语言提供的 <code>stack</code> 和 <code>queue</code> ，而非链表。</p>
-<p><strong>Q</strong>：初始化列表 <code>res = [0] * self.size()</code> 操作，会导致 <code>res</code> 的每个元素引用相同的地址吗？</p>
-<p>不会。但二维数组会有这个问题，例如初始化二维列表 <code>res = [[0]] * self.size()</code> ，则多次引用了同一个列表 <code>[0]</code> 。</p>
+<p><strong>Q</strong>：操作 <code>res = [[0]] * n</code> 生成了一个二维列表，其中每一个 <code>[0]</code> 都是独立的吗？</p>
+<p>不是独立的。此二维列表中，所有的 <code>[0]</code> 实际上是同一个对象的引用。如果我们修改其中一个元素，会发现所有的对应元素都会随之改变。</p>
+<p>如果希望二维列表中的每个 <code>[0]</code> 都是独立的，可以使用 <code>res = [[0] for _ in range(n)]</code> 来实现。这种方式的原理是初始化了 <span class="arithmatex">\(n\)</span> 个独立的 <code>[0]</code> 列表对象。</p>
+<p><strong>Q</strong>：操作 <code>res = [0] * n</code> 生成了一个列表，其中每一个整数 0 都是独立的吗？</p>
+<p>在该列表中，所有整数 0 都是同一个对象的引用。这是因为 Python 对小整数（通常是 -5 到 256）采用了缓存池机制，以便最大化对象复用，从而提升性能。</p>
+<p>虽然它们指向同一个对象，但我们仍然可以独立修改列表中的每个元素，这是因为 Python 的整数是“不可变对象”。当我们修改某个元素时，实际上是切换为另一个对象的引用，而不是改变原有对象本身。</p>
+<p>然而，当列表元素是“可变对象”时（例如列表、字典或类实例等），修改某个元素会直接改变该对象本身，所有引用该对象的元素都会产生相同变化。</p>
 
 <!-- Source file information -->
 
@@ -3961,8 +3958,6 @@ aria-label="页脚"
       <script src="../../assets/javascripts/bundle.c18c5fb9.min.js"></script>
       
         <script src="../../javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
       

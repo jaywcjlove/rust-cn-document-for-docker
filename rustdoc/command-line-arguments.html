@@ -177,22 +177,21 @@ $ rustdoc --help
 <p>这会展示 <code>rustdoc</code> 内置的帮助，包含了大量可用的命令行 flags。</p>
 <p>有些 flags 是未稳定的；这个页面只会只包好稳定的参数，<code>--help</code> 会包含所有的。</p>
 <h2><a class="header" href="#-v--version-version-information" id="-v--version-version-information"><code>-V</code>/<code>--version</code>: version information</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc -V
 $ rustdoc --version
 </code></pre>
-<p>This will show <code>rustdoc</code>'s version, which will look something
-like this:</p>
+<p>这将显示 <code>rustdoc</code> 的版本，如下所示：</p>
 <pre><code class="language-text">rustdoc 1.17.0 (56124baa9 2017-04-24)
 </code></pre>
 <h2><a class="header" href="#-v--verbose-more-verbose-output" id="-v--verbose-more-verbose-output"><code>-v</code>/<code>--verbose</code>: more verbose output</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc -v src/lib.rs
 $ rustdoc --verbose src/lib.rs
 </code></pre>
-<p>This enables &quot;verbose mode&quot;, which means that more information will be written
-to standard out. What is written depends on the other flags you've passed in.
-For example, with <code>--version</code>:</p>
+<p>这将启用 &quot;冗长模式&quot;，即会将更多信息写入标准输出。
+写入的内容取决于你传入的其它标志。
+例如，使用 <code>--version</code>：</p>
 <pre><code class="language-text">$ rustdoc --verbose --version
 rustdoc 1.17.0 (56124baa9 2017-04-24)
 binary: rustdoc
@@ -203,25 +202,23 @@ release: 1.17.0
 LLVM version: 3.9
 </code></pre>
 <h2><a class="header" href="#-o--out-dir-output-directory-path" id="-o--out-dir-output-directory-path"><code>-o</code>/<code>--out-dir</code>: output directory path</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs -o target/doc
 $ rustdoc src/lib.rs --out-dir target/doc
 </code></pre>
-<p>By default, <code>rustdoc</code>'s output appears in a directory named <code>doc</code> in
-the current working directory. With this flag, it will place all output
-into the directory you specify.</p>
+<p>默认情况下，<code>rustdoc</code> 的输出会出现在当前工作目录下名为 <code>doc</code> 的目录中。
+使用此标记后，它将把所有输出到你指定的目录。</p>
 <h2><a class="header" href="#--crate-name-controlling-the-name-of-the-crate" id="--crate-name-controlling-the-name-of-the-crate"><code>--crate-name</code>: controlling the name of the crate</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --crate-name mycrate
 </code></pre>
-<p>By default, <code>rustdoc</code> assumes that the name of your crate is the same name
-as the <code>.rs</code> file. <code>--crate-name</code> lets you override this assumption with
-whatever name you choose.</p>
+<p>默认情况下，&quot;rustdoc&quot;会假定你的 crate 名称与&quot;.rs &quot;文件相同。
+您可以使用 <code>--crate-name</code> 来覆盖这一假设。</p>
 <h2><a class="header" href="#--document-private-items-show-items-that-are-not-public" id="--document-private-items-show-items-that-are-not-public"><code>--document-private-items</code>: Show items that are not public</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --document-private-items
 </code></pre>
-<p>By default, <code>rustdoc</code> only documents items that are publicly reachable.</p>
+<p>默认情况下，<code>rustdoc</code> 只记录可公开访问的项目。</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -233,31 +230,28 @@ mod private { // this item is private and will not be documented
 </span></code></pre></pre>
 <p><code>--document-private-items</code> documents all items, even if they're not public.</p>
 <h2><a class="header" href="#-l--library-path-where-to-look-for-dependencies" id="-l--library-path-where-to-look-for-dependencies"><code>-L</code>/<code>--library-path</code>: where to look for dependencies</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs -L target/debug/deps
 $ rustdoc src/lib.rs --library-path target/debug/deps
 </code></pre>
-<p>If your crate has dependencies, <code>rustdoc</code> needs to know where to find them.
-Passing <code>--library-path</code> gives <code>rustdoc</code> a list of places to look for these
-dependencies.</p>
-<p>This flag takes any number of directories as its argument, and will use all of
-them when searching.</p>
+<p>如果你的 crate 有依赖库，<code>rustdoc</code> 需要知道在哪里可以找到它们。
+传递 <code>--library-path</code> 会给 <code>rustdoc</code> 提供一个查找这些依赖项的列表。</p>
+<p>这个标志可以接受任意数量的目录作为参数，并在搜索时使用所有的目录。</p>
 <h2><a class="header" href="#--cfg-passing-configuration-flags" id="--cfg-passing-configuration-flags"><code>--cfg</code>: passing configuration flags</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --cfg feature=&quot;foo&quot;
 </code></pre>
-<p>This flag accepts the same values as <code>rustc --cfg</code>, and uses it to configure
-compilation. The example above uses <code>feature</code>, but any of the <code>cfg</code> values
-are acceptable.</p>
+<p>该flag接受与 <code>rustc --cfg</code> 相同的值，并用它来配置编译。
+上面的例子使用了 <code>feature</code>，但任何 <code>cfg</code> 值都可以接受。</p>
 <h2><a class="header" href="#--extern-specify-a-dependencys-location" id="--extern-specify-a-dependencys-location"><code>--extern</code>: specify a dependency's location</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --extern lazy-static=/path/to/lazy-static
 </code></pre>
-<p>Similar to <code>--library-path</code>, <code>--extern</code> is about specifying the location
-of a dependency. <code>--library-path</code> provides directories to search in, <code>--extern</code>
-instead lets you specify exactly which dependency is located where.</p>
+<p>与&quot;--library-path &quot;类似，&quot;--extern &quot;是关于指定的位置。
+library-path &quot;提供了搜索目录，而&quot;--extern则可以让你精
+确地指定依赖项的位置。</p>
 <h2><a class="header" href="#-c--codegen-pass-codegen-options-to-rustc" id="-c--codegen-pass-codegen-options-to-rustc"><code>-C</code>/<code>--codegen</code>: pass codegen options to rustc</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs -C target_feature=+avx
 $ rustdoc src/lib.rs --codegen target_feature=+avx
 
@@ -267,35 +261,32 @@ $ rustdoc --test src/lib.rs --codegen target_feature=+avx
 $ rustdoc --test README.md -C target_feature=+avx
 $ rustdoc --test README.md --codegen target_feature=+avx
 </code></pre>
-<p>When rustdoc generates documentation, looks for documentation tests, or executes documentation
-tests, it needs to compile some rust code, at least part-way. This flag allows you to tell rustdoc
-to provide some extra codegen options to rustc when it runs these compilations. Most of the time,
-these options won't affect a regular documentation run, but if something depends on target features
-to be enabled, or documentation tests need to use some additional options, this flag allows you to
-affect that.</p>
-<p>The arguments to this flag are the same as those for the <code>-C</code> flag on rustc. Run <code>rustc -C help</code> to
-get the full list.</p>
+<p>当 rustdoc 生成文档、查找文档测试或执行文档测试时，它需要编译一些 rust 代码，至少是部分编译。
+测试时，需要编译一些 rust 代码，至少是部分编译。这个flag允许你告诉 rustdoc
+在运行这些编译时向 rustc 提供一些额外的 codegen 选项。
+大多数情况下这些选项不会影响正常的文档运行，但如果某些内容依赖于目标特性
+或者文档测试需要使用一些额外的选项，这个flag允许你影响。</p>
+<p>该标志的参数与 rustc 的 <code>-C</code> 标志相同。运行 <code>rustc -C help</code> 以
+获得完整的列表。</p>
 <h2><a class="header" href="#--test-run-code-examples-as-tests" id="--test-run-code-examples-as-tests"><code>--test</code>: run code examples as tests</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --test
 </code></pre>
-<p>This flag will run your code examples as tests. For more, see <a href="documentation-tests.html">the chapter
-on documentation tests</a>.</p>
-<p>See also <code>--test-args</code>.</p>
+<p>该flag将把你的代码示例作为测试运行。更多信息，请参阅(document-tests.md)。</p>
+<p>另请参阅 <code>--test-args</code>。</p>
 <h2><a class="header" href="#--test-args-pass-options-to-test-runner" id="--test-args-pass-options-to-test-runner"><code>--test-args</code>: pass options to test runner</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --test --test-args ignored
 </code></pre>
-<p>This flag will pass options to the test runner when running documentation tests.
-For more, see <a href="documentation-tests.html">the chapter on documentation tests</a>.</p>
-<p>See also <code>--test</code>.</p>
+<p>运行文档测试时，该flag将向测试运行器传递选项。
+更多信息，请参阅(document-tests.md)。</p>
+<p>另请参阅 <code>--test</code>。</p>
 <h2><a class="header" href="#--target-generate-documentation-for-the-specified-target-triple" id="--target-generate-documentation-for-the-specified-target-triple"><code>--target</code>: generate documentation for the specified target triple</a></h2>
-<p>Using this flag looks like this:</p>
+<p>使用该flag的方式如下：</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --target x86_64-pc-windows-gnu
 </code></pre>
-<p>Similar to the <code>--target</code> flag for <code>rustc</code>, this generates documentation
-for a target triple that's different than your host triple.</p>
-<p>All of the usual caveats of cross-compiling code apply.</p>
+<p>与 <code>rustc</code> 的 <code>--target</code> 标志类似，它会为与主机三元组不同的目标三元组生成文档。</p>
+<p>交叉编译代码的所有常见注意事项均适用。</p>
 <h2><a class="header" href="#--default-theme-set-the-default-theme" id="--default-theme-set-the-default-theme"><code>--default-theme</code>: set the default theme</a></h2>
 <p>Using this flag looks like this:</p>
 <pre><code class="language-bash">$ rustdoc src/lib.rs --default-theme=ayu

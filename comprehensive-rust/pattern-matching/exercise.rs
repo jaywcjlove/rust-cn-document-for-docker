@@ -44,11 +44,11 @@ fn eval(e: Expression) -> Result<i64, String> {
         Expression::Op { op, left, right } => {
             let left = match eval(*left) {
                 Ok(v) => v,
-                e @ Err(_) => return e,
+                Err(e) => return Err(e),
             };
             let right = match eval(*right) {
                 Ok(v) => v,
-                e @ Err(_) => return e,
+                Err(e) => return Err(e),
             };
             Ok(match op {
                 Operation::Add => left + right,
@@ -112,6 +112,34 @@ fn test_recursion() {
 }
 
 #[test]
+fn test_zeros() {
+    assert_eq!(
+        eval(Expression::Op {
+            op: Operation::Add,
+            left: Box::new(Expression::Value(0)),
+            right: Box::new(Expression::Value(0))
+        }),
+        Ok(0)
+    );
+    assert_eq!(
+        eval(Expression::Op {
+            op: Operation::Mul,
+            left: Box::new(Expression::Value(0)),
+            right: Box::new(Expression::Value(0))
+        }),
+        Ok(0)
+    );
+    assert_eq!(
+        eval(Expression::Op {
+            op: Operation::Sub,
+            left: Box::new(Expression::Value(0)),
+            right: Box::new(Expression::Value(0))
+        }),
+        Ok(0)
+    );
+}
+
+#[test]
 fn test_error() {
     assert_eq!(
         eval(Expression::Op {
@@ -130,6 +158,6 @@ fn main() {
         left: Box::new(Expression::Value(20)),
         right: Box::new(Expression::Value(10)),
     };
-    println!("expr: {:?}", expr);
+    println!("expr: {expr:?}");
     println!("result: {:?}", eval(expr));
 }

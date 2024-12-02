@@ -199,10 +199,10 @@
 <p><a href="types.html">类型系统</a> - 学习改变和定义类型。</p>
 </li>
 <li>
-<p><a href="conversion.html">类型转换</a></p>
+<p><a href="conversion.html">类型转换</a> - 在不同类型之间进行转换，例如字符串、整数和浮点数。</p>
 </li>
 <li>
-<p><a href="expression.html">表达式</a></p>
+<p><a href="expression.html">表达式</a> - 了解表达式以及如何使用。</p>
 </li>
 <li>
 <p><a href="flow_control.html">流程控制</a> - <code>if</code>/<code>else</code>，<code>for</code>，以及其他流程控制有关内容。</p>
@@ -232,7 +232,7 @@
 <p><a href="trait.html">特性 trait</a> - trait 是对未知类型（<code>Self</code>）定义的方法集。</p>
 </li>
 <li>
-<p><a href="macros.html">宏</a></p>
+<p><a href="macros.html">宏</a> - 宏是一种编写代码来编写其他代码的方法，这称为元编程（metaprogramming）。</p>
 </li>
 <li>
 <p><a href="error.html">错误处理</a> - 学习 Rust 语言处理失败的方式。</p>
@@ -247,10 +247,10 @@
 <p><a href="testing.html">测试</a> - Rust 语言的各种测试手段。</p>
 </li>
 <li>
-<p><a href="unsafe.html">不安全操作</a></p>
+<p><a href="unsafe.html">不安全操作</a> - 了解如何进入不安全操作块。</p>
 </li>
 <li>
-<p><a href="compatibility.html">兼容性</a></p>
+<p><a href="compatibility.html">兼容性</a> - 处理 Rust 的演变和潜在的兼容性问题。</p>
 </li>
 <li>
 <p><a href="meta.html">补充</a> - 文档和基准测试</p>
@@ -1490,7 +1490,7 @@ fn main() {
 <h1><a class="header" href="#类型转换-1" id="类型转换-1">类型转换</a></h1>
 <p>Rust 使用 <a href="trait.html">trait</a> 解决类型之间的转换问题。最一般的转换会用到 <a href="https://rustwiki.org/zh-CN/std/convert/trait.From.html"><code>From</code></a> 和 <a href="https://rustwiki.org/zh-CN/std/convert/trait.Into.html"><code>Into</code></a> 两个 trait。不过，即便常见的情况也可能会用到特别的 trait，尤其是从 <code>String</code> 转换到别的类型，以及把别的类型转换到 <code>String</code> 时。</p>
 <h1><a class="header" href="#from-和-into" id="from-和-into"><code>From</code> 和 <code>Into</code></a></h1>
-<p><a href="https://rustwiki.org/zh-CN/std/convert/trait.From.html"><code>From</code></a> 和 <a href="https://rustwiki.org/zh-CN/std/convert/trait.Into.html"><code>Into</code></a> 两个 trait 是内部相关联的，实际上这是它们实现的一部分。如果我们能够从类型 B 得到类型 A，那么很容易相信我们也能够把类型 B 转换为类型 A。</p>
+<p><a href="https://rustwiki.org/zh-CN/std/convert/trait.From.html"><code>From</code></a> 和 <a href="https://rustwiki.org/zh-CN/std/convert/trait.Into.html"><code>Into</code></a> 两个 trait 是内部相关联的，实际上这是它们实现的一部分。如果我们能够从类型 B 得到类型 A，那么很容易相信我们也能够把类型 A 转换为类型 B。</p>
 <h2><a class="header" href="#from" id="from"><code>From</code></a></h2>
 <p><a href="https://rustwiki.org/zh-CN/std/convert/trait.From.html"><code>From</code></a> trait 允许一种类型定义 “怎么根据另一种类型生成自己”，因此它提供了一种类型转换的简单机制。在标准库中有无数 <code>From</code> 的实现，规定原生类型及其他常见类型的转换功能。</p>
 <p>比如，可以很容易地把 <code>str</code> 转换成 <code>String</code>：</p>
@@ -1523,22 +1523,22 @@ fn main() {
 <h2><a class="header" href="#into" id="into"><code>Into</code></a></h2>
 <p><a href="https://rustwiki.org/zh-CN/std/convert/trait.Into.html"><code>Into</code></a> trait 就是把 <code>From</code> trait 倒过来而已。也就是说，如果你为你的类型实现了 <code>From</code>，那么同时你也就免费获得了 <code>Into</code>。</p>
 <p>使用 <code>Into</code> trait 通常要求指明要转换到的类型，因为编译器大多数时候不能推断它。不过考虑到我们免费获得了 <code>Into</code>，这点代价不值一提。</p>
-<pre><pre class="playground"><code class="language-rust editable">use std::convert::From;
+<pre><pre class="playground"><code class="language-rust editable">use std::convert::Into;
 
 #[derive(Debug)]
 struct Number {
     value: i32,
 }
 
-impl From&lt;i32&gt; for Number {
-    fn from(item: i32) -&gt; Self {
-        Number { value: item }
+impl Into&lt;Number&gt; for i32 {
+    fn into(self) -&gt; Number {
+        Number { value: self }
     }
 }
 
 fn main() {
     let int = 5;
-    // 试试删除类型说明
+    // 试试删除类型注释
     let num: Number = int.into();
     println!(&quot;My number is {:?}&quot;, num);
 }
@@ -1616,7 +1616,7 @@ fn main() {
 }
 </code></pre></pre>
 <h2><a class="header" href="#解析字符串" id="解析字符串">解析字符串</a></h2>
-<p>我们经常需要把字符串转成数字。完成这项工作的标准手段是用 <a href="https://rustwiki.org/zh-CN/std/primitive.str.html#method.parse"><code>parse</code></a> 函数。我们得提供要转换到的类型，这可以通过不使用类型推断，或者用 “涡轮鱼” 语法（turbo fish，<code>&lt;&gt;</code>）实现。</p>
+<p>我们经常需要把字符串转成数字。完成这项工作的标准手段是用 <a href="https://rustwiki.org/zh-CN/std/primitive.str.html#method.parse"><code>parse</code></a> 函数。我们得提供要转换到的类型，这可以通过使用类型推断，或者用 “涡轮鱼” 语法（turbo fish，<code>&lt;&gt;</code>）实现。</p>
 <p>只要对目标类型实现了 <a href="https://rustwiki.org/zh-CN/std/str/trait.FromStr.html"><code>FromStr</code></a> trait，就可以用 <code>parse</code> 把字符串转换成目标类型。
 标准库中已经给无数种类型实现了 <code>FromStr</code>。如果要转换到用户定义类型，只要手动实现
 <code>FromStr</code> 就行。</p>
@@ -3369,7 +3369,7 @@ bar = { path = &quot;../bar&quot; } # 来自本地文件系统的路径
     └── bin
         └── my_other_bin.rs
 </code></pre>
-<p>为了使得 <code>cargo</code> 编译或运行这个二进制可执行文件而不是默认或其他二进制可执行文件，我们只需给 <code>cargo</code> 增加一个参数 <code>--bin my_other_bin</code>，其中 <code>my_other_bin</code> 是我们想要使用的二进制可执行文件的名称。</p>
+<p>为了使得 <code>cargo</code> 只编译或运行这个二进制可执行文件，我们只需给 <code>cargo</code> 增加一个参数 <code>--bin my_other_bin</code>，其中 <code>my_other_bin</code> 是我们想要使用的二进制可执行文件的名称。</p>
 <p>除了可添加其他二进制可执行文件外，<code>cargo</code> 还支持<a href="https://doc.rust-lang.org/cargo/guide/project-layout.html">更多功能</a>，如基准测试，测试和示例。</p>
 <p>在下一节中，我们将更仔细地学习测试的内容。</p>
 <h1><a class="header" href="#测试" id="测试">测试</a></h1>

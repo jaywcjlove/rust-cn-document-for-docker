@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh-hans" class="sidebar-visible no-js light">
+<html lang="zh-Hans" class="light" dir="">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -51,10 +51,9 @@ s.parentNode.insertBefore(el, s);
 </script>
 
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="description" content="高级 Unsafe Rust 编程的黑科技指南">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         
         <link rel="icon" href="favicon.svg">
@@ -84,18 +83,21 @@ s.parentNode.insertBefore(el, s);
         
         <link rel="stylesheet" href="theme/nomicon.css">
         
+        <link rel="stylesheet" href="theme/language-picker.css">
+        
 
         
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -111,58 +113,89 @@ s.parentNode.insertBefore(el, s);
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html" class="active"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="展开/收起目录" aria-label="展开/收起目录" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="更换主题" aria-label="更换主题" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="全书搜索 (快捷键: s)" aria-label="显示/隐藏搜索框" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                         
@@ -171,23 +204,125 @@ s.parentNode.insertBefore(el, s);
                     <h1 class="menu-title">Rust 秘典（死灵书）</h1>
 
                     <div class="right-buttons">
+                        <button id="language-toggle" class="icon-button icon-button-wrapper" type="button"
+                                title="切换语言 / Change language" aria-label="切换语言 / Change language"
+                                aria-haspopup="true" aria-expanded="false"
+                                aria-controls="language-list">
+                            <i class="fa fa-globe"></i>
+                        </button>
+                        <ul id="language-list" class="theme-popup" aria-label="语言 / Languages" role="menu">
+                            <li role="none"><a role="menuitem" class="theme theme-link" id="en">英文原版 (English)</a></li>
+                            <li role="none"><a role="menuitem" class="theme theme-link" id="zh-Hans">中文译本</a></li>
+                        </ul>
+                        <script>
+                            let langToggle = document.getElementById("language-toggle");
+                            let langList = document.getElementById("language-list");
+
+                            const langId = "zh-Hans";
+                            let selectedLang = document.getElementById(langId);
+                            if (selectedLang) {
+                                selectedLang.classList.add("theme-selected");
+                            }
+
+                            function hideLangList() {
+                                langList.style.display = "none";
+                                langToggle.setAttribute('aria-expanded', false);
+                                langToggle.focus();
+                            }
+
+                            langToggle.addEventListener("click", (event) => {
+                                if (langList.style.display === "block") {
+                                    hideLangList();
+                                } else {
+                                    langList.style.display = "block";
+                                    langToggle.setAttribute('aria-expanded', true);
+                                    langList.querySelector("a#" + langId).focus();
+                                }
+                            });
+
+                            langList.addEventListener('focusout', function(e) {
+                                // e.relatedTarget is null in Safari and Firefox on macOS (see workaround below)
+                                if (!!e.relatedTarget && !langToggle.contains(e.relatedTarget) && !langList.contains(e.relatedTarget)) {
+                                    hideLangList();
+                                }
+                            });
+
+                            // Should not be needed, but it works around an issue on macOS & iOS: https://github.com/rust-lang/mdBook/issues/628
+                            document.addEventListener('click', function(e) {
+                                if (langList.style.display === 'block' && !langToggle.contains(e.target) && !langList.contains(e.target)) {
+                                    hideLangList();
+                                }
+                            });
+
+                            document.addEventListener('keydown', function (e) {
+                                if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) { return; }
+                                if (!langList.contains(e.target)) { return; }
+
+                                switch (e.key) {
+                                    case 'Escape':
+                                        e.preventDefault();
+                                        hideLangList();
+                                        break;
+                                    case 'ArrowUp':
+                                        e.preventDefault();
+                                        var li = document.activeElement.parentElement;
+                                        if (li && li.previousElementSibling) {
+                                            li.previousElementSibling.querySelector('a').focus();
+                                        }
+                                        break;
+                                    case 'ArrowDown':
+                                        e.preventDefault();
+                                        var li = document.activeElement.parentElement;
+                                        if (li && li.nextElementSibling) {
+                                            li.nextElementSibling.querySelector('a').focus();
+                                        }
+                                        break;
+                                    case 'Home':
+                                        e.preventDefault();
+                                        langList.querySelector('li:first-child a').focus();
+                                        break;
+                                    case 'End':
+                                        e.preventDefault();
+                                        langList.querySelector('li:last-child a').focus();
+                                        break;
+                                }
+                            });
+
+                            // The path to the root, taking the current
+                            // language into account.
+                                
+                                let full_path_to_root = "";
+                                
+                            // The page path (mdbook only gives us
+                            // access to the path to the Markdown file).
+                            let path = "destructors.md".replace(/\.md$/, ".html");
+                            for (let lang of langList.querySelectorAll("a")) {
+                                if (lang.id == "zh-Hans") {
+                                    lang.href = `${full_path_to_root}${path}`;
+                                } else {
+                                    lang.href = `${full_path_to_root}${lang.id}/${path}`;
+                                }
+                            }
+                        </script>
                         
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="print.html" title="打印本书" aria-label="打印本书">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
                         
-                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repo" aria-label="Git repo">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -198,7 +333,7 @@ s.parentNode.insertBefore(el, s);
                 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -339,13 +474,13 @@ impl&lt;T&gt; Drop for SuperBox&lt;T&gt; {
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="constructors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="constructors.html" class="mobile-nav-chapters previous" title="上一章" aria-label="上一章" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="leaking.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="leaking.html" class="mobile-nav-chapters next" title="下一章" aria-label="下一章" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -357,13 +492,13 @@ impl&lt;T&gt; Drop for SuperBox&lt;T&gt; {
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="constructors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="constructors.html" class="nav-chapters previous" title="上一章" aria-label="上一章" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="leaking.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="leaking.html" class="nav-chapters next" title="下一章" aria-label="下一章" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -378,7 +513,7 @@ impl&lt;T&gt; Drop for SuperBox&lt;T&gt; {
         
 
         
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
         
@@ -386,19 +521,21 @@ impl&lt;T&gt; Drop for SuperBox&lt;T&gt; {
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js"></script>
+        
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
         
 
         
 
+    </div>
     </body>
 </html>

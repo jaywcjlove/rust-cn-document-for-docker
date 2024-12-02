@@ -172,7 +172,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#定义枚举" id="定义枚举">定义枚举</a></h2>
-<p>让我们看看一个需要诉诸于代码的场景，来考虑为何此时使用枚举更为合适且实用。假设我们要处理 IP 地址。目前被广泛使用的两个主要 IP 标准：IPv4（version four）和 IPv6（version six）。这是我们的程序可能会遇到的所有可能的 IP 地址类型，所以可以 <strong>枚举</strong> 出所有可能的值，这也正是此枚举名字的由来。</p>
+<p>让我们看看一个需要诉诸于代码的场景，来考虑为何此时使用枚举更为合适且实用。假设我们要处理 IP 地址。目前被广泛使用的两个主要 IP 标准：IPv4（version four）和 IPv6（version six）。这是我们的程序可能会遇到的所有可能的 IP 地址类型，所以可以 <strong>枚举</strong> 出所有可能的值，这也正是 <strong>枚举</strong> 这个名字的由来。</p>
 <p>任何一个 IP 地址要么是 IPv4 的要么是 IPv6 的，而且不能两者都是。IP 地址的这个特性使得枚举数据结构非常适合这个场景，因为枚举值只可能是其中一个成员。IPv4 和 IPv6 从根本上讲仍是 IP 地址，所以当代码在处理适用于任何类型的 IP 地址的场景时应该把它们当作相同的类型。</p>
 <p>可以通过在代码中定义一个 <code>IpAddrKind</code> 枚举来表现这个概念并列出可能的 IP 地址类型，<code>V4</code> 和 <code>V6</code>。这被称为枚举的 <strong>成员</strong>（<em>variants</em>）：</p>
 <pre><pre class="playground"><code class="language-rust">

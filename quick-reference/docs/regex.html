@@ -4,14 +4,22 @@
 <meta charset="utf-8">
 <title>RegEX 备忘清单
  &#x26;  regex cheatsheet &#x26;  Quick Reference</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta content="width=device-width, initial-scale=1" name="viewport">
 <meta description="正则表达式 (regex) 的快速参考，包括符号、范围、分组、断言和一些示例模式，以帮助您入门。
 
 入门，为开发人员分享快速参考备忘单。">
 <meta keywords="regex,reference,Quick,Reference,cheatsheet,cheat,sheet">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%221em%22%20width%3D%221em%22%3E%20%3Cpath%20d%3D%22m21.66%2010.44-.98%204.18c-.84%203.61-2.5%205.07-5.62%204.77-.5-.04-1.04-.13-1.62-.27l-1.68-.4c-4.17-.99-5.46-3.05-4.48-7.23l.98-4.19c.2-.85.44-1.59.74-2.2%201.17-2.42%203.16-3.07%206.5-2.28l1.67.39c4.19.98%205.47%203.05%204.49%207.23Z%22%20fill%3D%22%23c9d1d9%22%2F%3E%20%3Cpath%20d%3D%22M15.06%2019.39c-.62.42-1.4.77-2.35%201.08l-1.58.52c-3.97%201.28-6.06.21-7.35-3.76L2.5%2013.28c-1.28-3.97-.22-6.07%203.75-7.35l1.58-.52c.41-.13.8-.24%201.17-.31-.3.61-.54%201.35-.74%202.2l-.98%204.19c-.98%204.18.31%206.24%204.48%207.23l1.68.4c.58.14%201.12.23%201.62.27Zm2.43-8.88c-.06%200-.12-.01-.19-.02l-4.85-1.23a.75.75%200%200%201%20.37-1.45l4.85%201.23a.748.748%200%200%201-.18%201.47Z%22%20fill%3D%22%23228e6c%22%20%2F%3E%20%3Cpath%20d%3D%22M14.56%2013.89c-.06%200-.12-.01-.19-.02l-2.91-.74a.75.75%200%200%201%20.37-1.45l2.91.74c.4.1.64.51.54.91-.08.34-.38.56-.72.56Z%22%20fill%3D%22%23228e6c%22%20%2F%3E%20%3C%2Fsvg%3E" type="image/svg+xml">
-<link rel="stylesheet" href="../style/style.css">
-<link rel="stylesheet" href="../style/katex.css">
+<meta name="author" content="jaywcjlove">
+<meta name="license" content="MIT">
+<meta name="funding" content="https://jaywcjlove.github.io/#/sponsor">
+<meta rel="apple-touch-icon" href="../icons/touch-icon-iphone.png">
+<meta rel="apple-touch-icon" sizes="152x152" href="../icons/touch-icon-ipad.png">
+<meta rel="apple-touch-icon" sizes="180x180" href="../icons/touch-icon-iphone.png">
+<meta rel="apple-touch-icon" sizes="167x167" href="../icons/touch-icon-ipad-retina.png">
+<meta rel="apple-touch-icon" sizes="120x120" href="../icons/touch-icon-iphone-retina.png">
+<link rel="icon" href="../icons/favicon.svg" type="image/svg+xml">
+<link href="../style/style.css" rel="stylesheet">
+<link href="../style/katex.css" rel="stylesheet">
 </head>
 <body><nav class="header-nav"><div class="max-container"><a href="../index.html" class="logo"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" height="1em" width="1em">
   <path d="m21.66 10.44-.98 4.18c-.84 3.61-2.5 5.07-5.62 4.77-.5-.04-1.04-.13-1.62-.27l-1.68-.4c-4.17-.99-5.46-3.05-4.48-7.23l.98-4.19c.2-.85.44-1.59.74-2.2 1.17-2.42 3.16-3.07 6.5-2.28l1.67.39c4.19.98 5.47 3.05 4.49 7.23Z" fill="#c9d1d9"></path>
@@ -26,7 +34,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="dark" height="1em" width="1em">
   <path d="M12 11.807A9.002 9.002 0 0 1 10.049 2a9.942 9.942 0 0 0-5.12 2.735c-3.905 3.905-3.905 10.237 0 14.142 3.906 3.906 10.237 3.905 14.143 0a9.946 9.946 0 0 0 2.735-5.119A9.003 9.003 0 0 1 12 11.807z"></path>
 </svg>
-</button><script src="../js/dark.js?v=1.5.5"></script><a href="https://github.com/jaywcjlove/reference" class="" target="__blank"><svg viewBox="0 0 16 16" fill="currentColor" height="1em" width="1em"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg></a></div></div></nav><div class="wrap h1body-exist max-container"><header class="wrap-header h1wrap"><h1 id="regex-备忘清单"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 14" height="1em" width="1em">
+</button><script src="../js/dark.js?v=1.8.0"></script><a href="https://github.com/jaywcjlove/reference" class="" target="__blank"><svg viewBox="0 0 16 16" fill="currentColor" height="1em" width="1em"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg></a></div></div></nav><div class="wrap h1body-exist max-container"><header class="wrap-header h1wrap"><h1 id="regex-备忘清单"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 14" height="1em" width="1em">
   <path d="M8.676 5.214a5.533 5.533 0 0 0-.312-1.527c-.253-.729-.379-1.23-.379-1.505 0-.387.09-.68.268-.881A.892.892 0 0 1 8.933 1c.23 0 .43.1.602.301.17.2.256.487.256.858 0 .335-.1.803-.3 1.405a7.515 7.515 0 0 0-.358 1.65c.41-.26.777-.576 1.104-.947.506-.588.88-.952 1.126-1.093.245-.141.494-.212.747-.212.245 0 .45.086.613.257.171.163.257.36.257.59 0 .275-.123.52-.368.736-.246.216-.859.431-1.84.647a8.032 8.032 0 0 0-1.427.435c.387.2.859.353 1.416.457.9.163 1.487.368 1.762.613.282.245.423.513.423.803a.776.776 0 0 1-.256.58.793.793 0 0 1-.58.245c-.223 0-.472-.078-.747-.235-.267-.156-.632-.505-1.092-1.048a5.909 5.909 0 0 0-1.138-1.025c.015.423.1.884.257 1.382.267.877.401 1.476.401 1.795 0 .297-.089.55-.267.758-.179.2-.368.301-.569.301-.275 0-.524-.108-.747-.323-.156-.156-.234-.405-.234-.747 0-.357.085-.784.256-1.282.171-.505.28-.851.324-1.037.044-.193.085-.476.122-.847a6.15 6.15 0 0 0-1.148.97c-.543.61-.951.996-1.226 1.16a1.133 1.133 0 0 1-.602.178.9.9 0 0 1-.647-.257c-.178-.17-.268-.36-.268-.568 0-.186.075-.38.223-.58.157-.208.387-.38.692-.513.2-.09.657-.208 1.37-.357a7.284 7.284 0 0 0 1.35-.423 5.726 5.726 0 0 0-1.438-.469c-.914-.193-1.48-.367-1.695-.524-.334-.245-.502-.542-.502-.891 0-.201.082-.383.246-.547a.812.812 0 0 1 .59-.256c.246 0 .506.078.781.234.275.156.617.472 1.026.948.408.468.825.832 1.248 1.092M2.93 9.18c.54 0 .993.19 1.36.568.367.367.55.814.55 1.342 0 .528-.189.98-.567 1.36-.367.366-.815.55-1.343.55-.527 0-.98-.184-1.359-.55a1.884 1.884 0 0 1-.55-1.36c0-.54.183-.992.55-1.36.379-.367.832-.55 1.36-.55"></path>
 </svg>
 <a aria-hidden="true" tabindex="-1" href="#regex-备忘清单"><span class="icon icon-link"></span></a>RegEX 备忘清单</h1><div class="wrap-body">
@@ -37,12 +45,18 @@
 </div></div><div class="h2wrap-body"><div class="wrap h3body-not-exist"><div class="wrap-header h3wrap"><h3 id="介绍"><a aria-hidden="true" tabindex="-1" href="#介绍"><span class="icon icon-link"></span></a>介绍</h3><div class="wrap-body">
 <p>这是开始使用正则表达式(Regex)的快速备忘单。</p>
 <ul class="cols-2">
-<li><a href="#python-%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">Python 中的 Regex</a> <em>(Quick Reference)</em></li>
-<li><a href="#javascript-%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">JavaScript 中的 Regex</a> <em>(Quick Reference)</em></li>
-<li><a href="#php%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">PHP 中的 Regex</a> <em>(Quick Reference)</em></li>
-<li><a href="#java-%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">Java 中的 Regex</a> <em>(Quick Reference)</em></li>
-<li><a href="#mysql%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">MySQL 中的 Regex</a> <em>(Quick Reference)</em></li>
-<li><a href="./vim#vim-%E6%90%9C%E7%B4%A2%E5%92%8C%E6%9B%BF%E6%8D%A2">Vim 中的 Regex</a> <em>(Quick Reference)</em></li>
+<li><a href="#python-%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">Python 中的 Regex</a><br>
+<em>(速查手册)</em></li>
+<li><a href="#javascript-%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">JavaScript 中的 Regex</a><br>
+<em>(速查手册)</em></li>
+<li><a href="#php%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">PHP 中的 Regex</a><br>
+<em>(速查手册)</em></li>
+<li><a href="#java-%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">Java 中的 Regex</a><br>
+<em>(速查手册)</em></li>
+<li><a href="#mysql%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">MySQL 中的 Regex</a><br>
+<em>(速查手册)</em></li>
+<li><a href="./vim#vim-%E6%90%9C%E7%B4%A2%E5%92%8C%E6%9B%BF%E6%8D%A2">Vim 中的 Regex</a><br>
+<em>(速查手册)</em></li>
 <li><a href="https://regex101.com/">在线 Regex 测试器</a> <em>(regex101.com)</em></li>
 <li><a href="https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md">轻松学习 Regex</a> <em>(github.com)</em></li>
 <li><a href="https://jaywcjlove.github.io/regexp-example">正则表达式实例搜集</a> <em>(jaywcjlove.github.io)</em></li>
@@ -86,7 +100,8 @@
 
 
 
-<table><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>[abc]</code></td><td>单个字符：<code>a</code>、<code>b</code> 或 <code>c</code></td></tr><tr><td align="left"><code>[^abc]</code></td><td>一个字符，除了：<code>a</code>、<code>b</code> 或 <code>c</code></td></tr><tr><td align="left"><code>[a-z]</code></td><td>范围内的字符：<code>a-z</code></td></tr><tr><td align="left"><code>[^a-z]</code></td><td>不在范围内的字符：<code>a-z</code></td></tr><tr><td align="left"><code>[0-9]</code></td><td>范围内的数字：<code>0-9</code></td></tr><tr><td align="left"><code>[a-zA-Z]</code></td><td>范围内的字符：<br><code>a-z</code> 或 <code>A-Z</code></td></tr><tr><td align="left"><code>[a-zA-Z0-9]</code></td><td>范围内的字符：<br><code>a-z</code>、<code>A-Z</code> 或 <code>0-9</code></td></tr></tbody></table>
+<table class="left-align"><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>[abc]</code></td><td>单个字符：<code>a</code>、<code>b</code> 或 <code>c</code></td></tr><tr><td align="left"><code>[^abc]</code></td><td>一个字符，除了：<code>a</code>、<code>b</code> 或 <code>c</code></td></tr><tr><td align="left"><code>[a-z]</code></td><td>范围内的字符：<code>a-z</code></td></tr><tr><td align="left"><code>[^a-z]</code></td><td>不在范围内的字符：<code>a-z</code></td></tr><tr><td align="left"><code>[0-9]</code></td><td>范围内的数字：<code>0-9</code></td></tr><tr><td align="left"><code>[a-zA-Z]</code></td><td>范围内的字符：<br><code>a-z</code> 或 <code>A-Z</code></td></tr><tr><td align="left"><code>[a-zA-Z0-9]</code></td><td>范围内的字符：<br><code>a-z</code>、<code>A-Z</code> 或 <code>0-9</code></td></tr></tbody></table>
+<!--rehype:className=left-align-->
 </div></div></div><div class="wrap h3body-not-exist"><div class="wrap-header h3wrap"><h3 id="量词"><a aria-hidden="true" tabindex="-1" href="#量词"><span class="icon icon-link"></span></a>量词</h3><div class="wrap-body">
 
 
@@ -137,25 +152,76 @@
 
 
 
-<table><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>a?</code></td><td>零个或一个<code>a</code></td></tr><tr><td align="left"><code>a*</code></td><td>零个或多个 <code>a</code></td></tr><tr><td align="left"><code>a+</code></td><td>一个或多个<code>a</code></td></tr><tr><td align="left"><code>[0-9]+</code></td><td><code>0-9</code>中的一个或多个</td></tr><tr><td align="left"><code>a{3}</code></td><td>正好 <code>3</code> 个 <code>a</code></td></tr><tr><td align="left"><code>a{3,}</code></td><td>3个或更多的<code>a</code></td></tr><tr><td align="left"><code>a{3,6}</code></td><td><code>a</code> 的 <code>3</code> 到 <code>6</code> 之间</td></tr><tr><td align="left"><code>a*</code></td><td>贪心量词</td></tr><tr><td align="left"><code>a*?</code></td><td>惰性量词</td></tr><tr><td align="left"><code>a*+</code></td><td>占有量词</td></tr></tbody></table>
+<table class="left-align"><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>a?</code></td><td>零个或一个<code>a</code></td></tr><tr><td align="left"><code>a*</code></td><td>零个或多个 <code>a</code></td></tr><tr><td align="left"><code>a+</code></td><td>一个或多个<code>a</code></td></tr><tr><td align="left"><code>[0-9]+</code></td><td><code>0-9</code>中的一个或多个</td></tr><tr><td align="left"><code>a{3}</code></td><td>正好 <code>3</code> 个 <code>a</code></td></tr><tr><td align="left"><code>a{3,}</code></td><td>3个或更多的<code>a</code></td></tr><tr><td align="left"><code>a{3,6}</code></td><td><code>a</code> 的 <code>3</code> 到 <code>6</code> 之间</td></tr><tr><td align="left"><code>a*</code></td><td>贪心量词</td></tr><tr><td align="left"><code>a*?</code></td><td>惰性量词</td></tr><tr><td align="left"><code>a*+</code></td><td>占有量词</td></tr></tbody></table>
+<!--rehype:className=left-align-->
 </div></div></div><div class="wrap h3body-not-exist"><div class="wrap-header h3wrap"><h3 id="常用元字符"><a aria-hidden="true" tabindex="-1" href="#常用元字符"><span class="icon icon-link"></span></a>常用元字符</h3><div class="wrap-body">
-<ul class="cols-3 style-none">
-<li>^</li>
-<li>{</li>
-<li>+</li>
-<li>&#x3C;</li>
-<li>[</li>
-<li>*</li>
-<li>)</li>
-<li>></li>
-<li>.</li>
-<li>(</li>
-<li>|</li>
-<li>$</li>
-<li>\</li>
-<li>?</li>
-</ul>
-<!--rehype:className=cols-3 style-none-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table class="left-align"><thead><tr><th align="left">模式</th><th>描述</th></tr></thead><tbody><tr><td align="left"><code>^</code></td><td>匹配字符串的开头</td></tr><tr><td align="left"><code>{</code></td><td>开始一个数量限定符，指定出现次数</td></tr><tr><td align="left"><code>+</code></td><td>匹配前面的元素一次或多次</td></tr><tr><td align="left"><code>&#x3C;</code></td><td>非标准的正则表达式元字符（在 HTML 中常用）</td></tr><tr><td align="left"><code>[</code></td><td>开始一个字符类</td></tr><tr><td align="left"><code>*</code></td><td>匹配前面的元素零次或多次</td></tr><tr><td align="left"><code>)</code></td><td>结束捕获组</td></tr><tr><td align="left"><code>></code></td><td>非标准的正则表达式元字符（在 HTML 中常用）</td></tr><tr><td align="left"><code>.</code></td><td>匹配除换行符之外的任意字符</td></tr><tr><td align="left"><code>(</code></td><td>开始一个捕获组</td></tr><tr><td align="left"><code>|</code></td><td>在正则表达式模式中作为逻辑或操作</td></tr><tr><td align="left"><code>$</code></td><td>匹配字符串的结尾</td></tr><tr><td align="left"><code>\</code></td><td>转义元字符，使其具有字面意义</td></tr><tr><td align="left"><code>?</code></td><td>匹配前面的元素零次或一次</td></tr></tbody></table>
+<!--rehype:className=left-align-->
 <p>使用 <code>\</code> 转义这些特殊字符</p>
 </div></div></div><div class="wrap h3body-not-exist row-span-4"><div class="wrap-header h3wrap"><h3 id="元序列"><a aria-hidden="true" tabindex="-1" href="#元序列"><span class="icon icon-link"></span></a>元序列</h3><div class="wrap-body">
 <!--rehype:wrap-class=row-span-4-->
@@ -371,7 +437,8 @@
 
 
 
-<table><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>\G</code></td><td>比赛开始</td></tr><tr><td align="left"><code>^</code></td><td>字符串的开始</td></tr><tr><td align="left"><code>$</code></td><td>字符串结束</td></tr><tr><td align="left"><code>\A</code></td><td>字符串的开始</td></tr><tr><td align="left"><code>\Z</code></td><td>字符串结束</td></tr><tr><td align="left"><code>\z</code></td><td>字符串的绝对结尾</td></tr><tr><td align="left"><code>\b</code></td><td>一个词的边界</td></tr><tr><td align="left"><code>\B</code></td><td>非单词边界</td></tr></tbody></table>
+<table class="left-align"><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>\G</code></td><td>比赛开始</td></tr><tr><td align="left"><code>^</code></td><td>字符串的开始</td></tr><tr><td align="left"><code>$</code></td><td>字符串结束</td></tr><tr><td align="left"><code>\A</code></td><td>字符串的开始</td></tr><tr><td align="left"><code>\Z</code></td><td>字符串结束</td></tr><tr><td align="left"><code>\z</code></td><td>字符串的绝对结尾</td></tr><tr><td align="left"><code>\b</code></td><td>一个词的边界</td></tr><tr><td align="left"><code>\B</code></td><td>非单词边界</td></tr></tbody></table>
+<!--rehype:className=left-align-->
 </div></div></div><div class="wrap h3body-not-exist"><div class="wrap-header h3wrap"><h3 id="替代"><a aria-hidden="true" tabindex="-1" href="#替代"><span class="icon icon-link"></span></a>替代</h3><div class="wrap-body">
 
 
@@ -434,7 +501,8 @@
 
 
 
-<table><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>\0</code></td><td>完整的比赛内容</td></tr><tr><td align="left"><code>\1</code></td><td>捕获组 <code>1</code> 中的内容</td></tr><tr><td align="left"><code>$1</code></td><td>捕获组 <code>1</code> 中的内容</td></tr><tr><td align="left"><code>${foo}</code></td><td>捕获组 <code>foo</code> 中的内容</td></tr><tr><td align="left"><code>\x20</code></td><td>十六进制替换值</td></tr><tr><td align="left"><code>\x{06fa}</code></td><td>十六进制替换值</td></tr><tr><td align="left"><code>\t</code></td><td>标签</td></tr><tr><td align="left"><code>\r</code></td><td>回车</td></tr><tr><td align="left"><code>\n</code></td><td>新队</td></tr><tr><td align="left"><code>\f</code></td><td>换页</td></tr><tr><td align="left"><code>\U</code></td><td>大写转换</td></tr><tr><td align="left"><code>\L</code></td><td>小写转换</td></tr><tr><td align="left"><code>\E</code></td><td>终止任何转换</td></tr></tbody></table>
+<table class="left-align"><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>\0</code></td><td>完整的比赛内容</td></tr><tr><td align="left"><code>\1</code></td><td>捕获组 <code>1</code> 中的内容</td></tr><tr><td align="left"><code>$1</code></td><td>捕获组 <code>1</code> 中的内容</td></tr><tr><td align="left"><code>${foo}</code></td><td>捕获组 <code>foo</code> 中的内容</td></tr><tr><td align="left"><code>\x20</code></td><td>十六进制替换值</td></tr><tr><td align="left"><code>\x{06fa}</code></td><td>十六进制替换值</td></tr><tr><td align="left"><code>\t</code></td><td>标签</td></tr><tr><td align="left"><code>\r</code></td><td>回车</td></tr><tr><td align="left"><code>\n</code></td><td>新队</td></tr><tr><td align="left"><code>\f</code></td><td>换页</td></tr><tr><td align="left"><code>\U</code></td><td>大写转换</td></tr><tr><td align="left"><code>\L</code></td><td>小写转换</td></tr><tr><td align="left"><code>\E</code></td><td>终止任何转换</td></tr></tbody></table>
+<!--rehype:className=left-align-->
 </div></div></div><div class="wrap h3body-not-exist"><div class="wrap-header h3wrap"><h3 id="组构造"><a aria-hidden="true" tabindex="-1" href="#组构造"><span class="icon icon-link"></span></a>组构造</h3><div class="wrap-body">
 
 
@@ -489,7 +557,8 @@
 
 
 
-<table><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>(...)</code></td><td>捕获所有封闭的东西</td></tr><tr><td align="left"><code>(a|b)</code></td><td>匹配 <code>a</code> 或 <code>b</code></td></tr><tr><td align="left"><code>(?:...)</code></td><td>匹配随附的所有内容</td></tr><tr><td align="left"><code>(?>...)</code></td><td>原子组（非捕获）</td></tr><tr><td align="left"><code>(?|...)</code></td><td>重复的子模式组号</td></tr><tr><td align="left"><code>(?#...)</code></td><td>注解</td></tr><tr><td align="left"><code>(?'name'...)</code></td><td>命名捕获组</td></tr><tr><td align="left"><code>(?&#x3C;name>...)</code></td><td>命名捕获组</td></tr><tr><td align="left"><code>(?P&#x3C;name>...)</code></td><td>命名捕获组</td></tr><tr><td align="left"><code>(?imsxXU)</code></td><td>内联修饰符</td></tr><tr><td align="left"><code>(?(DEFINE)...)</code></td><td>在使用它们之前预定义模式</td></tr></tbody></table>
+<table class="left-align"><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>(...)</code></td><td>捕获所有封闭的东西</td></tr><tr><td align="left"><code>(a|b)</code></td><td>匹配 <code>a</code> 或 <code>b</code></td></tr><tr><td align="left"><code>(?:...)</code></td><td>匹配随附的所有内容</td></tr><tr><td align="left"><code>(?>...)</code></td><td>原子组（非捕获）</td></tr><tr><td align="left"><code>(?|...)</code></td><td>重复的子模式组号</td></tr><tr><td align="left"><code>(?#...)</code></td><td>注解</td></tr><tr><td align="left"><code>(?'name'...)</code></td><td>命名捕获组</td></tr><tr><td align="left"><code>(?&#x3C;name>...)</code></td><td>命名捕获组</td></tr><tr><td align="left"><code>(?P&#x3C;name>...)</code></td><td>命名捕获组</td></tr><tr><td align="left"><code>(?imsxXU)</code></td><td>内联修饰符</td></tr><tr><td align="left"><code>(?(DEFINE)...)</code></td><td>在使用它们之前预定义模式</td></tr></tbody></table>
+<!--rehype:className=left-align-->
 </div></div></div><div class="wrap h3body-not-exist"><div class="wrap-header h3wrap"><h3 id="断言"><a aria-hidden="true" tabindex="-1" href="#断言"><span class="icon icon-link"></span></a>断言</h3><div class="wrap-body">
 
 
@@ -1155,7 +1224,8 @@
 
 
 
-<table><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>(in|out)put</code></td><td>匹配 <yel>input</yel> 或 <yel>output</yel></td></tr><tr><td align="left"><code>\d{5}(-\d{4})?</code></td><td>美国邮政编码 <em>(“+ 4”可选)</em></td></tr></tbody></table>
+<table class="left-align"><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>(in|out)put</code></td><td>匹配 <yel>input</yel> 或 <yel>output</yel></td></tr><tr><td align="left"><code>\d{5}(-\d{4})?</code></td><td>美国邮政编码 <em>(“+ 4”可选)</em></td></tr></tbody></table>
+<!--rehype:className=left-align-->
 <p>如果组后匹配失败，解析器会尝试每个替代方案。
 <br>
 可能导致灾难性的回溯。</p>
@@ -1216,9 +1286,11 @@
 
 
 
-<table><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>(?>red|green|blue)</code></td><td>比非捕获更快</td></tr><tr><td align="left"><code>(?>id|identity)\b</code></td><td>匹配 <yel>id</yel>，但不匹配 <yel>id</yel>entity</td></tr></tbody></table>
-<p>"id" 匹配，但 <code>\b</code> 在原子组之后失败，
+<table class="left-align"><thead><tr><th align="left">范例</th><th>说明</th></tr></thead><tbody><tr><td align="left"><code>(?>red|green|blue)</code></td><td>比非捕获更快</td></tr><tr><td align="left"><code>(?>id|identity)\b</code></td><td>匹配 <yel>id</yel>，但不匹配 <yel>id</yel>entity</td></tr></tbody></table>
+<!--rehype:className=left-align-->
+<p><yel>id</yel> 匹配，但 <code>\b</code> 在原子组之后失败，
 解析器不会回溯到组以重试“身份”</p>
+<hr>
 <p>如果替代品重叠，请从长到短命令。</p>
 </div></div></div><div class="wrap h3body-not-exist col-span-2 row-span-2"><div class="wrap-header h3wrap"><h3 id="零宽度断言-lookaround前后预查"><a aria-hidden="true" tabindex="-1" href="#零宽度断言-lookaround前后预查"><span class="icon icon-link"></span></a>零宽度断言 Lookaround(前后预查)</h3><div class="wrap-body">
 <!--rehype:wrap-class=col-span-2 row-span-2-->
@@ -1749,36 +1821,42 @@
 </span></code></pre>
 </div></div></div><div class="wrap h3body-exist col-span-2 row-span-3"><div class="wrap-header h3wrap"><h3 id="实例"><a aria-hidden="true" tabindex="-1" href="#实例"><span class="icon icon-link"></span></a>实例</h3><div class="wrap-body">
 <!--rehype:wrap-class=col-span-2 row-span-3-->
-<h4 id="research"><a aria-hidden="true" tabindex="-1" href="#research"><span class="icon icon-link"></span></a>re.search()</h4>
+<h4 style="text-align: left;color: var(--primary-color);" id="research"><a aria-hidden="true" tabindex="-1" href="#research"><span class="icon icon-link"></span></a>re.search()</h4>
+<!--rehype:style=text-align: left;color: var(--primary-color);-->
 <pre class="language-python"><code class="language-python code-highlight"><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> sentence <span class="token operator">=</span> <span class="token string">'This is a sample string'</span>
 </span><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">(</span>re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'this'</span><span class="token punctuation">,</span> sentence<span class="token punctuation">,</span> flags<span class="token operator">=</span>re<span class="token punctuation">.</span>I<span class="token punctuation">)</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token boolean">True</span>
 </span><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> <span class="token builtin">bool</span><span class="token punctuation">(</span>re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'xyz'</span><span class="token punctuation">,</span> sentence<span class="token punctuation">)</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token boolean">False</span>
 </span></code></pre>
-<h4 id="refindall"><a aria-hidden="true" tabindex="-1" href="#refindall"><span class="icon icon-link"></span></a>re.findall()</h4>
+<h4 style="text-align: left;color: var(--primary-color);" id="refindall"><a aria-hidden="true" tabindex="-1" href="#refindall"><span class="icon icon-link"></span></a>re.findall()</h4>
+<!--rehype:style=text-align: left;color: var(--primary-color);-->
 <pre class="language-python"><code class="language-python code-highlight"><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'\bs?pare?\b'</span><span class="token punctuation">,</span> <span class="token string">'par spar apparent spare part pare'</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token punctuation">[</span><span class="token string">'par'</span><span class="token punctuation">,</span> <span class="token string">'spar'</span><span class="token punctuation">,</span> <span class="token string">'spare'</span><span class="token punctuation">,</span> <span class="token string">'pare'</span><span class="token punctuation">]</span>
 </span><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'\b0*[1-9]\d{2,}\b'</span><span class="token punctuation">,</span> <span class="token string">'0501 035 154 12 26 98234'</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token punctuation">[</span><span class="token string">'0501'</span><span class="token punctuation">,</span> <span class="token string">'154'</span><span class="token punctuation">,</span> <span class="token string">'98234'</span><span class="token punctuation">]</span>
 </span></code></pre>
-<h4 id="refinditer"><a aria-hidden="true" tabindex="-1" href="#refinditer"><span class="icon icon-link"></span></a>re.finditer()</h4>
+<h4 style="text-align: left;color: var(--primary-color);" id="refinditer"><a aria-hidden="true" tabindex="-1" href="#refinditer"><span class="icon icon-link"></span></a>re.finditer()</h4>
+<!--rehype:style=text-align: left;color: var(--primary-color);-->
 <pre class="language-python"><code class="language-python code-highlight"><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> m_iter <span class="token operator">=</span> re<span class="token punctuation">.</span>finditer<span class="token punctuation">(</span><span class="token string">r'[0-9]+'</span><span class="token punctuation">,</span> <span class="token string">'45 349 651 593 4 204'</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> <span class="token punctuation">[</span>m<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">for</span> m <span class="token keyword">in</span> m_iter <span class="token keyword">if</span> <span class="token builtin">int</span><span class="token punctuation">(</span>m<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&#x3C;</span> <span class="token number">350</span><span class="token punctuation">]</span>
 </span><span class="code-line"><span class="token punctuation">[</span><span class="token string">'45'</span><span class="token punctuation">,</span> <span class="token string">'349'</span><span class="token punctuation">,</span> <span class="token string">'4'</span><span class="token punctuation">,</span> <span class="token string">'204'</span><span class="token punctuation">]</span>
 </span></code></pre>
-<h4 id="resplit"><a aria-hidden="true" tabindex="-1" href="#resplit"><span class="icon icon-link"></span></a>re.split()</h4>
+<h4 style="text-align: left;color: var(--primary-color);" id="resplit"><a aria-hidden="true" tabindex="-1" href="#resplit"><span class="icon icon-link"></span></a>re.split()</h4>
+<!--rehype:style=text-align: left;color: var(--primary-color);-->
 <pre class="language-python"><code class="language-python code-highlight"><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> re<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">r'\d+'</span><span class="token punctuation">,</span> <span class="token string">'Sample123string42with777numbers'</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token punctuation">[</span><span class="token string">'Sample'</span><span class="token punctuation">,</span> <span class="token string">'string'</span><span class="token punctuation">,</span> <span class="token string">'with'</span><span class="token punctuation">,</span> <span class="token string">'numbers'</span><span class="token punctuation">]</span>
 </span></code></pre>
-<h4 id="resub"><a aria-hidden="true" tabindex="-1" href="#resub"><span class="icon icon-link"></span></a>re.sub()</h4>
+<h4 style="text-align: left;color: var(--primary-color);" id="resub"><a aria-hidden="true" tabindex="-1" href="#resub"><span class="icon icon-link"></span></a>re.sub()</h4>
+<!--rehype:style=text-align: left;color: var(--primary-color);-->
 <pre class="language-python"><code class="language-python code-highlight"><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> ip_lines <span class="token operator">=</span> <span class="token string">"catapults\nconcatenate\ncat"</span>
 </span><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">print</span><span class="token punctuation">(</span>re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">r'^'</span><span class="token punctuation">,</span> <span class="token string">r'* '</span><span class="token punctuation">,</span> ip_lines<span class="token punctuation">,</span> flags<span class="token operator">=</span>re<span class="token punctuation">.</span>M<span class="token punctuation">)</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token operator">*</span> catapults
 </span><span class="code-line"><span class="token operator">*</span> concatenate
 </span><span class="code-line"><span class="token operator">*</span> cat
 </span></code></pre>
-<h4 id="recompile"><a aria-hidden="true" tabindex="-1" href="#recompile"><span class="icon icon-link"></span></a>re.compile()</h4>
+<h4 style="text-align: left;color: var(--primary-color);" id="recompile"><a aria-hidden="true" tabindex="-1" href="#recompile"><span class="icon icon-link"></span></a>re.compile()</h4>
+<!--rehype:style=text-align: left;color: var(--primary-color);-->
 <pre class="language-python"><code class="language-python code-highlight"><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> pet <span class="token operator">=</span> re<span class="token punctuation">.</span><span class="token builtin">compile</span><span class="token punctuation">(</span><span class="token string">r'dog'</span><span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token operator">>></span><span class="token operator">></span> <span class="token builtin">type</span><span class="token punctuation">(</span>pet<span class="token punctuation">)</span>
 </span><span class="code-line"><span class="token operator">&#x3C;</span><span class="token keyword">class</span> <span class="token string">'_sre.SRE_Pattern'</span><span class="token operator">></span>
@@ -2323,7 +2401,7 @@
 <li><a href="https://jaywcjlove.github.io/regexp-example">正则表达式实例搜集</a> <em>(jaywcjlove.github.io)</em></li>
 <li><a href="https://github.com/jaywcjlove/handbook/blob/master/docs/JavaScript/RegExp.md">一些正则表达式随记</a> <em>(jaywcjlove.github.io)</em></li>
 </ul>
-</div></div><div class="h2wrap-body"></div></div></div><script src="https://giscus.app/client.js" data-repo="jaywcjlove/reference" data-repo-id="R_kgDOID2-Mw" data-category="Q&#x26;A" data-category-id="DIC_kwDOID2-M84CS5wo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="dark" data-lang="zh-CN" crossorigin="anonymous" async></script><div class="giscus"></div></div><footer class="footer-wrap"><footer class="max-container">© 2022 <a href="https://wangchujiang.com/#/app" target="_blank">Kenny Wang</a>.</footer></footer><script src="../data.js?v=1.5.5" defer></script><script src="../js/fuse.min.js?v=1.5.5" defer></script><script src="../js/main.js?v=1.5.5" defer></script><div id="mysearch"><div class="mysearch-box"><div class="mysearch-input"><div><svg xmlns="http://www.w3.org/2000/svg" height="1em" width="1em" viewBox="0 0 18 18">
+</div></div><div class="h2wrap-body"></div></div></div><script src="https://giscus.app/client.js" data-repo="jaywcjlove/reference" data-repo-id="R_kgDOID2-Mw" data-category="Q&#x26;A" data-category-id="DIC_kwDOID2-M84CS5wo" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="bottom" data-theme="dark" data-lang="zh-CN" crossorigin="anonymous" async></script><div class="giscus"></div></div><footer class="footer-wrap"><footer class="max-container">© 2022 <a href="https://wangchujiang.com/#/app" target="_blank">Kenny Wang</a>.</footer></footer><script src="../data.js?v=1.8.0" defer></script><script src="../js/fuse.min.js?v=1.8.0" defer></script><script src="../js/main.js?v=1.8.0" defer></script><div id="mysearch"><div class="mysearch-box"><div class="mysearch-input"><div><svg xmlns="http://www.w3.org/2000/svg" height="1em" width="1em" viewBox="0 0 18 18">
   <path fill="currentColor" d="M17.71,16.29 L14.31,12.9 C15.4069846,11.5024547 16.0022094,9.77665502 16,8 C16,3.581722 12.418278,0 8,0 C3.581722,0 0,3.581722 0,8 C0,12.418278 3.581722,16 8,16 C9.77665502,16.0022094 11.5024547,15.4069846 12.9,14.31 L16.29,17.71 C16.4777666,17.8993127 16.7333625,18.0057983 17,18.0057983 C17.2666375,18.0057983 17.5222334,17.8993127 17.71,17.71 C17.8993127,17.5222334 18.0057983,17.2666375 18.0057983,17 C18.0057983,16.7333625 17.8993127,16.4777666 17.71,16.29 Z M2,8 C2,4.6862915 4.6862915,2 8,2 C11.3137085,2 14,4.6862915 14,8 C14,11.3137085 11.3137085,14 8,14 C4.6862915,14 2,11.3137085 2,8 Z"></path>
 </svg><input id="mysearch-input" type="search" placeholder="搜索" autocomplete="off"><div class="mysearch-clear"></div></div><button id="mysearch-close" type="button">搜索</button></div><div class="mysearch-result"><div id="mysearch-menu"></div><div id="mysearch-content"></div></div></div></div></body>
 </html>

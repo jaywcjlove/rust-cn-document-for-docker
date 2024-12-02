@@ -4892,7 +4892,7 @@ situations:</p>
 <li>
 <p>Features for target-specific dependencies are not enabled if the target is
 not currently being built. For example:</p>
-<pre><code class="language-toml">[dependency.common]
+<pre><code class="language-toml">[dependencies.common]
 version = &quot;1.0&quot;
 features = [&quot;f1&quot;]
 
@@ -10271,124 +10271,126 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#see-also-18" id="see-also-18">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-generate-lockfile.html">cargo-generate-lockfile(1)</a></p>
 <h1><a class="header" href="#cargo-vendor1" id="cargo-vendor1">cargo-vendor(1)</a></h1>
-<h2><a class="header" href="#name-18" id="name-18">NAME</a></h2>
-<p>cargo-vendor - Vendor all dependencies locally</p>
-<h2><a class="header" href="#synopsis-18" id="synopsis-18">SYNOPSIS</a></h2>
-<p><code>cargo vendor</code> [<em>options</em>] [<em>path</em>]</p>
-<h2><a class="header" href="#description-18" id="description-18">DESCRIPTION</a></h2>
-<p>This cargo subcommand will vendor all crates.io and git dependencies for a
-project into the specified directory at <code>&lt;path&gt;</code>. After this command completes
-the vendor directory specified by <code>&lt;path&gt;</code> will contain all remote sources from
-dependencies specified. Additional manifests beyond the default one can be
-specified with the <code>-s</code> option.</p>
-<p>The <code>cargo vendor</code> command will also print out the configuration necessary
-to use the vendored sources, which you will need to add to <code>.cargo/config.toml</code>.</p>
-<h2><a class="header" href="#options-17" id="options-17">OPTIONS</a></h2>
-<h3><a class="header" href="#vendor-options" id="vendor-options">Vendor Options</a></h3>
+<h2><a class="header" href="#名称-1" id="名称-1">名称</a></h2>
+<p>cargo-vendor --- 将所有依赖项下载到本地</p>
+<h2><a class="header" href="#用法概要" id="用法概要">用法概要</a></h2>
+<p><code>cargo vendor</code> [<em>选项</em>] [<em>路径</em>]</p>
+<h2><a class="header" href="#功能介绍" id="功能介绍">功能介绍</a></h2>
+<p>该cargo子命令将下载所有crates.io和git源指定的依赖项到指定的目录<code>&lt;path&gt;</code>中。
+待命令运行完毕之时，<code>&lt;path&gt;</code>指定的目录中将包含所有依赖项的远程源代码内容。
+可以使用<code>-s</code>选项指定额外的<code>Cargo.toml</code>清单文件。</p>
+<p>命令运行完毕时，stdout将输出配置信息，指导如何令分发（vendor）操作真正生效。
+一般来说，您需要将输出内容添加到<code>.cargo/config.toml</code>文件中。</p>
+<p>Cargo将经分发的源代码（vendored sources）视为只读的，就像它对registry源代码和git源代码那样。
+如果您意图对远程源代码中的crate进行修改，请在<code>Cargo.toml</code>清单文件中使用<code>[patch]</code>或指向本地副本的<code>path</code>依赖项。
+Cargo将正确处理该crate的增量构建过程，因为它知道它已经不是只读依赖项了。</p>
+<h2><a class="header" href="#选项-1" id="选项-1">选项</a></h2>
+<h3><a class="header" href="#分发选项" id="分发选项">分发选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor--s"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor--s"></a><code>-s</code> <em>manifest</em></dt>
 <dt class="option-term" id="option-cargo-vendor---sync"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---sync"></a><code>--sync</code> <em>manifest</em></dt>
-<dd class="option-desc">Specify extra <code>Cargo.toml</code> manifests to workspaces which should also be
-vendored and synced to the output.</dd>
+<dd class="option-desc">指定一个额外的<code>Cargo.toml</code>清单文件到当前工作空间中，该文件记录的依赖项也会被分发并同步到输出目录。可以多次指定这个选项</dd>
 <dt class="option-term" id="option-cargo-vendor---no-delete"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---no-delete"></a><code>--no-delete</code></dt>
-<dd class="option-desc">Don't delete the &quot;vendor&quot; directory when vendoring, but rather keep all
-existing contents of the vendor directory</dd>
+<dd class="option-desc">在分发时，不再删除"vendor"目录，即：保留那个目录中的所有已有内容</dd>
 <dt class="option-term" id="option-cargo-vendor---respect-source-config"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---respect-source-config"></a><code>--respect-source-config</code></dt>
-<dd class="option-desc">Instead of ignoring <code>[source]</code> configuration by default in <code>.cargo/config.toml</code>
-read it and use it when downloading crates from crates.io, for example</dd>
+<dd class="option-desc">默认情况下被忽略的<code>.cargo/config.toml</code>中的<code>[source]</code>此时不再被忽略。它将被用于诸如下载crates等用途</dd>
 <dt class="option-term" id="option-cargo-vendor---versioned-dirs"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---versioned-dirs"></a><code>--versioned-dirs</code></dt>
-<dd class="option-desc">Normally versions are only added to disambiguate multiple versions of the
-same package. This option causes all directories in the &quot;vendor&quot; directory
-to be versioned, which makes it easier to track the history of vendored
-packages over time, and can help with the performance of re-vendoring when
-only a subset of the packages have changed.</dd>
+<dd class="option-desc">一般来说，版本号仅在去歧义时才会被添加到依赖项的目录名中。使用此选项将导致"vendor"目录的所有依赖项目录名中包含完整的版本号。这将有利于追踪开发时间线上被分发crate的改动。当一部分被分发的crate发生改动时，重分发的效率也会有所提高</dd>
 </dl>
-<h3><a class="header" href="#manifest-options-17" id="manifest-options-17">Manifest Options</a></h3>
+<h3><a class="header" href="#清单选项-1" id="清单选项-1">清单选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor---manifest-path"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---manifest-path"></a><code>--manifest-path</code> <em>path</em></dt>
-<dd class="option-desc">用于指定<code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录或上级目录中寻找<code>Cargo.toml</code>文件。</dd>
-<dt class="option-term" id="option-cargo-vendor---frozen"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---frozen"></a><code>--frozen</code></dt>
+<dd class="option-desc"><code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录及父目录中搜索该文件</dd>
 <dt class="option-term" id="option-cargo-vendor---locked"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---locked"></a><code>--locked</code></dt>
-<dd class="option-desc">这两个选项用于保证<code>Cargo.lock</code>文件是最新的。如果该锁文件不存在，或者不是最新的，Cargo
-会报错退出。其中<code>--frozen</code>选项会阻止Cargo访问网络以检查锁文件是否是最新的。</p>
-<p>这些选项，可用于保证<code>Cargo.lock</code>文件是最新的(比如持续集成的构建过程)，
-或用于避免联网。</dd>
+<dd class="option-desc">确保分发时使用的依赖项及其版本均与<code>Cargo.lock</code>文件中记载的一致。当下列情景发生时，Cargo将会报错并退出：
+<ul>
+<li><code>Cargo.lock</code>文件丢失。</li>
+<li>由于依赖项解析结果发生变化，Cargo尝试修改<code>Cargo.lock</code>文件。（原文：Cargo attempted to change the lock file due to a different dependency resolution.）</li>
+</ul>
+<p>该选项在需要确定性构建的场景中十分有用，例如CI管道（CI pipelines）。</dd>
 <dt class="option-term" id="option-cargo-vendor---offline"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---offline"></a><code>--offline</code></dt>
-<dd class="option-desc">禁止Cargo访问网络。如果不添加此选项，Cargo在需要访问网络但网络不可用的情况下，会报错
-并停止工作。添加此选项后，Cargo会尽可能尝试不使用网络来工作。</p>
-<p>注意，在此情况下可能会产生与联网状态下不同的依赖解析(<strong>Dependency Resolution</strong>)结果。
-Cargo只会使用本地已下载的crate，即便本地的索引副本中表明可能有新版本crate。在离线前下载
-所需依赖的方法，参见 <a href="commands/cargo-fetch.html">cargo-fetch(1)</a> 。</p>
-<p>也可以通过 <code>net.offline</code> <a href="commands/../reference/config.html">config value</a>指定。</dd>
+<dd class="option-desc">阻止Cargo联网。若无设定此选项，Cargo将在需要联网但网络不可用时报错退出。设定此选项后，Cargo将尝试在无网络的情况下继续运行。</p>
+<p>注意：指定该选项之后，解析的依赖项可能与在线模式的不同。Cargo将限制自己仅使用本地已下载的crate，即使在线模式下可能有更新的版本也不会使用。请另行参阅<a href="commands/cargo-fetch.html">cargo-fetch(1)</a>命令，以在离线前提前下载依赖项。</p>
+<p>也可以通过指定<code>net.offline</code> <a href="commands/../reference/config.html">配置项（config value）</a>实现同样的效果。</dd>
+<dt class="option-term" id="option-cargo-vendor---frozen"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---frozen"></a><code>--frozen</code></dt>
+<dd class="option-desc">效果等同于同时设置<code>--locked</code>和<code>--offline</code>。</dd>
+<dt class="option-term" id="option-cargo-vendor---lockfile-path"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---lockfile-path"></a><code>--lockfile-path</code> <em>PATH</em></dt>
+<dd class="option-desc">修改Cargo.lock文件的路径为<em>PATH</em>，不再使用默认路径(<code>&lt;workspace_root&gt;/Cargo.lock</code>)。<em>PATH</em>必须以<code>Cargo.lock</code>结尾(例如：<code>--lockfile-path /tmp/temporary-lockfile/Cargo.lock</code>)。注意，若指定了<code>--lockfile-path</code>选项，则默认路径的Cargo.lock将被忽略，转而：要么用<em>PATH</em>指定的Cargo.lock，要么根据<em>PATH</em>指定的路径生成新的Cargo.lock文件。该选项可在只读的文件中运行，并在指定的<em>PATH</em>中写入Cargo.lock。</p>
+<p>该选项仅在<a href="https://doc.rust-lang.org/book/appendix-07-nightly-rust.html">nightly channel</a>中可用，且需要启用<code>-Z unstable-options</code>选项(请参阅
+<a href="https://github.com/rust-lang/cargo/issues/14421">#14421</a>).</dd>
 </dl>
-<h3><a class="header" href="#display-options-17" id="display-options-17">Display Options</a></h3>
+<h3><a class="header" href="#显示选项-1" id="显示选项-1">显示选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor--v"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-vendor---verbose"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---verbose"></a><code>--verbose</code></dt>
-<dd class="option-desc">启用更加详细的输出。可两次使用来显示&quot;非常详细&quot;的输出，其中包含了诸如 依赖警告 以及 构建脚本输出 等额外的输出内容。
-也可通过<code>term.verbose</code>指定。
-<a href="commands/../reference/config.html">config value</a>.</dd>
+<dd class="option-desc">输出详细信息。可以指定两次，以输出超详细信息，其中包含依赖项警告和构建脚本（build script）的输出。也可以通过指定<code>term.verbose</code>
+<a href="commands/../reference/config.html">配置选项</a>达成同样效果。</dd>
 <dt class="option-term" id="option-cargo-vendor--q"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor--q"></a><code>-q</code></dt>
 <dt class="option-term" id="option-cargo-vendor---quiet"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---quiet"></a><code>--quiet</code></dt>
-<dd class="option-desc">不输出Cargo的日志信息。也可通过<code>term.quiet</code>指定。
-<a href="commands/../reference/config.html">config value</a>.</dd>
+<dd class="option-desc">不输出Cargo日志信息。也可以通过指定<code>term.quiet</code><a href="commands/../reference/config.html">配置选项</a>来达成同样效果。</dd>
 <dt class="option-term" id="option-cargo-vendor---color"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---color"></a><code>--color</code> <em>when</em></dt>
-<dd class="option-desc">控制输出内容的颜色。有效取值如下：</p>
+<dd class="option-desc">控制是否输出彩色内容。可用的选项包括：</p>
 <ul>
-<li><code>auto</code> (默认)：自动检测终端是否支持带颜色的输出。</li>
-<li><code>always</code>：总显示带颜色的输出。</li>
-<li><code>never</code>：从不显示带颜色的输出。</li>
+<li><code>auto</code> (默认): 自动检测终端是否支持彩色输出。</li>
+<li><code>always</code>: 总是使用彩色输出。</li>
+<li><code>never</code>: 不使用彩色输出。</li>
 </ul>
-<p>也可通过<code>term.color</code>指定。
-<a href="commands/../reference/config.html">config value</a>.</dd>
+<p>也可以通过指定<code>term.color</code>
+<a href="commands/../reference/config.html">配置选项</a>达成同样效果。</dd>
 </dl>
-<h3><a class="header" href="#common-options-18" id="common-options-18">Common Options</a></h3>
+<h3><a class="header" href="#通用选项" id="通用选项">通用选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor-+toolchain"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor-+toolchain"></a><code>+</code><em>toolchain</em></dt>
-<dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
-begins with <code>+</code>, it will be interpreted as a rustup toolchain name (such
-as <code>+stable</code> or <code>+nightly</code>).
-See the <a href="https://rust-lang.github.io/rustup/overrides.html">rustup documentation</a>
-for more information about how toolchain overrides work.</dd>
+<dd class="option-desc">若Cargo是由rustup安装的，且cargo的第一个参数以+开头，Cargo将会把此参数视为rustup工具链名称（例如+stable、+nightly等）请参阅<a href="https://rust-lang.github.io/rustup/overrides.html">rustup文档</a>以理解更多关于工具链覆盖（override）的信息。</dd>
+<dt class="option-term" id="option-cargo-vendor---config"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---config"></a><code>--config</code> <em>KEY=VALUE</em> or <em>PATH</em></dt>
+<dd class="option-desc">覆盖一项Cargo配置选项。该参数应为TOML的键值对<code>KEY=VALUE</code>格式，或是一个指向Cargo配置文件的路径。该选项可多次设定。请参阅<a href="commands/../reference/config.html#command-line-overrides">命令行覆盖</a>以了解更多信息。</dd>
+<dt class="option-term" id="option-cargo-vendor--C"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor--C"></a><code>-C</code> <em>PATH</em></dt>
+<dd class="option-desc">在执行任何Cargo操作前，先将工作目录替换为给定路径。这将影响诸如Cargo寻找默认的清单文件(<code>Cargo.toml</code>)以及Cargo配置文件<code>.cargo/config.toml</code>等的行为。该选项必须在任何子命令之前给出，例如<code>cargo -C path/to/my-project build</code>。</p>
+<p>该选项尽在<a href="https://doc.rust-lang.org/book/appendix-07-nightly-rust.html">nightly channel</a>版本工具链中可用，且需要打开<code>-Z unstable-options</code>选项 (请参阅<a href="https://github.com/rust-lang/cargo/issues/10098">#10098</a>)。</dd>
 <dt class="option-term" id="option-cargo-vendor--h"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor--h"></a><code>-h</code></dt>
 <dt class="option-term" id="option-cargo-vendor---help"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor---help"></a><code>--help</code></dt>
-<dd class="option-desc">Prints help information.</dd>
+<dd class="option-desc">打印帮助信息。</dd>
 <dt class="option-term" id="option-cargo-vendor--Z"><a class="option-anchor" href="commands/cargo-vendor.html#option-cargo-vendor--Z"></a><code>-Z</code> <em>flag</em></dt>
-<dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
+<dd class="option-desc">启用Cargo不稳定功能（nightly专有）。运行<code>cargo -Z help</code>以了解详细信息。</dd>
 </dl>
-<h2><a class="header" href="#环境-18" id="环境-18">环境</a></h2>
-<p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-18" id="退出状态-18">退出状态</a></h2>
+<h2><a class="header" href="#环境变量" id="环境变量">环境变量</a></h2>
+<p>请参阅<a href="commands/../reference/environment-variables.html">该参考资料</a>，以详细了解Cargo所读取的环境变量。</p>
+<h2><a class="header" href="#退出状态码" id="退出状态码">退出状态码</a></h2>
 <ul>
-<li><code>0</code>: Cargo命令执行成功</li>
-<li><code>101</code>: Cargo命令未能完成.</li>
+<li><code>0</code>: Cargo操作成功。</li>
+<li><code>101</code>: Cargo操作未能成功。</li>
 </ul>
-<h2><a class="header" href="#examples-21" id="examples-21">EXAMPLES</a></h2>
+<h2><a class="header" href="#使用样例" id="使用样例">使用样例</a></h2>
 <ol>
 <li>
-<p>Vendor all dependencies into a local &quot;vendor&quot; folder</p>
+<p>将全部依赖分发到本地的<code>vendor</code>目录中</p>
 <pre><code>cargo vendor
 </code></pre>
 </li>
 <li>
-<p>Vendor all dependencies into a local &quot;third-party/vendor&quot; folder</p>
+<p>将全部依赖分发到本地的<code>third-party/vendor</code>目录中</p>
 <pre><code>cargo vendor third-party/vendor
 </code></pre>
 </li>
 <li>
-<p>Vendor the current workspace as well as another to &quot;vendor&quot;</p>
+<p>将当前工作空间和另一个工作空间（由Cargo.toml文件指定）分发到本地的<code>vendor</code>目录中</p>
 <pre><code>cargo vendor -s ../path/to/Cargo.toml
 </code></pre>
 </li>
+<li>
+<p>Vendor and redirect the necessary vendor configs to a config file.</p>
+<pre><code>cargo vendor &gt; path/to/my/cargo/config.toml
+</code></pre>
+</li>
 </ol>
-<h2><a class="header" href="#see-also-19" id="see-also-19">SEE ALSO</a></h2>
+<h2><a class="header" href="#另请参阅" id="另请参阅">另请参阅</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a></p>
 <h1><a class="header" href="#cargo-verify-project1" id="cargo-verify-project1">cargo-verify-project(1)</a></h1>
-<h2><a class="header" href="#name-19" id="name-19">NAME</a></h2>
+<h2><a class="header" href="#name-18" id="name-18">NAME</a></h2>
 <p>cargo-verify-project - Check correctness of crate manifest</p>
-<h2><a class="header" href="#synopsis-19" id="synopsis-19">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-18" id="synopsis-18">SYNOPSIS</a></h2>
 <p><code>cargo verify-project</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-19" id="description-19">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-18" id="description-18">DESCRIPTION</a></h2>
 <p>This command will parse the local manifest and check its validity. It emits a
 JSON object with the result. A successful validation will display:</p>
 <pre><code>{&quot;success&quot;:&quot;true&quot;}
@@ -10396,8 +10398,8 @@ JSON object with the result. A successful validation will display:</p>
 <p>An invalid workspace will display:</p>
 <pre><code>{&quot;invalid&quot;:&quot;human-readable error message&quot;}
 </code></pre>
-<h2><a class="header" href="#options-18" id="options-18">OPTIONS</a></h2>
-<h3><a class="header" href="#display-options-18" id="display-options-18">Display Options</a></h3>
+<h2><a class="header" href="#options-17" id="options-17">OPTIONS</a></h2>
+<h3><a class="header" href="#display-options-17" id="display-options-17">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-verify-project--v"><a class="option-anchor" href="commands/cargo-verify-project.html#option-cargo-verify-project--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-verify-project---verbose"><a class="option-anchor" href="commands/cargo-verify-project.html#option-cargo-verify-project---verbose"></a><code>--verbose</code></dt>
@@ -10418,7 +10420,7 @@ JSON object with the result. A successful validation will display:</p>
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#manifest-options-18" id="manifest-options-18">Manifest Options</a></h3>
+<h3><a class="header" href="#manifest-options-17" id="manifest-options-17">Manifest Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-verify-project---manifest-path"><a class="option-anchor" href="commands/cargo-verify-project.html#option-cargo-verify-project---manifest-path"></a><code>--manifest-path</code> <em>path</em></dt>
 <dd class="option-desc">用于指定<code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录或上级目录中寻找<code>Cargo.toml</code>文件。</dd>
@@ -10436,7 +10438,7 @@ Cargo只会使用本地已下载的crate，即便本地的索引副本中表明�
 所需依赖的方法，参见 <a href="commands/cargo-fetch.html">cargo-fetch(1)</a> 。</p>
 <p>也可以通过 <code>net.offline</code> <a href="commands/../reference/config.html">config value</a>指定。</dd>
 </dl>
-<h3><a class="header" href="#common-options-19" id="common-options-19">Common Options</a></h3>
+<h3><a class="header" href="#common-options-18" id="common-options-18">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-verify-project-+toolchain"><a class="option-anchor" href="commands/cargo-verify-project.html#option-cargo-verify-project-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -10450,14 +10452,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-verify-project--Z"><a class="option-anchor" href="commands/cargo-verify-project.html#option-cargo-verify-project--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-19" id="环境-19">环境</a></h2>
+<h2><a class="header" href="#环境-18" id="环境-18">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
 <h2><a class="header" href="#exit-status" id="exit-status">EXIT STATUS</a></h2>
 <ul>
 <li><code>0</code>: The workspace is OK.</li>
 <li><code>1</code>: The workspace is invalid.</li>
 </ul>
-<h2><a class="header" href="#examples-22" id="examples-22">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-21" id="examples-21">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Check the current workspace for errors:</p>
@@ -10465,7 +10467,7 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-20" id="see-also-20">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-19" id="see-also-19">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-package.html">cargo-package(1)</a></p>
 <h1><a class="header" href="#package-commands-1" id="package-commands-1">Package Commands</a></h1>
 <ul>
@@ -10476,11 +10478,11 @@ for more information about how toolchain overrides work.</dd>
 <li><a href="commands/cargo-uninstall.html">cargo uninstall</a></li>
 </ul>
 <h1><a class="header" href="#cargo-init1" id="cargo-init1">cargo-init(1)</a></h1>
-<h2><a class="header" href="#name-20" id="name-20">NAME</a></h2>
+<h2><a class="header" href="#name-19" id="name-19">NAME</a></h2>
 <p>cargo-init - Create a new Cargo package in an existing directory</p>
-<h2><a class="header" href="#synopsis-20" id="synopsis-20">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-19" id="synopsis-19">SYNOPSIS</a></h2>
 <p><code>cargo init</code> [<em>options</em>] [<em>path</em>]</p>
-<h2><a class="header" href="#description-20" id="description-20">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-19" id="description-19">DESCRIPTION</a></h2>
 <p>This command will create a new Cargo manifest in the current directory. Give a
 path as an argument to create in the given directory.</p>
 <p>If there are typically-named Rust source files already in the directory, those
@@ -10490,7 +10492,7 @@ will be used. If not, then a sample <code>src/main.rs</code> file will be create
 is created (see <code>--vcs</code> below).</p>
 <p>See <a href="commands/cargo-new.html">cargo-new(1)</a> for a similar command which will create a new package in
 a new directory.</p>
-<h2><a class="header" href="#options-19" id="options-19">OPTIONS</a></h2>
+<h2><a class="header" href="#options-18" id="options-18">OPTIONS</a></h2>
 <h3><a class="header" href="#init-options" id="init-options">Init Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-init---bin"><a class="option-anchor" href="commands/cargo-init.html#option-cargo-init---bin"></a><code>--bin</code></dt>
@@ -10517,7 +10519,7 @@ config key is used. If the default registry is not set and <code>--registry</cod
 used, the <code>publish</code> field will not be set which means that publishing will not
 be restricted.</dd>
 </dl>
-<h3><a class="header" href="#display-options-19" id="display-options-19">Display Options</a></h3>
+<h3><a class="header" href="#display-options-18" id="display-options-18">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-init--v"><a class="option-anchor" href="commands/cargo-init.html#option-cargo-init--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-init---verbose"><a class="option-anchor" href="commands/cargo-init.html#option-cargo-init---verbose"></a><code>--verbose</code></dt>
@@ -10538,7 +10540,7 @@ be restricted.</dd>
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-20" id="common-options-20">Common Options</a></h3>
+<h3><a class="header" href="#common-options-19" id="common-options-19">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-init-+toolchain"><a class="option-anchor" href="commands/cargo-init.html#option-cargo-init-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -10552,14 +10554,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-init--Z"><a class="option-anchor" href="commands/cargo-init.html#option-cargo-init--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-20" id="环境-20">环境</a></h2>
+<h2><a class="header" href="#环境-19" id="环境-19">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-19" id="退出状态-19">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-18" id="退出状态-18">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-23" id="examples-23">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-22" id="examples-22">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Create a binary Cargo package in the current directory:</p>
@@ -10567,17 +10569,17 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-21" id="see-also-21">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-20" id="see-also-20">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-new.html">cargo-new(1)</a></p>
 <h1><a class="header" href="#cargo-install1" id="cargo-install1">cargo-install(1)</a></h1>
-<h2><a class="header" href="#name-21" id="name-21">NAME</a></h2>
+<h2><a class="header" href="#name-20" id="name-20">NAME</a></h2>
 <p>cargo-install - Build and install a Rust binary</p>
-<h2><a class="header" href="#synopsis-21" id="synopsis-21">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-20" id="synopsis-20">SYNOPSIS</a></h2>
 <p><code>cargo install</code> [<em>options</em>] <em>crate</em>...<br />
 <code>cargo install</code> [<em>options</em>] <code>--path</code> <em>path</em><br />
 <code>cargo install</code> [<em>options</em>] <code>--git</code> <em>url</em> [<em>crate</em>...]<br />
 <code>cargo install</code> [<em>options</em>] <code>--list</code></p>
-<h2><a class="header" href="#description-21" id="description-21">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-20" id="description-20">DESCRIPTION</a></h2>
 <p>This command manages Cargo's local set of installed binary crates. Only
 packages which have executable <code>[[bin]]</code> or <code>[[example]]</code> targets can be
 installed, and all executables are installed into the installation root's
@@ -10632,7 +10634,7 @@ will not receive any fixes or updates to any dependency. Note that Cargo did
 not start publishing <code>Cargo.lock</code> files until version 1.37, which means
 packages published with prior versions will not have a <code>Cargo.lock</code> file
 available.</p>
-<h2><a class="header" href="#options-20" id="options-20">OPTIONS</a></h2>
+<h2><a class="header" href="#options-19" id="options-19">OPTIONS</a></h2>
 <h3><a class="header" href="#install-options" id="install-options">Install Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-install---vers"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install---vers"></a><code>--vers</code> <em>version</em></dt>
@@ -10720,7 +10722,7 @@ See also the <code>--profile</code> option for choosing a specific profile by na
 <dd class="option-desc">Install with the given profile.
 See the <a href="commands/../reference/profiles.html">the reference</a> for more details on profiles.</dd>
 </dl>
-<h3><a class="header" href="#manifest-options-19" id="manifest-options-19">Manifest Options</a></h3>
+<h3><a class="header" href="#manifest-options-18" id="manifest-options-18">Manifest Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-install---frozen"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install---frozen"></a><code>--frozen</code></dt>
 <dt class="option-term" id="option-cargo-install---locked"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install---locked"></a><code>--locked</code></dt>
@@ -10743,7 +10745,7 @@ Cargo只会使用本地已下载的crate，即便本地的索引副本中表明�
 <dd class="option-desc">要并行运行的作业数量。也可通过<code>build.jobs</code> <a href="commands/../reference/config.html">config value</a>指定。
 默认为CPU数量。</dd>
 </dl>
-<h3><a class="header" href="#display-options-20" id="display-options-20">Display Options</a></h3>
+<h3><a class="header" href="#display-options-19" id="display-options-19">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-install--v"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-install---verbose"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install---verbose"></a><code>--verbose</code></dt>
@@ -10785,7 +10787,7 @@ JSON diagnostics coming from rustc. Cargo's own JSON diagnostics and others
 coming from rustc are still emitted. Cannot be used with <code>human</code> or <code>short</code>.</li>
 </ul></dd>
 </dl>
-<h3><a class="header" href="#common-options-21" id="common-options-21">Common Options</a></h3>
+<h3><a class="header" href="#common-options-20" id="common-options-20">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-install-+toolchain"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -10799,14 +10801,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-install--Z"><a class="option-anchor" href="commands/cargo-install.html#option-cargo-install--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-21" id="环境-21">环境</a></h2>
+<h2><a class="header" href="#环境-20" id="环境-20">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-20" id="退出状态-20">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-19" id="退出状态-19">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-24" id="examples-24">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-23" id="examples-23">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Install or upgrade a package from crates.io:</p>
@@ -10824,21 +10826,21 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-22" id="see-also-22">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-21" id="see-also-21">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-uninstall.html">cargo-uninstall(1)</a>, <a href="commands/cargo-search.html">cargo-search(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-new1" id="cargo-new1">cargo-new(1)</a></h1>
-<h2><a class="header" href="#name-22" id="name-22">NAME</a></h2>
+<h2><a class="header" href="#name-21" id="name-21">NAME</a></h2>
 <p>cargo-new - Create a new Cargo package</p>
-<h2><a class="header" href="#synopsis-22" id="synopsis-22">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-21" id="synopsis-21">SYNOPSIS</a></h2>
 <p><code>cargo new</code> [<em>options</em>] <em>path</em></p>
-<h2><a class="header" href="#description-22" id="description-22">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-21" id="description-21">DESCRIPTION</a></h2>
 <p>This command will create a new Cargo package in the given directory. This
 includes a simple template with a <code>Cargo.toml</code> manifest, sample source file,
 and a VCS ignore file. If the directory is not already in a VCS repository,
 then a new repository is created (see <code>--vcs</code> below).</p>
 <p>See <a href="commands/cargo-init.html">cargo-init(1)</a> for a similar command which will create a new manifest
 in an existing directory.</p>
-<h2><a class="header" href="#options-21" id="options-21">OPTIONS</a></h2>
+<h2><a class="header" href="#options-20" id="options-20">OPTIONS</a></h2>
 <h3><a class="header" href="#new-options" id="new-options">New Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-new---bin"><a class="option-anchor" href="commands/cargo-new.html#option-cargo-new---bin"></a><code>--bin</code></dt>
@@ -10865,7 +10867,7 @@ config key is used. If the default registry is not set and <code>--registry</cod
 used, the <code>publish</code> field will not be set which means that publishing will not
 be restricted.</dd>
 </dl>
-<h3><a class="header" href="#display-options-21" id="display-options-21">Display Options</a></h3>
+<h3><a class="header" href="#display-options-20" id="display-options-20">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-new--v"><a class="option-anchor" href="commands/cargo-new.html#option-cargo-new--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-new---verbose"><a class="option-anchor" href="commands/cargo-new.html#option-cargo-new---verbose"></a><code>--verbose</code></dt>
@@ -10886,7 +10888,7 @@ be restricted.</dd>
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-22" id="common-options-22">Common Options</a></h3>
+<h3><a class="header" href="#common-options-21" id="common-options-21">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-new-+toolchain"><a class="option-anchor" href="commands/cargo-new.html#option-cargo-new-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -10900,14 +10902,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-new--Z"><a class="option-anchor" href="commands/cargo-new.html#option-cargo-new--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-22" id="环境-22">环境</a></h2>
+<h2><a class="header" href="#环境-21" id="环境-21">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-21" id="退出状态-21">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-20" id="退出状态-20">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-25" id="examples-25">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-24" id="examples-24">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Create a binary Cargo package in the given directory:</p>
@@ -10915,18 +10917,18 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-23" id="see-also-23">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-22" id="see-also-22">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-init.html">cargo-init(1)</a></p>
 <h1><a class="header" href="#cargo-search1" id="cargo-search1">cargo-search(1)</a></h1>
-<h2><a class="header" href="#name-23" id="name-23">NAME</a></h2>
+<h2><a class="header" href="#name-22" id="name-22">NAME</a></h2>
 <p>cargo-search - Search packages in crates.io</p>
-<h2><a class="header" href="#synopsis-23" id="synopsis-23">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-22" id="synopsis-22">SYNOPSIS</a></h2>
 <p><code>cargo search</code> [<em>options</em>] [<em>query</em>...]</p>
-<h2><a class="header" href="#description-23" id="description-23">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-22" id="description-22">DESCRIPTION</a></h2>
 <p>This performs a textual search for crates on <a href="https://crates.io">https://crates.io</a>. The matching
 crates will be displayed along with their description in TOML format suitable
 for copying into a <code>Cargo.toml</code> manifest.</p>
-<h2><a class="header" href="#options-22" id="options-22">OPTIONS</a></h2>
+<h2><a class="header" href="#options-21" id="options-21">OPTIONS</a></h2>
 <h3><a class="header" href="#search-options" id="search-options">Search Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-search---limit"><a class="option-anchor" href="commands/cargo-search.html#option-cargo-search---limit"></a><code>--limit</code> <em>limit</em></dt>
@@ -10939,7 +10941,7 @@ files</a>. If not specified, the default registry is used,
 which is defined by the <code>registry.default</code> config key which defaults to
 <code>crates-io</code>.</dd>
 </dl>
-<h3><a class="header" href="#display-options-22" id="display-options-22">Display Options</a></h3>
+<h3><a class="header" href="#display-options-21" id="display-options-21">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-search--v"><a class="option-anchor" href="commands/cargo-search.html#option-cargo-search--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-search---verbose"><a class="option-anchor" href="commands/cargo-search.html#option-cargo-search---verbose"></a><code>--verbose</code></dt>
@@ -10960,7 +10962,7 @@ which is defined by the <code>registry.default</code> config key which defaults 
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-23" id="common-options-23">Common Options</a></h3>
+<h3><a class="header" href="#common-options-22" id="common-options-22">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-search-+toolchain"><a class="option-anchor" href="commands/cargo-search.html#option-cargo-search-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -10974,14 +10976,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-search--Z"><a class="option-anchor" href="commands/cargo-search.html#option-cargo-search--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-23" id="环境-23">环境</a></h2>
+<h2><a class="header" href="#环境-22" id="环境-22">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-22" id="退出状态-22">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-21" id="退出状态-21">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-26" id="examples-26">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-25" id="examples-25">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Search for a package from crates.io:</p>
@@ -10989,14 +10991,14 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-24" id="see-also-24">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-23" id="see-also-23">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-install.html">cargo-install(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-uninstall1" id="cargo-uninstall1">cargo-uninstall(1)</a></h1>
-<h2><a class="header" href="#name-24" id="name-24">NAME</a></h2>
+<h2><a class="header" href="#name-23" id="name-23">NAME</a></h2>
 <p>cargo-uninstall - Remove a Rust binary</p>
-<h2><a class="header" href="#synopsis-24" id="synopsis-24">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-23" id="synopsis-23">SYNOPSIS</a></h2>
 <p><code>cargo uninstall</code> [<em>options</em>] [<em>spec</em>...]</p>
-<h2><a class="header" href="#description-24" id="description-24">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-23" id="description-23">DESCRIPTION</a></h2>
 <p>This command removes a package installed with <a href="commands/cargo-install.html">cargo-install(1)</a>. The <em>spec</em>
 argument is a package ID specification of the package to remove (see
 <a href="commands/cargo-pkgid.html">cargo-pkgid(1)</a>).</p>
@@ -11010,7 +11012,7 @@ argument is a package ID specification of the package to remove (see
 <li><code>CARGO_HOME</code> environment variable</li>
 <li><code>$HOME/.cargo</code></li>
 </ul>
-<h2><a class="header" href="#options-23" id="options-23">OPTIONS</a></h2>
+<h2><a class="header" href="#options-22" id="options-22">OPTIONS</a></h2>
 <h3><a class="header" href="#install-options-1" id="install-options-1">Install Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-uninstall--p"><a class="option-anchor" href="commands/cargo-uninstall.html#option-cargo-uninstall--p"></a><code>-p</code></dt>
@@ -11021,7 +11023,7 @@ argument is a package ID specification of the package to remove (see
 <dt class="option-term" id="option-cargo-uninstall---root"><a class="option-anchor" href="commands/cargo-uninstall.html#option-cargo-uninstall---root"></a><code>--root</code> <em>dir</em></dt>
 <dd class="option-desc">Directory to uninstall packages from.</dd>
 </dl>
-<h3><a class="header" href="#display-options-23" id="display-options-23">Display Options</a></h3>
+<h3><a class="header" href="#display-options-22" id="display-options-22">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-uninstall--v"><a class="option-anchor" href="commands/cargo-uninstall.html#option-cargo-uninstall--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-uninstall---verbose"><a class="option-anchor" href="commands/cargo-uninstall.html#option-cargo-uninstall---verbose"></a><code>--verbose</code></dt>
@@ -11042,7 +11044,7 @@ argument is a package ID specification of the package to remove (see
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-24" id="common-options-24">Common Options</a></h3>
+<h3><a class="header" href="#common-options-23" id="common-options-23">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-uninstall-+toolchain"><a class="option-anchor" href="commands/cargo-uninstall.html#option-cargo-uninstall-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -11056,14 +11058,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-uninstall--Z"><a class="option-anchor" href="commands/cargo-uninstall.html#option-cargo-uninstall--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-24" id="环境-24">环境</a></h2>
+<h2><a class="header" href="#环境-23" id="环境-23">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-23" id="退出状态-23">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-22" id="退出状态-22">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-27" id="examples-27">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-26" id="examples-26">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Uninstall a previously installed package.</p>
@@ -11071,7 +11073,7 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-25" id="see-also-25">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-24" id="see-also-24">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-install.html">cargo-install(1)</a></p>
 <h1><a class="header" href="#publishing-commands-1" id="publishing-commands-1">Publishing Commands</a></h1>
 <ul>
@@ -11082,11 +11084,11 @@ for more information about how toolchain overrides work.</dd>
 <li><a href="commands/cargo-yank.html">cargo yank</a></li>
 </ul>
 <h1><a class="header" href="#cargo-login1" id="cargo-login1">cargo-login(1)</a></h1>
-<h2><a class="header" href="#name-25" id="name-25">NAME</a></h2>
+<h2><a class="header" href="#name-24" id="name-24">NAME</a></h2>
 <p>cargo-login - Save an API token from the registry locally</p>
-<h2><a class="header" href="#synopsis-25" id="synopsis-25">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-24" id="synopsis-24">SYNOPSIS</a></h2>
 <p><code>cargo login</code> [<em>options</em>] [<em>token</em>]</p>
-<h2><a class="header" href="#description-25" id="description-25">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-24" id="description-24">DESCRIPTION</a></h2>
 <p>This command will save the API token to disk so that commands that require
 authentication, such as <a href="commands/cargo-publish.html">cargo-publish(1)</a>, will be automatically
 authenticated. The token is saved in <code>$CARGO_HOME/credentials.toml</code>. <code>CARGO_HOME</code>
@@ -11094,7 +11096,7 @@ defaults to <code>.cargo</code> in your home directory.</p>
 <p>If the <em>token</em> argument is not specified, it will be read from stdin.</p>
 <p>The API token for crates.io may be retrieved from <a href="https://crates.io/me">https://crates.io/me</a>.</p>
 <p>Take care to keep the token secret, it should not be shared with anyone else.</p>
-<h2><a class="header" href="#options-24" id="options-24">OPTIONS</a></h2>
+<h2><a class="header" href="#options-23" id="options-23">OPTIONS</a></h2>
 <h3><a class="header" href="#login-options" id="login-options">Login Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-login---registry"><a class="option-anchor" href="commands/cargo-login.html#option-cargo-login---registry"></a><code>--registry</code> <em>registry</em></dt>
@@ -11103,7 +11105,7 @@ files</a>. If not specified, the default registry is used,
 which is defined by the <code>registry.default</code> config key which defaults to
 <code>crates-io</code>.</dd>
 </dl>
-<h3><a class="header" href="#display-options-24" id="display-options-24">Display Options</a></h3>
+<h3><a class="header" href="#display-options-23" id="display-options-23">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-login--v"><a class="option-anchor" href="commands/cargo-login.html#option-cargo-login--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-login---verbose"><a class="option-anchor" href="commands/cargo-login.html#option-cargo-login---verbose"></a><code>--verbose</code></dt>
@@ -11124,7 +11126,7 @@ which is defined by the <code>registry.default</code> config key which defaults 
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-25" id="common-options-25">Common Options</a></h3>
+<h3><a class="header" href="#common-options-24" id="common-options-24">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-login-+toolchain"><a class="option-anchor" href="commands/cargo-login.html#option-cargo-login-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -11138,14 +11140,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-login--Z"><a class="option-anchor" href="commands/cargo-login.html#option-cargo-login--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-25" id="环境-25">环境</a></h2>
+<h2><a class="header" href="#环境-24" id="环境-24">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-24" id="退出状态-24">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-23" id="退出状态-23">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-28" id="examples-28">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-27" id="examples-27">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Save the API token to disk:</p>
@@ -11153,16 +11155,16 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-26" id="see-also-26">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-25" id="see-also-25">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-owner1" id="cargo-owner1">cargo-owner(1)</a></h1>
-<h2><a class="header" href="#name-26" id="name-26">NAME</a></h2>
+<h2><a class="header" href="#name-25" id="name-25">NAME</a></h2>
 <p>cargo-owner - Manage the owners of a crate on the registry</p>
-<h2><a class="header" href="#synopsis-26" id="synopsis-26">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-25" id="synopsis-25">SYNOPSIS</a></h2>
 <p><code>cargo owner</code> [<em>options</em>] <code>--add</code> <em>login</em> [<em>crate</em>]<br />
 <code>cargo owner</code> [<em>options</em>] <code>--remove</code> <em>login</em> [<em>crate</em>]<br />
 <code>cargo owner</code> [<em>options</em>] <code>--list</code> [<em>crate</em>]</p>
-<h2><a class="header" href="#description-26" id="description-26">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-25" id="description-25">DESCRIPTION</a></h2>
 <p>This command will modify the owners for a crate on the registry. Owners of a
 crate can upload new versions and yank old versions. Non-team owners can also
 modify the set of owners, so take care!</p>
@@ -11172,7 +11174,7 @@ or using <a href="commands/cargo-login.html">cargo-login(1)</a>.</p>
 current directory.</p>
 <p>See <a href="commands/../reference/publishing.html#cargo-owner">the reference</a> for more
 information about owners and publishing.</p>
-<h2><a class="header" href="#options-25" id="options-25">OPTIONS</a></h2>
+<h2><a class="header" href="#options-24" id="options-24">OPTIONS</a></h2>
 <h3><a class="header" href="#owner-options" id="owner-options">Owner Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-owner--a"><a class="option-anchor" href="commands/cargo-owner.html#option-cargo-owner--a"></a><code>-a</code></dt>
@@ -11201,7 +11203,7 @@ files</a>. If not specified, the default registry is used,
 which is defined by the <code>registry.default</code> config key which defaults to
 <code>crates-io</code>.</dd>
 </dl>
-<h3><a class="header" href="#display-options-25" id="display-options-25">Display Options</a></h3>
+<h3><a class="header" href="#display-options-24" id="display-options-24">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-owner--v"><a class="option-anchor" href="commands/cargo-owner.html#option-cargo-owner--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-owner---verbose"><a class="option-anchor" href="commands/cargo-owner.html#option-cargo-owner---verbose"></a><code>--verbose</code></dt>
@@ -11222,7 +11224,7 @@ which is defined by the <code>registry.default</code> config key which defaults 
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-26" id="common-options-26">Common Options</a></h3>
+<h3><a class="header" href="#common-options-25" id="common-options-25">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-owner-+toolchain"><a class="option-anchor" href="commands/cargo-owner.html#option-cargo-owner-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -11236,14 +11238,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-owner--Z"><a class="option-anchor" href="commands/cargo-owner.html#option-cargo-owner--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-26" id="环境-26">环境</a></h2>
+<h2><a class="header" href="#环境-25" id="环境-25">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-25" id="退出状态-25">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-24" id="退出状态-24">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-29" id="examples-29">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-28" id="examples-28">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>List owners of a package:</p>
@@ -11261,10 +11263,10 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-27" id="see-also-27">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-26" id="see-also-26">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-login.html">cargo-login(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-package1" id="cargo-package1">cargo-package(1)</a></h1>
-<h2><a class="header" href="#名称-1" id="名称-1">名称</a></h2>
+<h2><a class="header" href="#名称-2" id="名称-2">名称</a></h2>
 <p>cargo-package - 将本地包打包为可分发的压缩文件</p>
 <h2><a class="header" href="#用法-1" id="用法-1">用法</a></h2>
 <p><code>cargo package</code> [<em>options</em>]</p>
@@ -11366,7 +11368,7 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-package---no-default-features"><a class="option-anchor" href="commands/cargo-package.html#option-cargo-package---no-default-features"></a><code>--no-default-features</code></dt>
 <dd class="option-desc">不启用给定包的<code>default</code>特性</dd>
 </dl>
-<h3><a class="header" href="#清单选项-1" id="清单选项-1">清单选项</a></h3>
+<h3><a class="header" href="#清单选项-2" id="清单选项-2">清单选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-package---manifest-path"><a class="option-anchor" href="commands/cargo-package.html#option-cargo-package---manifest-path"></a><code>--manifest-path</code> <em>path</em></dt>
 <dd class="option-desc">用于指定<code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录或上级目录中寻找<code>Cargo.toml</code>文件。</dd>
@@ -11391,7 +11393,7 @@ Cargo只会使用本地已下载的crate，即便本地的索引副本中表明�
 <dd class="option-desc">要并行运行的作业数量。也可通过<code>build.jobs</code> <a href="commands/../reference/config.html">config value</a>指定。
 默认为CPU数量。</dd>
 </dl>
-<h3><a class="header" href="#显示选项-1" id="显示选项-1">显示选项</a></h3>
+<h3><a class="header" href="#显示选项-2" id="显示选项-2">显示选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-package--v"><a class="option-anchor" href="commands/cargo-package.html#option-cargo-package--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-package---verbose"><a class="option-anchor" href="commands/cargo-package.html#option-cargo-package---verbose"></a><code>--verbose</code></dt>
@@ -11412,7 +11414,7 @@ Cargo只会使用本地已下载的crate，即便本地的索引副本中表明�
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-27" id="common-options-27">Common Options</a></h3>
+<h3><a class="header" href="#common-options-26" id="common-options-26">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-package-+toolchain"><a class="option-anchor" href="commands/cargo-package.html#option-cargo-package-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -11426,9 +11428,9 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-package--Z"><a class="option-anchor" href="commands/cargo-package.html#option-cargo-package--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-27" id="环境-27">环境</a></h2>
+<h2><a class="header" href="#环境-26" id="环境-26">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-26" id="退出状态-26">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-25" id="退出状态-25">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
@@ -11444,11 +11446,11 @@ for more information about how toolchain overrides work.</dd>
 <h2><a class="header" href="#相关-1" id="相关-1">相关</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h1><a class="header" href="#cargo-publish1" id="cargo-publish1">cargo-publish(1)</a></h1>
-<h2><a class="header" href="#name-27" id="name-27">NAME</a></h2>
+<h2><a class="header" href="#name-26" id="name-26">NAME</a></h2>
 <p>cargo-publish - Upload a package to the registry</p>
-<h2><a class="header" href="#synopsis-27" id="synopsis-27">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-26" id="synopsis-26">SYNOPSIS</a></h2>
 <p><code>cargo publish</code> [<em>options</em>]</p>
-<h2><a class="header" href="#description-27" id="description-27">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-26" id="description-26">DESCRIPTION</a></h2>
 <p>This command will create a distributable, compressed <code>.crate</code> file with the
 source code of the package in the current directory and upload it to a
 registry. The default registry is <a href="https://crates.io">https://crates.io</a>. This performs the
@@ -11468,7 +11470,7 @@ additional checks on the crate.</li>
 or using <a href="commands/cargo-login.html">cargo-login(1)</a>.</p>
 <p>See <a href="commands/../reference/publishing.html">the reference</a> for more details about
 packaging and publishing.</p>
-<h2><a class="header" href="#options-26" id="options-26">OPTIONS</a></h2>
+<h2><a class="header" href="#options-25" id="options-25">OPTIONS</a></h2>
 <h3><a class="header" href="#publish-options" id="publish-options">Publish Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-publish---dry-run"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish---dry-run"></a><code>--dry-run</code></dt>
@@ -11533,7 +11535,7 @@ format.</dd>
 <dt class="option-term" id="option-cargo-publish---no-default-features"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish---no-default-features"></a><code>--no-default-features</code></dt>
 <dd class="option-desc">不启用给定包的<code>default</code>特性</dd>
 </dl>
-<h3><a class="header" href="#manifest-options-20" id="manifest-options-20">Manifest Options</a></h3>
+<h3><a class="header" href="#manifest-options-19" id="manifest-options-19">Manifest Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-publish---manifest-path"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish---manifest-path"></a><code>--manifest-path</code> <em>path</em></dt>
 <dd class="option-desc">用于指定<code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录或上级目录中寻找<code>Cargo.toml</code>文件。</dd>
@@ -11558,7 +11560,7 @@ Cargo只会使用本地已下载的crate，即便本地的索引副本中表明�
 <dd class="option-desc">要并行运行的作业数量。也可通过<code>build.jobs</code> <a href="commands/../reference/config.html">config value</a>指定。
 默认为CPU数量。</dd>
 </dl>
-<h3><a class="header" href="#display-options-26" id="display-options-26">Display Options</a></h3>
+<h3><a class="header" href="#display-options-25" id="display-options-25">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-publish--v"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-publish---verbose"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish---verbose"></a><code>--verbose</code></dt>
@@ -11579,7 +11581,7 @@ Cargo只会使用本地已下载的crate，即便本地的索引副本中表明�
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-28" id="common-options-28">Common Options</a></h3>
+<h3><a class="header" href="#common-options-27" id="common-options-27">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-publish-+toolchain"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -11593,14 +11595,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-publish--Z"><a class="option-anchor" href="commands/cargo-publish.html#option-cargo-publish--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-28" id="环境-28">环境</a></h2>
+<h2><a class="header" href="#环境-27" id="环境-27">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-27" id="退出状态-27">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-26" id="退出状态-26">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-30" id="examples-30">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-29" id="examples-29">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Publish the current package:</p>
@@ -11608,14 +11610,14 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-28" id="see-also-28">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-27" id="see-also-27">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-package.html">cargo-package(1)</a>, <a href="commands/cargo-login.html">cargo-login(1)</a></p>
 <h1><a class="header" href="#cargo-yank1" id="cargo-yank1">cargo-yank(1)</a></h1>
-<h2><a class="header" href="#name-28" id="name-28">NAME</a></h2>
+<h2><a class="header" href="#name-27" id="name-27">NAME</a></h2>
 <p>cargo-yank - Remove a pushed crate from the index</p>
-<h2><a class="header" href="#synopsis-28" id="synopsis-28">SYNOPSIS</a></h2>
+<h2><a class="header" href="#synopsis-27" id="synopsis-27">SYNOPSIS</a></h2>
 <p><code>cargo yank</code> [<em>options</em>] <code>--vers</code> <em>version</em> [<em>crate</em>]</p>
-<h2><a class="header" href="#description-28" id="description-28">DESCRIPTION</a></h2>
+<h2><a class="header" href="#description-27" id="description-27">DESCRIPTION</a></h2>
 <p>The yank command removes a previously published crate's version from the
 server's index. This command does not delete any data, and the crate will
 still be available for download via the registry's download link.</p>
@@ -11626,7 +11628,7 @@ crates to be locked to any yanked version.</p>
 or using <a href="commands/cargo-login.html">cargo-login(1)</a>.</p>
 <p>If the crate name is not specified, it will use the package name from the
 current directory.</p>
-<h2><a class="header" href="#options-27" id="options-27">OPTIONS</a></h2>
+<h2><a class="header" href="#options-26" id="options-26">OPTIONS</a></h2>
 <h3><a class="header" href="#yank-options" id="yank-options">Yank Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-yank---vers"><a class="option-anchor" href="commands/cargo-yank.html#option-cargo-yank---vers"></a><code>--vers</code> <em>version</em></dt>
@@ -11650,7 +11652,7 @@ files</a>. If not specified, the default registry is used,
 which is defined by the <code>registry.default</code> config key which defaults to
 <code>crates-io</code>.</dd>
 </dl>
-<h3><a class="header" href="#display-options-27" id="display-options-27">Display Options</a></h3>
+<h3><a class="header" href="#display-options-26" id="display-options-26">Display Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-yank--v"><a class="option-anchor" href="commands/cargo-yank.html#option-cargo-yank--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-yank---verbose"><a class="option-anchor" href="commands/cargo-yank.html#option-cargo-yank---verbose"></a><code>--verbose</code></dt>
@@ -11671,7 +11673,7 @@ which is defined by the <code>registry.default</code> config key which defaults 
 <p>也可通过<code>term.color</code>指定。
 <a href="commands/../reference/config.html">config value</a>.</dd>
 </dl>
-<h3><a class="header" href="#common-options-29" id="common-options-29">Common Options</a></h3>
+<h3><a class="header" href="#common-options-28" id="common-options-28">Common Options</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-yank-+toolchain"><a class="option-anchor" href="commands/cargo-yank.html#option-cargo-yank-+toolchain"></a><code>+</code><em>toolchain</em></dt>
 <dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
@@ -11685,14 +11687,14 @@ for more information about how toolchain overrides work.</dd>
 <dt class="option-term" id="option-cargo-yank--Z"><a class="option-anchor" href="commands/cargo-yank.html#option-cargo-yank--Z"></a><code>-Z</code> <em>flag</em></dt>
 <dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
 </dl>
-<h2><a class="header" href="#环境-29" id="环境-29">环境</a></h2>
+<h2><a class="header" href="#环境-28" id="环境-28">环境</a></h2>
 <p>关于Cargo所读取的环境变量，可参见<a href="commands/../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态-28" id="退出状态-28">退出状态</a></h2>
+<h2><a class="header" href="#退出状态-27" id="退出状态-27">退出状态</a></h2>
 <ul>
 <li><code>0</code>: Cargo命令执行成功</li>
 <li><code>101</code>: Cargo命令未能完成.</li>
 </ul>
-<h2><a class="header" href="#examples-31" id="examples-31">EXAMPLES</a></h2>
+<h2><a class="header" href="#examples-30" id="examples-30">EXAMPLES</a></h2>
 <ol>
 <li>
 <p>Yank a crate from the index:</p>
@@ -11700,7 +11702,7 @@ for more information about how toolchain overrides work.</dd>
 </code></pre>
 </li>
 </ol>
-<h2><a class="header" href="#see-also-29" id="see-also-29">SEE ALSO</a></h2>
+<h2><a class="header" href="#see-also-28" id="see-also-28">SEE ALSO</a></h2>
 <p><a href="commands/cargo.html">cargo(1)</a>, <a href="commands/cargo-login.html">cargo-login(1)</a>, <a href="commands/cargo-publish.html">cargo-publish(1)</a></p>
 <h2><a class="header" href="#常见问题" id="常见问题">常见问题</a></h2>
 <h3><a class="header" href="#is-the-plan-to-use-github-as-a-package-repository" id="is-the-plan-to-use-github-as-a-package-repository">Is the plan to use GitHub as a package repository?</a></h3>

@@ -170,117 +170,119 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#cargo-vendor1" id="cargo-vendor1">cargo-vendor(1)</a></h1>
-<h2><a class="header" href="#name" id="name">NAME</a></h2>
-<p>cargo-vendor - Vendor all dependencies locally</p>
-<h2><a class="header" href="#synopsis" id="synopsis">SYNOPSIS</a></h2>
-<p><code>cargo vendor</code> [<em>options</em>] [<em>path</em>]</p>
-<h2><a class="header" href="#description" id="description">DESCRIPTION</a></h2>
-<p>This cargo subcommand will vendor all crates.io and git dependencies for a
-project into the specified directory at <code>&lt;path&gt;</code>. After this command completes
-the vendor directory specified by <code>&lt;path&gt;</code> will contain all remote sources from
-dependencies specified. Additional manifests beyond the default one can be
-specified with the <code>-s</code> option.</p>
-<p>The <code>cargo vendor</code> command will also print out the configuration necessary
-to use the vendored sources, which you will need to add to <code>.cargo/config.toml</code>.</p>
-<h2><a class="header" href="#options" id="options">OPTIONS</a></h2>
-<h3><a class="header" href="#vendor-options" id="vendor-options">Vendor Options</a></h3>
+<h2><a class="header" href="#名称" id="名称">名称</a></h2>
+<p>cargo-vendor --- 将所有依赖项下载到本地</p>
+<h2><a class="header" href="#用法概要" id="用法概要">用法概要</a></h2>
+<p><code>cargo vendor</code> [<em>选项</em>] [<em>路径</em>]</p>
+<h2><a class="header" href="#功能介绍" id="功能介绍">功能介绍</a></h2>
+<p>该cargo子命令将下载所有crates.io和git源指定的依赖项到指定的目录<code>&lt;path&gt;</code>中。
+待命令运行完毕之时，<code>&lt;path&gt;</code>指定的目录中将包含所有依赖项的远程源代码内容。
+可以使用<code>-s</code>选项指定额外的<code>Cargo.toml</code>清单文件。</p>
+<p>命令运行完毕时，stdout将输出配置信息，指导如何令分发（vendor）操作真正生效。
+一般来说，您需要将输出内容添加到<code>.cargo/config.toml</code>文件中。</p>
+<p>Cargo将经分发的源代码（vendored sources）视为只读的，就像它对registry源代码和git源代码那样。
+如果您意图对远程源代码中的crate进行修改，请在<code>Cargo.toml</code>清单文件中使用<code>[patch]</code>或指向本地副本的<code>path</code>依赖项。
+Cargo将正确处理该crate的增量构建过程，因为它知道它已经不是只读依赖项了。</p>
+<h2><a class="header" href="#选项" id="选项">选项</a></h2>
+<h3><a class="header" href="#分发选项" id="分发选项">分发选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor--s"><a class="option-anchor" href="#option-cargo-vendor--s"></a><code>-s</code> <em>manifest</em></dt>
 <dt class="option-term" id="option-cargo-vendor---sync"><a class="option-anchor" href="#option-cargo-vendor---sync"></a><code>--sync</code> <em>manifest</em></dt>
-<dd class="option-desc">Specify extra <code>Cargo.toml</code> manifests to workspaces which should also be
-vendored and synced to the output.</dd>
+<dd class="option-desc">指定一个额外的<code>Cargo.toml</code>清单文件到当前工作空间中，该文件记录的依赖项也会被分发并同步到输出目录。可以多次指定这个选项</dd>
 <dt class="option-term" id="option-cargo-vendor---no-delete"><a class="option-anchor" href="#option-cargo-vendor---no-delete"></a><code>--no-delete</code></dt>
-<dd class="option-desc">Don't delete the &quot;vendor&quot; directory when vendoring, but rather keep all
-existing contents of the vendor directory</dd>
+<dd class="option-desc">在分发时，不再删除"vendor"目录，即：保留那个目录中的所有已有内容</dd>
 <dt class="option-term" id="option-cargo-vendor---respect-source-config"><a class="option-anchor" href="#option-cargo-vendor---respect-source-config"></a><code>--respect-source-config</code></dt>
-<dd class="option-desc">Instead of ignoring <code>[source]</code> configuration by default in <code>.cargo/config.toml</code>
-read it and use it when downloading crates from crates.io, for example</dd>
+<dd class="option-desc">默认情况下被忽略的<code>.cargo/config.toml</code>中的<code>[source]</code>此时不再被忽略。它将被用于诸如下载crates等用途</dd>
 <dt class="option-term" id="option-cargo-vendor---versioned-dirs"><a class="option-anchor" href="#option-cargo-vendor---versioned-dirs"></a><code>--versioned-dirs</code></dt>
-<dd class="option-desc">Normally versions are only added to disambiguate multiple versions of the
-same package. This option causes all directories in the &quot;vendor&quot; directory
-to be versioned, which makes it easier to track the history of vendored
-packages over time, and can help with the performance of re-vendoring when
-only a subset of the packages have changed.</dd>
+<dd class="option-desc">一般来说，版本号仅在去歧义时才会被添加到依赖项的目录名中。使用此选项将导致"vendor"目录的所有依赖项目录名中包含完整的版本号。这将有利于追踪开发时间线上被分发crate的改动。当一部分被分发的crate发生改动时，重分发的效率也会有所提高</dd>
 </dl>
-<h3><a class="header" href="#manifest-options" id="manifest-options">Manifest Options</a></h3>
+<h3><a class="header" href="#清单选项" id="清单选项">清单选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor---manifest-path"><a class="option-anchor" href="#option-cargo-vendor---manifest-path"></a><code>--manifest-path</code> <em>path</em></dt>
-<dd class="option-desc">用于指定<code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录或上级目录中寻找<code>Cargo.toml</code>文件。</dd>
-<dt class="option-term" id="option-cargo-vendor---frozen"><a class="option-anchor" href="#option-cargo-vendor---frozen"></a><code>--frozen</code></dt>
+<dd class="option-desc"><code>Cargo.toml</code>文件的路径。默认情况下，Cargo会在当前目录及父目录中搜索该文件</dd>
 <dt class="option-term" id="option-cargo-vendor---locked"><a class="option-anchor" href="#option-cargo-vendor---locked"></a><code>--locked</code></dt>
-<dd class="option-desc">这两个选项用于保证<code>Cargo.lock</code>文件是最新的。如果该锁文件不存在，或者不是最新的，Cargo
-会报错退出。其中<code>--frozen</code>选项会阻止Cargo访问网络以检查锁文件是否是最新的。</p>
-<p>这些选项，可用于保证<code>Cargo.lock</code>文件是最新的(比如持续集成的构建过程)，
-或用于避免联网。</dd>
+<dd class="option-desc">确保分发时使用的依赖项及其版本均与<code>Cargo.lock</code>文件中记载的一致。当下列情景发生时，Cargo将会报错并退出：
+<ul>
+<li><code>Cargo.lock</code>文件丢失。</li>
+<li>由于依赖项解析结果发生变化，Cargo尝试修改<code>Cargo.lock</code>文件。（原文：Cargo attempted to change the lock file due to a different dependency resolution.）</li>
+</ul>
+<p>该选项在需要确定性构建的场景中十分有用，例如CI管道（CI pipelines）。</dd>
 <dt class="option-term" id="option-cargo-vendor---offline"><a class="option-anchor" href="#option-cargo-vendor---offline"></a><code>--offline</code></dt>
-<dd class="option-desc">禁止Cargo访问网络。如果不添加此选项，Cargo在需要访问网络但网络不可用的情况下，会报错
-并停止工作。添加此选项后，Cargo会尽可能尝试不使用网络来工作。</p>
-<p>注意，在此情况下可能会产生与联网状态下不同的依赖解析(<strong>Dependency Resolution</strong>)结果。
-Cargo只会使用本地已下载的crate，即便本地的索引副本中表明可能有新版本crate。在离线前下载
-所需依赖的方法，参见 <a href="cargo-fetch.html">cargo-fetch(1)</a> 。</p>
-<p>也可以通过 <code>net.offline</code> <a href="../reference/config.html">config value</a>指定。</dd>
+<dd class="option-desc">阻止Cargo联网。若无设定此选项，Cargo将在需要联网但网络不可用时报错退出。设定此选项后，Cargo将尝试在无网络的情况下继续运行。</p>
+<p>注意：指定该选项之后，解析的依赖项可能与在线模式的不同。Cargo将限制自己仅使用本地已下载的crate，即使在线模式下可能有更新的版本也不会使用。请另行参阅<a href="cargo-fetch.html">cargo-fetch(1)</a>命令，以在离线前提前下载依赖项。</p>
+<p>也可以通过指定<code>net.offline</code> <a href="../reference/config.html">配置项（config value）</a>实现同样的效果。</dd>
+<dt class="option-term" id="option-cargo-vendor---frozen"><a class="option-anchor" href="#option-cargo-vendor---frozen"></a><code>--frozen</code></dt>
+<dd class="option-desc">效果等同于同时设置<code>--locked</code>和<code>--offline</code>。</dd>
+<dt class="option-term" id="option-cargo-vendor---lockfile-path"><a class="option-anchor" href="#option-cargo-vendor---lockfile-path"></a><code>--lockfile-path</code> <em>PATH</em></dt>
+<dd class="option-desc">修改Cargo.lock文件的路径为<em>PATH</em>，不再使用默认路径(<code>&lt;workspace_root&gt;/Cargo.lock</code>)。<em>PATH</em>必须以<code>Cargo.lock</code>结尾(例如：<code>--lockfile-path /tmp/temporary-lockfile/Cargo.lock</code>)。注意，若指定了<code>--lockfile-path</code>选项，则默认路径的Cargo.lock将被忽略，转而：要么用<em>PATH</em>指定的Cargo.lock，要么根据<em>PATH</em>指定的路径生成新的Cargo.lock文件。该选项可在只读的文件中运行，并在指定的<em>PATH</em>中写入Cargo.lock。</p>
+<p>该选项仅在<a href="https://doc.rust-lang.org/book/appendix-07-nightly-rust.html">nightly channel</a>中可用，且需要启用<code>-Z unstable-options</code>选项(请参阅
+<a href="https://github.com/rust-lang/cargo/issues/14421">#14421</a>).</dd>
 </dl>
-<h3><a class="header" href="#display-options" id="display-options">Display Options</a></h3>
+<h3><a class="header" href="#显示选项" id="显示选项">显示选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor--v"><a class="option-anchor" href="#option-cargo-vendor--v"></a><code>-v</code></dt>
 <dt class="option-term" id="option-cargo-vendor---verbose"><a class="option-anchor" href="#option-cargo-vendor---verbose"></a><code>--verbose</code></dt>
-<dd class="option-desc">启用更加详细的输出。可两次使用来显示&quot;非常详细&quot;的输出，其中包含了诸如 依赖警告 以及 构建脚本输出 等额外的输出内容。
-也可通过<code>term.verbose</code>指定。
-<a href="../reference/config.html">config value</a>.</dd>
+<dd class="option-desc">输出详细信息。可以指定两次，以输出超详细信息，其中包含依赖项警告和构建脚本（build script）的输出。也可以通过指定<code>term.verbose</code>
+<a href="../reference/config.html">配置选项</a>达成同样效果。</dd>
 <dt class="option-term" id="option-cargo-vendor--q"><a class="option-anchor" href="#option-cargo-vendor--q"></a><code>-q</code></dt>
 <dt class="option-term" id="option-cargo-vendor---quiet"><a class="option-anchor" href="#option-cargo-vendor---quiet"></a><code>--quiet</code></dt>
-<dd class="option-desc">不输出Cargo的日志信息。也可通过<code>term.quiet</code>指定。
-<a href="../reference/config.html">config value</a>.</dd>
+<dd class="option-desc">不输出Cargo日志信息。也可以通过指定<code>term.quiet</code><a href="../reference/config.html">配置选项</a>来达成同样效果。</dd>
 <dt class="option-term" id="option-cargo-vendor---color"><a class="option-anchor" href="#option-cargo-vendor---color"></a><code>--color</code> <em>when</em></dt>
-<dd class="option-desc">控制输出内容的颜色。有效取值如下：</p>
+<dd class="option-desc">控制是否输出彩色内容。可用的选项包括：</p>
 <ul>
-<li><code>auto</code> (默认)：自动检测终端是否支持带颜色的输出。</li>
-<li><code>always</code>：总显示带颜色的输出。</li>
-<li><code>never</code>：从不显示带颜色的输出。</li>
+<li><code>auto</code> (默认): 自动检测终端是否支持彩色输出。</li>
+<li><code>always</code>: 总是使用彩色输出。</li>
+<li><code>never</code>: 不使用彩色输出。</li>
 </ul>
-<p>也可通过<code>term.color</code>指定。
-<a href="../reference/config.html">config value</a>.</dd>
+<p>也可以通过指定<code>term.color</code>
+<a href="../reference/config.html">配置选项</a>达成同样效果。</dd>
 </dl>
-<h3><a class="header" href="#common-options" id="common-options">Common Options</a></h3>
+<h3><a class="header" href="#通用选项" id="通用选项">通用选项</a></h3>
 <dl>
 <dt class="option-term" id="option-cargo-vendor-+toolchain"><a class="option-anchor" href="#option-cargo-vendor-+toolchain"></a><code>+</code><em>toolchain</em></dt>
-<dd class="option-desc">If Cargo has been installed with rustup, and the first argument to <code>cargo</code>
-begins with <code>+</code>, it will be interpreted as a rustup toolchain name (such
-as <code>+stable</code> or <code>+nightly</code>).
-See the <a href="https://rust-lang.github.io/rustup/overrides.html">rustup documentation</a>
-for more information about how toolchain overrides work.</dd>
+<dd class="option-desc">若Cargo是由rustup安装的，且cargo的第一个参数以+开头，Cargo将会把此参数视为rustup工具链名称（例如+stable、+nightly等）请参阅<a href="https://rust-lang.github.io/rustup/overrides.html">rustup文档</a>以理解更多关于工具链覆盖（override）的信息。</dd>
+<dt class="option-term" id="option-cargo-vendor---config"><a class="option-anchor" href="#option-cargo-vendor---config"></a><code>--config</code> <em>KEY=VALUE</em> or <em>PATH</em></dt>
+<dd class="option-desc">覆盖一项Cargo配置选项。该参数应为TOML的键值对<code>KEY=VALUE</code>格式，或是一个指向Cargo配置文件的路径。该选项可多次设定。请参阅<a href="../reference/config.html#command-line-overrides">命令行覆盖</a>以了解更多信息。</dd>
+<dt class="option-term" id="option-cargo-vendor--C"><a class="option-anchor" href="#option-cargo-vendor--C"></a><code>-C</code> <em>PATH</em></dt>
+<dd class="option-desc">在执行任何Cargo操作前，先将工作目录替换为给定路径。这将影响诸如Cargo寻找默认的清单文件(<code>Cargo.toml</code>)以及Cargo配置文件<code>.cargo/config.toml</code>等的行为。该选项必须在任何子命令之前给出，例如<code>cargo -C path/to/my-project build</code>。</p>
+<p>该选项尽在<a href="https://doc.rust-lang.org/book/appendix-07-nightly-rust.html">nightly channel</a>版本工具链中可用，且需要打开<code>-Z unstable-options</code>选项 (请参阅<a href="https://github.com/rust-lang/cargo/issues/10098">#10098</a>)。</dd>
 <dt class="option-term" id="option-cargo-vendor--h"><a class="option-anchor" href="#option-cargo-vendor--h"></a><code>-h</code></dt>
 <dt class="option-term" id="option-cargo-vendor---help"><a class="option-anchor" href="#option-cargo-vendor---help"></a><code>--help</code></dt>
-<dd class="option-desc">Prints help information.</dd>
+<dd class="option-desc">打印帮助信息。</dd>
 <dt class="option-term" id="option-cargo-vendor--Z"><a class="option-anchor" href="#option-cargo-vendor--Z"></a><code>-Z</code> <em>flag</em></dt>
-<dd class="option-desc">Unstable (nightly-only) flags to Cargo. Run <code>cargo -Z help</code> for details.</dd>
+<dd class="option-desc">启用Cargo不稳定功能（nightly专有）。运行<code>cargo -Z help</code>以了解详细信息。</dd>
 </dl>
-<h2><a class="header" href="#环境" id="环境">环境</a></h2>
-<p>关于Cargo所读取的环境变量，可参见<a href="../reference/environment-variables.html">the reference</a></p>
-<h2><a class="header" href="#退出状态" id="退出状态">退出状态</a></h2>
+<h2><a class="header" href="#环境变量" id="环境变量">环境变量</a></h2>
+<p>请参阅<a href="../reference/environment-variables.html">该参考资料</a>，以详细了解Cargo所读取的环境变量。</p>
+<h2><a class="header" href="#退出状态码" id="退出状态码">退出状态码</a></h2>
 <ul>
-<li><code>0</code>: Cargo命令执行成功</li>
-<li><code>101</code>: Cargo命令未能完成.</li>
+<li><code>0</code>: Cargo操作成功。</li>
+<li><code>101</code>: Cargo操作未能成功。</li>
 </ul>
-<h2><a class="header" href="#examples" id="examples">EXAMPLES</a></h2>
+<h2><a class="header" href="#使用样例" id="使用样例">使用样例</a></h2>
 <ol>
 <li>
-<p>Vendor all dependencies into a local &quot;vendor&quot; folder</p>
+<p>将全部依赖分发到本地的<code>vendor</code>目录中</p>
 <pre><code>cargo vendor
 </code></pre>
 </li>
 <li>
-<p>Vendor all dependencies into a local &quot;third-party/vendor&quot; folder</p>
+<p>将全部依赖分发到本地的<code>third-party/vendor</code>目录中</p>
 <pre><code>cargo vendor third-party/vendor
 </code></pre>
 </li>
 <li>
-<p>Vendor the current workspace as well as another to &quot;vendor&quot;</p>
+<p>将当前工作空间和另一个工作空间（由Cargo.toml文件指定）分发到本地的<code>vendor</code>目录中</p>
 <pre><code>cargo vendor -s ../path/to/Cargo.toml
 </code></pre>
 </li>
+<li>
+<p>Vendor and redirect the necessary vendor configs to a config file.</p>
+<pre><code>cargo vendor &gt; path/to/my/cargo/config.toml
+</code></pre>
+</li>
 </ol>
-<h2><a class="header" href="#see-also" id="see-also">SEE ALSO</a></h2>
+<h2><a class="header" href="#另请参阅" id="另请参阅">另请参阅</a></h2>
 <p><a href="cargo.html">cargo(1)</a></p>
 
                     </main>

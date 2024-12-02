@@ -3663,7 +3663,7 @@ impl Rectangle {
 <p>本章介绍 <strong>枚举</strong>（<em>enumerations</em>），也被称作 <em>enums</em>。枚举允许你通过列举可能的 <strong>成员</strong>（<em>variants</em>） 来定义一个类型。首先，我们会定义并使用一个枚举来展示它是如何连同数据一起编码信息的。接下来，我们会探索一个特别有用的枚举，叫做 <code>Option</code>，它代表一个值要么是某个值要么什么都不是。然后会讲到在 <code>match</code> 表达式中用模式匹配，针对不同的枚举值编写相应要执行的代码。最后会介绍 <code>if let</code>，另一个简洁方便处理代码中枚举的结构。</p>
 <p>枚举是一个很多语言都有的功能，不过不同语言中其功能各不相同。Rust 的枚举与 F#、OCaml 和 Haskell 这样的函数式编程语言中的 <strong>代数数据类型</strong>（<em>algebraic data types</em>）最为相似。</p>
 <h2><a class="header" href="#定义枚举" id="定义枚举">定义枚举</a></h2>
-<p>让我们看看一个需要诉诸于代码的场景，来考虑为何此时使用枚举更为合适且实用。假设我们要处理 IP 地址。目前被广泛使用的两个主要 IP 标准：IPv4（version four）和 IPv6（version six）。这是我们的程序可能会遇到的所有可能的 IP 地址类型，所以可以 <strong>枚举</strong> 出所有可能的值，这也正是此枚举名字的由来。</p>
+<p>让我们看看一个需要诉诸于代码的场景，来考虑为何此时使用枚举更为合适且实用。假设我们要处理 IP 地址。目前被广泛使用的两个主要 IP 标准：IPv4（version four）和 IPv6（version six）。这是我们的程序可能会遇到的所有可能的 IP 地址类型，所以可以 <strong>枚举</strong> 出所有可能的值，这也正是 <strong>枚举</strong> 这个名字的由来。</p>
 <p>任何一个 IP 地址要么是 IPv4 的要么是 IPv6 的，而且不能两者都是。IP 地址的这个特性使得枚举数据结构非常适合这个场景，因为枚举值只可能是其中一个成员。IPv4 和 IPv6 从根本上讲仍是 IP 地址，所以当代码在处理适用于任何类型的 IP 地址的场景时应该把它们当作相同的类型。</p>
 <p>可以通过在代码中定义一个 <code>IpAddrKind</code> 枚举来表现这个概念并列出可能的 IP 地址类型，<code>V4</code> 和 <code>V6</code>。这被称为枚举的 <strong>成员</strong>（<em>variants</em>）：</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -5029,7 +5029,7 @@ let s3 = String::from(&quot;toe&quot;);
 let s = s1 + &quot;-&quot; + &amp;s2 + &quot;-&quot; + &amp;s3;
 <span class="boring">}
 </span></code></pre></pre>
-<p>这时 <code>s</code> 的内容会是 <code>tic-tac-toe</code>。在有这么多 <code>+</code> 和 <code>&quot;</code> 字符的情况下，很难理解具体发生了什么。对于更为复杂的字符串链接，可以使用 <code>format!</code> 宏：</p>
+<p>这时 <code>s</code> 的内容会是 <code>tic-tac-toe</code>。在有这么多 <code>+</code> 和 <code>&quot;</code> 字符的情况下，很难理解具体发生了什么。对于更为复杂的字符串连接，可以使用 <code>format!</code> 宏：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6435,7 +6435,7 @@ impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
 <p>trait 和 trait bound 让我们使用泛型类型参数来减少重复，并仍然能够向编译器明确指定泛型类型需要拥有哪些行为。因为我们向编译器提供了 trait bound 信息，它就可以检查代码中所用到的具体类型是否提供了正确的行为。在动态类型语言中，如果我们尝试调用一个类型并没有实现的方法，会在运行时出现错误。Rust 将这些错误移动到了编译时，甚至在代码能够运行之前就强迫我们修复错误。另外，我们也无需编写运行时检查行为的代码，因为在编译时就已经检查过了，这样相比其他那些不愿放弃泛型灵活性的语言有更好的性能。</p>
 <p>这里还有一种泛型，我们一直在使用它甚至都没有察觉它的存在，这就是 <strong>生命周期</strong>（<em>lifetimes</em>）。不同于其他泛型帮助我们确保类型拥有期望的行为，生命周期则有助于确保引用在我们需要他们的时候一直有效。让我们学习生命周期是如何做到这些的。</p>
 <h2><a class="header" href="#生命周期与引用有效性" id="生命周期与引用有效性">生命周期与引用有效性</a></h2>
-<p>当在第 4 章讨论 <a href="ch04-02-references-and-borrowing.html#references-and-borrowing">“引用与借用”</a> 部分时，我们遗漏了一个重要的细节：Rust 中的每一个引用都有其 <strong>生命周期</strong>（<em>lifetime</em>），也就是引用保持有效的作用域。大部分时候生命周期是隐含并可以推断的，正如大部分时候类型也是可以推断的一样。类似于当因为有多种可能类型的时候必须注明类型，也会出现引用的生命周期以一些不同方式相关联的情况，所以 Rust 需要我们使用泛型生命周期参数来注明他们的关系，这样就能确保运行时实际使用的引用绝对是有效的。</p>
+<p>当在第 4 章讨论 <a href="ch04-02-references-and-borrowing.html#references-and-borrowing">“引用与借用”</a> 部分时，我们遗漏了一个重要的细节：Rust 中的每一个引用都有其 <strong>生命周期</strong>（<em>lifetime</em>），也就是引用保持有效的作用域。大部分时候生命周期是隐含并可以推断的，正如大部分时候类型也是可以推断的一样。类似于当因为有多种可能类型的时候不得不注明类型，也会出现引用的生命周期以一些不同方式相关联的情况，所以 Rust 需要我们使用泛型生命周期参数来注明他们的关系，这样就能确保运行时实际使用的引用绝对是有效的。</p>
 <p>生命周期的概念从某种程度上说不同于其他语言中类似的工具，毫无疑问这是 Rust 最与众不同的功能。虽然本章不可能涉及到它全部的内容，我们会讲到一些通常你可能会遇到的生命周期语法以便你熟悉这个概念。</p>
 <h3><a class="header" href="#生命周期避免了悬垂引用" id="生命周期避免了悬垂引用">生命周期避免了悬垂引用</a></h3>
 <p>生命周期的主要目标是避免悬垂引用，它会导致程序引用了非预期引用的数据。考虑一下示例 10-17 中的程序，它有一个外部作用域和一个内部作用域。</p>

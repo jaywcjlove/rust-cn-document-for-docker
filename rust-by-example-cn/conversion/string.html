@@ -206,7 +206,7 @@ fn main() {
 }
 </code></pre></pre>
 <h2><a class="header" href="#解析字符串" id="解析字符串">解析字符串</a></h2>
-<p>我们经常需要把字符串转成数字。完成这项工作的标准手段是用 <a href="https://rustwiki.org/zh-CN/std/primitive.str.html#method.parse"><code>parse</code></a> 函数。我们得提供要转换到的类型，这可以通过不使用类型推断，或者用 “涡轮鱼” 语法（turbo fish，<code>&lt;&gt;</code>）实现。</p>
+<p>我们经常需要把字符串转成数字。完成这项工作的标准手段是用 <a href="https://rustwiki.org/zh-CN/std/primitive.str.html#method.parse"><code>parse</code></a> 函数。我们得提供要转换到的类型，这可以通过使用类型推断，或者用 “涡轮鱼” 语法（turbo fish，<code>&lt;&gt;</code>）实现。</p>
 <p>只要对目标类型实现了 <a href="https://rustwiki.org/zh-CN/std/str/trait.FromStr.html"><code>FromStr</code></a> trait，就可以用 <code>parse</code> 把字符串转换成目标类型。
 标准库中已经给无数种类型实现了 <code>FromStr</code>。如果要转换到用户定义类型，只要手动实现
 <code>FromStr</code> 就行。</p>

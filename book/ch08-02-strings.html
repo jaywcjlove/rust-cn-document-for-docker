@@ -292,7 +292,7 @@ let s3 = String::from(&quot;toe&quot;);
 let s = s1 + &quot;-&quot; + &amp;s2 + &quot;-&quot; + &amp;s3;
 <span class="boring">}
 </span></code></pre></pre>
-<p>这时 <code>s</code> 的内容会是 <code>tic-tac-toe</code>。在有这么多 <code>+</code> 和 <code>&quot;</code> 字符的情况下，很难理解具体发生了什么。对于更为复杂的字符串链接，可以使用 <code>format!</code> 宏：</p>
+<p>这时 <code>s</code> 的内容会是 <code>tic-tac-toe</code>。在有这么多 <code>+</code> 和 <code>&quot;</code> 字符的情况下，很难理解具体发生了什么。对于更为复杂的字符串连接，可以使用 <code>format!</code> 宏：</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

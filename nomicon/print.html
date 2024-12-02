@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
-<html lang="zh-hans" class="sidebar-visible no-js light">
+<html lang="zh-Hans" class="light" dir="">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Rust 秘典（死灵书）</title>
         
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
         
         
 
@@ -53,10 +53,9 @@ s.parentNode.insertBefore(el, s);
 </script>
 
 
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="Unsafe Rust 的黑魔法指南">
+        <meta name="description" content="高级 Unsafe Rust 编程的黑科技指南">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         
         <link rel="icon" href="favicon.svg">
@@ -86,18 +85,21 @@ s.parentNode.insertBefore(el, s);
         
         <link rel="stylesheet" href="theme/nomicon.css">
         
+        <link rel="stylesheet" href="theme/language-picker.css">
+        
 
         
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -113,58 +115,89 @@ s.parentNode.insertBefore(el, s);
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
 
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var html = document.querySelector('html');
-            var sidebar = 'hidden';
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
                 <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">介绍</a></li><li class="chapter-item expanded "><a href="meet-safe-and-unsafe.html"><strong aria-hidden="true">1.</strong> 认识安全和不安全</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="safe-unsafe-meaning.html"><strong aria-hidden="true">1.1.</strong> 安全和不安全如何交互</a></li><li class="chapter-item expanded "><a href="what-unsafe-does.html"><strong aria-hidden="true">1.2.</strong> Unsafe Rust 能做什么</a></li><li class="chapter-item expanded "><a href="working-with-unsafe.html"><strong aria-hidden="true">1.3.</strong> 使用 Unsafe</a></li></ol></li><li class="chapter-item expanded "><a href="data.html"><strong aria-hidden="true">2.</strong> Rust 中的数据布局</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="repr-rust.html"><strong aria-hidden="true">2.1.</strong> repr(Rust)</a></li><li class="chapter-item expanded "><a href="exotic-sizes.html"><strong aria-hidden="true">2.2.</strong> 非正常大小的类型</a></li><li class="chapter-item expanded "><a href="other-reprs.html"><strong aria-hidden="true">2.3.</strong> 可选的数据布局</a></li></ol></li><li class="chapter-item expanded "><a href="ownership.html"><strong aria-hidden="true">3.</strong> 所有权</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">3.1.</strong> 引用</a></li><li class="chapter-item expanded "><a href="aliasing.html"><strong aria-hidden="true">3.2.</strong> 别名</a></li><li class="chapter-item expanded "><a href="lifetimes.html"><strong aria-hidden="true">3.3.</strong> 生命周期</a></li><li class="chapter-item expanded "><a href="lifetime-mismatch.html"><strong aria-hidden="true">3.4.</strong> 生命周期的局限</a></li><li class="chapter-item expanded "><a href="lifetime-elision.html"><strong aria-hidden="true">3.5.</strong> 生命周期推导</a></li><li class="chapter-item expanded "><a href="unbounded-lifetimes.html"><strong aria-hidden="true">3.6.</strong> 不受约束的生命周期</a></li><li class="chapter-item expanded "><a href="hrtb.html"><strong aria-hidden="true">3.7.</strong> Higher-Rank Trait Bounds</a></li><li class="chapter-item expanded "><a href="subtyping.html"><strong aria-hidden="true">3.8.</strong> 子类型化和变异性</a></li><li class="chapter-item expanded "><a href="dropck.html"><strong aria-hidden="true">3.9.</strong> 丢弃检查</a></li><li class="chapter-item expanded "><a href="phantom-data.html"><strong aria-hidden="true">3.10.</strong> 幽灵数据</a></li><li class="chapter-item expanded "><a href="borrow-splitting.html"><strong aria-hidden="true">3.11.</strong> 拆分 Borrows</a></li></ol></li><li class="chapter-item expanded "><a href="conversions.html"><strong aria-hidden="true">4.</strong> 类型转换</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="coercions.html"><strong aria-hidden="true">4.1.</strong> 强转</a></li><li class="chapter-item expanded "><a href="dot-operator.html"><strong aria-hidden="true">4.2.</strong> 点运算符</a></li><li class="chapter-item expanded "><a href="casts.html"><strong aria-hidden="true">4.3.</strong> Casts</a></li><li class="chapter-item expanded "><a href="transmutes.html"><strong aria-hidden="true">4.4.</strong> Transmutes</a></li></ol></li><li class="chapter-item expanded "><a href="uninitialized.html"><strong aria-hidden="true">5.</strong> 未初始化内存</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="checked-uninit.html"><strong aria-hidden="true">5.1.</strong> Checked</a></li><li class="chapter-item expanded "><a href="drop-flags.html"><strong aria-hidden="true">5.2.</strong> 丢弃标志</a></li><li class="chapter-item expanded "><a href="unchecked-uninit.html"><strong aria-hidden="true">5.3.</strong> Unchecked</a></li></ol></li><li class="chapter-item expanded "><a href="obrm.html"><strong aria-hidden="true">6.</strong> 基于所有权的资源管理</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="constructors.html"><strong aria-hidden="true">6.1.</strong> 构造</a></li><li class="chapter-item expanded "><a href="destructors.html"><strong aria-hidden="true">6.2.</strong> 析构</a></li><li class="chapter-item expanded "><a href="leaking.html"><strong aria-hidden="true">6.3.</strong> 泄漏</a></li></ol></li><li class="chapter-item expanded "><a href="unwinding.html"><strong aria-hidden="true">7.</strong> Unwinding</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="exception-safety.html"><strong aria-hidden="true">7.1.</strong> 异常安全</a></li><li class="chapter-item expanded "><a href="poisoning.html"><strong aria-hidden="true">7.2.</strong> Poisoning</a></li></ol></li><li class="chapter-item expanded "><a href="concurrency.html"><strong aria-hidden="true">8.</strong> 并发</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="races.html"><strong aria-hidden="true">8.1.</strong> 数据竞争</a></li><li class="chapter-item expanded "><a href="send-and-sync.html"><strong aria-hidden="true">8.2.</strong> Send 和 Sync</a></li><li class="chapter-item expanded "><a href="atomics.html"><strong aria-hidden="true">8.3.</strong> Atomics</a></li></ol></li><li class="chapter-item expanded "><a href="vec/vec.html"><strong aria-hidden="true">9.</strong> 实现 Vec</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="vec/vec-layout.html"><strong aria-hidden="true">9.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="vec/vec-alloc.html"><strong aria-hidden="true">9.2.</strong> 分配内存</a></li><li class="chapter-item expanded "><a href="vec/vec-push-pop.html"><strong aria-hidden="true">9.3.</strong> Push 和 Pop</a></li><li class="chapter-item expanded "><a href="vec/vec-dealloc.html"><strong aria-hidden="true">9.4.</strong> 释放内存</a></li><li class="chapter-item expanded "><a href="vec/vec-deref.html"><strong aria-hidden="true">9.5.</strong> Deref</a></li><li class="chapter-item expanded "><a href="vec/vec-insert-remove.html"><strong aria-hidden="true">9.6.</strong> 插入和删除</a></li><li class="chapter-item expanded "><a href="vec/vec-into-iter.html"><strong aria-hidden="true">9.7.</strong> IntoIter</a></li><li class="chapter-item expanded "><a href="vec/vec-raw.html"><strong aria-hidden="true">9.8.</strong> RawVec</a></li><li class="chapter-item expanded "><a href="vec/vec-drain.html"><strong aria-hidden="true">9.9.</strong> Drain</a></li><li class="chapter-item expanded "><a href="vec/vec-zsts.html"><strong aria-hidden="true">9.10.</strong> 处理零大小的类型</a></li><li class="chapter-item expanded "><a href="vec/vec-final.html"><strong aria-hidden="true">9.11.</strong> 最终代码</a></li></ol></li><li class="chapter-item expanded "><a href="arc-mutex/arc-and-mutex.html"><strong aria-hidden="true">10.</strong> 实现 Arc 和 Mutex</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc.html"><strong aria-hidden="true">10.1.</strong> 实现 Arc</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="arc-mutex/arc-layout.html"><strong aria-hidden="true">10.1.1.</strong> 布局</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-base.html"><strong aria-hidden="true">10.1.2.</strong> 基本代码</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-clone.html"><strong aria-hidden="true">10.1.3.</strong> 克隆</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-drop.html"><strong aria-hidden="true">10.1.4.</strong> 丢弃</a></li><li class="chapter-item expanded "><a href="arc-mutex/arc-final.html"><strong aria-hidden="true">10.1.5.</strong> 最终代码</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="ffi.html"><strong aria-hidden="true">11.</strong> 外部函数接口（FFI）</a></li><li class="chapter-item expanded "><a href="beneath-std.html"><strong aria-hidden="true">12.</strong> 标准库之下</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="panic-handler.html"><strong aria-hidden="true">12.1.</strong> #[panic_handler]</a></li></ol></li></ol>
             </div>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
         </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 
                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="展开/收起目录" aria-label="展开/收起目录" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
-                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="更换主题" aria-label="更换主题" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
                         
-                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                        <button id="search-toggle" class="icon-button" type="button" title="全书搜索 (快捷键: s)" aria-label="显示/隐藏搜索框" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
                         
@@ -173,23 +206,125 @@ s.parentNode.insertBefore(el, s);
                     <h1 class="menu-title">Rust 秘典（死灵书）</h1>
 
                     <div class="right-buttons">
+                        <button id="language-toggle" class="icon-button icon-button-wrapper" type="button"
+                                title="切换语言 / Change language" aria-label="切换语言 / Change language"
+                                aria-haspopup="true" aria-expanded="false"
+                                aria-controls="language-list">
+                            <i class="fa fa-globe"></i>
+                        </button>
+                        <ul id="language-list" class="theme-popup" aria-label="语言 / Languages" role="menu">
+                            <li role="none"><a role="menuitem" class="theme theme-link" id="en">英文原版 (English)</a></li>
+                            <li role="none"><a role="menuitem" class="theme theme-link" id="zh-Hans">中文译本</a></li>
+                        </ul>
+                        <script>
+                            let langToggle = document.getElementById("language-toggle");
+                            let langList = document.getElementById("language-list");
+
+                            const langId = "zh-Hans";
+                            let selectedLang = document.getElementById(langId);
+                            if (selectedLang) {
+                                selectedLang.classList.add("theme-selected");
+                            }
+
+                            function hideLangList() {
+                                langList.style.display = "none";
+                                langToggle.setAttribute('aria-expanded', false);
+                                langToggle.focus();
+                            }
+
+                            langToggle.addEventListener("click", (event) => {
+                                if (langList.style.display === "block") {
+                                    hideLangList();
+                                } else {
+                                    langList.style.display = "block";
+                                    langToggle.setAttribute('aria-expanded', true);
+                                    langList.querySelector("a#" + langId).focus();
+                                }
+                            });
+
+                            langList.addEventListener('focusout', function(e) {
+                                // e.relatedTarget is null in Safari and Firefox on macOS (see workaround below)
+                                if (!!e.relatedTarget && !langToggle.contains(e.relatedTarget) && !langList.contains(e.relatedTarget)) {
+                                    hideLangList();
+                                }
+                            });
+
+                            // Should not be needed, but it works around an issue on macOS & iOS: https://github.com/rust-lang/mdBook/issues/628
+                            document.addEventListener('click', function(e) {
+                                if (langList.style.display === 'block' && !langToggle.contains(e.target) && !langList.contains(e.target)) {
+                                    hideLangList();
+                                }
+                            });
+
+                            document.addEventListener('keydown', function (e) {
+                                if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) { return; }
+                                if (!langList.contains(e.target)) { return; }
+
+                                switch (e.key) {
+                                    case 'Escape':
+                                        e.preventDefault();
+                                        hideLangList();
+                                        break;
+                                    case 'ArrowUp':
+                                        e.preventDefault();
+                                        var li = document.activeElement.parentElement;
+                                        if (li && li.previousElementSibling) {
+                                            li.previousElementSibling.querySelector('a').focus();
+                                        }
+                                        break;
+                                    case 'ArrowDown':
+                                        e.preventDefault();
+                                        var li = document.activeElement.parentElement;
+                                        if (li && li.nextElementSibling) {
+                                            li.nextElementSibling.querySelector('a').focus();
+                                        }
+                                        break;
+                                    case 'Home':
+                                        e.preventDefault();
+                                        langList.querySelector('li:first-child a').focus();
+                                        break;
+                                    case 'End':
+                                        e.preventDefault();
+                                        langList.querySelector('li:last-child a').focus();
+                                        break;
+                                }
+                            });
+
+                            // The path to the root, taking the current
+                            // language into account.
+                                
+                                let full_path_to_root = "";
+                                
+                            // The page path (mdbook only gives us
+                            // access to the path to the Markdown file).
+                            let path = "print.md".replace(/\.md$/, ".html");
+                            for (let lang of langList.querySelectorAll("a")) {
+                                if (lang.id == "zh-Hans") {
+                                    lang.href = `${full_path_to_root}${path}`;
+                                } else {
+                                    lang.href = `${full_path_to_root}${lang.id}/${path}`;
+                                }
+                            }
+                        </script>
                         
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="print.html" title="打印本书" aria-label="打印本书">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
                         
                         
-                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repository" aria-label="Git repository">
+                        <a href="https://github.com/rust-lang-cn/nomicon-zh-Hans" title="Git repo" aria-label="Git repo">
                             <i id="git-repository-button" class="fa fa-github"></i>
                         </a>
                         
+                        
+
                     </div>
                 </div>
 
                 
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
-                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                     </form>
                     <div id="searchresults-outer" class="searchresults-outer hidden">
                         <div id="searchresults-header" class="searchresults-header"></div>
@@ -200,7 +335,7 @@ s.parentNode.insertBefore(el, s);
                 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -221,7 +356,7 @@ s.parentNode.insertBefore(el, s);
 <p>译者的话：首先，限于译者自身姿势水平，翻译有可能无法做到完全信达雅，并且有一些专业术语不知道如何翻译到中文，在这里先向大家道歉，请多包涵。</p>
 <p>不过，译者保证所有翻译的内容都是译者阅读并调整过多次的，并且译者会努力将内容调整到满足<strong>能看懂</strong>的要求，并且做到不遗漏原文内容。</p>
 <p>如果大家对于翻译有更好的建议或者想法，欢迎直接 PR~</p>
-<p>目前翻译基于 commit：0ebdacadbda8ce2cd8fbf93985e15af61a7ab895，基于时间：2024/6/5</p>
+<p>目前翻译基于 commit：6ecf95c5f2bfa0e6314dfe282bf775fd1405f7e9，基于时间：2024/8/12</p>
 <p>Q：为什么不基于之前已有的中文版进行改进？</p>
 <p>A：因为翻译成中文版后，很难再回过头去看和现在的英文版原文到底差了啥，所以还不如完全重新翻译一遍。</p>
 <p>Q：那会不会有一天你的这个版本也过期了？</p>
@@ -324,7 +459,7 @@ unsafe trait UnsafeOrd {
 <li>对原始指针进行解引用</li>
 <li>调用 “Unsafe” 的函数（包括 C 函数、编译器的内建指令和原始分配器。</li>
 <li>实现 “Unsafe” trait</li>
-<li>改变静态数据</li>
+<li>访问或者修改可变的静态变量</li>
 <li>访问 “union” 的字段</li>
 </ul>
 <p>这就是全部了。这些操作被归入 unsafe 的原因是，误用其中的任何一项都会引起可怕的未定义行为。调用“未定义行为”使编译器有充分的权利对你的程序做任何坏事。你绝对_不能_调用“未定义行为”。</p>
@@ -637,8 +772,8 @@ struct LotsOfNothing {
 </span></code></pre></pre>
 <p>空类型甚至比 ZST 更加边缘化。空类型的主要作用是为了让某个类型不可达。例如，假设一个 API 需要在一般情况下返回一个结果，但一个特定的情况实际上是不可能的。实际上可以通过返回一个<code>Result&lt;T, Void&gt;</code>来在类型级别上传达这个信息。API 的消费者可以放心地 unwrap 这样一个结果，因为他们知道这个值在本质上不可能是<code>Err</code>，因为这需要提供一个<code>Void</code>类型的值。</p>
 <p>原则上，Rust 可以基于这个事实做一些有趣的分析和优化，例如，<code>Result&lt;T, Void&gt;</code>只表示为<code>T</code>，因为<code>Err</code>的情况实际上并不存在（严格来说，这只是一种优化，并不保证，所以例如将一个转化为另一个仍然是 UB）。</p>
-<p>下面的例子<em>本来应该</em>可以编译的:</p>
-<pre><pre class="playground"><code class="language-rust compile_fail">
+<p>下面的例子是可以编译的:</p>
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Void {}
@@ -649,7 +784,6 @@ let res: Result&lt;u32, Void&gt; = Ok(0);
 let Ok(num) = res;
 <span class="boring">}
 </span></code></pre></pre>
-<p>但现在还不让这么玩儿。</p>
 <p>关于空类型的最后一个微妙的细节是，构造一个指向它们的原始指针实际上是有效的，但对它们的解引用是未定义行为，因为那是没有意义的。</p>
 <p>我们建议不要用<code>*const Void</code>来模拟 C 的<code>void*</code>类型。很多人之前这样做，但很快就遇到了麻烦，因为 Rust 没有任何安全防护措施来防止用不安全的代码来实例化空类型，如果你这样做了，就是未定义行为。因为开发者有将原始指针转换为引用的习惯，而构造一个<code>&amp;Void</code><em>也</em>是未定义行为，所以这尤其成问题。</p>
 <p><code>*const ()</code>（或等价物）对<code>void*</code>来说效果相当好，可以做成引用而没有任何安全问题。它仍然不能阻止你试图读取或写入数值，但至少它可以编译成一个 no-op 而不是 UB。</p>
@@ -667,7 +801,7 @@ let Ok(num) = res;
 <li>带有字段的枚举在 C 或 C++ 中也没有对应的概念，但是类型的有效桥接<a href="https://github.com/rust-lang/rfcs/blob/master/text/2195-really-tagged-unions.md">是被定义的</a></li>
 <li>如果<code>T</code>是一个<a href="ffi.html#%E7%A9%BA%E6%8C%87%E9%92%88%E4%BC%98%E5%8C%96">FFI 安全的非空指针类型</a>，<code>Option&lt;T&gt;</code>被保证具有与<code>T</code>相同的布局和 ABI，因此也是 FFI 安全的。截至目前，这包括<code>&amp;</code>、<code>&amp;mut</code>和函数指针，所有这些都不能为空。</li>
 <li>就<code>repr(C)</code>而言，元组结构和结构一样，因为与结构的唯一区别是字段没有命名。</li>
-<li><code>repr(C)</code>相当于无字段枚举的<code>repr(u*)</code>之一（见下一节）。选择的大小是目标平台的 C 应用二进制接口（ABI）的默认枚举大小。请注意，C 语言中的枚举表示法是实现定义的，所以这实际上是一个“最佳猜测”。特别是，当对应的 C 代码在编译时带有某些标志时，这可能是不正确的。</li>
+<li><code>repr(C)</code>相当于无字段枚举的<code>repr(u*)</code>之一（见下一节）。选择的大小和符号类型是目标平台的 C 应用二进制接口（ABI）的默认枚举大小与符号类型。请注意，C 语言中的枚举表示法是实现定义的，所以这实际上是一个“最佳猜测”。特别是，当对应的 C 代码在编译时带有某些标志时，这可能是不正确的。</li>
 <li>带有<code>repr(C)</code>或<code>repr(u*)</code>的无字段枚举仍然不能在没有相应变量的情况下设置为整数值，尽管这在 C 或 C++ 中是允许的行为。如果（不安全地）构造一个枚举的实例，但不与它的一个变体相匹配，这是未定义的行为(这使得详尽的匹配可以继续被编写和编译为正常行为)。</li>
 </ul>
 <h2><a class="header" href="#reprtransparent" id="reprtransparent">repr(transparent)</a></h2>
@@ -680,8 +814,8 @@ let Ok(num) = res;
 <p>只有在唯一的字段为<code>pub</code>或其内存布局在文档中所承诺的情况下，该 repr 才被视为一个类型的公共 ABI 的一部分。否则，该内存布局不应被其他 crate 所依赖。</p>
 <p>更多细节可以参考<a href="https://github.com/rust-lang/rfcs/blob/master/text/1758-repr-transparent.md">RFC 1758</a>和<a href="https://rust-lang.github.io/rfcs/2645-transparent-unions.html">RFC 2645</a>。</p>
 <h2><a class="header" href="#repru-repri" id="repru-repri">repr(u*), repr(i*)</a></h2>
-<p>这些指定了使无字段枚举的大小。如果判别符超过了它可以容纳的整数，就会产生一个编译时错误。你可以通过将溢出的元素明确设置为 0 来手动要求 Rust 允许这样做。</p>
-<p>术语“无字段枚举”仅意味着该枚举在其任何变体中都没有数据。没有<code>repr(u*)</code>或<code>repr(C)</code>的无字段枚举仍然是一个 Rust 本地类型，没有稳定的 ABI 表示。添加<code>repr</code>会使它在 ABI 上被视为与指定的整数大小完全相同。</p>
+<p>这些指定了使无字段枚举的大小和符号类型。如果判别符超过了它可以容纳的整数，就会产生一个编译时错误。你可以通过将溢出的元素明确设置为 0 来手动要求 Rust 允许这样做。</p>
+<p>术语“无字段枚举”仅意味着该枚举在其任何变体中都没有数据。没有<code>repr(u*)</code>或<code>repr(C)</code>的无字段枚举仍然是一个 Rust 本地类型，没有稳定的 ABI 表示。添加<code>repr</code>会使它在 ABI 上被视为与指定的整数类型大小完全相同。</p>
 <p>如果枚举有字段，其效果类似于<code>repr(C)</code>的效果，因为该类型有一个定义的布局。这使得将枚举传递给 C 代码或者访问该类型的原始表示并直接操作其标记和字段成为可能，详见<a href="https://github.com/rust-lang/rfcs/blob/master/text/2195-really-tagged-unions.md">RFC</a>。</p>
 <p>这些“repr”对结构（struct）没有作用。</p>
 <p>在含有字段的枚举中加入明确的<code>repr(u*)</code>、<code>repr(i*)</code>或<code>repr(C)</code>可以抑制空指针优化，比如：</p>
@@ -5673,7 +5807,7 @@ fn main() {
         
 
         
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
         
@@ -5681,21 +5815,22 @@ fn main() {
         
 
         
-        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="elasticlunr.min.js"></script>
+        
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
         
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
         
 
         
         
-        <script type="text/javascript">
+        <script>
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
@@ -5703,5 +5838,6 @@ fn main() {
         
         
 
+    </div>
     </body>
 </html>
