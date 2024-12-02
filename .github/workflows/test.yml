@@ -22,12 +22,6 @@ jobs:
           repository: google/comprehensive-rust
           path: 'comprehensive-rust'
 
-      - name: Checkout chuxiuhong/chuxiuhong-rust-patterns-zh code
-        uses: actions/checkout@v4
-        with:
-          repository: chuxiuhong/chuxiuhong-rust-patterns-zh
-          path: 'chuxiuhong-rust-patterns-zh'
-
       - name: Install formatting dependencies
         run: |
           sudo apt update
@@ -76,18 +70,20 @@ jobs:
 
       - run: git clone https://github.com/rustlang-cn/rust-algos.git -b gh-pages rust-algos --depth 1
       - run: git clone https://github.com/krahets/hello-algo.git -b gh-pages hello-algo --depth 1
+      - run: git clone https://github.com/chuxiuhong/chuxiuhong-rust-patterns-zh.git -b gh-pages chuxiuhong-rust-patterns-zh --depth 1
 
       - run: cp -rp std/doc dist/std
       - run: rm -rf book/.git
       - run: rm -rf rust-by-example-cn/.git
       - run: rm -rf comprehensive-rust/.git
-      - run: rm -rf chuxiuhong-rust-patterns-zh/.git
       - run: rm -rf quick-reference/.git
       - run: cp -rp quick-reference dist/quick-reference
       - run: rm -rf rust-algos/.git
       - run: cp -rp rust-algos dist/rust-algos
       - run: rm -rf hello-algo/.git
       - run: cp -rp hello-algo dist/hello-algo
+      - run: rm -rf chuxiuhong-rust-patterns-zh/.git
+      - run: cp -rp chuxiuhong-rust-patterns-zh dist/chuxiuhong-rust-patterns-zh
       - run: rm -rf rust-course/.git
       - run: rm -rf rusty-book/.git
       - run: rm -rf style-guide-cn/.git
@@ -155,13 +151,6 @@ jobs:
           mdbook build
           rm -rf .git
           cp -rp ./book ../dist/rust-cookbook
-
-      - name: 📗 chuxiuhong-rust-patterns-zh
-        working-directory: chuxiuhong-rust-patterns-zh
-        run: |
-          mdbook build
-          rm -rf .git
-          cp -rp ./book ../dist/chuxiuhong-rust-patterns-zh
 
       - name: 📗 cargo
         working-directory: cargo
