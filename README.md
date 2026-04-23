@@ -44,7 +44,7 @@ Rust 相关中文文档
 
 将 [**Rust 中文资源**](https://github.com/rust-lang-cn) 等 Rust 中文文档打包成 [Docker](#docker) 镜像，支持本地部署，方便随时预览学习！
 
-更新时间：(<!--GAMFC-->2026-04-17 01:27:31<!--GAMFC-END-->)
+更新时间：(<!--GAMFC-->2026-04-23 06:05:10<!--GAMFC-END-->)
 
 Github Repo | last commit | home
 ---- | ---- | ----
